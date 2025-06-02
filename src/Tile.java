@@ -20,10 +20,10 @@ public class Tile extends Node {
 	public int anInt1400;
 	public Class3 aClass3_1401;
 	public Class20 aClass20_1402;
-	public Class44 aClass44_1403;
+	public ScenegraphMember44 aClass44_1403;
 	public Class35 aClass35_1404;
-	public Class28 aClass28_1405;
-	public Class10 aClass10_1406;
+	public ScenegraphMember28 aClass28_1405;
+	public ScenegraphMember10 aClass10_1406;
 	public int anInt1407;
 	public Class5 aClass5Array1408[];
 	public int anIntArray1409[];

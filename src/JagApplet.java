@@ -53,7 +53,7 @@ public class JagApplet extends Applet implements Runnable, MouseListener, MouseM
 		if (frame != null)
 			frame.addWindowListener(this);
 		drawLoadingText(0, "Loading...");
-		method6();
+		load();
 		int i = 0;
 		int j = 256;
 		int k = 1;
@@ -378,7 +378,7 @@ public class JagApplet extends Applet implements Runnable, MouseListener, MouseM
 	public void windowOpened(WindowEvent windowevent) {
 	}
 
-	public void method6() {
+	public void load() {
 	}
 
 	public void method7(byte byte0) {

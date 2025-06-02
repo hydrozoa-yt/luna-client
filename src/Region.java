@@ -82,7 +82,7 @@ public class Region {
                 else
                     class50_sub1_sub4 = new Class50_Sub1_Sub4_Sub5(class47.animationId, i_24_, i_25_, i_23_, 22, (byte) 3,
                             i, true, i_22_, i_18_);
-                class22.method247(i_19_, i_17_, 669, i_28_, i_27_, i_26_, i_21_, class50_sub1_sub4);
+                class22.addSomethingToScenegraph(i_21_, i_19_, i_17_, 669, i_28_, i_27_, i_26_, class50_sub1_sub4);
                 if (class47.aBoolean810 && class47.aBoolean759)
                     class46.method414(8, i_17_, i_19_);
             } else if (i_16_ == 10 || i_16_ == 11) {
@@ -129,7 +129,7 @@ public class Region {
                 else
                     class50_sub1_sub4 = new Class50_Sub1_Sub4_Sub5(class47.animationId, i_24_, i_25_, i_23_, 0, (byte) 3,
                             i, true, i_22_, i_18_);
-                class22.method249(i_26_, 49878, 0, anIntArray158[i_18_], null, i_19_, i_27_, i_28_, i_17_,
+                class22.addSomethingToScenegraph3(i_19_, i_17_, i_26_, 49878, 0, anIntArray158[i_18_], null, i_27_, i_28_,
                         class50_sub1_sub4, i_21_);
                 if (class47.aBoolean810)
                     class46.method412(i_18_, 37679, class47.aBoolean809, i_16_, i_19_, i_17_);
@@ -140,7 +140,7 @@ public class Region {
                 else
                     class50_sub1_sub4 = new Class50_Sub1_Sub4_Sub5(class47.animationId, i_24_, i_25_, i_23_, 1, (byte) 3,
                             i, true, i_22_, i_18_);
-                class22.method249(i_26_, 49878, 0, anIntArray167[i_18_], null, i_19_, i_27_, i_28_, i_17_,
+                class22.addSomethingToScenegraph3(i_19_, i_17_, i_26_, 49878, 0, anIntArray167[i_18_], null, i_27_, i_28_,
                         class50_sub1_sub4, i_21_);
                 if (class47.aBoolean810)
                     class46.method412(i_18_, 37679, class47.aBoolean809, i_16_, i_19_, i_17_);
@@ -157,8 +157,8 @@ public class Region {
                     class50_sub1_sub4_33_ = new Class50_Sub1_Sub4_Sub5(class47.animationId, i_24_, i_25_, i_23_, 2,
                             (byte) 3, i, true, i_22_, i_32_);
                 }
-                class22.method249(i_26_, 49878, anIntArray158[i_32_], anIntArray158[i_18_], class50_sub1_sub4_33_,
-                        i_19_, i_27_, i_28_, i_17_, class50_sub1_sub4, i_21_);
+                class22.addSomethingToScenegraph3(i_19_, i_17_, i_26_, 49878, anIntArray158[i_32_], anIntArray158[i_18_], class50_sub1_sub4_33_,
+                        i_27_, i_28_, class50_sub1_sub4, i_21_);
                 if (class47.aBoolean810)
                     class46.method412(i_18_, 37679, class47.aBoolean809, i_16_, i_19_, i_17_);
             } else if (i_16_ == 3) {
@@ -168,7 +168,7 @@ public class Region {
                 else
                     class50_sub1_sub4 = new Class50_Sub1_Sub4_Sub5(class47.animationId, i_24_, i_25_, i_23_, 3, (byte) 3,
                             i, true, i_22_, i_18_);
-                class22.method249(i_26_, 49878, 0, anIntArray167[i_18_], null, i_19_, i_27_, i_28_, i_17_,
+                class22.addSomethingToScenegraph3(i_19_, i_17_, i_26_, 49878, 0, anIntArray167[i_18_], null, i_27_, i_28_,
                         class50_sub1_sub4, i_21_);
                 if (class47.aBoolean810)
                     class46.method412(i_18_, 37679, class47.aBoolean809, i_16_, i_19_, i_17_);
@@ -757,7 +757,7 @@ public class Region {
                     else
                         class50_sub1_sub4 = new Class50_Sub1_Sub4_Sub5(objectDef.animationId, i_193_, i_194_, i_192_, 22,
                                 (byte) 3, i_190_, true, i_191_, i_188_);
-                    class22.method247(x, y, 669, i_197_, i_196_, i_195_, z, class50_sub1_sub4);
+                    class22.addSomethingToScenegraph(z, x, y, 669, i_197_, i_196_, i_195_, class50_sub1_sub4);
                     if (objectDef.aBoolean810 && objectDef.aBoolean759 && class46 != null)
                         class46.method414(8, y, x);
                 }
@@ -825,7 +825,7 @@ public class Region {
                 else
                     class50_sub1_sub4 = new Class50_Sub1_Sub4_Sub5(objectDef.animationId, i_193_, i_194_, i_192_, 0,
                             (byte) 3, i_190_, true, i_191_, i_188_);
-                class22.method249(i_195_, 49878, 0, anIntArray158[i_188_], null, x, i_196_, i_197_, y,
+                class22.addSomethingToScenegraph3(x, y, i_195_, 49878, 0, anIntArray158[i_188_], null, i_196_, i_197_,
                         class50_sub1_sub4, z);
                 if (i_188_ == 0) {
                     if (objectDef.aBoolean807) {
@@ -867,7 +867,7 @@ public class Region {
                 else
                     class50_sub1_sub4 = new Class50_Sub1_Sub4_Sub5(objectDef.animationId, i_193_, i_194_, i_192_, 1,
                             (byte) 3, i_190_, true, i_191_, i_188_);
-                class22.method249(i_195_, 49878, 0, anIntArray167[i_188_], null, x, i_196_, i_197_, y,
+                class22.addSomethingToScenegraph3(x, y, i_195_, 49878, 0, anIntArray167[i_188_], null, i_196_, i_197_,
                         class50_sub1_sub4, z);
                 if (objectDef.aBoolean807) {
                     if (i_188_ == 0)
@@ -894,8 +894,8 @@ public class Region {
                     class50_sub1_sub4_205_ = new Class50_Sub1_Sub4_Sub5(objectDef.animationId, i_193_, i_194_, i_192_, 2,
                             (byte) 3, i_190_, true, i_191_, i_204_);
                 }
-                class22.method249(i_195_, 49878, anIntArray158[i_204_], anIntArray158[i_188_], class50_sub1_sub4_205_,
-                        x, i_196_, i_197_, y, class50_sub1_sub4, z);
+                class22.addSomethingToScenegraph3(x, y, i_195_, 49878, anIntArray158[i_204_], anIntArray158[i_188_], class50_sub1_sub4_205_,
+                        i_196_, i_197_, class50_sub1_sub4, z);
                 if (objectDef.aBoolean797) {
                     if (i_188_ == 0) {
                         anIntArrayArrayArray168[z][x][y] |= 0x249;
@@ -922,7 +922,7 @@ public class Region {
                 else
                     class50_sub1_sub4 = new Class50_Sub1_Sub4_Sub5(objectDef.animationId, i_193_, i_194_, i_192_, 3,
                             (byte) 3, i_190_, true, i_191_, i_188_);
-                class22.method249(i_195_, 49878, 0, anIntArray167[i_188_], null, x, i_196_, i_197_, y,
+                class22.addSomethingToScenegraph3(x, y, i_195_, 49878, 0, anIntArray167[i_188_], null, i_196_, i_197_,
                         class50_sub1_sub4, z);
                 if (objectDef.aBoolean807) {
                     if (i_188_ == 0)

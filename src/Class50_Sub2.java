@@ -4,10 +4,6 @@
 
 public class Class50_Sub2 extends Node {
 
-	public Class50_Sub2() {
-		anInt1390 = -1;
-	}
-
 	public int anInt1384;
 	public int anInt1385;
 	public int anInt1386;
@@ -20,4 +16,8 @@ public class Class50_Sub2 extends Node {
 	public int anInt1393;
 	public int anInt1394;
 	public int anInt1395;
+
+	public Class50_Sub2() {
+		anInt1390 = -1;
+	}
 }

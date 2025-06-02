@@ -4,9 +4,6 @@
 
 public class Class5 {
 
-	public Class5() {
-	}
-
 	public int anInt113;
 	public int anInt114;
 	public int anInt115;
@@ -21,4 +18,7 @@ public class Class5 {
 	public int anInt124;
 	public int anInt125;
 	public byte aByte126;
+
+	public Class5() {
+	}
 }

@@ -167,29 +167,29 @@ public class SceneGraph {
 		aClass50_Sub3ArrayArrayArray456[i][j][k].aClass20_1402 = class20;
 	}
 
-	public void method247(int i, int j, int k, byte byte0, int l, int i1, int j1, Entity class50_sub1_sub4) {
+	public void addSomethingToScenegraph(int coord1, int coord2, int coord3, int k, byte byte0, int l, int i1, Entity class50_sub1_sub4) {
 		if (k <= 0)
 			return;
 		if (class50_sub1_sub4 == null)
 			return;
-		Class28 class28 = new Class28();
+		ScenegraphMember28 class28 = new ScenegraphMember28();
 		class28.aClass50_Sub1_Sub4_570 = class50_sub1_sub4;
-		class28.anInt568 = i * 128 + 64;
-		class28.anInt569 = j * 128 + 64;
+		class28.anInt568 = coord2 * 128 + 64;
+		class28.anInt569 = coord3 * 128 + 64;
 		class28.anInt567 = i1;
 		class28.anInt571 = l;
 		class28.aByte572 = byte0;
-		if (aClass50_Sub3ArrayArrayArray456[j1][i][j] == null)
-			aClass50_Sub3ArrayArrayArray456[j1][i][j] = new Tile(j1, i, j);
-		aClass50_Sub3ArrayArrayArray456[j1][i][j].aClass28_1405 = class28;
+		if (aClass50_Sub3ArrayArrayArray456[coord1][coord2][coord3] == null)
+			aClass50_Sub3ArrayArrayArray456[coord1][coord2][coord3] = new Tile(coord1, coord2, coord3);
+		aClass50_Sub3ArrayArrayArray456[coord1][coord2][coord3].aClass28_1405 = class28;
 	}
 
-	public void method248(int i, int j, Entity class50_sub1_sub4, Entity class50_sub1_sub4_1,
-			int k, Entity class50_sub1_sub4_2, int l, int i1, int j1) {
-		Class10 class10 = new Class10();
+	public void addSomethingToScenegraph2(int coord1, int coord2, int coord3, int i, Entity class50_sub1_sub4, Entity class50_sub1_sub4_1,
+										  int k, Entity class50_sub1_sub4_2, int l) {
+		ScenegraphMember10 class10 = new ScenegraphMember10();
 		class10.aClass50_Sub1_Sub4_176 = class50_sub1_sub4;
-		class10.anInt174 = j1 * 128 + 64;
-		class10.anInt175 = i1 * 128 + 64;
+		class10.anInt174 = coord2 * 128 + 64;
+		class10.anInt175 = coord3 * 128 + 64;
 		class10.anInt173 = i;
 		class10.anInt179 = k;
 		class10.aClass50_Sub1_Sub4_177 = class50_sub1_sub4_1;
@@ -197,7 +197,7 @@ public class SceneGraph {
 		if (l < 2 || l > 2)
 			aBoolean447 = !aBoolean447;
 		int k1 = 0;
-		Tile class50_sub3 = aClass50_Sub3ArrayArrayArray456[j][j1][i1];
+		Tile class50_sub3 = aClass50_Sub3ArrayArrayArray456[coord1][coord2][coord3];
 		if (class50_sub3 != null) {
 			for (int l1 = 0; l1 < class50_sub3.anInt1407; l1++)
 				if (class50_sub3.aClass5Array1408[l1].aClass50_Sub1_Sub4_117 instanceof Model) {
@@ -208,20 +208,20 @@ public class SceneGraph {
 
 		}
 		class10.anInt180 = k1;
-		if (aClass50_Sub3ArrayArrayArray456[j][j1][i1] == null)
-			aClass50_Sub3ArrayArrayArray456[j][j1][i1] = new Tile(j, j1, i1);
-		aClass50_Sub3ArrayArrayArray456[j][j1][i1].aClass10_1406 = class10;
+		if (aClass50_Sub3ArrayArrayArray456[coord1][coord2][coord3] == null)
+			aClass50_Sub3ArrayArrayArray456[coord1][coord2][coord3] = new Tile(coord1, coord2, coord3);
+		aClass50_Sub3ArrayArrayArray456[coord1][coord2][coord3].aClass10_1406 = class10;
 	}
 
-	public void method249(int i, int j, int k, int l, Entity class50_sub1_sub4, int i1, int j1, byte byte0,
-			int k1, Entity class50_sub1_sub4_1, int l1) {
+	public void addSomethingToScenegraph3(int coord2, int coord3, int i, int j, int k, int l, Entity class50_sub1_sub4, int j1, byte byte0,
+										  Entity class50_sub1_sub4_1, int l1) {
 		if (class50_sub1_sub4_1 == null && class50_sub1_sub4 == null)
 			return;
-		Class44 class44 = new Class44();
+		ScenegraphMember44 class44 = new ScenegraphMember44();
 		class44.uid = j1;
 		class44.aByte727 = byte0;
-		class44.anInt720 = i1 * 128 + 64;
-		class44.anInt721 = k1 * 128 + 64;
+		class44.anInt720 = coord2 * 128 + 64;
+		class44.anInt721 = coord3 * 128 + 64;
 		class44.anInt719 = i;
 		if (j != 49878) {
 			for (int i2 = 1; i2 > 0; i2++);
@@ -230,11 +230,11 @@ public class SceneGraph {
 		class44.aClass50_Sub1_Sub4_725 = class50_sub1_sub4;
 		class44.anInt722 = l;
 		class44.anInt723 = k;
-		for (int j2 = l1; j2 >= 0; j2--)
-			if (aClass50_Sub3ArrayArrayArray456[j2][i1][k1] == null)
-				aClass50_Sub3ArrayArrayArray456[j2][i1][k1] = new Tile(j2, i1, k1);
+		for (int coord1 = l1; coord1 >= 0; coord1--)
+			if (aClass50_Sub3ArrayArrayArray456[coord1][coord2][coord3] == null)
+				aClass50_Sub3ArrayArrayArray456[coord1][coord2][coord3] = new Tile(coord1, coord2, coord3);
 
-		aClass50_Sub3ArrayArrayArray456[l1][i1][k1].aClass44_1403 = class44;
+		aClass50_Sub3ArrayArrayArray456[l1][coord2][coord3].aClass44_1403 = class44;
 	}
 
 	public void method250(int i, int j, int k, int l, byte byte0, int i1, int j1, int k1, int l1, int i2,
@@ -482,7 +482,7 @@ public class SceneGraph {
 		}
 	}
 
-	public Class44 method263(int i, int j, int k, int l) {
+	public ScenegraphMember44 method263(int i, int j, int k, int l) {
 		Tile class50_sub3 = aClass50_Sub3ArrayArrayArray456[i][k][l];
 		if (j != 17734)
 			throw new NullPointerException();
@@ -518,7 +518,7 @@ public class SceneGraph {
 		return null;
 	}
 
-	public Class28 method266(int i, int j, int k, int l) {
+	public ScenegraphMember28 method266(int i, int j, int k, int l) {
 		if (k != 0)
 			throw new NullPointerException();
 		Tile class50_sub3 = aClass50_Sub3ArrayArrayArray456[i][l][j];
@@ -590,7 +590,7 @@ public class SceneGraph {
 				for (int j1 = 0; j1 < anInt454; j1++) {
 					Tile class50_sub3 = aClass50_Sub3ArrayArrayArray456[l][i1][j1];
 					if (class50_sub3 != null) {
-						Class44 class44 = class50_sub3.aClass44_1403;
+						ScenegraphMember44 class44 = class50_sub3.aClass44_1403;
 						if (class44 != null && class44.aClass50_Sub1_Sub4_724 != null
 								&& class44.aClass50_Sub1_Sub4_724.normals != null) {
 							method274(j1, l, 0, 1, (Model) class44.aClass50_Sub1_Sub4_724, i1, 1);
@@ -614,7 +614,7 @@ public class SceneGraph {
 							}
 						}
 
-						Class28 class28 = class50_sub3.aClass28_1405;
+						ScenegraphMember28 class28 = class50_sub3.aClass28_1405;
 						if (class28 != null && class28.aClass50_Sub1_Sub4_570.normals != null) {
 							method273(i1, (Model) class28.aClass50_Sub1_Sub4_570, j1, l, 0);
 							((Model) class28.aClass50_Sub1_Sub4_570).method595(i, j, 0, k);
@@ -686,7 +686,7 @@ public class SceneGraph {
 													+ anIntArrayArrayArray455[j][i1 + 1][i]
 													+ anIntArrayArrayArray455[j][i1][i + 1] + anIntArrayArrayArray455[j][i1 + 1][i + 1])
 											/ 4;
-									Class44 class44 = class50_sub3.aClass44_1403;
+									ScenegraphMember44 class44 = class50_sub3.aClass44_1403;
 									if (class44 != null && class44.aClass50_Sub1_Sub4_724 != null
 											&& class44.aClass50_Sub1_Sub4_724.normals != null)
 										method275(class50_sub1_sub4_sub4,
@@ -1149,7 +1149,7 @@ public class SceneGraph {
 							method282(class50_sub3_7.aClass3_1401, 0, anInt473, anInt474, anInt475, anInt476, i, j);
 					} else if (class50_sub3_7.aClass20_1402 != null && !method287(0, i, j))
 						method283(anInt474, anInt476, class50_sub3_7.aClass20_1402, anInt473, j, i, anInt475, (byte) 3);
-					Class44 class44 = class50_sub3_7.aClass44_1403;
+					ScenegraphMember44 class44 = class50_sub3_7.aClass44_1403;
 					if (class44 != null)
 						class44.aClass50_Sub1_Sub4_724.method560(0, anInt473, anInt474, anInt475, anInt476,
 								class44.anInt720 - anInt470, class44.anInt719 - anInt471, class44.anInt721 - anInt472,
@@ -1175,7 +1175,7 @@ public class SceneGraph {
 				}
 				int j1 = 0;
 				int j2 = 0;
-				Class44 class44_3 = class50_sub3_1.aClass44_1403;
+				ScenegraphMember44 class44_3 = class50_sub3_1.aClass44_1403;
 				Class35 class35_1 = class50_sub3_1.aClass35_1404;
 				if (class44_3 != null || class35_1 != null) {
 					if (anInt468 == i)
@@ -1254,12 +1254,12 @@ public class SceneGraph {
 						}
 					}
 				if (flag1) {
-					Class28 class28 = class50_sub3_1.aClass28_1405;
+					ScenegraphMember28 class28 = class50_sub3_1.aClass28_1405;
 					if (class28 != null)
 						class28.aClass50_Sub1_Sub4_570.method560(0, anInt473, anInt474, anInt475, anInt476,
 								class28.anInt568 - anInt470, class28.anInt567 - anInt471, class28.anInt569 - anInt472,
 								class28.anInt571);
-					Class10 class10_1 = class50_sub3_1.aClass10_1406;
+					ScenegraphMember10 class10_1 = class50_sub3_1.aClass10_1406;
 					if (class10_1 != null && class10_1.anInt180 == 0) {
 						if (class10_1.aClass50_Sub1_Sub4_177 != null)
 							class10_1.aClass50_Sub1_Sub4_177.method560(0, anInt473, anInt474, anInt475, anInt476,
@@ -1310,7 +1310,7 @@ public class SceneGraph {
 				}
 
 				if (flag2) {
-					Class44 class44_1 = class50_sub3_1.aClass44_1403;
+					ScenegraphMember44 class44_1 = class50_sub3_1.aClass44_1403;
 					if (!method288(l, i, j, class44_1.anInt722))
 						class44_1.aClass50_Sub1_Sub4_724.method560(0, anInt473, anInt474, anInt475, anInt476,
 								class44_1.anInt720 - anInt470, class44_1.anInt719 - anInt471, class44_1.anInt721
@@ -1435,7 +1435,7 @@ public class SceneGraph {
 			}
 			class50_sub3_1.aBoolean1413 = false;
 			anInt461--;
-			Class10 class10 = class50_sub3_1.aClass10_1406;
+			ScenegraphMember10 class10 = class50_sub3_1.aClass10_1406;
 			if (class10 != null && class10.anInt180 != 0) {
 				if (class10.aClass50_Sub1_Sub4_177 != null)
 					class10.aClass50_Sub1_Sub4_177.method560(0, anInt473, anInt474, anInt475, anInt476,
@@ -1485,7 +1485,7 @@ public class SceneGraph {
 									anInt475, anInt476, j9, j3, j10, class35.anInt609);
 						}
 					}
-				Class44 class44_2 = class50_sub3_1.aClass44_1403;
+				ScenegraphMember44 class44_2 = class50_sub3_1.aClass44_1403;
 				if (class44_2 != null) {
 					if ((class44_2.anInt723 & class50_sub3_1.anInt1418) != 0 && !method288(l, i, j, class44_2.anInt723))
 						class44_2.aClass50_Sub1_Sub4_725.method560(0, anInt473, anInt474, anInt475, anInt476,

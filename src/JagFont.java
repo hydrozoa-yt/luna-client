@@ -6,6 +6,20 @@ import java.util.Random;
 
 public class JagFont extends Drawable {
 
+	public boolean aBoolean1496;
+	public boolean aBoolean1497;
+	public int anInt1498;
+	public int anInt1499;
+	public byte aByteArrayArray1500[][];
+	public int anIntArray1501[];
+	public int anIntArray1502[];
+	public int anIntArray1503[];
+	public int anIntArray1504[];
+	public int anIntArray1505[];
+	public int anInt1506;
+	public Random aRandom1507;
+	public boolean strikethrough;
+
 	public JagFont(boolean flag, Archive archive, int i, String name) {
 		aBoolean1496 = true;
 		aBoolean1497 = true;
@@ -432,18 +446,4 @@ public class JagFont extends Drawable {
 		}
 
 	}
-
-	public boolean aBoolean1496;
-	public boolean aBoolean1497;
-	public int anInt1498;
-	public int anInt1499;
-	public byte aByteArrayArray1500[][];
-	public int anIntArray1501[];
-	public int anIntArray1502[];
-	public int anIntArray1503[];
-	public int anIntArray1504[];
-	public int anIntArray1505[];
-	public int anInt1506;
-	public Random aRandom1507;
-	public boolean strikethrough;
 }

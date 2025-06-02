@@ -624,8 +624,8 @@ public class client extends JagApplet {
         }
 
         int i1 = x + (y << 7) + 0x60000000;
-        aClass22_1164.method248(getFloorDrawHeight(y * 128 + 64, x * 128 + 64, plane), plane,
-                ((Entity) (obj)), ((Entity) (obj1)), i1, ((Entity) (obj2)), 2, y, x);
+        aClass22_1164.addSomethingToScenegraph2(plane, x, y, getFloorDrawHeight(y * 128 + 64, x * 128 + 64, plane),
+                ((Entity) (obj)), ((Entity) (obj1)), i1, ((Entity) (obj2)), 2);
     }
 
     public static void switchToHighMem() {
@@ -2731,7 +2731,7 @@ public class client extends JagApplet {
             }
         l3 = 0;
         if (flag1)
-            method6();
+            load();
         walkingPathX[l3] = curX;
         walkingPathY[l3++] = curY;
         int k5;
@@ -3484,7 +3484,7 @@ public class client extends JagApplet {
         aClass50_Sub1_Sub1_Sub3_1293 = new IndexedSprite(titleArchive, "titlebutton", 0);
         aClass50_Sub1_Sub1_Sub3Array1117 = new IndexedSprite[12];
         if (flag)
-            method6();
+            load();
         for (int i = 0; i < 12; i++)
             aClass50_Sub1_Sub1_Sub3Array1117[i] = new IndexedSprite(titleArchive, "runes", i);
 
@@ -4280,15 +4280,15 @@ public class client extends JagApplet {
         aBoolean1046 = true;
     }
 
-    public void method6() {
+    public void load() {
         drawLoadingText(20, "Starting up");
         if (signlink.sunjava)
             super.anInt8 = 5;
-        if (aBoolean999) {
+        if (started) {
             aBoolean1016 = true;
             return;
         }
-        aBoolean999 = true;
+        started = true;
         boolean flag = false;
         String s = method37(-42588);
         if (s.endsWith("jagex.com"))
@@ -8056,7 +8056,7 @@ public class client extends JagApplet {
         if (byte0 == aByte956)
             byte0 = 0;
         else
-            method6();
+            load();
         if (anInt1219 < 310) {
             anInt978++;
             if (anInt978 > 1457) {
@@ -9833,7 +9833,7 @@ public class client extends JagApplet {
                 int i20 = intGroundArray[plane][x + 1][y + 1];
                 int l20 = intGroundArray[plane][x][y + 1];
                 if (i12 == 0) {
-                    Class44 class44 = aClass22_1164.method263(plane, 17734, x, y);
+                    ScenegraphMember44 class44 = aClass22_1164.method263(plane, 17734, x, y);
                     if (class44 != null) {
                         int k21 = class44.uid >> 14 & 0x7fff;
                         if (k6 == 2) {
@@ -9862,7 +9862,7 @@ public class client extends JagApplet {
                                 class5.anInt125 >> 14 & 0x7fff, false, l18, j9);
                 }
                 if (i12 == 3) {
-                    Class28 class28 = aClass22_1164.method266(plane, y, 0, x);
+                    ScenegraphMember28 class28 = aClass22_1164.method266(plane, y, 0, x);
                     if (class28 != null)
                         class28.aClass50_Sub1_Sub4_570 = new Class50_Sub1_Sub4_Sub5(i1, i20, l20, j19, 22, (byte) 3,
                                 class28.anInt571 >> 14 & 0x7fff, false, l18, j9);
@@ -11050,7 +11050,7 @@ public class client extends JagApplet {
 
     public void method152(int i) {
         if (i != -23763)
-            method6();
+            load();
         for (int j = 0; j < anInt1035; j++)
             if (anIntArray1259[j] <= 0) {
                 boolean flag = false;
@@ -11466,7 +11466,7 @@ public class client extends JagApplet {
     public int anInt996;
     public int anInt997;
     public int anInt998;
-    public static boolean aBoolean999;
+    public static boolean started;
     public int anIntArray1000[];
     public int anIntArray1001[];
     public int anIntArray1002[];
