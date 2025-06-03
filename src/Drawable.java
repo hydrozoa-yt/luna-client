@@ -20,14 +20,14 @@ public class Drawable extends QueueNode {
 	public Drawable() {
 	}
 
-	public static void method444(int width, int heíght, int pixels[]) {
+	public static void putPixels(int width, int heíght, int pixels[]) {
 		Drawable.pixels = pixels;
 		Drawable.width = width;
 		Drawable.height = heíght;
 		recalcEdges(0, 0, heíght, width, true);
 	}
 
-	public static void method445() {
+	public static void recalcSize() {
 		startY = 0;
 		startX = 0;
 		endX = width;
@@ -60,15 +60,15 @@ public class Drawable extends QueueNode {
 	}
 
 	public static void method447(int i) {
-		int j = width * height;
+		int pixelsTotal = width * height;
 		if (i != 4)
 			aBoolean1421 = !aBoolean1421;
-		for (int k = 0; k < j; k++)
+		for (int k = 0; k < pixelsTotal; k++)
 			pixels[k] = 0;
 
 	}
 
-	public static void method448(boolean flag, int i, int j, int k, int l, int i1, int j1) {
+	public static void method448(boolean flag, int i, int j, int k, int l, int darkness, int j1) {
 		if (j1 < startY) {
 			k -= startY - j1;
 			j1 = startY;
@@ -81,23 +81,22 @@ public class Drawable extends QueueNode {
 			k = endX - j1;
 		if (j + l > endY)
 			l = endY - j;
-		int k1 = 256 - i1;
-		int l1 = (i >> 16 & 0xff) * i1;
-		int i2 = (i >> 8 & 0xff) * i1;
-		int j2 = (i & 0xff) * i1;
+		int saturation = 256 - darkness;
+		int l1 = (i >> 16 & 0xff) * darkness;
+		int i2 = (i >> 8 & 0xff) * darkness;
+		int j2 = (i & 0xff) * darkness;
 		if (flag)
 			aBoolean1421 = !aBoolean1421;
 		int j3 = width - k;
 		int k3 = j1 + j * width;
 		for (int l3 = 0; l3 < l; l3++) {
 			for (int i4 = -k; i4 < 0; i4++) {
-				int k2 = (pixels[k3] >> 16 & 0xff) * k1;
-				int l2 = (pixels[k3] >> 8 & 0xff) * k1;
-				int i3 = (pixels[k3] & 0xff) * k1;
+				int k2 = (pixels[k3] >> 16 & 0xff) * saturation;
+				int l2 = (pixels[k3] >> 8 & 0xff) * saturation;
+				int i3 = (pixels[k3] & 0xff) * saturation;
 				int j4 = ((l1 + k2 >> 8) << 16) + ((i2 + l2 >> 8) << 8) + (j2 + i3 >> 8);
 				pixels[k3++] = j4;
 			}
-
 			k3 += j3;
 		}
 

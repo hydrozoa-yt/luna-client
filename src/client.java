@@ -5236,14 +5236,14 @@ public class client extends JagApplet {
                     class13.anInt241 = 765;
                     class13.anInt238 = 503;
                 }
-                method142(0, 0, class13, 0, 8);
+                renderInterface(0, 0, class13, 0, 8);
                 if (anInt960 != -1) {
                     JagInterface class13_1 = JagInterface.forId(anInt960);
                     if (class13_1.anInt241 == 512 && class13_1.anInt238 == 334 && class13_1.anInt236 == 0) {
                         class13_1.anInt241 = 765;
                         class13_1.anInt238 = 503;
                     }
-                    method142(0, 0, class13_1, 0, 8);
+                    renderInterface(0, 0, class13_1, 0, 8);
                 }
                 if (!aBoolean1065) {
                     method91(-521);
@@ -6196,7 +6196,7 @@ public class client extends JagApplet {
                     class50_sub1_sub1_sub2.method470(239, 452, l, 0, aStringArray863[j]);
             }
 
-            Drawable.method445();
+            Drawable.recalcSize();
             if (anInt862 > 5)
                 method56(true, anInt865, 463, 77, anInt862 * 14 + 7, 0);
             if (chatboxInput.length() == 0)
@@ -6210,9 +6210,9 @@ public class client extends JagApplet {
             aClass50_Sub1_Sub1_Sub2_1061.method470(239, 452, 40, 0, aString1058);
             aClass50_Sub1_Sub1_Sub2_1061.method470(239, 452, 60, 128, "Click to continue");
         } else if (anInt988 != -1)
-            method142(0, 0, JagInterface.forId(anInt988), 0, 8);
+            renderInterface(0, 0, JagInterface.forId(anInt988), 0, 8);
         else if (anInt1191 != -1) {
-            method142(0, 0, JagInterface.forId(anInt1191), 0, 8);
+            renderInterface(0, 0, JagInterface.forId(anInt1191), 0, 8);
         } else {
             JagFont class50_sub1_sub1_sub2_1 = fontChatboxButtons;
             int k = 0;
@@ -6298,7 +6298,7 @@ public class client extends JagApplet {
                     }
                 }
 
-            Drawable.method445();
+            Drawable.recalcSize();
             anInt1107 = k * 14 + 7;
             if (anInt1107 < 78)
                 anInt1107 = 78;
@@ -7690,11 +7690,11 @@ public class client extends JagApplet {
             aClass50_Sub1_Sub1_Sub1Array896[4 + anInt1022 / 100].method461(anInt1021 - 8 - 4, anInt1020 - 8 - 4, -488);
         if (walkableInterfaceId != -1) {
             method88(anInt951, walkableInterfaceId, (byte) 5);
-            method142(0, 0, JagInterface.forId(walkableInterfaceId), 0, 8);
+            renderInterface(0, 0, JagInterface.forId(walkableInterfaceId), 0, 8);
         }
         if (anInt1169 != -1) {
             method88(anInt951, anInt1169, (byte) 5);
-            method142(0, 0, JagInterface.forId(anInt1169), 0, 8);
+            renderInterface(0, 0, JagInterface.forId(anInt1169), 0, 8);
         }
         method107(-7);
         if (!aBoolean1065) {
@@ -9237,7 +9237,7 @@ public class client extends JagApplet {
                     Drawable.recalcEdges(0, anInt932 - 50, 334, anInt932 + 50, true);
                     aClass50_Sub1_Sub1_Sub2_1061.method474(2245, (anInt932 + 50) - i4, 0, anInt933 + 1, s);
                     aClass50_Sub1_Sub1_Sub2_1061.method474(2245, (anInt932 + 50) - i4, k2, anInt933, s);
-                    Drawable.method445();
+                    Drawable.recalcSize();
                 }
                 if (anIntArray946[j] == 5) {
                     int l3 = 150 - anIntArray947[j];
@@ -9250,7 +9250,7 @@ public class client extends JagApplet {
                             512, true);
                     aClass50_Sub1_Sub1_Sub2_1061.method470(anInt932, 452, anInt933 + 1 + j4, 0, s);
                     aClass50_Sub1_Sub1_Sub2_1061.method470(anInt932, 452, anInt933 + j4, k2, s);
-                    Drawable.method445();
+                    Drawable.recalcSize();
                 }
             } else {
                 aClass50_Sub1_Sub1_Sub2_1061.method470(anInt932, 452, anInt933 + 1, 0, s);
@@ -10026,9 +10026,9 @@ public class client extends JagApplet {
         ThreeDimensionalCanvas.anIntArray1538 = anIntArray1001;
         aClass50_Sub1_Sub1_Sub3_1185.method490(0, 0, -488);
         if (anInt1089 != -1)
-            method142(0, 0, JagInterface.forId(anInt1089), 0, 8);
+            renderInterface(0, 0, JagInterface.forId(anInt1089), 0, 8);
         else if (anIntArray1081[tabId] != -1)
-            method142(0, 0, JagInterface.forId(anIntArray1081[tabId]), 0, 8);
+            renderInterface(0, 0, JagInterface.forId(anIntArray1081[tabId]), 0, 8);
         if (aBoolean1065 && anInt1304 == 1)
             method128(false);
         inventoryPanelBackground.drawImage(553, 205, super.graphics);
@@ -10265,7 +10265,7 @@ public class client extends JagApplet {
         aClass50_Sub1_Sub1_Sub1_1018 = null;
     }
 
-    public void method142(int i, int j, JagInterface class13, int k, int l) {
+    public void renderInterface(int i, int j, JagInterface class13, int k, int l) {
         if (class13.anInt236 != 0 || class13.anIntArray258 == null)
             return;
         if (class13.aBoolean219 && anInt1302 != class13.id && anInt1280 != class13.id
@@ -10292,7 +10292,7 @@ public class client extends JagApplet {
                     class13_1.anInt231 = class13_1.anInt285 - class13_1.anInt238;
                 if (class13_1.anInt231 < 0)
                     class13_1.anInt231 = 0;
-                method142(l2, k2, class13_1, class13_1.anInt231, 8);
+                renderInterface(l2, k2, class13_1, class13_1.anInt231, 8);
                 if (class13_1.anInt285 > class13_1.anInt238)
                     method56(true, class13_1.anInt231, k2 + class13_1.anInt241, class13_1.anInt238, class13_1.anInt285,
                             l2);
@@ -10390,11 +10390,11 @@ public class client extends JagApplet {
                             j3 = class13_1.anInt261;
                     }
                     if (class13_1.aByte220 == 0) {
-                        if (class13_1.aBoolean239)
+                        if (class13_1.visible)
                             Drawable.method449(class13_1.anInt238, l2, j3, (byte) -24, class13_1.anInt241, k2);
                         else
                             Drawable.method450(0, l2, class13_1.anInt238, j3, k2, class13_1.anInt241);
-                    } else if (class13_1.aBoolean239)
+                    } else if (class13_1.visible)
                         Drawable.method448(false, j3, l2, class13_1.anInt241, class13_1.anInt238,
                                 256 - (class13_1.aByte220 & 0xff), k2);
                     else

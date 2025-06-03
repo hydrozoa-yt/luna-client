@@ -33,7 +33,7 @@ public class JagInterface {
 	public int anInt236;
 	public JagFont aClass50_Sub1_Sub1_Sub2_237;
 	public int anInt238;
-	public boolean aBoolean239;
+	public boolean visible;
 	public int anInt240;
 	public int anInt241;
 	public int anInt242;
@@ -242,7 +242,7 @@ public class JagInterface {
 
 		}
 		if (inter.anInt236 == 3)
-			inter.aBoolean239 = buf.getByte() == 1;
+			inter.visible = buf.getByte() == 1;
 		if (inter.anInt236 == 4 || inter.anInt236 == 1) {
 			inter.aBoolean272 = buf.getByte() == 1;
 			int j2 = buf.getByte();

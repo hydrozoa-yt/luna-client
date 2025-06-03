@@ -122,7 +122,7 @@ public class RgbSprite extends Drawable {
 		if (flag) {
 			return;
 		} else {
-			Drawable.method444(anInt1490, anInt1491, anIntArray1489);
+			Drawable.putPixels(anInt1490, anInt1491, anIntArray1489);
 			return;
 		}
 	}

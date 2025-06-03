@@ -36,7 +36,7 @@ public class JagImageProducer implements ImageProducer, ImageObserver {
 	}
 
 	public void method230() {
-		Drawable.method444(width, height, pixels);
+		Drawable.putPixels(width, height, pixels);
 	}
 
 	public void drawImage(int x, int y, Graphics g) {

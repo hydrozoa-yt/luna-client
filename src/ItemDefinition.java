@@ -364,7 +364,7 @@ public class ItemDefinition {
 		int l2 = Drawable.startX;
 		int i3 = Drawable.endY;
 		ThreeDimensionalCanvas.aBoolean1530 = false;
-		Drawable.method444(32, 32, class50_sub1_sub1_sub1_1.anIntArray1489);
+		Drawable.putPixels(32, 32, class50_sub1_sub1_sub1_1.anIntArray1489);
 		Drawable.method449(32, 0, 0, (byte) -24, 32, 0);
 		ThreeDimensionalCanvas.method493(568);
 		int j3 = class16.modelScale;
@@ -427,7 +427,7 @@ public class ItemDefinition {
 		}
 		if (i == 0)
 			spriteCache.put(class50_sub1_sub1_sub1_1, k);
-		Drawable.method444(l1, i2, ai1);
+		Drawable.putPixels(l1, i2, ai1);
 		Drawable.recalcEdges(l2, j2, i3, k2, true);
 		ThreeDimensionalCanvas.anInt1532 = j1;
 		ThreeDimensionalCanvas.anInt1533 = k1;
