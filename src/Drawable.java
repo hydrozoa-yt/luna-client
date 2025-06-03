@@ -142,8 +142,8 @@ public class Drawable extends QueueNode {
 		method453(i1, i, j, 1388, j1, k);
 		method453((i1 + l) - 1, i, j, 1388, j1, k);
 		if (l >= 3) {
-			method455(0, i1 + 1, i, k, l - 2, j1);
-			method455(0, i1 + 1, (i + j) - 1, k, l - 2, j1);
+			method455(i1 + 1, i, k, l - 2, j1);
+			method455(i1 + 1, (i + j) - 1, k, l - 2, j1);
 		}
 	}
 
@@ -205,7 +205,7 @@ public class Drawable extends QueueNode {
 
 	}
 
-	public static void method455(int i, int width, int k, int l, int i1, int darkness) {
+	public static void method455(int width, int k, int l, int i1, int darkness) {
 		if (k < startY || k >= endX)
 			return;
 		if (width < startX) {
@@ -218,9 +218,6 @@ public class Drawable extends QueueNode {
 		int rbgComponent1_1 = (l >> 16 & 0xff) * darkness;
 		int rbgComponent2_1 = (l >> 8 & 0xff) * darkness;
 		int rbgComponent3_1 = (l & 0xff) * darkness;
-		if (i != 0) {
-			for (int j3 = 1; j3 > 0; j3++);
-		}
 		int pixelOffset = k + width * Drawable.width;
 		for (int l3 = 0; l3 < i1; l3++) {
 			int rgbComponent1_2 = (pixels[pixelOffset] >> 16 & 0xff) * saturation;
