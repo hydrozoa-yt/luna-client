@@ -13,17 +13,24 @@ import java.awt.image.ImageProducer;
 
 public class JagImageProducer implements ImageProducer, ImageObserver {
 
+	public int pixels[];
+	public int width;
+	public int height;
+	public ColorModel colorModel;
+	public ImageConsumer consumer;
+	public Image image;
+
 	public JagImageProducer(int _width, int _height, Component component) {
 		width = _width;
 		height = _height;
 		pixels = new int[_width * _height];
 		colorModel = new DirectColorModel(32, 0xff0000, 65280, 255);
 		image = component.createImage(this);
-		method232();
+		flipBuffer();
 		component.prepareImage(image, this);
-		method232();
+		flipBuffer();
 		component.prepareImage(image, this);
-		method232();
+		flipBuffer();
 		component.prepareImage(image, this);
 		method230();
 	}
@@ -32,8 +39,8 @@ public class JagImageProducer implements ImageProducer, ImageObserver {
 		Drawable.method444(width, height, pixels);
 	}
 
-	public void method231(int x, int y, Graphics g) {
-		method232();
+	public void drawImage(int x, int y, Graphics g) {
+		flipBuffer();
 		g.drawImage(image, x, y, this);
 	}
 
@@ -62,7 +69,7 @@ public class JagImageProducer implements ImageProducer, ImageObserver {
 		System.out.println("TDLR");
 	}
 
-	public synchronized void method232() {
+	public synchronized void flipBuffer() {
 		if (consumer == null) {
 			return;
 		} else {
@@ -75,11 +82,4 @@ public class JagImageProducer implements ImageProducer, ImageObserver {
 	public boolean imageUpdate(Image image, int i, int j, int k, int l, int i1) {
 		return true;
 	}
-
-	public int pixels[];
-	public int width;
-	public int height;
-	public ColorModel colorModel;
-	public ImageConsumer consumer;
-	public Image image;
 }

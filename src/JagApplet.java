@@ -137,7 +137,7 @@ public class JagApplet extends Applet implements Runnable, MouseListener, MouseM
 
 	public void exit(boolean flag) {
 		gameState = -2;
-		method8(277);
+		cleanupShutdown(277);
 		if (flag)
 			return;
 		if (frame != null) {
@@ -386,7 +386,7 @@ public class JagApplet extends Applet implements Runnable, MouseListener, MouseM
 			anInt5 = -400;
 	}
 
-	public void method8(int i) {
+	public void cleanupShutdown(int i) {
 		i = 41 / i;
 	}
 

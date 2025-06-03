@@ -4,6 +4,24 @@
 
 public class Drawable extends QueueNode {
 
+	public static int anInt1420;
+	public static boolean aBoolean1421;
+	public static boolean aBoolean1422 = true;
+	public static int anIntArray1424[];
+	public static int width;
+	public static int height;
+	public static int anInt1427;
+	public static int anInt1428;
+	public static int anInt1429;
+	public static int anInt1430;
+	public static int anInt1431;
+	public static int anInt1432;
+	public static int anInt1433;
+	public static boolean aBoolean1434;
+
+	public Drawable() {
+	}
+
 	public static void method444(int i, int j, int ai[]) {
 		anIntArray1424 = ai;
 		width = i;
@@ -221,23 +239,4 @@ public class Drawable extends QueueNode {
 		}
 
 	}
-
-	public Drawable() {
-	}
-
-	public static int anInt1420;
-	public static boolean aBoolean1421;
-	public static boolean aBoolean1422 = true;
-	public static int anIntArray1424[];
-	public static int width;
-	public static int height;
-	public static int anInt1427;
-	public static int anInt1428;
-	public static int anInt1429;
-	public static int anInt1430;
-	public static int anInt1431;
-	public static int anInt1432;
-	public static int anInt1433;
-	public static boolean aBoolean1434;
-
 }

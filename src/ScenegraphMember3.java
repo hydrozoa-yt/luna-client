@@ -2,7 +2,7 @@
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) 
 
-public class Class3 {
+public class ScenegraphMember3 {
 
 	public int anInt95;
 	public int anInt96;
@@ -12,7 +12,7 @@ public class Class3 {
 	public boolean aBoolean100;
 	public int anInt101;
 
-	public Class3(int i, int j, int k, int l, int i1, int j1, boolean flag) {
+	public ScenegraphMember3(int i, int j, int k, int l, int i1, int j1, boolean flag) {
 		aBoolean100 = true;
 		anInt95 = i;
 		anInt96 = j;

@@ -18,8 +18,8 @@ public class Tile extends Node {
 	public int anInt1398;
 	public int anInt1399;
 	public int anInt1400;
-	public Class3 aClass3_1401;
-	public Class20 aClass20_1402;
+	public ScenegraphMember3 aClass3_1401;
+	public ScenegraphMember20 aClass20_1402;
 	public ScenegraphMember44 aClass44_1403;
 	public Class35 aClass35_1404;
 	public ScenegraphMember28 aClass28_1405;

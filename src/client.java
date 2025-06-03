@@ -90,7 +90,7 @@ public class client extends JagApplet {
         if (anInt1053 != -1) {
             method44(aBoolean1190, anInt1053);
             anInt1053 = -1;
-            aBoolean1046 = true;
+            shouldRenderUI = true;
         }
         if (anInt960 != -1) {
             method44(aBoolean1190, anInt960);
@@ -162,7 +162,7 @@ public class client extends JagApplet {
     }
 
     public void method17(byte byte0) {
-        aBoolean1320 = true;
+        delayedResetter1320 = true;
         if (byte0 == 4)
             byte0 = 0;
         else
@@ -171,7 +171,7 @@ public class client extends JagApplet {
             long l = System.currentTimeMillis();
             int i = 0;
             int j = 20;
-            while (aBoolean1243) {
+            while (isThreadStarted) {
                 anInt1101++;
                 method81((byte) 1);
                 method81((byte) 1);
@@ -192,7 +192,7 @@ public class client extends JagApplet {
             }
         } catch (Exception _ex) {
         }
-        aBoolean1320 = false;
+        delayedResetter1320 = false;
     }
 
     public void method18(byte byte0) {
@@ -235,16 +235,16 @@ public class client extends JagApplet {
             return coins / 0xf4240 + "M";
     }
 
-    public void method8(int i) {
+    public void cleanupShutdown(int i) {
         players = null;
         localPlayers = null;
         updatedPlayers = null;
         cachedAppearances = null;
         removePlayers = null;
         aClass18_906 = null;
-        aClass18_907 = null;
-        aClass18_908 = null;
-        aClass18_909 = null;
+        uiSideChatboxLeft = null;
+        uiSideMinimapRight = null;
+        uiSideRockRight1 = null;
         aClass50_Sub1_Sub1_Sub3_880 = null;
         aClass50_Sub1_Sub1_Sub3_881 = null;
         aClass50_Sub1_Sub1_Sub3_882 = null;
@@ -287,10 +287,10 @@ public class client extends JagApplet {
         aClass50_Sub1_Sub1_Sub3_966 = null;
         aClass50_Sub1_Sub1_Sub3_967 = null;
         aClass18_910 = null;
-        aClass18_911 = null;
-        aClass18_912 = null;
-        aClass18_913 = null;
-        aClass18_914 = null;
+        uiSideMinimapLeft = null;
+        uiSideRockLeft1 = null;
+        uiSideChatboxRight = null;
+        uiSideChatboxTop = null;
         intGroundArray = null;
         aByteArrayArrayArray1125 = null;
         aClass22_1164 = null;
@@ -311,7 +311,7 @@ public class client extends JagApplet {
         outBuffer = null;
         tempBuffer = null;
         buffer = null;
-        aClass18_1156 = null;
+        inventoryPanelBackground = null;
         aClass18_1157 = null;
         aClass18_1158 = null;
         aClass18_1159 = null;
@@ -320,7 +320,7 @@ public class client extends JagApplet {
         aClass50_Sub1_Sub1_Sub3_1187 = null;
         try {
             if (connection != null)
-                connection.method224();
+                connection.closeConnection();
         } catch (Exception _ex) {
         }
         connection = null;
@@ -349,7 +349,7 @@ public class client extends JagApplet {
         groundItems = null;
         i = 96 / i;
         aClass6_1261 = null;
-        method141();
+        resetWhenBoolTrue();
         ObjectDefinition.method433(false);
         NpcDefinition.method358(false);
         ItemDefinition.method222(false);
@@ -1494,7 +1494,7 @@ public class client extends JagApplet {
                 if (anInt1053 != -1) {
                     method44(aBoolean1190, anInt1053);
                     anInt1053 = -1;
-                    aBoolean1046 = true;
+                    shouldRenderUI = true;
                 }
                 if (anInt960 != -1) {
                     method44(aBoolean1190, anInt960);
@@ -1682,7 +1682,7 @@ public class client extends JagApplet {
                 if (anInt1053 != -1) {
                     method44(aBoolean1190, anInt1053);
                     anInt1053 = -1;
-                    aBoolean1046 = true;
+                    shouldRenderUI = true;
                 }
                 if (anInt960 != -1) {
                     method44(aBoolean1190, anInt960);
@@ -1811,7 +1811,7 @@ public class client extends JagApplet {
                 if (anInt1053 != -1) {
                     method44(aBoolean1190, anInt1053);
                     anInt1053 = -1;
-                    aBoolean1046 = true;
+                    shouldRenderUI = true;
                 }
                 if (anInt960 != -1) {
                     method44(aBoolean1190, anInt960);
@@ -2033,7 +2033,7 @@ public class client extends JagApplet {
                 if (anInt1053 != -1) {
                     method44(aBoolean1190, anInt1053);
                     anInt1053 = -1;
-                    aBoolean1046 = true;
+                    shouldRenderUI = true;
                 }
                 if (anInt960 != -1) {
                     method44(aBoolean1190, anInt960);
@@ -2062,7 +2062,7 @@ public class client extends JagApplet {
                 if (anInt1053 != -1) {
                     method44(aBoolean1190, anInt1053);
                     anInt1053 = -1;
-                    aBoolean1046 = true;
+                    shouldRenderUI = true;
                 }
                 if (anInt960 != -1) {
                     method44(aBoolean1190, anInt960);
@@ -3480,8 +3480,8 @@ public class client extends JagApplet {
     }
 
     public void method52(boolean flag) {
-        aClass50_Sub1_Sub1_Sub3_1292 = new IndexedSprite(titleArchive, "titlebox", 0);
-        aClass50_Sub1_Sub1_Sub3_1293 = new IndexedSprite(titleArchive, "titlebutton", 0);
+        indexedSprite1292 = new IndexedSprite(titleArchive, "titlebox", 0);
+        indexedSprite1293 = new IndexedSprite(titleArchive, "titlebutton", 0);
         aClass50_Sub1_Sub1_Sub3Array1117 = new IndexedSprite[12];
         if (flag)
             load();
@@ -3542,9 +3542,9 @@ public class client extends JagApplet {
         anIntArray1084 = new int[32768];
         anIntArray1085 = new int[32768];
         drawLoadingText(10, "Connecting to fileserver");
-        if (!aBoolean1243) {
-            aBoolean1314 = true;
-            aBoolean1243 = true;
+        if (!isThreadStarted) {
+            isGameThreadStarted = true;
+            isThreadStarted = true;
             startThread(this, 2);
         }
     }
@@ -3780,7 +3780,7 @@ public class client extends JagApplet {
         if (!aBoolean1137)
             method124(true);
         try {
-            class17.method224();
+            class17.closeConnection();
             return;
         } catch (Exception _ex) {
             return;
@@ -4004,7 +4004,7 @@ public class client extends JagApplet {
     }
 
     public void method10(byte byte0) {
-        aBoolean1046 = true;
+        shouldRenderUI = true;
         if (byte0 == -99)
             ;
     }
@@ -4248,7 +4248,7 @@ public class client extends JagApplet {
         super.imageProducer = null;
         aClass18_1159 = null;
         aClass18_1157 = null;
-        aClass18_1156 = null;
+        inventoryPanelBackground = null;
         aClass18_1158 = null;
         aClass18_1108 = null;
         aClass18_1109 = null;
@@ -4277,7 +4277,7 @@ public class client extends JagApplet {
             method139(aBoolean1207);
             method52(false);
         }
-        aBoolean1046 = true;
+        shouldRenderUI = true;
     }
 
     public void load() {
@@ -4540,28 +4540,28 @@ public class client extends JagApplet {
             aClass18_906 = new JagImageProducer(class50_sub1_sub1_sub1.anInt1490, class50_sub1_sub1_sub1.anInt1491, getParentComponent());
             class50_sub1_sub1_sub1.method459(0, -192, 0);
             class50_sub1_sub1_sub1 = new RgbSprite(mediaArchive, "backleft2", 0);
-            aClass18_907 = new JagImageProducer(class50_sub1_sub1_sub1.anInt1490, class50_sub1_sub1_sub1.anInt1491, getParentComponent());
+            uiSideChatboxLeft = new JagImageProducer(class50_sub1_sub1_sub1.anInt1490, class50_sub1_sub1_sub1.anInt1491, getParentComponent());
             class50_sub1_sub1_sub1.method459(0, -192, 0);
             class50_sub1_sub1_sub1 = new RgbSprite(mediaArchive, "backright1", 0);
-            aClass18_908 = new JagImageProducer(class50_sub1_sub1_sub1.anInt1490, class50_sub1_sub1_sub1.anInt1491, getParentComponent());
+            uiSideMinimapRight = new JagImageProducer(class50_sub1_sub1_sub1.anInt1490, class50_sub1_sub1_sub1.anInt1491, getParentComponent());
             class50_sub1_sub1_sub1.method459(0, -192, 0);
             class50_sub1_sub1_sub1 = new RgbSprite(mediaArchive, "backright2", 0);
-            aClass18_909 = new JagImageProducer(class50_sub1_sub1_sub1.anInt1490, class50_sub1_sub1_sub1.anInt1491, getParentComponent());
+            uiSideRockRight1 = new JagImageProducer(class50_sub1_sub1_sub1.anInt1490, class50_sub1_sub1_sub1.anInt1491, getParentComponent());
             class50_sub1_sub1_sub1.method459(0, -192, 0);
             class50_sub1_sub1_sub1 = new RgbSprite(mediaArchive, "backtop1", 0);
             aClass18_910 = new JagImageProducer(class50_sub1_sub1_sub1.anInt1490, class50_sub1_sub1_sub1.anInt1491, getParentComponent());
             class50_sub1_sub1_sub1.method459(0, -192, 0);
             class50_sub1_sub1_sub1 = new RgbSprite(mediaArchive, "backvmid1", 0);
-            aClass18_911 = new JagImageProducer(class50_sub1_sub1_sub1.anInt1490, class50_sub1_sub1_sub1.anInt1491, getParentComponent());
+            uiSideMinimapLeft = new JagImageProducer(class50_sub1_sub1_sub1.anInt1490, class50_sub1_sub1_sub1.anInt1491, getParentComponent());
             class50_sub1_sub1_sub1.method459(0, -192, 0);
             class50_sub1_sub1_sub1 = new RgbSprite(mediaArchive, "backvmid2", 0);
-            aClass18_912 = new JagImageProducer(class50_sub1_sub1_sub1.anInt1490, class50_sub1_sub1_sub1.anInt1491, getParentComponent());
+            uiSideRockLeft1 = new JagImageProducer(class50_sub1_sub1_sub1.anInt1490, class50_sub1_sub1_sub1.anInt1491, getParentComponent());
             class50_sub1_sub1_sub1.method459(0, -192, 0);
             class50_sub1_sub1_sub1 = new RgbSprite(mediaArchive, "backvmid3", 0);
-            aClass18_913 = new JagImageProducer(class50_sub1_sub1_sub1.anInt1490, class50_sub1_sub1_sub1.anInt1491, getParentComponent());
+            uiSideChatboxRight = new JagImageProducer(class50_sub1_sub1_sub1.anInt1490, class50_sub1_sub1_sub1.anInt1491, getParentComponent());
             class50_sub1_sub1_sub1.method459(0, -192, 0);
             class50_sub1_sub1_sub1 = new RgbSprite(mediaArchive, "backhmid2", 0);
-            aClass18_914 = new JagImageProducer(class50_sub1_sub1_sub1.anInt1490, class50_sub1_sub1_sub1.anInt1491, getParentComponent());
+            uiSideChatboxTop = new JagImageProducer(class50_sub1_sub1_sub1.anInt1490, class50_sub1_sub1_sub1.anInt1491, getParentComponent());
             class50_sub1_sub1_sub1.method459(0, -192, 0);
             int l5 = (int) (Math.random() * 21D) - 10;
             int i6 = (int) (Math.random() * 21D) - 10;
@@ -5230,7 +5230,7 @@ public class client extends JagApplet {
                 super.imageProducer.method230();
                 ThreeDimensionalCanvas.anIntArray1538 = anIntArray1003;
                 Drawable.method447(4);
-                aBoolean1046 = true;
+                shouldRenderUI = true;
                 JagInterface class13 = JagInterface.forId(anInt1053);
                 if (class13.anInt241 == 512 && class13.anInt238 == 334 && class13.anInt236 == 0) {
                     class13.anInt241 = 765;
@@ -5252,28 +5252,28 @@ public class client extends JagApplet {
                     method128(false);
                 }
             }
-            super.imageProducer.method231(0, 0, super.graphics);
+            super.imageProducer.drawImage(0, 0, super.graphics);
             return;
         }
-        if (aBoolean1046) {
+        if (shouldRenderUI) {
             method122(-906);
-            aBoolean1046 = false;
-            aClass18_906.method231(0, 4, super.graphics);
-            aClass18_907.method231(0, 357, super.graphics);
-            aClass18_908.method231(722, 4, super.graphics);
-            aClass18_909.method231(743, 205, super.graphics);
-            aClass18_910.method231(0, 0, super.graphics);
-            aClass18_911.method231(516, 4, super.graphics);
-            aClass18_912.method231(516, 205, super.graphics);
-            aClass18_913.method231(496, 357, super.graphics);
-            aClass18_914.method231(0, 338, super.graphics);
+            shouldRenderUI = false;
+            aClass18_906.drawImage(0, 4, super.graphics);
+            uiSideChatboxLeft.drawImage(0, 357, super.graphics);
+            uiSideMinimapRight.drawImage(722, 4, super.graphics);
+            uiSideRockRight1.drawImage(743, 205, super.graphics);
+            aClass18_910.drawImage(0, 0, super.graphics);
+            uiSideMinimapLeft.drawImage(516, 4, super.graphics);
+            uiSideRockLeft1.drawImage(516, 205, super.graphics);
+            uiSideChatboxRight.drawImage(496, 357, super.graphics);
+            uiSideChatboxTop.drawImage(0, 338, super.graphics);
             aBoolean1181 = true;
             aBoolean1240 = true;
             aBoolean950 = true;
             aBoolean1212 = true;
             if (loadingStage != 2) {
-                aClass18_1158.method231(4, 4, super.graphics);
-                aClass18_1157.method231(550, 4, super.graphics);
+                aClass18_1158.drawImage(4, 4, super.graphics);
+                aClass18_1157.drawImage(550, 4, super.graphics);
             }
             anInt1237++;
             if (anInt1237 > 85) {
@@ -5346,7 +5346,7 @@ public class client extends JagApplet {
         }
         if (loadingStage == 2) {
             method87(503);
-            aClass18_1157.method231(550, 4, super.graphics);
+            aClass18_1157.drawImage(550, 4, super.graphics);
         }
         if (anInt1213 != -1)
             aBoolean950 = true;
@@ -5391,7 +5391,7 @@ public class client extends JagApplet {
                 if (anIntArray1081[6] != -1 && (anInt1213 != 6 || pulseCycle % 20 < 10))
                     aClass50_Sub1_Sub1_Sub3Array976[6].method490(13, 208, -488);
             }
-            aClass18_1110.method231(516, 160, super.graphics);
+            aClass18_1110.drawImage(516, 160, super.graphics);
             aClass18_1109.method230();
             aClass50_Sub1_Sub1_Sub3_966.method490(0, 0, -488);
             if (anInt1089 == -1) {
@@ -5424,7 +5424,7 @@ public class client extends JagApplet {
                 if (anIntArray1081[13] != -1 && (anInt1213 != 13 || pulseCycle % 20 < 10))
                     aClass50_Sub1_Sub1_Sub3Array976[12].method490(2, 226, -488);
             }
-            aClass18_1109.method231(496, 466, super.graphics);
+            aClass18_1109.drawImage(496, 466, super.graphics);
             aClass18_1158.method230();
             ThreeDimensionalCanvas.anIntArray1538 = anIntArray1002;
         }
@@ -5456,7 +5456,7 @@ public class client extends JagApplet {
             if (anInt1227 == 2)
                 aClass50_Sub1_Sub1_Sub2_1060.method471(true, anInt1056, 0xff0000, 41, 324, "Off");
             aClass50_Sub1_Sub1_Sub2_1060.method471(true, anInt1056, 0xffffff, 33, 458, "Report abuse");
-            aClass18_1108.method231(0, 453, super.graphics);
+            aClass18_1108.drawImage(0, 453, super.graphics);
             aClass18_1158.method230();
             ThreeDimensionalCanvas.anIntArray1538 = anIntArray1002;
         }
@@ -6315,7 +6315,7 @@ public class client extends JagApplet {
         }
         if (aBoolean1065 && anInt1304 == 2)
             method128(false);
-        aClass18_1159.method231(17, 357, super.graphics);
+        aClass18_1159.drawImage(17, 357, super.graphics);
         aClass18_1158.method230();
         ThreeDimensionalCanvas.anIntArray1538 = anIntArray1002;
         if (i != 0)
@@ -7122,7 +7122,7 @@ public class client extends JagApplet {
             k1 += k2;
         }
 
-        aClass18_1201.method231(0, 0, super.graphics);
+        aClass18_1201.drawImage(0, 0, super.graphics);
         i = 66 / i;
         for (int j2 = 0; j2 < 33920; j2++)
             aClass18_1202.pixels[j2] = aClass50_Sub1_Sub1_Sub1_1018.anIntArray1489[j2];
@@ -7151,7 +7151,7 @@ public class client extends JagApplet {
             k1 += 128 - l3 - j3;
         }
 
-        aClass18_1202.method231(637, 0, super.graphics);
+        aClass18_1202.drawImage(637, 0, super.graphics);
     }
 
     public void adjustVolume(boolean flag, byte byte0, int i) {
@@ -7524,7 +7524,7 @@ public class client extends JagApplet {
             if (value == 4)
                 ThreeDimensionalCanvas.method501(0.59999999999999998D, (byte) 6);
             ItemDefinition.spriteCache.clear();
-            aBoolean1046 = true;
+            shouldRenderUI = true;
         }
         if (varpType == 3) {
             boolean wasMusicEnabled = musicEnabled;
@@ -7742,7 +7742,7 @@ public class client extends JagApplet {
     }
 
     public void run() {
-        if (aBoolean1314) {
+        if (isGameThreadStarted) {
             method17((byte) 4);
             return;
         } else {
@@ -8152,14 +8152,14 @@ public class client extends JagApplet {
             return 3;
     }
 
-    public void startThread(Runnable runnable, int i) {
-        if (i > 10)
-            i = 10;
+    public void startThread(Runnable runnable, int priority) {
+        if (priority > 10)
+            priority = 10;
         if (signlink.mainapp != null) {
-            signlink.startthread(runnable, i);
+            signlink.startthread(runnable, priority);
             return;
         } else {
-            super.startThread(runnable, i);
+            super.startThread(runnable, priority);
             return;
         }
     }
@@ -9268,7 +9268,7 @@ public class client extends JagApplet {
         if (aClass18_1159 != null) {
             return;
         } else {
-            method141();
+            resetWhenBoolTrue();
             super.imageProducer = null;
             aClass18_1198 = null;
             aClass18_1199 = null;
@@ -9283,13 +9283,13 @@ public class client extends JagApplet {
             aClass18_1157 = new JagImageProducer(172, 156, getParentComponent());
             Drawable.method447(4);
             aClass50_Sub1_Sub1_Sub3_1186.method490(0, 0, -488);
-            aClass18_1156 = new JagImageProducer(190, 261, getParentComponent());
+            inventoryPanelBackground = new JagImageProducer(190, 261, getParentComponent());
             aClass18_1158 = new JagImageProducer(512, 334, getParentComponent());
             Drawable.method447(4);
             aClass18_1108 = new JagImageProducer(496, 50, getParentComponent());
             aClass18_1109 = new JagImageProducer(269, 37, getParentComponent());
             aClass18_1110 = new JagImageProducer(249, 45, getParentComponent());
-            aBoolean1046 = true;
+            shouldRenderUI = true;
             aClass18_1158.method230();
             ThreeDimensionalCanvas.anIntArray1538 = anIntArray1002;
             return;
@@ -9303,7 +9303,7 @@ public class client extends JagApplet {
         g.fillRect(0, 0, 765, 503);
         method4(1);
         if (aBoolean1283) {
-            aBoolean1243 = false;
+            isThreadStarted = false;
             g.setFont(new Font("Helvetica", 1, 16));
             g.setColor(Color.yellow);
             int j = 35;
@@ -9325,7 +9325,7 @@ public class client extends JagApplet {
             g.drawString("5: Try selecting a different version of Java from the play-game menu", 30, j);
         }
         if (aBoolean1097) {
-            aBoolean1243 = false;
+            isThreadStarted = false;
             g.setFont(new Font("Helvetica", 1, 20));
             g.setColor(Color.white);
             g.drawString("Error - unable to load game!", 50, 50);
@@ -9333,7 +9333,7 @@ public class client extends JagApplet {
             g.drawString("http://www.runescape.com", 50, 150);
         }
         if (aBoolean1016) {
-            aBoolean1243 = false;
+            isThreadStarted = false;
             g.setColor(Color.yellow);
             int k = 35;
             g.drawString("Error a copy of RuneScape already appears to be loaded", 30, k);
@@ -9353,7 +9353,7 @@ public class client extends JagApplet {
     public void method124(boolean flag) {
         try {
             if (connection != null)
-                connection.method224();
+                connection.closeConnection();
         } catch (Exception _ex) {
         }
         connection = null;
@@ -9390,7 +9390,7 @@ public class client extends JagApplet {
                 aClass50_Sub1_Sub1_Sub2_1060.method470(257, 452, j, 0, s);
                 aClass50_Sub1_Sub1_Sub2_1060.method470(256, 452, j - 1, 0xffffff, s);
             }
-            aClass18_1158.method231(4, 4, super.graphics);
+            aClass18_1158.drawImage(4, 4, super.graphics);
             return;
         }
         if (super.imageProducer != null) {
@@ -9410,7 +9410,7 @@ public class client extends JagApplet {
                 aClass50_Sub1_Sub1_Sub2_1060.method470(383, 452, k, 0, s);
                 aClass50_Sub1_Sub1_Sub2_1060.method470(382, 452, k - 1, 0xffffff, s);
             }
-            super.imageProducer.method231(0, 0, super.graphics);
+            super.imageProducer.drawImage(0, 0, super.graphics);
         }
     }
 
@@ -9624,7 +9624,7 @@ public class client extends JagApplet {
     public void method131(byte byte0, boolean flag) {
         method64(-188);
         aClass18_1200.method230();
-        aClass50_Sub1_Sub1_Sub3_1292.method490(0, 0, -488);
+        indexedSprite1292.method490(0, 0, -488);
         char c = '\u0168';
         char c1 = '\310';
         if (byte0 != -50) {
@@ -9638,10 +9638,10 @@ public class client extends JagApplet {
             j += 30;
             int i1 = c / 2 - 80;
             int l1 = c1 / 2 + 20;
-            aClass50_Sub1_Sub1_Sub3_1293.method490(l1 - 20, i1 - 73, -488);
+            indexedSprite1293.method490(l1 - 20, i1 - 73, -488);
             aClass50_Sub1_Sub1_Sub2_1061.method471(true, anInt1056, 0xffffff, l1 + 5, i1, "New User");
             i1 = c / 2 + 80;
-            aClass50_Sub1_Sub1_Sub3_1293.method490(l1 - 20, i1 - 73, -488);
+            indexedSprite1293.method490(l1 - 20, i1 - 73, -488);
             aClass50_Sub1_Sub1_Sub2_1061.method471(true, anInt1056, 0xffffff, l1 + 5, i1, "Existing User");
         }
         if (anInt1225 == 2) {
@@ -9664,10 +9664,10 @@ public class client extends JagApplet {
             if (!flag) {
                 int j1 = c / 2 - 80;
                 int i2 = c1 / 2 + 50;
-                aClass50_Sub1_Sub1_Sub3_1293.method490(i2 - 20, j1 - 73, -488);
+                indexedSprite1293.method490(i2 - 20, j1 - 73, -488);
                 aClass50_Sub1_Sub1_Sub2_1061.method471(true, anInt1056, 0xffffff, i2 + 5, j1, "Login");
                 j1 = c / 2 + 80;
-                aClass50_Sub1_Sub1_Sub3_1293.method490(i2 - 20, j1 - 73, -488);
+                indexedSprite1293.method490(i2 - 20, j1 - 73, -488);
                 aClass50_Sub1_Sub1_Sub2_1061.method471(true, anInt1056, 0xffffff, i2 + 5, j1, "Cancel");
             }
         }
@@ -9689,18 +9689,18 @@ public class client extends JagApplet {
             l += 15;
             int k1 = c / 2;
             int j2 = c1 / 2 + 50;
-            aClass50_Sub1_Sub1_Sub3_1293.method490(j2 - 20, k1 - 73, -488);
+            indexedSprite1293.method490(j2 - 20, k1 - 73, -488);
             aClass50_Sub1_Sub1_Sub2_1061.method471(true, anInt1056, 0xffffff, j2 + 5, k1, "Cancel");
         }
-        aClass18_1200.method231(202, 171, super.graphics);
-        if (aBoolean1046) {
-            aBoolean1046 = false;
-            aClass18_1198.method231(128, 0, super.graphics);
-            aClass18_1199.method231(202, 371, super.graphics);
-            aClass18_1203.method231(0, 265, super.graphics);
-            aClass18_1204.method231(562, 265, super.graphics);
-            aClass18_1205.method231(128, 171, super.graphics);
-            aClass18_1206.method231(562, 171, super.graphics);
+        aClass18_1200.drawImage(202, 171, super.graphics);
+        if (shouldRenderUI) {
+            shouldRenderUI = false;
+            aClass18_1198.drawImage(128, 0, super.graphics);
+            aClass18_1199.drawImage(202, 371, super.graphics);
+            aClass18_1203.drawImage(0, 265, super.graphics);
+            aClass18_1204.drawImage(562, 265, super.graphics);
+            aClass18_1205.drawImage(128, 171, super.graphics);
+            aClass18_1206.drawImage(562, 171, super.graphics);
         }
     }
 
@@ -9769,7 +9769,7 @@ public class client extends JagApplet {
                 int l22 = intGroundArray[plane][x][y + 1];
                 Model class50_sub1_sub4_sub4 = class47.method431(i6, rotation, i22, j22, k22, l22, -1);
                 if (class50_sub1_sub4_sub4 != null) {
-                    method145(true, plane, x, 0, l19 + 1, 0, -1, l21 + 1, k11, y);
+                    method145(true, plane, x, y, 0, l19 + 1, 0, -1, l21 + 1, k11);
                     player.anInt1764 = l21 + pulseCycle;
                     player.anInt1765 = l19 + pulseCycle;
                     player.aClass50_Sub1_Sub4_Sub4_1746 = class50_sub1_sub4_sub4;
@@ -9973,7 +9973,7 @@ public class client extends JagApplet {
             }
             return;
         }
-        if (opcode == 152) {
+        if (opcode == 152) { // anti cheat?
             int k2 = buf.getByteNegated();
             int j5 = k2 >> 2;
             int i8 = k2 & 3;
@@ -9983,7 +9983,7 @@ public class client extends JagApplet {
             int i17 = placementX + (k15 >> 4 & 7);
             int j18 = placementY + (k15 & 7);
             if (i17 >= 0 && j18 >= 0 && i17 < 104 && j18 < 104)
-                method145(true, plane, i17, i8, -1, j5, k13, 0, l10, j18);
+                method145(true, plane, i17, j18, i8, -1, j5, k13, 0, l10);
             return;
         }
         if (opcode == 208) { // remove ground item
@@ -10017,12 +10017,12 @@ public class client extends JagApplet {
             int l15 = j11 & 3;
             int j17 = anIntArray1032[l13];
             if (l5 >= 0 && k8 >= 0 && l5 < 104 && k8 < 104)
-                method145(true, plane, l5, l15, -1, l13, -1, 0, j17, k8);
+                method145(true, plane, l5, k8, l15, -1, l13, -1, 0, j17);
         }
     }
 
     public void method134(byte byte0) {
-        aClass18_1156.method230();
+        inventoryPanelBackground.method230();
         ThreeDimensionalCanvas.anIntArray1538 = anIntArray1001;
         aClass50_Sub1_Sub1_Sub3_1185.method490(0, 0, -488);
         if (anInt1089 != -1)
@@ -10031,7 +10031,7 @@ public class client extends JagApplet {
             method142(0, 0, JagInterface.forId(anIntArray1081[tabId]), 0, 8);
         if (aBoolean1065 && anInt1304 == 1)
             method128(false);
-        aClass18_1156.method231(553, 205, super.graphics);
+        inventoryPanelBackground.drawImage(553, 205, super.graphics);
         aClass18_1158.method230();
         ThreeDimensionalCanvas.anIntArray1538 = anIntArray1002;
         if (byte0 == 7)
@@ -10136,19 +10136,19 @@ public class client extends JagApplet {
         Drawable.method449(30, j + 2, 0x8c1111, (byte) -24, i * 3, c / 2 - 150);
         Drawable.method449(30, j + 2, 0, (byte) -24, 300 - i * 3, (c / 2 - 150) + i * 3);
         aClass50_Sub1_Sub1_Sub2_1061.method470(c / 2, 452, (c1 / 2 + 5) - byte0, 0xffffff, s);
-        aClass18_1200.method231(202, 171, super.graphics);
-        if (aBoolean1046) {
-            aBoolean1046 = false;
-            if (!aBoolean1243) {
-                aClass18_1201.method231(0, 0, super.graphics);
-                aClass18_1202.method231(637, 0, super.graphics);
+        aClass18_1200.drawImage(202, 171, super.graphics);
+        if (shouldRenderUI) {
+            shouldRenderUI = false;
+            if (!isThreadStarted) {
+                aClass18_1201.drawImage(0, 0, super.graphics);
+                aClass18_1202.drawImage(637, 0, super.graphics);
             }
-            aClass18_1198.method231(128, 0, super.graphics);
-            aClass18_1199.method231(202, 371, super.graphics);
-            aClass18_1203.method231(0, 265, super.graphics);
-            aClass18_1204.method231(562, 265, super.graphics);
-            aClass18_1205.method231(128, 171, super.graphics);
-            aClass18_1206.method231(562, 171, super.graphics);
+            aClass18_1198.drawImage(128, 0, super.graphics);
+            aClass18_1199.drawImage(202, 371, super.graphics);
+            aClass18_1203.drawImage(0, 265, super.graphics);
+            aClass18_1204.drawImage(562, 265, super.graphics);
+            aClass18_1205.drawImage(128, 171, super.graphics);
+            aClass18_1206.drawImage(562, 171, super.graphics);
         }
     }
 
@@ -10241,17 +10241,17 @@ public class client extends JagApplet {
         class50_sub2.anInt1388 = l;
     }
 
-    public void method141() {
-        aBoolean1243 = false;
-        while (aBoolean1320) {
-            aBoolean1243 = false;
+    public void resetWhenBoolTrue() {
+        isThreadStarted = false;
+        while (delayedResetter1320) {
+            isThreadStarted = false;
             try {
                 Thread.sleep(50L);
             } catch (Exception _ex) {
             }
         }
-        aClass50_Sub1_Sub1_Sub3_1292 = null;
-        aClass50_Sub1_Sub1_Sub3_1293 = null;
+        indexedSprite1292 = null;
+        indexedSprite1293 = null;
         aClass50_Sub1_Sub1_Sub3Array1117 = null;
         anIntArray1310 = null;
         anIntArray1311 = null;
@@ -10650,11 +10650,11 @@ public class client extends JagApplet {
         }
     }
 
-    public void method145(boolean flag, int i, int j, int k, int l, int i1, int j1, int k1, int l1, int i2) {
+    public void method145(boolean flag, int plane, int x, int y, int k, int l, int i1, int j1, int k1, int l1) {
         Class50_Sub2 class50_sub2 = null;
         for (Class50_Sub2 class50_sub2_1 = (Class50_Sub2) aClass6_1261.first(); class50_sub2_1 != null; class50_sub2_1 = (Class50_Sub2) aClass6_1261
                 .next()) {
-            if (class50_sub2_1.anInt1391 != i || class50_sub2_1.anInt1393 != j || class50_sub2_1.anInt1394 != i2
+            if (class50_sub2_1.anInt1391 != plane || class50_sub2_1.anInt1393 != x || class50_sub2_1.anInt1394 != y
                     || class50_sub2_1.anInt1392 != l1)
                 continue;
             class50_sub2 = class50_sub2_1;
@@ -10663,10 +10663,10 @@ public class client extends JagApplet {
 
         if (class50_sub2 == null) {
             class50_sub2 = new Class50_Sub2();
-            class50_sub2.anInt1391 = i;
+            class50_sub2.anInt1391 = plane;
             class50_sub2.anInt1392 = l1;
-            class50_sub2.anInt1393 = j;
-            class50_sub2.anInt1394 = i2;
+            class50_sub2.anInt1393 = x;
+            class50_sub2.anInt1394 = y;
             method140((byte) -61, class50_sub2);
             aClass6_1261.addLast(class50_sub2);
         }
@@ -10720,7 +10720,7 @@ public class client extends JagApplet {
     public void method147(int i) {
         if (super.imageProducer != null)
             return;
-        method141();
+        resetWhenBoolTrue();
         aClass18_1198 = null;
         aClass18_1199 = null;
         aClass18_1200 = null;
@@ -10734,13 +10734,13 @@ public class client extends JagApplet {
         aClass18_1206 = null;
         aClass18_1159 = null;
         aClass18_1157 = null;
-        aClass18_1156 = null;
+        inventoryPanelBackground = null;
         aClass18_1158 = null;
         aClass18_1108 = null;
         aClass18_1109 = null;
         aClass18_1110 = null;
         super.imageProducer = new JagImageProducer(765, 503, getParentComponent());
-        aBoolean1046 = true;
+        shouldRenderUI = true;
     }
 
     public boolean method148(int i, String s) {
@@ -11040,7 +11040,7 @@ public class client extends JagApplet {
         method127(true);
         method65(l2, -927);
         method109(30729);
-        aClass18_1158.method231(4, 4, super.graphics);
+        aClass18_1158.drawImage(4, 4, super.graphics);
         anInt1216 = i1;
         anInt1217 = j1;
         anInt1218 = k1;
@@ -11189,7 +11189,7 @@ public class client extends JagApplet {
         aBoolean1033 = false;
         aBoolean1038 = true;
         localVarps = new int[2000];
-        aBoolean1046 = false;
+        shouldRenderUI = false;
         anInt1051 = 69;
         anInt1053 = -1;
         anIntArray1054 = new int[Class42.anInt700];
@@ -11260,7 +11260,7 @@ public class client extends JagApplet {
         anInt1236 = 326;
         aBoolean1239 = false;
         aBoolean1240 = false;
-        aBoolean1243 = false;
+        isThreadStarted = false;
         aByteArray1245 = new byte[16384];
         aClass13_1249 = new JagInterface();
         anInt1251 = 128;
@@ -11292,10 +11292,10 @@ public class client extends JagApplet {
         aStringArray1297 = new String[100];
         aStringArray1298 = new String[100];
         aBoolean1301 = true;
-        aBoolean1314 = false;
+        isGameThreadStarted = false;
         aByte1317 = -58;
         anInt1318 = 416;
-        aBoolean1320 = false;
+        delayedResetter1320 = false;
         anIntArray1321 = new int[50];
         groundItems = new LinkedList[4][104][104];
         anIntArray1326 = new int[7];
@@ -11374,14 +11374,14 @@ public class client extends JagApplet {
     public int lastOpcode;
     public int anInt905;
     public JagImageProducer aClass18_906;
-    public JagImageProducer aClass18_907;
-    public JagImageProducer aClass18_908;
-    public JagImageProducer aClass18_909;
+    public JagImageProducer uiSideChatboxLeft;
+    public JagImageProducer uiSideMinimapRight;
+    public JagImageProducer uiSideRockRight1;
     public JagImageProducer aClass18_910;
-    public JagImageProducer aClass18_911;
-    public JagImageProducer aClass18_912;
-    public JagImageProducer aClass18_913;
-    public JagImageProducer aClass18_914;
+    public JagImageProducer uiSideMinimapLeft;
+    public JagImageProducer uiSideRockLeft1;
+    public JagImageProducer uiSideChatboxRight;
+    public JagImageProducer uiSideChatboxTop;
     public int anInt915;
     public int anInt916;
     public int anInt917;
@@ -11516,7 +11516,7 @@ public class client extends JagApplet {
     public int topLeftTileY;
     public int anInt1044;
     public int anInt1045;
-    public boolean aBoolean1046;
+    public boolean shouldRenderUI;
     public int anInt1047;
     public int anInt1048;
     public static int anInt1049;
@@ -11625,7 +11625,7 @@ public class client extends JagApplet {
     public IndexedSprite aClass50_Sub1_Sub1_Sub3Array1153[];
     public int anInt1154;
     public boolean aBoolean1155;
-    public JagImageProducer aClass18_1156;
+    public JagImageProducer inventoryPanelBackground;
     public JagImageProducer aClass18_1157;
     public JagImageProducer aClass18_1158;
     public JagImageProducer aClass18_1159;
@@ -11711,7 +11711,7 @@ public class client extends JagApplet {
     public boolean aBoolean1240;
     public int lastAddress;
     public static boolean aBoolean1242 = true;
-    public volatile boolean aBoolean1243;
+    public volatile boolean isThreadStarted;
     public int chatboxInterfaceType;
     public byte aByteArray1245[];
     public int anInt1246;
@@ -11761,8 +11761,8 @@ public class client extends JagApplet {
     public int anInt1289;
     public int anIntArray1290[] = {17, 24, 34, 40};
     public OnDemandFetcher fileFetcher;
-    public IndexedSprite aClass50_Sub1_Sub1_Sub3_1292;
-    public IndexedSprite aClass50_Sub1_Sub1_Sub3_1293;
+    public IndexedSprite indexedSprite1292;
+    public IndexedSprite indexedSprite1293;
     public int removePlayerCount;
     public int removePlayers[];
     public int anIntArray1296[];
@@ -11783,14 +11783,14 @@ public class client extends JagApplet {
     public int anIntArray1311[];
     public int anIntArray1312[];
     public int anIntArray1313[];
-    public volatile boolean aBoolean1314;
+    public volatile boolean isGameThreadStarted;
     public int anInt1315;
     public static BigInteger JAGEX_PUBLIC_KEY = new BigInteger(
             "58778699976184461502525193738213253649000149147835990136706041084440742975821");
     public byte aByte1317;
     public int anInt1318;
     public int anInt1319;
-    public volatile boolean aBoolean1320;
+    public volatile boolean delayedResetter1320;
     public int anIntArray1321[];
     public int anInt1322;
     public LinkedList groundItems[][][];
