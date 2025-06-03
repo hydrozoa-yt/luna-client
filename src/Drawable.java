@@ -61,43 +61,39 @@ public class Drawable extends QueueNode {
 
 	public static void method447(int i) {
 		int pixelsTotal = width * height;
-		if (i != 4)
-			aBoolean1421 = !aBoolean1421;
 		for (int k = 0; k < pixelsTotal; k++)
 			pixels[k] = 0;
 
 	}
 
-	public static void method448(boolean flag, int i, int j, int k, int l, int darkness, int j1) {
-		if (j1 < startY) {
-			k -= startY - j1;
-			j1 = startY;
+	public static void drawFullRect(int color, int x, int k, int l, int darkness, int y) {
+		if (y < startY) {
+			k -= startY - y;
+			y = startY;
 		}
-		if (j < startX) {
-			l -= startX - j;
-			j = startX;
+		if (x < startX) {
+			l -= startX - x;
+			x = startX;
 		}
-		if (j1 + k > endX)
-			k = endX - j1;
-		if (j + l > endY)
-			l = endY - j;
+		if (y + k > endX)
+			k = endX - y;
+		if (x + l > endY)
+			l = endY - x;
 		int saturation = 256 - darkness;
-		int l1 = (i >> 16 & 0xff) * darkness;
-		int i2 = (i >> 8 & 0xff) * darkness;
-		int j2 = (i & 0xff) * darkness;
-		if (flag)
-			aBoolean1421 = !aBoolean1421;
+		int l1 = (color >> 16 & 0xff) * darkness;
+		int i2 = (color >> 8 & 0xff) * darkness;
+		int j2 = (color & 0xff) * darkness;
 		int j3 = width - k;
-		int k3 = j1 + j * width;
+		int pixelOffset = y + x * width;
 		for (int l3 = 0; l3 < l; l3++) {
 			for (int i4 = -k; i4 < 0; i4++) {
-				int k2 = (pixels[k3] >> 16 & 0xff) * saturation;
-				int l2 = (pixels[k3] >> 8 & 0xff) * saturation;
-				int i3 = (pixels[k3] & 0xff) * saturation;
+				int k2 = (pixels[pixelOffset] >> 16 & 0xff) * saturation;
+				int l2 = (pixels[pixelOffset] >> 8 & 0xff) * saturation;
+				int i3 = (pixels[pixelOffset] & 0xff) * saturation;
 				int j4 = ((l1 + k2 >> 8) << 16) + ((i2 + l2 >> 8) << 8) + (j2 + i3 >> 8);
-				pixels[k3++] = j4;
+				pixels[pixelOffset++] = j4;
 			}
-			k3 += j3;
+			pixelOffset += j3;
 		}
 
 	}
@@ -128,7 +124,7 @@ public class Drawable extends QueueNode {
 			;
 	}
 
-	public static void method450(int i, int j, int k, int l, int i1, int j1) {
+	public static void method450(int j, int k, int l, int i1, int j1) {
 		method452(i1, l, j, j1, true);
 		method452(i1, l, (j + k) - 1, j1, true);
 		method454(i1, l, k, false, j);

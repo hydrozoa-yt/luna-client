@@ -9400,7 +9400,7 @@ public class client extends JagApplet {
             char c = '\u012C';
             byte byte0 = 50;
             Drawable.method449(byte0, k - 5 - byte0 / 2, 0, (byte) -24, c, 383 - c / 2);
-            Drawable.method450(0, k - 5 - byte0 / 2, byte0, 0xffffff, 383 - c / 2, c);
+            Drawable.method450(k - 5 - byte0 / 2, byte0, 0xffffff, 383 - c / 2, c);
             if (s != null)
                 k -= 7;
             fontChatboxButtons.method470(383, 452, k, 0, s1);
@@ -9461,7 +9461,7 @@ public class client extends JagApplet {
         int i1 = 0x5d5447;
         Drawable.method449(l, j, i1, (byte) -24, k, i);
         Drawable.method449(16, j + 1, 0, (byte) -24, k - 2, i + 1);
-        Drawable.method450(0, j + 18, l - 19, 0, i + 1, k - 2);
+        Drawable.method450(j + 18, l - 19, 0, i + 1, k - 2);
         aClass50_Sub1_Sub1_Sub2_1061.method474(2245, i + 3, i1, j + 14, "Choose Option");
         int j1 = super.mouseX;
         int k1 = super.mouseY;
@@ -10131,8 +10131,8 @@ public class client extends JagApplet {
         aClass50_Sub1_Sub1_Sub2_1061.method470(c / 2, 452, c1 / 2 - 26 - byte0, 0xffffff,
                 "RuneScape is loading - please wait...");
         int j = c1 / 2 - 18 - byte0;
-        Drawable.method450(0, j, 34, 0x8c1111, c / 2 - 152, 304);
-        Drawable.method450(0, j + 1, 32, 0, c / 2 - 151, 302);
+        Drawable.method450(j, 34, 0x8c1111, c / 2 - 152, 304);
+        Drawable.method450(j + 1, 32, 0, c / 2 - 151, 302);
         Drawable.method449(30, j + 2, 0x8c1111, (byte) -24, i * 3, c / 2 - 150);
         Drawable.method449(30, j + 2, 0, (byte) -24, 300 - i * 3, (c / 2 - 150) + i * 3);
         aClass50_Sub1_Sub1_Sub2_1061.method470(c / 2, 452, (c1 / 2 + 5) - byte0, 0xffffff, s);
@@ -10393,9 +10393,9 @@ public class client extends JagApplet {
                         if (class13_1.visible)
                             Drawable.method449(class13_1.anInt238, l2, j3, (byte) -24, class13_1.anInt241, k2);
                         else
-                            Drawable.method450(0, l2, class13_1.anInt238, j3, k2, class13_1.anInt241);
+                            Drawable.method450(l2, class13_1.anInt238, j3, k2, class13_1.anInt241);
                     } else if (class13_1.visible)
-                        Drawable.method448(false, j3, l2, class13_1.anInt241, class13_1.anInt238,
+                        Drawable.drawFullRect(j3, l2, class13_1.anInt241, class13_1.anInt238,
                                 256 - (class13_1.aByte220 & 0xff), k2);
                     else
                         Drawable.method451(k2, class13_1.anInt241, j3, class13_1.anInt238, l2,
@@ -10570,7 +10570,7 @@ public class client extends JagApplet {
                         if (k10 + i5 > i + class13.anInt238)
                             k10 = (i + class13.anInt238) - i5;
                         Drawable.method449(i5, k10, 0xffffa0, (byte) -24, l3, i8);
-                        Drawable.method450(0, k10, i5, 0, i8, l3);
+                        Drawable.method450(k10, i5, 0, i8, l3);
                         String s2 = class13_1.aString230;
                         for (int j11 = k10 + class50_sub1_sub1_sub2_2.anInt1506 + 2; s2.length() > 0; j11 += class50_sub1_sub1_sub2_2.anInt1506 + 1) {
                             int l11 = s2.indexOf("\\n");
