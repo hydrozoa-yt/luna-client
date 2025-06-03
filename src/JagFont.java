@@ -321,26 +321,26 @@ public class JagFont extends Drawable {
 		int remainingWidth = Drawable.width - width;
 		int characterPixelOffset = 0;
 		int characterPixel = 0;
-		if (y < Drawable.anInt1427) {
-			int offsetY = Drawable.anInt1427 - y;
+		if (y < Drawable.startX) {
+			int offsetY = Drawable.startX - y;
 			height -= offsetY;
-			y = Drawable.anInt1427;
+			y = Drawable.startX;
 			characterPixel += offsetY * width;
 			graphicsPixel += offsetY * Drawable.width;
 		}
-		if (y + height >= Drawable.anInt1428)
-			height -= ((y + height) - Drawable.anInt1428) + 1;
-		if (x < Drawable.anInt1429) {
-			int offsetX = Drawable.anInt1429 - x;
+		if (y + height >= Drawable.endY)
+			height -= ((y + height) - Drawable.endY) + 1;
+		if (x < Drawable.startY) {
+			int offsetX = Drawable.startY - x;
 			width -= offsetX;
-			x = Drawable.anInt1429;
+			x = Drawable.startY;
 			characterPixel += offsetX;
 			graphicsPixel += offsetX;
 			characterPixelOffset += offsetX;
 			remainingWidth += offsetX;
 		}
-		if (x + width >= Drawable.anInt1430) {
-			int l2 = ((x + width) - Drawable.anInt1430) + 1;
+		if (x + width >= Drawable.endX) {
+			int l2 = ((x + width) - Drawable.endX) + 1;
 			width -= l2;
 			characterPixelOffset += l2;
 			remainingWidth += l2;
@@ -395,26 +395,26 @@ public class JagFont extends Drawable {
 		int j2 = 0;
 		if (!flag)
 			return;
-		if (k < Drawable.anInt1427) {
-			int k2 = Drawable.anInt1427 - k;
+		if (k < Drawable.startX) {
+			int k2 = Drawable.startX - k;
 			l -= k2;
-			k = Drawable.anInt1427;
+			k = Drawable.startX;
 			j2 += k2 * i1;
 			k1 += k2 * Drawable.width;
 		}
-		if (k + l >= Drawable.anInt1428)
-			l -= ((k + l) - Drawable.anInt1428) + 1;
-		if (i < Drawable.anInt1429) {
-			int l2 = Drawable.anInt1429 - i;
+		if (k + l >= Drawable.endY)
+			l -= ((k + l) - Drawable.endY) + 1;
+		if (i < Drawable.startY) {
+			int l2 = Drawable.startY - i;
 			i1 -= l2;
-			i = Drawable.anInt1429;
+			i = Drawable.startY;
 			j2 += l2;
 			k1 += l2;
 			i2 += l2;
 			l1 += l2;
 		}
-		if (i + i1 >= Drawable.anInt1430) {
-			int i3 = ((i + i1) - Drawable.anInt1430) + 1;
+		if (i + i1 >= Drawable.endX) {
+			int i3 = ((i + i1) - Drawable.endX) + 1;
 			i1 -= i3;
 			i2 += i3;
 			l1 += i3;

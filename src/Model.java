@@ -1375,19 +1375,19 @@ public class Model extends Entity {
 			return;
 		int j3 = l1 * l + j1 * i1 >> 16;
 		int k3 = j3 - anInt1671 << 9;
-		if (k3 / i3 >= Drawable.anInt1432)
+		if (k3 / i3 >= Drawable.halfWidthX)
 			return;
 		int l3 = j3 + anInt1671 << 9;
-		if (l3 / i3 <= -Drawable.anInt1432)
+		if (l3 / i3 <= -Drawable.halfWidthX)
 			return;
 		int i4 = k1 * k - j2 * j >> 16;
 		int j4 = anInt1671 * j >> 16;
 		int k4 = i4 + j4 << 9;
-		if (k4 / i3 <= -Drawable.anInt1433)
+		if (k4 / i3 <= -Drawable.halfHeightY)
 			return;
 		int l4 = j4 + (super.height * k >> 16);
 		int i5 = i4 - l4 << 9;
-		if (i5 / i3 >= Drawable.anInt1433)
+		if (i5 / i3 >= Drawable.halfHeightY)
 			return;
 		int j5 = l2 + (super.height * j >> 16);
 		boolean flag = false;
@@ -1495,8 +1495,8 @@ public class Model extends Entity {
 					if ((i3 - l3) * (anIntArray1687[j2] - anIntArray1687[k1])
 							- (anIntArray1687[l] - anIntArray1687[k1]) * (k4 - l3) > 0) {
 						aBooleanArray1685[k] = false;
-						if (i3 < 0 || l3 < 0 || k4 < 0 || i3 > Drawable.anInt1431
-								|| l3 > Drawable.anInt1431 || k4 > Drawable.anInt1431)
+						if (i3 < 0 || l3 < 0 || k4 < 0 || i3 > Drawable.lastPixelX
+								|| l3 > Drawable.lastPixelX || k4 > Drawable.lastPixelX)
 							aBooleanArray1684[k] = true;
 						else
 							aBooleanArray1684[k] = false;
@@ -1766,8 +1766,8 @@ public class Model extends Entity {
 		if ((j3 - j4) * (k7 - j7) - (i7 - j7) * (j5 - j4) > 0) {
 			ThreeDimensionalCanvas.aBoolean1528 = false;
 			if (l == 3) {
-				if (j3 < 0 || j4 < 0 || j5 < 0 || j3 > Drawable.anInt1431 || j4 > Drawable.anInt1431
-						|| j5 > Drawable.anInt1431)
+				if (j3 < 0 || j4 < 0 || j5 < 0 || j3 > Drawable.lastPixelX || j4 > Drawable.lastPixelX
+						|| j5 > Drawable.lastPixelX)
 					ThreeDimensionalCanvas.aBoolean1528 = true;
 				int l7;
 				if (anIntArray1659 == null)
@@ -1800,9 +1800,9 @@ public class Model extends Entity {
 				}
 			}
 			if (l == 4) {
-				if (j3 < 0 || j4 < 0 || j5 < 0 || j3 > Drawable.anInt1431 || j4 > Drawable.anInt1431
-						|| j5 > Drawable.anInt1431 || anIntArray1699[3] < 0
-						|| anIntArray1699[3] > Drawable.anInt1431)
+				if (j3 < 0 || j4 < 0 || j5 < 0 || j3 > Drawable.lastPixelX || j4 > Drawable.lastPixelX
+						|| j5 > Drawable.lastPixelX || anIntArray1699[3] < 0
+						|| anIntArray1699[3] > Drawable.lastPixelX)
 					ThreeDimensionalCanvas.aBoolean1528 = true;
 				int i8;
 				if (anIntArray1659 == null)

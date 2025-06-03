@@ -1673,8 +1673,8 @@ public class SceneGraph {
 		ThreeDimensionalCanvas.anInt1531 = 0;
 		if ((i6 - k6) * (l5 - l6) - (j6 - l6) * (k5 - k6) > 0) {
 			ThreeDimensionalCanvas.aBoolean1528 = false;
-			if (i6 < 0 || k6 < 0 || k5 < 0 || i6 > Drawable.anInt1431 || k6 > Drawable.anInt1431
-					|| k5 > Drawable.anInt1431)
+			if (i6 < 0 || k6 < 0 || k5 < 0 || i6 > Drawable.lastPixelX || k6 > Drawable.lastPixelX
+					|| k5 > Drawable.lastPixelX)
 				ThreeDimensionalCanvas.aBoolean1528 = true;
 			if (aBoolean482 && method285(anInt483, anInt484, j6, l6, l5, i6, k6, k5)) {
 				anInt485 = j1;
@@ -1699,8 +1699,8 @@ public class SceneGraph {
 		}
 		if ((i5 - k5) * (l6 - l5) - (j5 - l5) * (k6 - k5) > 0) {
 			ThreeDimensionalCanvas.aBoolean1528 = false;
-			if (i5 < 0 || k5 < 0 || k6 < 0 || i5 > Drawable.anInt1431 || k5 > Drawable.anInt1431
-					|| k6 > Drawable.anInt1431)
+			if (i5 < 0 || k5 < 0 || k6 < 0 || i5 > Drawable.lastPixelX || k5 > Drawable.lastPixelX
+					|| k6 > Drawable.lastPixelX)
 				ThreeDimensionalCanvas.aBoolean1528 = true;
 			if (aBoolean482 && method285(anInt483, anInt484, j5, l5, l6, i5, k5, k6)) {
 				anInt485 = j1;
@@ -1764,8 +1764,8 @@ public class SceneGraph {
 			int j5 = ScenegraphMember20.anIntArray419[l3];
 			if ((i4 - j4) * (j5 - i5) - (l4 - i5) * (k4 - j4) > 0) {
 				ThreeDimensionalCanvas.aBoolean1528 = false;
-				if (i4 < 0 || j4 < 0 || k4 < 0 || i4 > Drawable.anInt1431 || j4 > Drawable.anInt1431
-						|| k4 > Drawable.anInt1431)
+				if (i4 < 0 || j4 < 0 || k4 < 0 || i4 > Drawable.lastPixelX || j4 > Drawable.lastPixelX
+						|| k4 > Drawable.lastPixelX)
 					ThreeDimensionalCanvas.aBoolean1528 = true;
 				if (aBoolean482 && method285(anInt483, anInt484, l4, i5, j5, i4, j4, k4)) {
 					anInt485 = i1;

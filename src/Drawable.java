@@ -5,13 +5,13 @@
 public class Drawable extends QueueNode {
 
 	public static boolean aBoolean1421;
-	public static int anInt1427;
-	public static int anInt1428;
-	public static int anInt1429;
-	public static int anInt1430;
-	public static int anInt1431;
-	public static int anInt1432;
-	public static int anInt1433;
+	public static int startX;
+	public static int endY;
+	public static int startY;
+	public static int endX;
+	public static int lastPixelX;
+	public static int halfWidthX;
+	public static int halfHeightY;
 
 	public static int pixels[];
 	public static int width;
@@ -24,19 +24,19 @@ public class Drawable extends QueueNode {
 		Drawable.pixels = pixels;
 		Drawable.width = width;
 		Drawable.height = heíght;
-		method446(0, 0, heíght, width, true);
+		recalcEdges(0, 0, heíght, width, true);
 	}
 
 	public static void method445() {
-		anInt1429 = 0;
-		anInt1427 = 0;
-		anInt1430 = width;
-		anInt1428 = height;
-		anInt1431 = anInt1430 - 1;
-		anInt1432 = anInt1430 / 2;
+		startY = 0;
+		startX = 0;
+		endX = width;
+		endY = height;
+		lastPixelX = endX - 1;
+		halfWidthX = endX / 2;
 	}
 
-	public static void method446(int startX, int startY, int endY, int endX, boolean flag) {
+	public static void recalcEdges(int startX, int startY, int endY, int endX, boolean fullrecalc) {
 		if (startY < 0)
 			startY = 0;
 		if (startX < 0)
@@ -45,16 +45,16 @@ public class Drawable extends QueueNode {
 			endX = width;
 		if (endY > height)
 			endY = height;
-		anInt1429 = startY;
-		anInt1427 = startX;
-		anInt1430 = endX;
-		anInt1428 = endY;
-		if (!flag) {
+		Drawable.startY = startY;
+		Drawable.startX = startX;
+		Drawable.endX = endX;
+		Drawable.endY = endY;
+		if (!fullrecalc) {
 			return;
 		} else {
-			anInt1431 = anInt1430 - 1;
-			anInt1432 = anInt1430 / 2;
-			anInt1433 = anInt1428 / 2;
+			lastPixelX = Drawable.endX - 1;
+			halfWidthX = Drawable.endX / 2;
+			halfHeightY = Drawable.endY / 2;
 			return;
 		}
 	}
@@ -69,18 +69,18 @@ public class Drawable extends QueueNode {
 	}
 
 	public static void method448(boolean flag, int i, int j, int k, int l, int i1, int j1) {
-		if (j1 < anInt1429) {
-			k -= anInt1429 - j1;
-			j1 = anInt1429;
+		if (j1 < startY) {
+			k -= startY - j1;
+			j1 = startY;
 		}
-		if (j < anInt1427) {
-			l -= anInt1427 - j;
-			j = anInt1427;
+		if (j < startX) {
+			l -= startX - j;
+			j = startX;
 		}
-		if (j1 + k > anInt1430)
-			k = anInt1430 - j1;
-		if (j + l > anInt1428)
-			l = anInt1428 - j;
+		if (j1 + k > endX)
+			k = endX - j1;
+		if (j + l > endY)
+			l = endY - j;
 		int k1 = 256 - i1;
 		int l1 = (i >> 16 & 0xff) * i1;
 		int i2 = (i >> 8 & 0xff) * i1;
@@ -104,18 +104,18 @@ public class Drawable extends QueueNode {
 	}
 
 	public static void method449(int i, int j, int k, byte byte0, int l, int i1) {
-		if (i1 < anInt1429) {
-			l -= anInt1429 - i1;
-			i1 = anInt1429;
+		if (i1 < startY) {
+			l -= startY - i1;
+			i1 = startY;
 		}
-		if (j < anInt1427) {
-			i -= anInt1427 - j;
-			j = anInt1427;
+		if (j < startX) {
+			i -= startX - j;
+			j = startX;
 		}
-		if (i1 + l > anInt1430)
-			l = anInt1430 - i1;
-		if (j + i > anInt1428)
-			i = anInt1428 - j;
+		if (i1 + l > endX)
+			l = endX - i1;
+		if (j + i > endY)
+			i = endY - j;
 		int j1 = width - l;
 		int k1 = i1 + j * width;
 		for (int l1 = -i; l1 < 0; l1++) {
@@ -148,14 +148,14 @@ public class Drawable extends QueueNode {
 	}
 
 	public static void method452(int i, int j, int k, int l, boolean flag) {
-		if (k < anInt1427 || k >= anInt1428)
+		if (k < startX || k >= endY)
 			return;
-		if (i < anInt1429) {
-			l -= anInt1429 - i;
-			i = anInt1429;
+		if (i < startY) {
+			l -= startY - i;
+			i = startY;
 		}
-		if (i + l > anInt1430)
-			l = anInt1430 - i;
+		if (i + l > endX)
+			l = endX - i;
 		int i1 = i + k * width;
 		if (!flag) {
 			for (int j1 = 1; j1 > 0; j1++);
@@ -166,14 +166,14 @@ public class Drawable extends QueueNode {
 	}
 
 	public static void method453(int i, int j, int k, int l, int i1, int j1) {
-		if (i < anInt1427 || i >= anInt1428)
+		if (i < startX || i >= endY)
 			return;
-		if (j < anInt1429) {
-			k -= anInt1429 - j;
-			j = anInt1429;
+		if (j < startY) {
+			k -= startY - j;
+			j = startY;
 		}
-		if (j + k > anInt1430)
-			k = anInt1430 - j;
+		if (j + k > endX)
+			k = endX - j;
 		int k1 = 256 - i1;
 		int l1 = (j1 >> 16 & 0xff) * i1;
 		int i2 = (j1 >> 8 & 0xff) * i1;
@@ -191,44 +191,44 @@ public class Drawable extends QueueNode {
 	public static void method454(int i, int j, int k, boolean flag, int l) {
 		if (flag)
 			return;
-		if (i < anInt1429 || i >= anInt1430)
+		if (i < startY || i >= endX)
 			return;
-		if (l < anInt1427) {
-			k -= anInt1427 - l;
-			l = anInt1427;
+		if (l < startX) {
+			k -= startX - l;
+			l = startX;
 		}
-		if (l + k > anInt1428)
-			k = anInt1428 - l;
+		if (l + k > endY)
+			k = endY - l;
 		int i1 = i + l * width;
 		for (int j1 = 0; j1 < k; j1++)
 			pixels[i1 + j1 * width] = j;
 
 	}
 
-	public static void method455(int i, int j, int k, int l, int i1, int j1) {
-		if (k < anInt1429 || k >= anInt1430)
+	public static void method455(int i, int width, int k, int l, int i1, int darkness) {
+		if (k < startY || k >= endX)
 			return;
-		if (j < anInt1427) {
-			i1 -= anInt1427 - j;
-			j = anInt1427;
+		if (width < startX) {
+			i1 -= startX - width;
+			width = startX;
 		}
-		if (j + i1 > anInt1428)
-			i1 = anInt1428 - j;
-		int k1 = 256 - j1;
-		int l1 = (l >> 16 & 0xff) * j1;
-		int i2 = (l >> 8 & 0xff) * j1;
-		int j2 = (l & 0xff) * j1;
+		if (width + i1 > endY)
+			i1 = endY - width;
+		int saturation = 256 - darkness;
+		int rbgComponent1_1 = (l >> 16 & 0xff) * darkness;
+		int rbgComponent2_1 = (l >> 8 & 0xff) * darkness;
+		int rbgComponent3_1 = (l & 0xff) * darkness;
 		if (i != 0) {
 			for (int j3 = 1; j3 > 0; j3++);
 		}
-		int k3 = k + j * width;
+		int pixelOffset = k + width * Drawable.width;
 		for (int l3 = 0; l3 < i1; l3++) {
-			int k2 = (pixels[k3] >> 16 & 0xff) * k1;
-			int l2 = (pixels[k3] >> 8 & 0xff) * k1;
-			int i3 = (pixels[k3] & 0xff) * k1;
-			int i4 = ((l1 + k2 >> 8) << 16) + ((i2 + l2 >> 8) << 8) + (j2 + i3 >> 8);
-			pixels[k3] = i4;
-			k3 += width;
+			int rgbComponent1_2 = (pixels[pixelOffset] >> 16 & 0xff) * saturation;
+			int rgbComponent2_2 = (pixels[pixelOffset] >> 8 & 0xff) * saturation;
+			int rbgComponent3_2 = (pixels[pixelOffset] & 0xff) * saturation;
+			int pixelColor = ((rbgComponent1_1 + rgbComponent1_2 >> 8) << 16) + ((rbgComponent2_1 + rgbComponent2_2 >> 8) << 8) + (rbgComponent3_1 + rbgComponent3_2 >> 8);
+			pixels[pixelOffset] = pixelColor;
+			pixelOffset += Drawable.width;
 		}
 
 	}

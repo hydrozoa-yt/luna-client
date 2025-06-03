@@ -6189,7 +6189,7 @@ public class client extends JagApplet {
                 aString861 = chatboxInput;
             }
             JagFont class50_sub1_sub1_sub2 = fontChatboxButtons;
-            Drawable.method446(0, 0, 77, 463, true);
+            Drawable.recalcEdges(0, 0, 77, 463, true);
             for (int j = 0; j < anInt862; j++) {
                 int l = (18 + j * 14) - anInt865;
                 if (l > 0 && l < 110)
@@ -6216,7 +6216,7 @@ public class client extends JagApplet {
         } else {
             JagFont class50_sub1_sub1_sub2_1 = fontChatboxButtons;
             int k = 0;
-            Drawable.method446(0, 0, 77, 463, true);
+            Drawable.recalcEdges(0, 0, 77, 463, true);
             for (int i1 = 0; i1 < 100; i1++)
                 if (aStringArray1298[i1] != null) {
                     int j1 = anIntArray1296[i1];
@@ -9234,7 +9234,7 @@ public class client extends JagApplet {
                 if (anIntArray946[j] == 4) {
                     int k3 = aClass50_Sub1_Sub1_Sub2_1061.method473(s, (byte) -53);
                     int i4 = ((150 - anIntArray947[j]) * (k3 + 100)) / 150;
-                    Drawable.method446(0, anInt932 - 50, 334, anInt932 + 50, true);
+                    Drawable.recalcEdges(0, anInt932 - 50, 334, anInt932 + 50, true);
                     aClass50_Sub1_Sub1_Sub2_1061.method474(2245, (anInt932 + 50) - i4, 0, anInt933 + 1, s);
                     aClass50_Sub1_Sub1_Sub2_1061.method474(2245, (anInt932 + 50) - i4, k2, anInt933, s);
                     Drawable.method445();
@@ -9246,7 +9246,7 @@ public class client extends JagApplet {
                         j4 = l3 - 25;
                     else if (l3 > 125)
                         j4 = l3 - 125;
-                    Drawable.method446(anInt933 - aClass50_Sub1_Sub1_Sub2_1061.anInt1506 - 1, 0, anInt933 + 5,
+                    Drawable.recalcEdges(anInt933 - aClass50_Sub1_Sub1_Sub2_1061.anInt1506 - 1, 0, anInt933 + 5,
                             512, true);
                     aClass50_Sub1_Sub1_Sub2_1061.method470(anInt932, 452, anInt933 + 1 + j4, 0, s);
                     aClass50_Sub1_Sub1_Sub2_1061.method470(anInt932, 452, anInt933 + j4, k2, s);
@@ -10271,11 +10271,11 @@ public class client extends JagApplet {
         if (class13.aBoolean219 && anInt1302 != class13.id && anInt1280 != class13.id
                 && anInt1106 != class13.id)
             return;
-        int i1 = Drawable.anInt1429;
-        int j1 = Drawable.anInt1427;
-        int k1 = Drawable.anInt1430;
-        int l1 = Drawable.anInt1428;
-        Drawable.method446(i, j, i + class13.anInt238, j + class13.anInt241, true);
+        int i1 = Drawable.startY;
+        int j1 = Drawable.startX;
+        int k1 = Drawable.endX;
+        int l1 = Drawable.endY;
+        Drawable.recalcEdges(i, j, i + class13.anInt238, j + class13.anInt241, true);
         int i2 = class13.anIntArray258.length;
         if (l != 8)
             opcode = -1;
@@ -10311,8 +10311,8 @@ public class client extends JagApplet {
                                 int i7 = 0;
                                 int j8 = 0;
                                 int l10 = class13_1.itemIds[i3] - 1;
-                                if (i6 > Drawable.anInt1429 - 32 && i6 < Drawable.anInt1430
-                                        && l6 > Drawable.anInt1427 - 32 && l6 < Drawable.anInt1428
+                                if (i6 > Drawable.startY - 32 && i6 < Drawable.endX
+                                        && l6 > Drawable.startX - 32 && l6 < Drawable.endY
                                         || anInt1113 != 0 && anInt1112 == i3) {
                                     int k11 = 0;
                                     if (anInt1146 == 1 && itemIndexId == i3 && itemInterfaceId == class13_1.id)
@@ -10332,8 +10332,8 @@ public class client extends JagApplet {
                                                 j8 = 0;
                                             }
                                             class50_sub1_sub1_sub1_2.method463(0, i6 + i7, l6 + j8, 128);
-                                            if (l6 + j8 < Drawable.anInt1427 && class13.anInt231 > 0) {
-                                                int i12 = (anInt951 * (Drawable.anInt1427 - l6 - j8)) / 3;
+                                            if (l6 + j8 < Drawable.startX && class13.anInt231 > 0) {
+                                                int i12 = (anInt951 * (Drawable.startX - l6 - j8)) / 3;
                                                 if (i12 > anInt951 * 10)
                                                     i12 = anInt951 * 10;
                                                 if (i12 > class13.anInt231)
@@ -10341,9 +10341,9 @@ public class client extends JagApplet {
                                                 class13.anInt231 -= i12;
                                                 anInt1115 += i12;
                                             }
-                                            if (l6 + j8 + 32 > Drawable.anInt1428
+                                            if (l6 + j8 + 32 > Drawable.endY
                                                     && class13.anInt231 < class13.anInt285 - class13.anInt238) {
-                                                int j12 = (anInt951 * ((l6 + j8 + 32) - Drawable.anInt1428)) / 3;
+                                                int j12 = (anInt951 * ((l6 + j8 + 32) - Drawable.endY)) / 3;
                                                 if (j12 > anInt951 * 10)
                                                     j12 = anInt951 * 10;
                                                 if (j12 > class13.anInt285 - class13.anInt238 - class13.anInt231)
@@ -10589,7 +10589,7 @@ public class client extends JagApplet {
                 }
         }
 
-        Drawable.method446(j1, i1, l1, k1, true);
+        Drawable.recalcEdges(j1, i1, l1, k1, true);
     }
 
     public void method143(byte byte0) {

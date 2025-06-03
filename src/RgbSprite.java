@@ -183,26 +183,26 @@ public class RgbSprite extends Drawable {
 		int k1 = anInt1490;
 		int l1 = Drawable.width - k1;
 		int i2 = 0;
-		if (i < Drawable.anInt1427) {
-			int j2 = Drawable.anInt1427 - i;
+		if (i < Drawable.startX) {
+			int j2 = Drawable.startX - i;
 			j1 -= j2;
-			i = Drawable.anInt1427;
+			i = Drawable.startX;
 			i1 += j2 * k1;
 			l += j2 * Drawable.width;
 		}
-		if (i + j1 > Drawable.anInt1428)
-			j1 -= (i + j1) - Drawable.anInt1428;
-		if (k < Drawable.anInt1429) {
-			int k2 = Drawable.anInt1429 - k;
+		if (i + j1 > Drawable.endY)
+			j1 -= (i + j1) - Drawable.endY;
+		if (k < Drawable.startY) {
+			int k2 = Drawable.startY - k;
 			k1 -= k2;
-			k = Drawable.anInt1429;
+			k = Drawable.startY;
 			i1 += k2;
 			l += k2;
 			i2 += k2;
 			l1 += k2;
 		}
-		if (k + k1 > Drawable.anInt1430) {
-			int l2 = (k + k1) - Drawable.anInt1430;
+		if (k + k1 > Drawable.endX) {
+			int l2 = (k + k1) - Drawable.endX;
 			k1 -= l2;
 			i2 += l2;
 			l1 += l2;
@@ -247,26 +247,26 @@ public class RgbSprite extends Drawable {
 		int k1 = anInt1490;
 		int l1 = Drawable.width - k1;
 		int i2 = 0;
-		if (i < Drawable.anInt1427) {
-			int j2 = Drawable.anInt1427 - i;
+		if (i < Drawable.startX) {
+			int j2 = Drawable.startX - i;
 			j1 -= j2;
-			i = Drawable.anInt1427;
+			i = Drawable.startX;
 			i1 += j2 * k1;
 			l += j2 * Drawable.width;
 		}
-		if (i + j1 > Drawable.anInt1428)
-			j1 -= (i + j1) - Drawable.anInt1428;
-		if (j < Drawable.anInt1429) {
-			int k2 = Drawable.anInt1429 - j;
+		if (i + j1 > Drawable.endY)
+			j1 -= (i + j1) - Drawable.endY;
+		if (j < Drawable.startY) {
+			int k2 = Drawable.startY - j;
 			k1 -= k2;
-			j = Drawable.anInt1429;
+			j = Drawable.startY;
 			i1 += k2;
 			l += k2;
 			i2 += k2;
 			l1 += k2;
 		}
-		if (j + k1 > Drawable.anInt1430) {
-			int l2 = (j + k1) - Drawable.anInt1430;
+		if (j + k1 > Drawable.endX) {
+			int l2 = (j + k1) - Drawable.endX;
 			k1 -= l2;
 			i2 += l2;
 			l1 += l2;
@@ -331,26 +331,26 @@ public class RgbSprite extends Drawable {
 		int l1 = anInt1490;
 		int i2 = Drawable.width - l1;
 		int j2 = 0;
-		if (k < Drawable.anInt1427) {
-			int k2 = Drawable.anInt1427 - k;
+		if (k < Drawable.startX) {
+			int k2 = Drawable.startX - k;
 			k1 -= k2;
-			k = Drawable.anInt1427;
+			k = Drawable.startX;
 			j1 += k2 * l1;
 			i1 += k2 * Drawable.width;
 		}
-		if (k + k1 > Drawable.anInt1428)
-			k1 -= (k + k1) - Drawable.anInt1428;
-		if (j < Drawable.anInt1429) {
-			int l2 = Drawable.anInt1429 - j;
+		if (k + k1 > Drawable.endY)
+			k1 -= (k + k1) - Drawable.endY;
+		if (j < Drawable.startY) {
+			int l2 = Drawable.startY - j;
 			l1 -= l2;
-			j = Drawable.anInt1429;
+			j = Drawable.startY;
 			j1 += l2;
 			i1 += l2;
 			j2 += l2;
 			i2 += l2;
 		}
-		if (j + l1 > Drawable.anInt1430) {
-			int i3 = (j + l1) - Drawable.anInt1430;
+		if (j + l1 > Drawable.endX) {
+			int i3 = (j + l1) - Drawable.endX;
 			l1 -= i3;
 			j2 += i3;
 			i2 += i3;
@@ -468,26 +468,26 @@ public class RgbSprite extends Drawable {
 		int k1 = anInt1490;
 		int l1 = Drawable.width - k1;
 		int i2 = 0;
-		if (i < Drawable.anInt1427) {
-			int j2 = Drawable.anInt1427 - i;
+		if (i < Drawable.startX) {
+			int j2 = Drawable.startX - i;
 			j1 -= j2;
-			i = Drawable.anInt1427;
+			i = Drawable.startX;
 			i1 += j2 * k1;
 			l += j2 * Drawable.width;
 		}
-		if (i + j1 > Drawable.anInt1428)
-			j1 -= (i + j1) - Drawable.anInt1428;
-		if (k < Drawable.anInt1429) {
-			int k2 = Drawable.anInt1429 - k;
+		if (i + j1 > Drawable.endY)
+			j1 -= (i + j1) - Drawable.endY;
+		if (k < Drawable.startY) {
+			int k2 = Drawable.startY - k;
 			k1 -= k2;
-			k = Drawable.anInt1429;
+			k = Drawable.startY;
 			i1 += k2;
 			l += k2;
 			i2 += k2;
 			l1 += k2;
 		}
-		if (k + k1 > Drawable.anInt1430) {
-			int l2 = (k + k1) - Drawable.anInt1430;
+		if (k + k1 > Drawable.endX) {
+			int l2 = (k + k1) - Drawable.endX;
 			k1 -= l2;
 			i2 += l2;
 			l1 += l2;

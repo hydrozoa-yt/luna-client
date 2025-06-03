@@ -300,12 +300,12 @@ public class ThreeDimensionalCanvas extends Drawable {
 			k3 = (k1 - i2 << 15) / (i - k);
 		}
 		if (i <= j && i <= k) {
-			if (i >= Drawable.anInt1428)
+			if (i >= Drawable.endY)
 				return;
-			if (j > Drawable.anInt1428)
-				j = Drawable.anInt1428;
-			if (k > Drawable.anInt1428)
-				k = Drawable.anInt1428;
+			if (j > Drawable.endY)
+				j = Drawable.endY;
+			if (k > Drawable.endY)
+				k = Drawable.endY;
 			if (j < k) {
 				j1 = l <<= 16;
 				i2 = k1 <<= 15;
@@ -422,12 +422,12 @@ public class ThreeDimensionalCanvas extends Drawable {
 			return;
 		}
 		if (j <= k) {
-			if (j >= Drawable.anInt1428)
+			if (j >= Drawable.endY)
 				return;
-			if (k > Drawable.anInt1428)
-				k = Drawable.anInt1428;
-			if (i > Drawable.anInt1428)
-				i = Drawable.anInt1428;
+			if (k > Drawable.endY)
+				k = Drawable.endY;
+			if (i > Drawable.endY)
+				i = Drawable.endY;
 			if (k < i) {
 				l = i1 <<= 16;
 				k1 = l1 <<= 15;
@@ -543,12 +543,12 @@ public class ThreeDimensionalCanvas extends Drawable {
 			}
 			return;
 		}
-		if (k >= Drawable.anInt1428)
+		if (k >= Drawable.endY)
 			return;
-		if (i > Drawable.anInt1428)
-			i = Drawable.anInt1428;
-		if (j > Drawable.anInt1428)
-			j = Drawable.anInt1428;
+		if (i > Drawable.endY)
+			i = Drawable.endY;
+		if (j > Drawable.endY)
+			j = Drawable.endY;
 		if (i < j) {
 			i1 = j1 <<= 16;
 			l1 = i2 <<= 15;
@@ -672,8 +672,8 @@ public class ThreeDimensionalCanvas extends Drawable {
 					l1 = (k1 - j1) / (i1 - l);
 				else
 					l1 = 0;
-				if (i1 > Drawable.anInt1431)
-					i1 = Drawable.anInt1431;
+				if (i1 > Drawable.lastPixelX)
+					i1 = Drawable.lastPixelX;
 				if (l < 0) {
 					j1 -= l * l1;
 					l = 0;
@@ -737,8 +737,8 @@ public class ThreeDimensionalCanvas extends Drawable {
 			return;
 		int i2 = (k1 - j1) / (i1 - l);
 		if (aBoolean1528) {
-			if (i1 > Drawable.anInt1431)
-				i1 = Drawable.anInt1431;
+			if (i1 > Drawable.lastPixelX)
+				i1 = Drawable.lastPixelX;
 			if (l < 0) {
 				j1 -= l * i2;
 				l = 0;
@@ -776,12 +776,12 @@ public class ThreeDimensionalCanvas extends Drawable {
 		if (k != i)
 			j2 = (l - j1 << 16) / (i - k);
 		if (i <= j && i <= k) {
-			if (i >= Drawable.anInt1428)
+			if (i >= Drawable.endY)
 				return;
-			if (j > Drawable.anInt1428)
-				j = Drawable.anInt1428;
-			if (k > Drawable.anInt1428)
-				k = Drawable.anInt1428;
+			if (j > Drawable.endY)
+				j = Drawable.endY;
+			if (k > Drawable.endY)
+				k = Drawable.endY;
 			if (j < k) {
 				j1 = l <<= 16;
 				if (i < 0) {
@@ -872,12 +872,12 @@ public class ThreeDimensionalCanvas extends Drawable {
 			return;
 		}
 		if (j <= k) {
-			if (j >= Drawable.anInt1428)
+			if (j >= Drawable.endY)
 				return;
-			if (k > Drawable.anInt1428)
-				k = Drawable.anInt1428;
-			if (i > Drawable.anInt1428)
-				i = Drawable.anInt1428;
+			if (k > Drawable.endY)
+				k = Drawable.endY;
+			if (i > Drawable.endY)
+				i = Drawable.endY;
 			if (k < i) {
 				l = i1 <<= 16;
 				if (j < 0) {
@@ -967,12 +967,12 @@ public class ThreeDimensionalCanvas extends Drawable {
 			}
 			return;
 		}
-		if (k >= Drawable.anInt1428)
+		if (k >= Drawable.endY)
 			return;
-		if (i > Drawable.anInt1428)
-			i = Drawable.anInt1428;
-		if (j > Drawable.anInt1428)
-			j = Drawable.anInt1428;
+		if (i > Drawable.endY)
+			i = Drawable.endY;
+		if (j > Drawable.endY)
+			j = Drawable.endY;
 		if (i < j) {
 			i1 = j1 <<= 16;
 			if (k < 0) {
@@ -1064,8 +1064,8 @@ public class ThreeDimensionalCanvas extends Drawable {
 
 	public static void method506(int ai[], int i, int j, int k, int l, int i1) {
 		if (aBoolean1528) {
-			if (i1 > Drawable.anInt1431)
-				i1 = Drawable.anInt1431;
+			if (i1 > Drawable.lastPixelX)
+				i1 = Drawable.lastPixelX;
 			if (l < 0)
 				l = 0;
 		}
@@ -1137,12 +1137,12 @@ public class ThreeDimensionalCanvas extends Drawable {
 			j8 = (k1 - i2 << 16) / (i - k);
 		}
 		if (i <= j && i <= k) {
-			if (i >= Drawable.anInt1428)
+			if (i >= Drawable.endY)
 				return;
-			if (j > Drawable.anInt1428)
-				j = Drawable.anInt1428;
-			if (k > Drawable.anInt1428)
-				k = Drawable.anInt1428;
+			if (j > Drawable.endY)
+				j = Drawable.endY;
+			if (k > Drawable.endY)
+				k = Drawable.endY;
 			if (j < k) {
 				j1 = l <<= 16;
 				i2 = k1 <<= 16;
@@ -1303,12 +1303,12 @@ public class ThreeDimensionalCanvas extends Drawable {
 			return;
 		}
 		if (j <= k) {
-			if (j >= Drawable.anInt1428)
+			if (j >= Drawable.endY)
 				return;
-			if (k > Drawable.anInt1428)
-				k = Drawable.anInt1428;
-			if (i > Drawable.anInt1428)
-				i = Drawable.anInt1428;
+			if (k > Drawable.endY)
+				k = Drawable.endY;
+			if (i > Drawable.endY)
+				i = Drawable.endY;
 			if (k < i) {
 				l = i1 <<= 16;
 				k1 = l1 <<= 16;
@@ -1468,12 +1468,12 @@ public class ThreeDimensionalCanvas extends Drawable {
 			}
 			return;
 		}
-		if (k >= Drawable.anInt1428)
+		if (k >= Drawable.endY)
 			return;
-		if (i > Drawable.anInt1428)
-			i = Drawable.anInt1428;
-		if (j > Drawable.anInt1428)
-			j = Drawable.anInt1428;
+		if (i > Drawable.endY)
+			i = Drawable.endY;
+		if (j > Drawable.endY)
+			j = Drawable.endY;
 		if (i < j) {
 			i1 = j1 <<= 16;
 			l1 = i2 <<= 16;
@@ -1641,8 +1641,8 @@ public class ThreeDimensionalCanvas extends Drawable {
 		int k3;
 		if (aBoolean1528) {
 			j3 = (k1 - j1) / (i1 - l);
-			if (i1 > Drawable.anInt1431)
-				i1 = Drawable.anInt1431;
+			if (i1 > Drawable.lastPixelX)
+				i1 = Drawable.lastPixelX;
 			if (l < 0) {
 				j1 -= l * j3;
 				l = 0;
