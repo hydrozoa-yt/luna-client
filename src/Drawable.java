@@ -135,8 +135,6 @@ public class Drawable extends QueueNode {
 	public static void method450(int i, int j, int k, int l, int i1, int j1) {
 		method452(i1, l, j, j1, true);
 		method452(i1, l, (j + k) - 1, j1, true);
-		if (i != 0)
-			anInt1420 = -278;
 		method454(i1, l, k, false, j);
 		method454((i1 + j1) - 1, l, k, false, j);
 	}
@@ -191,9 +189,6 @@ public class Drawable extends QueueNode {
 			int l3 = ((l1 + k2 >> 8) << 16) + ((i2 + l2 >> 8) << 8) + (j2 + i3 >> 8);
 			pixels[j3++] = l3;
 		}
-
-		if (l != 1388)
-			anInt1420 = -36;
 	}
 
 	public static void method454(int i, int j, int k, boolean flag, int l) {
