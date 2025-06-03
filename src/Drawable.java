@@ -4,9 +4,7 @@
 
 public class Drawable extends QueueNode {
 
-	public static int anInt1420;
 	public static boolean aBoolean1421;
-	public static boolean aBoolean1422 = true;
 	public static int anInt1427;
 	public static int anInt1428;
 	public static int anInt1429;
@@ -14,7 +12,6 @@ public class Drawable extends QueueNode {
 	public static int anInt1431;
 	public static int anInt1432;
 	public static int anInt1433;
-	public static boolean aBoolean1434;
 
 	public static int pixels[];
 	public static int width;
