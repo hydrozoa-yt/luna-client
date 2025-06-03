@@ -124,11 +124,11 @@ public class Drawable extends QueueNode {
 			;
 	}
 
-	public static void method450(int j, int k, int l, int i1, int j1) {
-		method452(i1, l, j, j1, true);
-		method452(i1, l, (j + k) - 1, j1, true);
-		method454(i1, l, k, false, j);
-		method454((i1 + j1) - 1, l, k, false, j);
+	public static void method450(int j, int k, int color, int i1, int j1) {
+		drawLine(i1, color, j, j1);
+		drawLine(i1, color, (j + k) - 1, j1);
+		method454(color, i1, k, j);
+		method454(color, (i1 + j1) - 1, k, j);
 	}
 
 	public static void method451(int i, int j, int k, int l, int i1, int j1, byte byte0) {
@@ -142,7 +142,7 @@ public class Drawable extends QueueNode {
 		}
 	}
 
-	public static void method452(int i, int j, int k, int l, boolean flag) {
+	public static void drawLine(int i, int j, int k, int l) {
 		if (k < startX || k >= endY)
 			return;
 		if (i < startY) {
@@ -152,12 +152,8 @@ public class Drawable extends QueueNode {
 		if (i + l > endX)
 			l = endX - i;
 		int i1 = i + k * width;
-		if (!flag) {
-			for (int j1 = 1; j1 > 0; j1++);
-		}
 		for (int k1 = 0; k1 < l; k1++)
 			pixels[i1 + k1] = j;
-
 	}
 
 	public static void method453(int i, int j, int k, int l, int i1, int j1) {
@@ -183,20 +179,18 @@ public class Drawable extends QueueNode {
 		}
 	}
 
-	public static void method454(int i, int j, int k, boolean flag, int l) {
-		if (flag)
+	public static void method454(int color, int y, int k, int x) {
+		if (y < startY || y >= endX)
 			return;
-		if (i < startY || i >= endX)
-			return;
-		if (l < startX) {
-			k -= startX - l;
-			l = startX;
+		if (x < startX) {
+			k -= startX - x;
+			x = startX;
 		}
-		if (l + k > endY)
-			k = endY - l;
-		int i1 = i + l * width;
+		if (x + k > endY)
+			k = endY - x;
+		int i1 = y + x * width;
 		for (int j1 = 0; j1 < k; j1++)
-			pixels[i1 + j1 * width] = j;
+			pixels[i1 + j1 * width] = color;
 
 	}
 

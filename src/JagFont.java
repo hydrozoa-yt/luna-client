@@ -238,7 +238,7 @@ public class JagFont extends Drawable {
 			}
 
 		if (strikethrough)
-			Drawable.method452(i1, 0x800000, k + (int) (anInt1506 * 0.69999999999999996D), j - i1, true);
+			Drawable.drawLine(i1, 0x800000, k + (int) (anInt1506 * 0.69999999999999996D), j - i1);
 	}
 
 	public void method479(boolean flag, int i, int j, int k, int l, String s, int i1) {

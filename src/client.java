@@ -3711,16 +3711,16 @@ public class client extends JagApplet {
             j1 = 8;
         int k1 = ((k - 32 - j1) * i) / (l - k);
         Drawable.method449(j1, i1 + 16 + k1, anInt1080, (byte) -24, 16, j);
-        Drawable.method454(j, anInt1135, j1, false, i1 + 16 + k1);
-        Drawable.method454(j + 1, anInt1135, j1, false, i1 + 16 + k1);
+        Drawable.method454(colorBrown1135, j, j1, i1 + 16 + k1);
+        Drawable.method454(colorBrown1135, j + 1, j1, i1 + 16 + k1);
         if (!flag)
             anInt921 = -136;
-        Drawable.method452(j, anInt1135, i1 + 16 + k1, 16, true);
-        Drawable.method452(j, anInt1135, i1 + 17 + k1, 16, true);
-        Drawable.method454(j + 15, anInt1287, j1, false, i1 + 16 + k1);
-        Drawable.method454(j + 14, anInt1287, j1 - 1, false, i1 + 17 + k1);
-        Drawable.method452(j, anInt1287, i1 + 15 + k1 + j1, 16, true);
-        Drawable.method452(j + 1, anInt1287, i1 + 14 + k1 + j1, 15, true);
+        Drawable.drawLine(j, colorBrown1135, i1 + 16 + k1, 16);
+        Drawable.drawLine(j, colorBrown1135, i1 + 17 + k1, 16);
+        Drawable.method454(anInt1287, j + 15, j1, i1 + 16 + k1);
+        Drawable.method454(anInt1287, j + 14, j1 - 1, i1 + 17 + k1);
+        Drawable.drawLine(j, anInt1287, i1 + 15 + k1 + j1, 16);
+        Drawable.drawLine(j + 1, anInt1287, i1 + 14 + k1 + j1, 15);
     }
 
     public void method57(int i, boolean flag) {
@@ -6205,7 +6205,7 @@ public class client extends JagApplet {
                 aClass50_Sub1_Sub1_Sub2_1061.method470(239, 452, 40, 0,
                         "No matching objects found, please shorten search");
             class50_sub1_sub1_sub2.method470(239, 452, 90, 0, chatboxInput + "*");
-            Drawable.method452(0, 0, 77, 479, true);
+            Drawable.drawLine(0, 0, 77, 479);
         } else if (aString1058 != null) {
             aClass50_Sub1_Sub1_Sub2_1061.method470(239, 452, 40, 0, aString1058);
             aClass50_Sub1_Sub1_Sub2_1061.method470(239, 452, 60, 128, "Click to continue");
@@ -6311,7 +6311,7 @@ public class client extends JagApplet {
             class50_sub1_sub1_sub2_1.method474(2245, 4, 0, 90, s + ":");
             class50_sub1_sub1_sub2_1.method474(2245, 6 + class50_sub1_sub1_sub2_1.method472((byte) 35, s + ": "), 255,
                     90, chatInput + "*");
-            Drawable.method452(0, 0, 77, 479, true);
+            Drawable.drawLine(0, 0, 77, 479);
         }
         if (aBoolean1065 && anInt1304 == 2)
             method128(false);
@@ -11225,7 +11225,7 @@ public class client extends JagApplet {
         aClass50_Sub1_Sub2_1131 = new JagBuffer(new byte[5000]);
         npcs = new Npc[16384];
         anIntArray1134 = new int[16384];
-        anInt1135 = 0x766654;
+        colorBrown1135 = 0x766654;
         aBoolean1136 = false;
         aBoolean1137 = false;
         anInt1140 = -110;
@@ -11604,7 +11604,7 @@ public class client extends JagApplet {
     public Npc npcs[];
     public int localNpcCount;
     public int anIntArray1134[];
-    public int anInt1135;
+    public int colorBrown1135;
     public boolean aBoolean1136;
     public boolean aBoolean1137;
     public int anInt1138;
