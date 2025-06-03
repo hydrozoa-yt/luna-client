@@ -149,7 +149,7 @@ public class JagSocket implements Runnable {
 		}
 	}
 
-	public void method229(boolean flag) {
+	public void debugPrint(boolean flag) {
 		System.out.println("dummy:" + connectionClosed);
 		System.out.println("tcycl:" + anInt387);
 		System.out.println("tnum:" + anInt388);

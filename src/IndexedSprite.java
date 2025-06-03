@@ -192,7 +192,7 @@ public class IndexedSprite extends Drawable {
 		if (l1 <= 0 || k1 <= 0) {
 			return;
 		} else {
-			method491(j1, Drawable.anIntArray1424, aByteArray1516, j2, anIntArray1517, k1, l1, i1, false, i2);
+			method491(j1, Drawable.pixels, aByteArray1516, j2, anIntArray1517, k1, l1, i1, false, i2);
 			return;
 		}
 	}

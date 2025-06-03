@@ -327,7 +327,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 					k -= j;
 					j -= i;
 					for (i = anIntArray1538[i]; --j >= 0; i += Drawable.width) {
-						method504(Drawable.anIntArray1424, i, 0, 0, j1 >> 16, l >> 16, i2 >> 7, k1 >> 7);
+						method504(Drawable.pixels, i, 0, 0, j1 >> 16, l >> 16, i2 >> 7, k1 >> 7);
 						j1 += j3;
 						l += j2;
 						i2 += k3;
@@ -335,7 +335,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 					}
 
 					while (--k >= 0) {
-						method504(Drawable.anIntArray1424, i, 0, 0, j1 >> 16, i1 >> 16, i2 >> 7, l1 >> 7);
+						method504(Drawable.pixels, i, 0, 0, j1 >> 16, i1 >> 16, i2 >> 7, l1 >> 7);
 						j1 += j3;
 						i1 += l2;
 						i2 += k3;
@@ -347,7 +347,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 				k -= j;
 				j -= i;
 				for (i = anIntArray1538[i]; --j >= 0; i += Drawable.width) {
-					method504(Drawable.anIntArray1424, i, 0, 0, l >> 16, j1 >> 16, k1 >> 7, i2 >> 7);
+					method504(Drawable.pixels, i, 0, 0, l >> 16, j1 >> 16, k1 >> 7, i2 >> 7);
 					j1 += j3;
 					l += j2;
 					i2 += k3;
@@ -355,7 +355,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 				}
 
 				while (--k >= 0) {
-					method504(Drawable.anIntArray1424, i, 0, 0, i1 >> 16, j1 >> 16, l1 >> 7, i2 >> 7);
+					method504(Drawable.pixels, i, 0, 0, i1 >> 16, j1 >> 16, l1 >> 7, i2 >> 7);
 					j1 += j3;
 					i1 += l2;
 					i2 += k3;
@@ -384,7 +384,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 				j -= k;
 				k -= i;
 				for (i = anIntArray1538[i]; --k >= 0; i += Drawable.width) {
-					method504(Drawable.anIntArray1424, i, 0, 0, i1 >> 16, l >> 16, l1 >> 7, k1 >> 7);
+					method504(Drawable.pixels, i, 0, 0, i1 >> 16, l >> 16, l1 >> 7, k1 >> 7);
 					i1 += j3;
 					l += j2;
 					l1 += k3;
@@ -392,7 +392,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 				}
 
 				while (--j >= 0) {
-					method504(Drawable.anIntArray1424, i, 0, 0, j1 >> 16, l >> 16, i2 >> 7, k1 >> 7);
+					method504(Drawable.pixels, i, 0, 0, j1 >> 16, l >> 16, i2 >> 7, k1 >> 7);
 					j1 += l2;
 					l += j2;
 					i2 += i3;
@@ -404,7 +404,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 			j -= k;
 			k -= i;
 			for (i = anIntArray1538[i]; --k >= 0; i += Drawable.width) {
-				method504(Drawable.anIntArray1424, i, 0, 0, l >> 16, i1 >> 16, k1 >> 7, l1 >> 7);
+				method504(Drawable.pixels, i, 0, 0, l >> 16, i1 >> 16, k1 >> 7, l1 >> 7);
 				i1 += j3;
 				l += j2;
 				l1 += k3;
@@ -412,7 +412,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 			}
 
 			while (--j >= 0) {
-				method504(Drawable.anIntArray1424, i, 0, 0, l >> 16, j1 >> 16, k1 >> 7, i2 >> 7);
+				method504(Drawable.pixels, i, 0, 0, l >> 16, j1 >> 16, k1 >> 7, i2 >> 7);
 				j1 += l2;
 				l += j2;
 				i2 += i3;
@@ -449,7 +449,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 					i -= k;
 					k -= j;
 					for (j = anIntArray1538[j]; --k >= 0; j += Drawable.width) {
-						method504(Drawable.anIntArray1424, j, 0, 0, l >> 16, i1 >> 16, k1 >> 7, l1 >> 7);
+						method504(Drawable.pixels, j, 0, 0, l >> 16, i1 >> 16, k1 >> 7, l1 >> 7);
 						l += j2;
 						i1 += l2;
 						k1 += k2;
@@ -457,7 +457,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 					}
 
 					while (--i >= 0) {
-						method504(Drawable.anIntArray1424, j, 0, 0, l >> 16, j1 >> 16, k1 >> 7, i2 >> 7);
+						method504(Drawable.pixels, j, 0, 0, l >> 16, j1 >> 16, k1 >> 7, i2 >> 7);
 						l += j2;
 						j1 += j3;
 						k1 += k2;
@@ -469,7 +469,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 				i -= k;
 				k -= j;
 				for (j = anIntArray1538[j]; --k >= 0; j += Drawable.width) {
-					method504(Drawable.anIntArray1424, j, 0, 0, i1 >> 16, l >> 16, l1 >> 7, k1 >> 7);
+					method504(Drawable.pixels, j, 0, 0, i1 >> 16, l >> 16, l1 >> 7, k1 >> 7);
 					l += j2;
 					i1 += l2;
 					k1 += k2;
@@ -477,7 +477,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 				}
 
 				while (--i >= 0) {
-					method504(Drawable.anIntArray1424, j, 0, 0, j1 >> 16, l >> 16, i2 >> 7, k1 >> 7);
+					method504(Drawable.pixels, j, 0, 0, j1 >> 16, l >> 16, i2 >> 7, k1 >> 7);
 					l += j2;
 					j1 += j3;
 					k1 += k2;
@@ -506,7 +506,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 				k -= i;
 				i -= j;
 				for (j = anIntArray1538[j]; --i >= 0; j += Drawable.width) {
-					method504(Drawable.anIntArray1424, j, 0, 0, j1 >> 16, i1 >> 16, i2 >> 7, l1 >> 7);
+					method504(Drawable.pixels, j, 0, 0, j1 >> 16, i1 >> 16, i2 >> 7, l1 >> 7);
 					j1 += j2;
 					i1 += l2;
 					i2 += k2;
@@ -514,7 +514,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 				}
 
 				while (--k >= 0) {
-					method504(Drawable.anIntArray1424, j, 0, 0, l >> 16, i1 >> 16, k1 >> 7, l1 >> 7);
+					method504(Drawable.pixels, j, 0, 0, l >> 16, i1 >> 16, k1 >> 7, l1 >> 7);
 					l += j3;
 					i1 += l2;
 					k1 += k3;
@@ -526,7 +526,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 			k -= i;
 			i -= j;
 			for (j = anIntArray1538[j]; --i >= 0; j += Drawable.width) {
-				method504(Drawable.anIntArray1424, j, 0, 0, i1 >> 16, j1 >> 16, l1 >> 7, i2 >> 7);
+				method504(Drawable.pixels, j, 0, 0, i1 >> 16, j1 >> 16, l1 >> 7, i2 >> 7);
 				j1 += j2;
 				i1 += l2;
 				i2 += k2;
@@ -534,7 +534,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 			}
 
 			while (--k >= 0) {
-				method504(Drawable.anIntArray1424, j, 0, 0, i1 >> 16, l >> 16, l1 >> 7, k1 >> 7);
+				method504(Drawable.pixels, j, 0, 0, i1 >> 16, l >> 16, l1 >> 7, k1 >> 7);
 				l += j3;
 				i1 += l2;
 				k1 += k3;
@@ -570,7 +570,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 				j -= i;
 				i -= k;
 				for (k = anIntArray1538[k]; --i >= 0; k += Drawable.width) {
-					method504(Drawable.anIntArray1424, k, 0, 0, i1 >> 16, j1 >> 16, l1 >> 7, i2 >> 7);
+					method504(Drawable.pixels, k, 0, 0, i1 >> 16, j1 >> 16, l1 >> 7, i2 >> 7);
 					i1 += l2;
 					j1 += j3;
 					l1 += i3;
@@ -578,7 +578,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 				}
 
 				while (--j >= 0) {
-					method504(Drawable.anIntArray1424, k, 0, 0, i1 >> 16, l >> 16, l1 >> 7, k1 >> 7);
+					method504(Drawable.pixels, k, 0, 0, i1 >> 16, l >> 16, l1 >> 7, k1 >> 7);
 					i1 += l2;
 					l += j2;
 					l1 += i3;
@@ -590,7 +590,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 			j -= i;
 			i -= k;
 			for (k = anIntArray1538[k]; --i >= 0; k += Drawable.width) {
-				method504(Drawable.anIntArray1424, k, 0, 0, j1 >> 16, i1 >> 16, i2 >> 7, l1 >> 7);
+				method504(Drawable.pixels, k, 0, 0, j1 >> 16, i1 >> 16, i2 >> 7, l1 >> 7);
 				i1 += l2;
 				j1 += j3;
 				l1 += i3;
@@ -598,7 +598,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 			}
 
 			while (--j >= 0) {
-				method504(Drawable.anIntArray1424, k, 0, 0, l >> 16, i1 >> 16, k1 >> 7, l1 >> 7);
+				method504(Drawable.pixels, k, 0, 0, l >> 16, i1 >> 16, k1 >> 7, l1 >> 7);
 				i1 += l2;
 				l += j2;
 				l1 += i3;
@@ -627,7 +627,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 			i -= j;
 			j -= k;
 			for (k = anIntArray1538[k]; --j >= 0; k += Drawable.width) {
-				method504(Drawable.anIntArray1424, k, 0, 0, l >> 16, j1 >> 16, k1 >> 7, i2 >> 7);
+				method504(Drawable.pixels, k, 0, 0, l >> 16, j1 >> 16, k1 >> 7, i2 >> 7);
 				l += l2;
 				j1 += j3;
 				k1 += i3;
@@ -635,7 +635,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 			}
 
 			while (--i >= 0) {
-				method504(Drawable.anIntArray1424, k, 0, 0, i1 >> 16, j1 >> 16, l1 >> 7, i2 >> 7);
+				method504(Drawable.pixels, k, 0, 0, i1 >> 16, j1 >> 16, l1 >> 7, i2 >> 7);
 				i1 += j2;
 				j1 += j3;
 				l1 += k2;
@@ -647,7 +647,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 		i -= j;
 		j -= k;
 		for (k = anIntArray1538[k]; --j >= 0; k += Drawable.width) {
-			method504(Drawable.anIntArray1424, k, 0, 0, j1 >> 16, l >> 16, i2 >> 7, k1 >> 7);
+			method504(Drawable.pixels, k, 0, 0, j1 >> 16, l >> 16, i2 >> 7, k1 >> 7);
 			l += l2;
 			j1 += j3;
 			k1 += i3;
@@ -655,7 +655,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 		}
 
 		while (--i >= 0) {
-			method504(Drawable.anIntArray1424, k, 0, 0, j1 >> 16, i1 >> 16, i2 >> 7, l1 >> 7);
+			method504(Drawable.pixels, k, 0, 0, j1 >> 16, i1 >> 16, i2 >> 7, l1 >> 7);
 			i1 += j2;
 			j1 += j3;
 			l1 += k2;
@@ -798,13 +798,13 @@ public class ThreeDimensionalCanvas extends Drawable {
 					k -= j;
 					j -= i;
 					for (i = anIntArray1538[i]; --j >= 0; i += Drawable.width) {
-						method506(Drawable.anIntArray1424, i, k1, 0, j1 >> 16, l >> 16);
+						method506(Drawable.pixels, i, k1, 0, j1 >> 16, l >> 16);
 						j1 += j2;
 						l += l1;
 					}
 
 					while (--k >= 0) {
-						method506(Drawable.anIntArray1424, i, k1, 0, j1 >> 16, i1 >> 16);
+						method506(Drawable.pixels, i, k1, 0, j1 >> 16, i1 >> 16);
 						j1 += j2;
 						i1 += i2;
 						i += Drawable.width;
@@ -814,13 +814,13 @@ public class ThreeDimensionalCanvas extends Drawable {
 				k -= j;
 				j -= i;
 				for (i = anIntArray1538[i]; --j >= 0; i += Drawable.width) {
-					method506(Drawable.anIntArray1424, i, k1, 0, l >> 16, j1 >> 16);
+					method506(Drawable.pixels, i, k1, 0, l >> 16, j1 >> 16);
 					j1 += j2;
 					l += l1;
 				}
 
 				while (--k >= 0) {
-					method506(Drawable.anIntArray1424, i, k1, 0, i1 >> 16, j1 >> 16);
+					method506(Drawable.pixels, i, k1, 0, i1 >> 16, j1 >> 16);
 					j1 += j2;
 					i1 += i2;
 					i += Drawable.width;
@@ -842,13 +842,13 @@ public class ThreeDimensionalCanvas extends Drawable {
 				j -= k;
 				k -= i;
 				for (i = anIntArray1538[i]; --k >= 0; i += Drawable.width) {
-					method506(Drawable.anIntArray1424, i, k1, 0, i1 >> 16, l >> 16);
+					method506(Drawable.pixels, i, k1, 0, i1 >> 16, l >> 16);
 					i1 += j2;
 					l += l1;
 				}
 
 				while (--j >= 0) {
-					method506(Drawable.anIntArray1424, i, k1, 0, j1 >> 16, l >> 16);
+					method506(Drawable.pixels, i, k1, 0, j1 >> 16, l >> 16);
 					j1 += i2;
 					l += l1;
 					i += Drawable.width;
@@ -858,13 +858,13 @@ public class ThreeDimensionalCanvas extends Drawable {
 			j -= k;
 			k -= i;
 			for (i = anIntArray1538[i]; --k >= 0; i += Drawable.width) {
-				method506(Drawable.anIntArray1424, i, k1, 0, l >> 16, i1 >> 16);
+				method506(Drawable.pixels, i, k1, 0, l >> 16, i1 >> 16);
 				i1 += j2;
 				l += l1;
 			}
 
 			while (--j >= 0) {
-				method506(Drawable.anIntArray1424, i, k1, 0, l >> 16, j1 >> 16);
+				method506(Drawable.pixels, i, k1, 0, l >> 16, j1 >> 16);
 				j1 += i2;
 				l += l1;
 				i += Drawable.width;
@@ -894,13 +894,13 @@ public class ThreeDimensionalCanvas extends Drawable {
 					i -= k;
 					k -= j;
 					for (j = anIntArray1538[j]; --k >= 0; j += Drawable.width) {
-						method506(Drawable.anIntArray1424, j, k1, 0, l >> 16, i1 >> 16);
+						method506(Drawable.pixels, j, k1, 0, l >> 16, i1 >> 16);
 						l += l1;
 						i1 += i2;
 					}
 
 					while (--i >= 0) {
-						method506(Drawable.anIntArray1424, j, k1, 0, l >> 16, j1 >> 16);
+						method506(Drawable.pixels, j, k1, 0, l >> 16, j1 >> 16);
 						l += l1;
 						j1 += j2;
 						j += Drawable.width;
@@ -910,13 +910,13 @@ public class ThreeDimensionalCanvas extends Drawable {
 				i -= k;
 				k -= j;
 				for (j = anIntArray1538[j]; --k >= 0; j += Drawable.width) {
-					method506(Drawable.anIntArray1424, j, k1, 0, i1 >> 16, l >> 16);
+					method506(Drawable.pixels, j, k1, 0, i1 >> 16, l >> 16);
 					l += l1;
 					i1 += i2;
 				}
 
 				while (--i >= 0) {
-					method506(Drawable.anIntArray1424, j, k1, 0, j1 >> 16, l >> 16);
+					method506(Drawable.pixels, j, k1, 0, j1 >> 16, l >> 16);
 					l += l1;
 					j1 += j2;
 					j += Drawable.width;
@@ -938,13 +938,13 @@ public class ThreeDimensionalCanvas extends Drawable {
 				k -= i;
 				i -= j;
 				for (j = anIntArray1538[j]; --i >= 0; j += Drawable.width) {
-					method506(Drawable.anIntArray1424, j, k1, 0, j1 >> 16, i1 >> 16);
+					method506(Drawable.pixels, j, k1, 0, j1 >> 16, i1 >> 16);
 					j1 += l1;
 					i1 += i2;
 				}
 
 				while (--k >= 0) {
-					method506(Drawable.anIntArray1424, j, k1, 0, l >> 16, i1 >> 16);
+					method506(Drawable.pixels, j, k1, 0, l >> 16, i1 >> 16);
 					l += j2;
 					i1 += i2;
 					j += Drawable.width;
@@ -954,13 +954,13 @@ public class ThreeDimensionalCanvas extends Drawable {
 			k -= i;
 			i -= j;
 			for (j = anIntArray1538[j]; --i >= 0; j += Drawable.width) {
-				method506(Drawable.anIntArray1424, j, k1, 0, i1 >> 16, j1 >> 16);
+				method506(Drawable.pixels, j, k1, 0, i1 >> 16, j1 >> 16);
 				j1 += l1;
 				i1 += i2;
 			}
 
 			while (--k >= 0) {
-				method506(Drawable.anIntArray1424, j, k1, 0, i1 >> 16, l >> 16);
+				method506(Drawable.pixels, j, k1, 0, i1 >> 16, l >> 16);
 				l += j2;
 				i1 += i2;
 				j += Drawable.width;
@@ -989,13 +989,13 @@ public class ThreeDimensionalCanvas extends Drawable {
 				j -= i;
 				i -= k;
 				for (k = anIntArray1538[k]; --i >= 0; k += Drawable.width) {
-					method506(Drawable.anIntArray1424, k, k1, 0, i1 >> 16, j1 >> 16);
+					method506(Drawable.pixels, k, k1, 0, i1 >> 16, j1 >> 16);
 					i1 += i2;
 					j1 += j2;
 				}
 
 				while (--j >= 0) {
-					method506(Drawable.anIntArray1424, k, k1, 0, i1 >> 16, l >> 16);
+					method506(Drawable.pixels, k, k1, 0, i1 >> 16, l >> 16);
 					i1 += i2;
 					l += l1;
 					k += Drawable.width;
@@ -1005,13 +1005,13 @@ public class ThreeDimensionalCanvas extends Drawable {
 			j -= i;
 			i -= k;
 			for (k = anIntArray1538[k]; --i >= 0; k += Drawable.width) {
-				method506(Drawable.anIntArray1424, k, k1, 0, j1 >> 16, i1 >> 16);
+				method506(Drawable.pixels, k, k1, 0, j1 >> 16, i1 >> 16);
 				i1 += i2;
 				j1 += j2;
 			}
 
 			while (--j >= 0) {
-				method506(Drawable.anIntArray1424, k, k1, 0, l >> 16, i1 >> 16);
+				method506(Drawable.pixels, k, k1, 0, l >> 16, i1 >> 16);
 				i1 += i2;
 				l += l1;
 				k += Drawable.width;
@@ -1033,13 +1033,13 @@ public class ThreeDimensionalCanvas extends Drawable {
 			i -= j;
 			j -= k;
 			for (k = anIntArray1538[k]; --j >= 0; k += Drawable.width) {
-				method506(Drawable.anIntArray1424, k, k1, 0, l >> 16, j1 >> 16);
+				method506(Drawable.pixels, k, k1, 0, l >> 16, j1 >> 16);
 				l += i2;
 				j1 += j2;
 			}
 
 			while (--i >= 0) {
-				method506(Drawable.anIntArray1424, k, k1, 0, i1 >> 16, j1 >> 16);
+				method506(Drawable.pixels, k, k1, 0, i1 >> 16, j1 >> 16);
 				i1 += l1;
 				j1 += j2;
 				k += Drawable.width;
@@ -1049,13 +1049,13 @@ public class ThreeDimensionalCanvas extends Drawable {
 		i -= j;
 		j -= k;
 		for (k = anIntArray1538[k]; --j >= 0; k += Drawable.width) {
-			method506(Drawable.anIntArray1424, k, k1, 0, j1 >> 16, l >> 16);
+			method506(Drawable.pixels, k, k1, 0, j1 >> 16, l >> 16);
 			l += i2;
 			j1 += j2;
 		}
 
 		while (--i >= 0) {
-			method506(Drawable.anIntArray1424, k, k1, 0, j1 >> 16, i1 >> 16);
+			method506(Drawable.pixels, k, k1, 0, j1 >> 16, i1 >> 16);
 			i1 += l1;
 			j1 += j2;
 			k += Drawable.width;
@@ -1169,7 +1169,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 					j -= i;
 					i = anIntArray1538[i];
 					while (--j >= 0) {
-						method508(Drawable.anIntArray1424, ai, 0, 0, i, j1 >> 16, l >> 16, i2 >> 8, k1 >> 8,
+						method508(Drawable.pixels, ai, 0, 0, i, j1 >> 16, l >> 16, i2 >> 8, k1 >> 8,
 								l4, k5, j6, i5, l5, k6);
 						j1 += i8;
 						l += i7;
@@ -1181,7 +1181,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 						j6 += l6;
 					}
 					while (--k >= 0) {
-						method508(Drawable.anIntArray1424, ai, 0, 0, i, j1 >> 16, i1 >> 16, i2 >> 8, l1 >> 8,
+						method508(Drawable.pixels, ai, 0, 0, i, j1 >> 16, i1 >> 16, i2 >> 8, l1 >> 8,
 								l4, k5, j6, i5, l5, k6);
 						j1 += i8;
 						i1 += k7;
@@ -1198,7 +1198,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 				j -= i;
 				i = anIntArray1538[i];
 				while (--j >= 0) {
-					method508(Drawable.anIntArray1424, ai, 0, 0, i, l >> 16, j1 >> 16, k1 >> 8, i2 >> 8, l4,
+					method508(Drawable.pixels, ai, 0, 0, i, l >> 16, j1 >> 16, k1 >> 8, i2 >> 8, l4,
 							k5, j6, i5, l5, k6);
 					j1 += i8;
 					l += i7;
@@ -1210,7 +1210,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 					j6 += l6;
 				}
 				while (--k >= 0) {
-					method508(Drawable.anIntArray1424, ai, 0, 0, i, i1 >> 16, j1 >> 16, l1 >> 8, i2 >> 8, l4,
+					method508(Drawable.pixels, ai, 0, 0, i, i1 >> 16, j1 >> 16, l1 >> 8, i2 >> 8, l4,
 							k5, j6, i5, l5, k6);
 					j1 += i8;
 					i1 += k7;
@@ -1248,7 +1248,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 				k -= i;
 				i = anIntArray1538[i];
 				while (--k >= 0) {
-					method508(Drawable.anIntArray1424, ai, 0, 0, i, i1 >> 16, l >> 16, l1 >> 8, k1 >> 8, l4,
+					method508(Drawable.pixels, ai, 0, 0, i, i1 >> 16, l >> 16, l1 >> 8, k1 >> 8, l4,
 							k5, j6, i5, l5, k6);
 					i1 += i8;
 					l += i7;
@@ -1260,7 +1260,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 					j6 += l6;
 				}
 				while (--j >= 0) {
-					method508(Drawable.anIntArray1424, ai, 0, 0, i, j1 >> 16, l >> 16, i2 >> 8, k1 >> 8, l4,
+					method508(Drawable.pixels, ai, 0, 0, i, j1 >> 16, l >> 16, i2 >> 8, k1 >> 8, l4,
 							k5, j6, i5, l5, k6);
 					j1 += k7;
 					l += i7;
@@ -1277,7 +1277,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 			k -= i;
 			i = anIntArray1538[i];
 			while (--k >= 0) {
-				method508(Drawable.anIntArray1424, ai, 0, 0, i, l >> 16, i1 >> 16, k1 >> 8, l1 >> 8, l4, k5,
+				method508(Drawable.pixels, ai, 0, 0, i, l >> 16, i1 >> 16, k1 >> 8, l1 >> 8, l4, k5,
 						j6, i5, l5, k6);
 				i1 += i8;
 				l += i7;
@@ -1289,7 +1289,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 				j6 += l6;
 			}
 			while (--j >= 0) {
-				method508(Drawable.anIntArray1424, ai, 0, 0, i, l >> 16, j1 >> 16, k1 >> 8, i2 >> 8, l4, k5,
+				method508(Drawable.pixels, ai, 0, 0, i, l >> 16, j1 >> 16, k1 >> 8, i2 >> 8, l4, k5,
 						j6, i5, l5, k6);
 				j1 += k7;
 				l += i7;
@@ -1335,7 +1335,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 					k -= j;
 					j = anIntArray1538[j];
 					while (--k >= 0) {
-						method508(Drawable.anIntArray1424, ai, 0, 0, j, l >> 16, i1 >> 16, k1 >> 8, l1 >> 8,
+						method508(Drawable.pixels, ai, 0, 0, j, l >> 16, i1 >> 16, k1 >> 8, l1 >> 8,
 								l4, k5, j6, i5, l5, k6);
 						l += i7;
 						i1 += k7;
@@ -1347,7 +1347,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 						j6 += l6;
 					}
 					while (--i >= 0) {
-						method508(Drawable.anIntArray1424, ai, 0, 0, j, l >> 16, j1 >> 16, k1 >> 8, i2 >> 8,
+						method508(Drawable.pixels, ai, 0, 0, j, l >> 16, j1 >> 16, k1 >> 8, i2 >> 8,
 								l4, k5, j6, i5, l5, k6);
 						l += i7;
 						j1 += i8;
@@ -1364,7 +1364,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 				k -= j;
 				j = anIntArray1538[j];
 				while (--k >= 0) {
-					method508(Drawable.anIntArray1424, ai, 0, 0, j, i1 >> 16, l >> 16, l1 >> 8, k1 >> 8, l4,
+					method508(Drawable.pixels, ai, 0, 0, j, i1 >> 16, l >> 16, l1 >> 8, k1 >> 8, l4,
 							k5, j6, i5, l5, k6);
 					l += i7;
 					i1 += k7;
@@ -1376,7 +1376,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 					j6 += l6;
 				}
 				while (--i >= 0) {
-					method508(Drawable.anIntArray1424, ai, 0, 0, j, j1 >> 16, l >> 16, i2 >> 8, k1 >> 8, l4,
+					method508(Drawable.pixels, ai, 0, 0, j, j1 >> 16, l >> 16, i2 >> 8, k1 >> 8, l4,
 							k5, j6, i5, l5, k6);
 					l += i7;
 					j1 += i8;
@@ -1414,7 +1414,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 				i -= j;
 				j = anIntArray1538[j];
 				while (--i >= 0) {
-					method508(Drawable.anIntArray1424, ai, 0, 0, j, j1 >> 16, i1 >> 16, i2 >> 8, l1 >> 8, l4,
+					method508(Drawable.pixels, ai, 0, 0, j, j1 >> 16, i1 >> 16, i2 >> 8, l1 >> 8, l4,
 							k5, j6, i5, l5, k6);
 					j1 += i7;
 					i1 += k7;
@@ -1426,7 +1426,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 					j6 += l6;
 				}
 				while (--k >= 0) {
-					method508(Drawable.anIntArray1424, ai, 0, 0, j, l >> 16, i1 >> 16, k1 >> 8, l1 >> 8, l4,
+					method508(Drawable.pixels, ai, 0, 0, j, l >> 16, i1 >> 16, k1 >> 8, l1 >> 8, l4,
 							k5, j6, i5, l5, k6);
 					l += i8;
 					i1 += k7;
@@ -1443,7 +1443,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 			i -= j;
 			j = anIntArray1538[j];
 			while (--i >= 0) {
-				method508(Drawable.anIntArray1424, ai, 0, 0, j, i1 >> 16, j1 >> 16, l1 >> 8, i2 >> 8, l4, k5,
+				method508(Drawable.pixels, ai, 0, 0, j, i1 >> 16, j1 >> 16, l1 >> 8, i2 >> 8, l4, k5,
 						j6, i5, l5, k6);
 				j1 += i7;
 				i1 += k7;
@@ -1455,7 +1455,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 				j6 += l6;
 			}
 			while (--k >= 0) {
-				method508(Drawable.anIntArray1424, ai, 0, 0, j, i1 >> 16, l >> 16, l1 >> 8, k1 >> 8, l4, k5,
+				method508(Drawable.pixels, ai, 0, 0, j, i1 >> 16, l >> 16, l1 >> 8, k1 >> 8, l4, k5,
 						j6, i5, l5, k6);
 				l += i8;
 				i1 += k7;
@@ -1500,7 +1500,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 				i -= k;
 				k = anIntArray1538[k];
 				while (--i >= 0) {
-					method508(Drawable.anIntArray1424, ai, 0, 0, k, i1 >> 16, j1 >> 16, l1 >> 8, i2 >> 8, l4,
+					method508(Drawable.pixels, ai, 0, 0, k, i1 >> 16, j1 >> 16, l1 >> 8, i2 >> 8, l4,
 							k5, j6, i5, l5, k6);
 					i1 += k7;
 					j1 += i8;
@@ -1512,7 +1512,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 					j6 += l6;
 				}
 				while (--j >= 0) {
-					method508(Drawable.anIntArray1424, ai, 0, 0, k, i1 >> 16, l >> 16, l1 >> 8, k1 >> 8, l4,
+					method508(Drawable.pixels, ai, 0, 0, k, i1 >> 16, l >> 16, l1 >> 8, k1 >> 8, l4,
 							k5, j6, i5, l5, k6);
 					i1 += k7;
 					l += i7;
@@ -1529,7 +1529,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 			i -= k;
 			k = anIntArray1538[k];
 			while (--i >= 0) {
-				method508(Drawable.anIntArray1424, ai, 0, 0, k, j1 >> 16, i1 >> 16, i2 >> 8, l1 >> 8, l4, k5,
+				method508(Drawable.pixels, ai, 0, 0, k, j1 >> 16, i1 >> 16, i2 >> 8, l1 >> 8, l4, k5,
 						j6, i5, l5, k6);
 				i1 += k7;
 				j1 += i8;
@@ -1541,7 +1541,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 				j6 += l6;
 			}
 			while (--j >= 0) {
-				method508(Drawable.anIntArray1424, ai, 0, 0, k, l >> 16, i1 >> 16, k1 >> 8, l1 >> 8, l4, k5,
+				method508(Drawable.pixels, ai, 0, 0, k, l >> 16, i1 >> 16, k1 >> 8, l1 >> 8, l4, k5,
 						j6, i5, l5, k6);
 				i1 += k7;
 				l += i7;
@@ -1579,7 +1579,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 			j -= k;
 			k = anIntArray1538[k];
 			while (--j >= 0) {
-				method508(Drawable.anIntArray1424, ai, 0, 0, k, l >> 16, j1 >> 16, k1 >> 8, i2 >> 8, l4, k5,
+				method508(Drawable.pixels, ai, 0, 0, k, l >> 16, j1 >> 16, k1 >> 8, i2 >> 8, l4, k5,
 						j6, i5, l5, k6);
 				l += k7;
 				j1 += i8;
@@ -1591,7 +1591,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 				j6 += l6;
 			}
 			while (--i >= 0) {
-				method508(Drawable.anIntArray1424, ai, 0, 0, k, i1 >> 16, j1 >> 16, l1 >> 8, i2 >> 8, l4, k5,
+				method508(Drawable.pixels, ai, 0, 0, k, i1 >> 16, j1 >> 16, l1 >> 8, i2 >> 8, l4, k5,
 						j6, i5, l5, k6);
 				i1 += i7;
 				j1 += i8;
@@ -1608,7 +1608,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 		j -= k;
 		k = anIntArray1538[k];
 		while (--j >= 0) {
-			method508(Drawable.anIntArray1424, ai, 0, 0, k, j1 >> 16, l >> 16, i2 >> 8, k1 >> 8, l4, k5, j6,
+			method508(Drawable.pixels, ai, 0, 0, k, j1 >> 16, l >> 16, i2 >> 8, k1 >> 8, l4, k5, j6,
 					i5, l5, k6);
 			l += k7;
 			j1 += i8;
@@ -1620,7 +1620,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 			j6 += l6;
 		}
 		while (--i >= 0) {
-			method508(Drawable.anIntArray1424, ai, 0, 0, k, j1 >> 16, i1 >> 16, i2 >> 8, l1 >> 8, l4, k5, j6,
+			method508(Drawable.pixels, ai, 0, 0, k, j1 >> 16, i1 >> 16, i2 >> 8, l1 >> 8, l4, k5, j6,
 					i5, l5, k6);
 			i1 += i7;
 			j1 += i8;

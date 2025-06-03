@@ -7,9 +7,6 @@ public class Drawable extends QueueNode {
 	public static int anInt1420;
 	public static boolean aBoolean1421;
 	public static boolean aBoolean1422 = true;
-	public static int anIntArray1424[];
-	public static int width;
-	public static int height;
 	public static int anInt1427;
 	public static int anInt1428;
 	public static int anInt1429;
@@ -19,14 +16,18 @@ public class Drawable extends QueueNode {
 	public static int anInt1433;
 	public static boolean aBoolean1434;
 
+	public static int pixels[];
+	public static int width;
+	public static int height;
+
 	public Drawable() {
 	}
 
-	public static void method444(int i, int j, int ai[]) {
-		anIntArray1424 = ai;
-		width = i;
-		height = j;
-		method446(0, 0, j, i, true);
+	public static void method444(int width, int heíght, int pixels[]) {
+		Drawable.pixels = pixels;
+		Drawable.width = width;
+		Drawable.height = heíght;
+		method446(0, 0, heíght, width, true);
 	}
 
 	public static void method445() {
@@ -38,19 +39,19 @@ public class Drawable extends QueueNode {
 		anInt1432 = anInt1430 / 2;
 	}
 
-	public static void method446(int i, int j, int k, int l, boolean flag) {
-		if (j < 0)
-			j = 0;
-		if (i < 0)
-			i = 0;
-		if (l > width)
-			l = width;
-		if (k > height)
-			k = height;
-		anInt1429 = j;
-		anInt1427 = i;
-		anInt1430 = l;
-		anInt1428 = k;
+	public static void method446(int startX, int startY, int endY, int endX, boolean flag) {
+		if (startY < 0)
+			startY = 0;
+		if (startX < 0)
+			startX = 0;
+		if (endX > width)
+			endX = width;
+		if (endY > height)
+			endY = height;
+		anInt1429 = startY;
+		anInt1427 = startX;
+		anInt1430 = endX;
+		anInt1428 = endY;
 		if (!flag) {
 			return;
 		} else {
@@ -66,7 +67,7 @@ public class Drawable extends QueueNode {
 		if (i != 4)
 			aBoolean1421 = !aBoolean1421;
 		for (int k = 0; k < j; k++)
-			anIntArray1424[k] = 0;
+			pixels[k] = 0;
 
 	}
 
@@ -93,11 +94,11 @@ public class Drawable extends QueueNode {
 		int k3 = j1 + j * width;
 		for (int l3 = 0; l3 < l; l3++) {
 			for (int i4 = -k; i4 < 0; i4++) {
-				int k2 = (anIntArray1424[k3] >> 16 & 0xff) * k1;
-				int l2 = (anIntArray1424[k3] >> 8 & 0xff) * k1;
-				int i3 = (anIntArray1424[k3] & 0xff) * k1;
+				int k2 = (pixels[k3] >> 16 & 0xff) * k1;
+				int l2 = (pixels[k3] >> 8 & 0xff) * k1;
+				int i3 = (pixels[k3] & 0xff) * k1;
 				int j4 = ((l1 + k2 >> 8) << 16) + ((i2 + l2 >> 8) << 8) + (j2 + i3 >> 8);
-				anIntArray1424[k3++] = j4;
+				pixels[k3++] = j4;
 			}
 
 			k3 += j3;
@@ -122,7 +123,7 @@ public class Drawable extends QueueNode {
 		int k1 = i1 + j * width;
 		for (int l1 = -i; l1 < 0; l1++) {
 			for (int i2 = -l; i2 < 0; i2++)
-				anIntArray1424[k1++] = k;
+				pixels[k1++] = k;
 
 			k1 += j1;
 		}
@@ -165,7 +166,7 @@ public class Drawable extends QueueNode {
 			for (int j1 = 1; j1 > 0; j1++);
 		}
 		for (int k1 = 0; k1 < l; k1++)
-			anIntArray1424[i1 + k1] = j;
+			pixels[i1 + k1] = j;
 
 	}
 
@@ -184,11 +185,11 @@ public class Drawable extends QueueNode {
 		int j2 = (j1 & 0xff) * i1;
 		int j3 = j + i * width;
 		for (int k3 = 0; k3 < k; k3++) {
-			int k2 = (anIntArray1424[j3] >> 16 & 0xff) * k1;
-			int l2 = (anIntArray1424[j3] >> 8 & 0xff) * k1;
-			int i3 = (anIntArray1424[j3] & 0xff) * k1;
+			int k2 = (pixels[j3] >> 16 & 0xff) * k1;
+			int l2 = (pixels[j3] >> 8 & 0xff) * k1;
+			int i3 = (pixels[j3] & 0xff) * k1;
 			int l3 = ((l1 + k2 >> 8) << 16) + ((i2 + l2 >> 8) << 8) + (j2 + i3 >> 8);
-			anIntArray1424[j3++] = l3;
+			pixels[j3++] = l3;
 		}
 
 		if (l != 1388)
@@ -208,7 +209,7 @@ public class Drawable extends QueueNode {
 			k = anInt1428 - l;
 		int i1 = i + l * width;
 		for (int j1 = 0; j1 < k; j1++)
-			anIntArray1424[i1 + j1 * width] = j;
+			pixels[i1 + j1 * width] = j;
 
 	}
 
@@ -230,11 +231,11 @@ public class Drawable extends QueueNode {
 		}
 		int k3 = k + j * width;
 		for (int l3 = 0; l3 < i1; l3++) {
-			int k2 = (anIntArray1424[k3] >> 16 & 0xff) * k1;
-			int l2 = (anIntArray1424[k3] >> 8 & 0xff) * k1;
-			int i3 = (anIntArray1424[k3] & 0xff) * k1;
+			int k2 = (pixels[k3] >> 16 & 0xff) * k1;
+			int l2 = (pixels[k3] >> 8 & 0xff) * k1;
+			int i3 = (pixels[k3] & 0xff) * k1;
 			int i4 = ((l1 + k2 >> 8) << 16) + ((i2 + l2 >> 8) << 8) + (j2 + i3 >> 8);
-			anIntArray1424[k3] = i4;
+			pixels[k3] = i4;
 			k3 += width;
 		}
 

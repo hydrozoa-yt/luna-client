@@ -356,7 +356,7 @@ public class ItemDefinition {
 		int j1 = ThreeDimensionalCanvas.anInt1532;
 		int k1 = ThreeDimensionalCanvas.anInt1533;
 		int ai[] = ThreeDimensionalCanvas.anIntArray1538;
-		int ai1[] = Drawable.anIntArray1424;
+		int ai1[] = Drawable.pixels;
 		int l1 = Drawable.width;
 		int i2 = Drawable.height;
 		int j2 = Drawable.anInt1429;

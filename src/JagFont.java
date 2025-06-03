@@ -100,11 +100,11 @@ public class JagFont extends Drawable {
 		method474(2245, i - method473(s, (byte) -53) / 2, l, k, s);
 	}
 
-	public void method471(boolean flag, int i, int j, int k, int l, String s) {
+	public void drawString(String text, int x, int y, boolean flag, int i, int j) {
 		if (i < anInt1498 || i > anInt1498) {
 			return;
 		} else {
-			method478(j, l - method472((byte) 35, s) / 2, k, flag, s, -39629);
+			method478(j, x - method472((byte) 35, text) / 2, y, flag, text, -39629);
 			return;
 		}
 	}
@@ -348,7 +348,7 @@ public class JagFont extends Drawable {
 		if (width <= 0 || height <= 0) {
 			return;
 		} else {
-			method482(Drawable.anIntArray1424, abyte0, i1, characterPixel, graphicsPixel, width, height, remainingWidth, characterPixelOffset);
+			method482(Drawable.pixels, abyte0, i1, characterPixel, graphicsPixel, width, height, remainingWidth, characterPixelOffset);
 			return;
 		}
 	}
@@ -422,7 +422,7 @@ public class JagFont extends Drawable {
 		if (i1 <= 0 || l <= 0) {
 			return;
 		} else {
-			method484(j2, l1, i2, k1, j1, Drawable.anIntArray1424, j, 2, l, i1, abyte0);
+			method484(j2, l1, i2, k1, j1, Drawable.pixels, j, 2, l, i1, abyte0);
 			return;
 		}
 	}

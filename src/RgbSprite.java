@@ -209,7 +209,7 @@ public class RgbSprite extends Drawable {
 		}
 		if (k1 <= 0 || j1 <= 0)
 			return;
-		method460(k1, l1, j1, anIntArray1489, i1, i2, l, (byte) -39, Drawable.anIntArray1424);
+		method460(k1, l1, j1, anIntArray1489, i1, i2, l, (byte) -39, Drawable.pixels);
 		if (j >= 0)
 			aBoolean1487 = !aBoolean1487;
 	}
@@ -274,7 +274,7 @@ public class RgbSprite extends Drawable {
 		if (k1 <= 0 || j1 <= 0) {
 			return;
 		} else {
-			method462(Drawable.anIntArray1424, anIntArray1489, 0, i1, l, k1, j1, l1, i2);
+			method462(Drawable.pixels, anIntArray1489, 0, i1, l, k1, j1, l1, i2);
 			return;
 		}
 	}
@@ -358,7 +358,7 @@ public class RgbSprite extends Drawable {
 		if (l1 <= 0 || k1 <= 0) {
 			return;
 		} else {
-			method464(l1, j2, 0, i2, j1, anInt1481, l, i1, k1, Drawable.anIntArray1424, anIntArray1489);
+			method464(l1, j2, 0, i2, j1, anInt1481, l, i1, k1, Drawable.pixels, anIntArray1489);
 			return;
 		}
 	}
@@ -403,7 +403,7 @@ public class RgbSprite extends Drawable {
 				int k4 = j3 + i3 * i4;
 				int l4 = k3 - l2 * i4;
 				for (j1 = -ai[i]; j1 < 0; j1++) {
-					Drawable.anIntArray1424[j4++] = anIntArray1489[(k4 >> 16) + (l4 >> 16) * anInt1490];
+					Drawable.pixels[j4++] = anIntArray1489[(k4 >> 16) + (l4 >> 16) * anInt1490];
 					k4 += i3;
 					l4 -= l2;
 				}
@@ -439,7 +439,7 @@ public class RgbSprite extends Drawable {
 				for (k = -k1; k < 0; k++) {
 					int k4 = anIntArray1489[(i4 >> 16) + (j4 >> 16) * anInt1490];
 					if (k4 != 0)
-						Drawable.anIntArray1424[l3++] = k4;
+						Drawable.pixels[l3++] = k4;
 					else
 						l3++;
 					i4 += l2;
@@ -495,7 +495,7 @@ public class RgbSprite extends Drawable {
 		if (k1 <= 0 || j1 <= 0) {
 			return;
 		} else {
-			method468(l, l1, anIntArray1489, k1, Drawable.anIntArray1424,
+			method468(l, l1, anIntArray1489, k1, Drawable.pixels,
 					class50_sub1_sub1_sub3.aByteArray1516, 40303, j1, i1, 0, i2);
 			return;
 		}
