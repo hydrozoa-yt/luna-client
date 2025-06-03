@@ -98,7 +98,7 @@ public class Drawable extends QueueNode {
 
 	}
 
-	public static void method449(int i, int j, int k, byte byte0, int l, int i1) {
+	public static void drawFullRect2(int i, int j, int k, int l, int i1) {
 		if (i1 < startY) {
 			l -= startY - i1;
 			i1 = startY;
@@ -119,14 +119,11 @@ public class Drawable extends QueueNode {
 
 			k1 += j1;
 		}
-
-		if (byte0 == -24)
-			;
 	}
 
 	public static void method450(int j, int k, int color, int i1, int j1) {
-		drawLine(i1, color, j, j1);
-		drawLine(i1, color, (j + k) - 1, j1);
+		drawLine(color, i1, j, j1);
+		drawLine(color, i1, (j + k) - 1, j1);
 		method454(color, i1, k, j);
 		method454(color, (i1 + j1) - 1, k, j);
 	}
@@ -142,20 +139,21 @@ public class Drawable extends QueueNode {
 		}
 	}
 
-	public static void drawLine(int i, int j, int k, int l) {
+	public static void drawLine(int color, int i, int k, int length) {
 		if (k < startX || k >= endY)
 			return;
 		if (i < startY) {
-			l -= startY - i;
+			length -= startY - i;
 			i = startY;
 		}
-		if (i + l > endX)
-			l = endX - i;
-		int i1 = i + k * width;
-		for (int k1 = 0; k1 < l; k1++)
-			pixels[i1 + k1] = j;
+		if (i + length > endX)
+			length = endX - i;
+		int ppixelOffset = i + k * width;
+		for (int counter = 0; counter < length; counter++)
+			pixels[ppixelOffset + counter] = color;
 	}
 
+	// not obvious when knockout
 	public static void method453(int i, int j, int k, int l, int i1, int j1) {
 		if (i < startX || i >= endY)
 			return;
@@ -179,6 +177,7 @@ public class Drawable extends QueueNode {
 		}
 	}
 
+	// not obvious when knockout
 	public static void method454(int color, int y, int k, int x) {
 		if (y < startY || y >= endX)
 			return;
@@ -191,9 +190,9 @@ public class Drawable extends QueueNode {
 		int i1 = y + x * width;
 		for (int j1 = 0; j1 < k; j1++)
 			pixels[i1 + j1 * width] = color;
-
 	}
 
+	// not obvious when knockout
 	public static void method455(int width, int k, int l, int i1, int darkness) {
 		if (k < startY || k >= endX)
 			return;
@@ -216,6 +215,5 @@ public class Drawable extends QueueNode {
 			pixels[pixelOffset] = pixelColor;
 			pixelOffset += Drawable.width;
 		}
-
 	}
 }

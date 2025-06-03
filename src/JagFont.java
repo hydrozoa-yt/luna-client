@@ -104,7 +104,7 @@ public class JagFont extends Drawable {
 		if (i < anInt1498 || i > anInt1498) {
 			return;
 		} else {
-			method478(j, x - method472((byte) 35, text) / 2, y, flag, text, -39629);
+			this.drawString(text, j, x - method472((byte) 35, text) / 2, y, flag);
 			return;
 		}
 	}
@@ -211,22 +211,20 @@ public class JagFont extends Drawable {
 
 	}
 
-	public void method478(int i, int j, int k, boolean flag, String s, int l) {
+	public void drawString(String text, int i, int j, int k, boolean flag) {
 		strikethrough = false;
-		if (l != -39629)
-			return;
 		int i1 = j;
-		if (s == null)
+		if (text == null)
 			return;
 		k -= anInt1506;
-		for (int j1 = 0; j1 < s.length(); j1++)
-			if (s.charAt(j1) == '@' && j1 + 4 < s.length() && s.charAt(j1 + 4) == '@') {
-				int k1 = processFormattingCode(anInt1499, s.substring(j1 + 1, j1 + 4));
+		for (int j1 = 0; j1 < text.length(); j1++)
+			if (text.charAt(j1) == '@' && j1 + 4 < text.length() && text.charAt(j1 + 4) == '@') {
+				int k1 = processFormattingCode(anInt1499, text.substring(j1 + 1, j1 + 4));
 				if (k1 != -1)
 					i = k1;
 				j1 += 4;
 			} else {
-				char c = s.charAt(j1);
+				char c = text.charAt(j1);
 				if (c != ' ') {
 					if (flag)
 						method481(aByteArrayArray1500[c], j + anIntArray1503[c] + 1, k + anIntArray1504[c] + 1,
@@ -238,7 +236,7 @@ public class JagFont extends Drawable {
 			}
 
 		if (strikethrough)
-			Drawable.drawLine(i1, 0x800000, k + (int) (anInt1506 * 0.69999999999999996D), j - i1);
+			Drawable.drawLine(0x800000, i1, k + (int) (anInt1506 * 0.69999999999999996D), j - i1);
 	}
 
 	public void method479(boolean flag, int i, int j, int k, int l, String s, int i1) {

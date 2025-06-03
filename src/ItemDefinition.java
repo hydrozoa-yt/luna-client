@@ -365,7 +365,7 @@ public class ItemDefinition {
 		int i3 = Drawable.endY;
 		ThreeDimensionalCanvas.aBoolean1530 = false;
 		Drawable.putPixels(32, 32, class50_sub1_sub1_sub1_1.anIntArray1489);
-		Drawable.method449(32, 0, 0, (byte) -24, 32, 0);
+		Drawable.drawFullRect2(32, 0, 0, 32, 0);
 		ThreeDimensionalCanvas.method493(568);
 		int j3 = class16.modelScale;
 		if (i == -1)
