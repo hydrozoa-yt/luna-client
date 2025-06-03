@@ -4,6 +4,25 @@
 
 public class Class36 {
 
+	public int anInt611;
+	public boolean aBoolean612;
+	public int anIntArray613[];
+	public int anIntArrayArrayArray614[][][];
+	public int anIntArrayArrayArray615[][][];
+	public int anIntArray616[];
+	public static float aFloatArrayArray617[][] = new float[2][8];
+	public static int anIntArrayArray618[][] = new int[2][8];
+	public static float aFloat619;
+	public static int anInt620;
+
+	public Class36() {
+		aBoolean612 = true;
+		anIntArray613 = new int[2];
+		anIntArrayArrayArray614 = new int[2][2][4];
+		anIntArrayArrayArray615 = new int[2][2][4];
+		anIntArray616 = new int[2];
+	}
+
 	public float method352(int i, int j, float f, int k) {
 		float f1 = anIntArrayArrayArray615[i][0][k] + f
 				* (anIntArrayArrayArray615[i][1][k] - anIntArrayArrayArray615[i][0][k]);
@@ -107,24 +126,4 @@ public class Class36 {
 			return;
 		}
 	}
-
-	public Class36() {
-		aBoolean612 = true;
-		anIntArray613 = new int[2];
-		anIntArrayArrayArray614 = new int[2][2][4];
-		anIntArrayArrayArray615 = new int[2][2][4];
-		anIntArray616 = new int[2];
-	}
-
-	public int anInt611;
-	public boolean aBoolean612;
-	public int anIntArray613[];
-	public int anIntArrayArrayArray614[][][];
-	public int anIntArrayArrayArray615[][][];
-	public int anIntArray616[];
-	public static float aFloatArrayArray617[][] = new float[2][8];
-	public static int anIntArrayArray618[][] = new int[2][8];
-	public static float aFloat619;
-	public static int anInt620;
-
 }

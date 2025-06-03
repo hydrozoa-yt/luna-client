@@ -23,6 +23,57 @@ import java.awt.event.WindowListener;
 public class JagApplet extends Applet implements Runnable, MouseListener, MouseMotionListener, KeyListener,
 		FocusListener, WindowListener {
 
+	public boolean aBoolean2;
+	public boolean aBoolean3;
+	public int anInt4;
+	public int anInt5;
+	public int gameState;
+	public int delayTime;
+	public int minDelay;
+	public long aLongArray9[];
+	public int fps;
+	public boolean aBoolean11;
+	public int width;
+	public int height;
+	public Graphics graphics;
+	public JagImageProducer imageProducer;
+	public RgbSprite aClass50_Sub1_Sub1_Sub1Array16[];
+	public JagFrame frame;
+	public boolean clearBackground;
+	public boolean aBoolean19;
+	public int anInt20;
+	public int anInt21;
+	public int mouseX;
+	public int mouseY;
+	public int anInt24;
+	public int anInt25;
+	public int anInt26;
+	public long aLong27;
+	public int anInt28;
+	public int anInt29;
+	public int anInt30;
+	public long aLong31;
+	public int anIntArray32[];
+	public int anIntArray33[];
+	public int anInt34;
+	public int anInt35;
+	public static int anInt36;
+
+	public JagApplet() {
+		aBoolean2 = false;
+		aBoolean3 = false;
+		anInt4 = 3;
+		delayTime = 20;
+		minDelay = 1;
+		aLongArray9 = new long[10];
+		aBoolean11 = false;
+		aClass50_Sub1_Sub1_Sub1Array16 = new RgbSprite[6];
+		clearBackground = true;
+		aBoolean19 = true;
+		anIntArray32 = new int[128];
+		anIntArray33 = new int[128];
+	}
+
 	public void start(int _width, int _height) {
 		width = _width;
 		height = _height;
@@ -79,15 +130,15 @@ public class JagApplet extends Applet implements Runnable, MouseListener, MouseM
 				j = i2;
 				k = j2;
 			} else if (l1 > aLongArray9[i])
-				j = (int) ((2560 * anInt7) / (l1 - aLongArray9[i]));
+				j = (int) ((2560 * delayTime) / (l1 - aLongArray9[i]));
 			if (j < 25)
 				j = 25;
 			if (j > 256) {
 				j = 256;
-				k = (int) (anInt7 - (l1 - aLongArray9[i]) / 10L);
+				k = (int) (delayTime - (l1 - aLongArray9[i]) / 10L);
 			}
-			if (k > anInt7)
-				k = anInt7;
+			if (k > delayTime)
+				k = delayTime;
 			aLongArray9[i] = l1;
 			i = (i + 1) % 10;
 			if (k > 1) {
@@ -96,8 +147,8 @@ public class JagApplet extends Applet implements Runnable, MouseListener, MouseM
 						aLongArray9[k2] += k;
 
 			}
-			if (k < anInt8)
-				k = anInt8;
+			if (k < minDelay)
+				k = minDelay;
 			try {
 				Thread.sleep(k);
 			} catch (InterruptedException _ex) {
@@ -114,8 +165,8 @@ public class JagApplet extends Applet implements Runnable, MouseListener, MouseM
 			}
 
 			i1 &= 0xff;
-			if (anInt7 > 0)
-				fps = (1000 * j) / (anInt7 * 256);
+			if (delayTime > 0)
+				fps = (1000 * j) / (delayTime * 256);
 			repaintGame(818);
 			if (aBoolean11) {
 				System.out.println("ntime:" + l1);
@@ -125,7 +176,7 @@ public class JagApplet extends Applet implements Runnable, MouseListener, MouseM
 				}
 
 				System.out.println("fps:" + fps + " ratio:" + j + " count:" + i1);
-				System.out.println("del:" + k + " deltime:" + anInt7 + " mindel:" + anInt8);
+				System.out.println("del:" + k + " deltime:" + delayTime + " mindel:" + minDelay);
 				System.out.println("intex:" + j1 + " opos:" + i);
 				aBoolean11 = false;
 				j1 = 0;
@@ -153,8 +204,8 @@ public class JagApplet extends Applet implements Runnable, MouseListener, MouseM
 		}
 	}
 
-	public void method4(int i) {
-		anInt7 = 1000 / i;
+	public void setFramerate(int newFramerate) {
+		delayTime = 1000 / newFramerate;
 	}
 
 	@Override
@@ -166,7 +217,7 @@ public class JagApplet extends Applet implements Runnable, MouseListener, MouseM
 	@Override
 	public void stop() {
 		if (gameState >= 0)
-			gameState = 4000 / anInt7;
+			gameState = 4000 / delayTime;
 	}
 
 	@Override
@@ -185,7 +236,7 @@ public class JagApplet extends Applet implements Runnable, MouseListener, MouseM
 		if (graphics == null)
 			graphics = g;
 		clearBackground = true;
-		method10((byte) -99);
+		needsUIRedraw();
 	}
 
 	@Override
@@ -193,7 +244,7 @@ public class JagApplet extends Applet implements Runnable, MouseListener, MouseM
 		if (graphics == null)
 			graphics = g;
 		clearBackground = true;
-		method10((byte) -99);
+		needsUIRedraw();
 	}
 
 	public void mousePressed(MouseEvent mouseevent) {
@@ -261,42 +312,42 @@ public class JagApplet extends Applet implements Runnable, MouseListener, MouseM
 
 	public void keyPressed(KeyEvent keyevent) {
 		anInt20 = 0;
-		int i = keyevent.getKeyCode();
-		int j = keyevent.getKeyChar();
-		if (j < 30)
-			j = 0;
-		if (i == 37)
-			j = 1;
-		if (i == 39)
-			j = 2;
-		if (i == 38)
-			j = 3;
-		if (i == 40)
-			j = 4;
-		if (i == 17)
-			j = 5;
-		if (i == 8)
-			j = 8;
-		if (i == 127)
-			j = 8;
-		if (i == 9)
-			j = 9;
-		if (i == 10)
-			j = 10;
-		if (i >= 112 && i <= 123)
-			j = (1008 + i) - 112;
-		if (i == 36)
-			j = 1000;
-		if (i == 35)
-			j = 1001;
-		if (i == 33)
-			j = 1002;
-		if (i == 34)
-			j = 1003;
-		if (j > 0 && j < 128)
-			anIntArray32[j] = 1;
-		if (j > 4) {
-			anIntArray33[anInt35] = j;
+		int keycode = keyevent.getKeyCode();
+		int keychar = keyevent.getKeyChar();
+		if (keychar < 30)
+			keychar = 0;
+		if (keycode == 37)
+			keychar = 1;
+		if (keycode == 39)
+			keychar = 2;
+		if (keycode == 38)
+			keychar = 3;
+		if (keycode == 40)
+			keychar = 4;
+		if (keycode == 17)
+			keychar = 5;
+		if (keycode == 8)
+			keychar = 8;
+		if (keycode == 127)
+			keychar = 8;
+		if (keycode == 9)
+			keychar = 9;
+		if (keycode == 10)
+			keychar = 10;
+		if (keycode >= 112 && keycode <= 123)
+			keychar = (1008 + keycode) - 112;
+		if (keycode == 36)
+			keychar = 1000;
+		if (keycode == 35)
+			keychar = 1001;
+		if (keycode == 33)
+			keychar = 1002;
+		if (keycode == 34)
+			keychar = 1003;
+		if (keychar > 0 && keychar < 128)
+			anIntArray32[keychar] = 1;
+		if (keychar > 4) {
+			anIntArray33[anInt35] = keychar;
 			anInt35 = anInt35 + 1 & 0x7f;
 		}
 	}
@@ -346,7 +397,7 @@ public class JagApplet extends Applet implements Runnable, MouseListener, MouseM
 	public void focusGained(FocusEvent focusevent) {
 		aBoolean19 = true;
 		clearBackground = true;
-		method10((byte) -99);
+		needsUIRedraw();
 	}
 
 	public void focusLost(FocusEvent focusevent) {
@@ -395,10 +446,7 @@ public class JagApplet extends Applet implements Runnable, MouseListener, MouseM
 			;
 	}
 
-	public void method10(byte byte0) {
-		if (byte0 == -99)
-			;
-	}
+	public void needsUIRedraw() {}
 
 	public Component getParentComponent() {
 		if (frame != null)
@@ -413,7 +461,7 @@ public class JagApplet extends Applet implements Runnable, MouseListener, MouseM
 		thread.setPriority(priority);
 	}
 
-	public void drawLoadingText(int percent, String desc) {
+	public void drawLoadingText(int percent, String text) {
 		while (graphics == null) {
 			graphics = getParentComponent().getGraphics();
 			try {
@@ -443,57 +491,6 @@ public class JagApplet extends Applet implements Runnable, MouseListener, MouseM
 		graphics.fillRect((width / 2 - 150) + percent * 3, j + 2, 300 - percent * 3, 30);
 		graphics.setFont(font);
 		graphics.setColor(Color.white);
-		graphics.drawString(desc, (width - fontmetrics.stringWidth(desc)) / 2, j + 22);
+		graphics.drawString(text, (width - fontmetrics.stringWidth(text)) / 2, j + 22);
 	}
-
-	public JagApplet() {
-		aBoolean2 = false;
-		aBoolean3 = false;
-		anInt4 = 3;
-		anInt7 = 20;
-		anInt8 = 1;
-		aLongArray9 = new long[10];
-		aBoolean11 = false;
-		aClass50_Sub1_Sub1_Sub1Array16 = new RgbSprite[6];
-		clearBackground = true;
-		aBoolean19 = true;
-		anIntArray32 = new int[128];
-		anIntArray33 = new int[128];
-	}
-
-	public boolean aBoolean2;
-	public boolean aBoolean3;
-	public int anInt4;
-	public int anInt5;
-	public int gameState;
-	public int anInt7;
-	public int anInt8;
-	public long aLongArray9[];
-	public int fps;
-	public boolean aBoolean11;
-	public int width;
-	public int height;
-	public Graphics graphics;
-	public JagImageProducer imageProducer;
-	public RgbSprite aClass50_Sub1_Sub1_Sub1Array16[];
-	public JagFrame frame;
-	public boolean clearBackground;
-	public boolean aBoolean19;
-	public int anInt20;
-	public int anInt21;
-	public int mouseX;
-	public int mouseY;
-	public int anInt24;
-	public int anInt25;
-	public int anInt26;
-	public long aLong27;
-	public int anInt28;
-	public int anInt29;
-	public int anInt30;
-	public long aLong31;
-	public int anIntArray32[];
-	public int anIntArray33[];
-	public int anInt34;
-	public int anInt35;
-	public static int anInt36;
 }

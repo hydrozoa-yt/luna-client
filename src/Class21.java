@@ -4,6 +4,21 @@
 
 public class Class21 {
 
+	public static int anInt428 = 217;
+	public static boolean aBoolean429;
+	public static Class21 aClass21Array430[];
+	public int anInt431;
+	public Class41 aClass41_432;
+	public int anInt433;
+	public int anIntArray434[];
+	public int anIntArray435[];
+	public int anIntArray436[];
+	public int anIntArray437[];
+	public static boolean aBooleanArray438[];
+
+	public Class21() {
+	}
+
 	public static void method235(int i) {
 		aClass21Array430 = new Class21[i + 1];
 		aBooleanArray438 = new boolean[i + 1];
@@ -122,19 +137,6 @@ public class Class21 {
 		return i == -1;
 	}
 
-	public Class21() {
-	}
 
-	public static int anInt428 = 217;
-	public static boolean aBoolean429;
-	public static Class21 aClass21Array430[];
-	public int anInt431;
-	public Class41 aClass41_432;
-	public int anInt433;
-	public int anIntArray434[];
-	public int anIntArray435[];
-	public int anIntArray436[];
-	public int anIntArray437[];
-	public static boolean aBooleanArray438[];
 
 }

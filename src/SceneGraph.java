@@ -333,7 +333,7 @@ public class SceneGraph {
 			Entity class50_sub1_sub4, int j2) {
 		if (class50_sub1_sub4 == null)
 			return;
-		Class35 class35 = new Class35();
+		ScenegraphMember35 class35 = new ScenegraphMember35();
 		class35.anInt609 = l;
 		class35.aByte610 = byte0;
 		class35.anInt604 = i1 * 128 + 64 + l1;
@@ -503,7 +503,7 @@ public class SceneGraph {
 		Tile class50_sub3 = tiles[k][l][i];
 		if (class50_sub3 == null)
 			return;
-		Class35 class35 = class50_sub3.aClass35_1404;
+		ScenegraphMember35 class35 = class50_sub3.aClass35_1404;
 		if (class35 == null)
 			return;
 		int j1 = l * 128 + 64;
@@ -584,7 +584,7 @@ public class SceneGraph {
 			return class50_sub3.aClass44_1403;
 	}
 
-	public Class35 method264(int i, int j, int k, boolean flag) {
+	public ScenegraphMember35 method264(int i, int j, int k, boolean flag) {
 		Tile class50_sub3 = tiles[i][k][j];
 		if (flag)
 			throw new NullPointerException();
@@ -1268,7 +1268,7 @@ public class SceneGraph {
 				int j1 = 0;
 				int j2 = 0;
 				ScenegraphMember44 class44_3 = class50_sub3_1.aClass44_1403;
-				Class35 class35_1 = class50_sub3_1.aClass35_1404;
+				ScenegraphMember35 class35_1 = class50_sub3_1.aClass35_1404;
 				if (class44_3 != null || class35_1 != null) {
 					if (anInt468 == i)
 						j1++;
@@ -1543,7 +1543,7 @@ public class SceneGraph {
 							class10.anInt175 - anInt472, class10.anInt179);
 			}
 			if (class50_sub3_1.anInt1418 != 0) {
-				Class35 class35 = class50_sub3_1.aClass35_1404;
+				ScenegraphMember35 class35 = class50_sub3_1.aClass35_1404;
 				if (class35 != null && !method289(l, i, j, class35.aClass50_Sub1_Sub4_608.height))
 					if ((class35.anInt606 & class50_sub3_1.anInt1418) != 0)
 						class35.aClass50_Sub1_Sub4_608.method560(class35.anInt607, anInt473, anInt474, anInt475,

@@ -4,6 +4,92 @@
 
 public class Model extends Entity {
 
+	public static Model aClass50_Sub1_Sub4_Sub4_1643 = new Model(852);
+	public int anInt1636;
+	public int anInt1637;
+	public boolean aBoolean1638;
+	public boolean aBoolean1639;
+	public int anInt1640;
+	public boolean aBoolean1641;
+	public static int anInt1642;
+	public static int anIntArray1644[] = new int[2000];
+	public static int anIntArray1645[] = new int[2000];
+	public static int anIntArray1646[] = new int[2000];
+	public static int anIntArray1647[] = new int[2000];
+	public int anInt1648;
+	public int anIntArray1649[];
+	public int anIntArray1650[];
+	public int anIntArray1651[];
+	public int anInt1652;
+	public int anIntArray1653[];
+	public int anIntArray1654[];
+	public int anIntArray1655[];
+	public int anIntArray1656[];
+	public int anIntArray1657[];
+	public int anIntArray1658[];
+	public int anIntArray1659[];
+	public int anIntArray1660[];
+	public int anIntArray1661[];
+	public int colors[];
+	public int anInt1663;
+	public int anInt1664;
+	public int anIntArray1665[];
+	public int anIntArray1666[];
+	public int anIntArray1667[];
+	public int anInt1668;
+	public int anInt1669;
+	public int anInt1670;
+	public int anInt1671;
+	public int anInt1672;
+	public int anInt1673;
+	public int anInt1674;
+	public int anInt1675;
+	public int anIntArray1676[];
+	public int anIntArray1677[];
+	public int anIntArrayArray1678[][];
+	public int anIntArrayArray1679[][];
+	public boolean aBoolean1680;
+	public VertexNormal aClass40Array1681[];
+	public static ModelRelated26 aClass26Array1682[];
+	public static ModelProvider aClass32_1683;
+	public static boolean aBooleanArray1684[] = new boolean[4096];
+	public static boolean aBooleanArray1685[] = new boolean[4096];
+	public static int anIntArray1686[] = new int[4096];
+	public static int anIntArray1687[] = new int[4096];
+	public static int anIntArray1688[] = new int[4096];
+	public static int anIntArray1689[] = new int[4096];
+	public static int anIntArray1690[] = new int[4096];
+	public static int anIntArray1691[] = new int[4096];
+	public static int anIntArray1692[] = new int[1500];
+	public static int anIntArrayArray1693[][] = new int[1500][512];
+	public static int anIntArray1694[] = new int[12];
+	public static int anIntArrayArray1695[][] = new int[12][2000];
+	public static int anIntArray1696[] = new int[2000];
+	public static int anIntArray1697[] = new int[2000];
+	public static int anIntArray1698[] = new int[12];
+	public static int anIntArray1699[] = new int[10];
+	public static int anIntArray1700[] = new int[10];
+	public static int anIntArray1701[] = new int[10];
+	public static int anInt1702;
+	public static int anInt1703;
+	public static int anInt1704;
+	public static boolean aBoolean1705;
+	public static int anInt1706;
+	public static int anInt1707;
+	public static int anInt1708;
+	public static int anIntArray1709[] = new int[1000];
+	public static int anIntArray1710[];
+	public static int anIntArray1711[];
+	public static int anIntArray1712[];
+	public static int anIntArray1713[];
+
+	static {
+		anIntArray1710 = ThreeDimensionalCanvas.sineTable;
+		anIntArray1711 = ThreeDimensionalCanvas.cosineTable;
+		anIntArray1712 = ThreeDimensionalCanvas.anIntArray1548;
+		anIntArray1713 = ThreeDimensionalCanvas.anIntArray1535;
+	}
+
 	public static void method573(boolean flag) {
 		aClass26Array1682 = null;
 		aBooleanArray1684 = null;
@@ -33,7 +119,7 @@ public class Model extends Entity {
 	}
 
 	public static void method574(int i, ModelProvider class32) {
-		aClass26Array1682 = new Class26[i];
+		aClass26Array1682 = new ModelRelated26[i];
 		aClass32_1683 = class32;
 	}
 
@@ -41,7 +127,7 @@ public class Model extends Entity {
 		if (byte0 != 7)
 			return;
 		if (abyte0 == null) {
-			Class26 class26 = aClass26Array1682[i] = new Class26();
+			ModelRelated26 class26 = aClass26Array1682[i] = new ModelRelated26();
 			class26.anInt534 = 0;
 			class26.anInt535 = 0;
 			class26.anInt536 = 0;
@@ -49,7 +135,7 @@ public class Model extends Entity {
 		}
 		JagBuffer class50_sub1_sub2 = new JagBuffer(abyte0);
 		class50_sub1_sub2.position = abyte0.length - 18;
-		Class26 class26_1 = aClass26Array1682[i] = new Class26();
+		ModelRelated26 class26_1 = aClass26Array1682[i] = new ModelRelated26();
 		class26_1.aByteArray533 = abyte0;
 		class26_1.anInt534 = class50_sub1_sub2.getShort();
 		class26_1.anInt535 = class50_sub1_sub2.getShort();
@@ -119,7 +205,7 @@ public class Model extends Entity {
 	public static Model forId(int i) {
 		if (aClass26Array1682 == null)
 			return null;
-		Class26 class26 = aClass26Array1682[i];
+		ModelRelated26 class26 = aClass26Array1682[i];
 		if (class26 == null) {
 			aClass32_1683.requestModel(i);
 			return null;
@@ -131,7 +217,7 @@ public class Model extends Entity {
 	public static boolean isDownloaded(int id) {
 		if (aClass26Array1682 == null)
 			return false;
-		Class26 class26 = aClass26Array1682[id];
+		ModelRelated26 class26 = aClass26Array1682[id];
 		if (class26 == null) {
 			aClass32_1683.requestModel(id);
 			return false;
@@ -161,7 +247,7 @@ public class Model extends Entity {
 		aBoolean1641 = false;
 		aBoolean1680 = false;
 		anInt1642++;
-		Class26 class26 = aClass26Array1682[i];
+		ModelRelated26 class26 = aClass26Array1682[i];
 		anInt1648 = class26.anInt534;
 		anInt1652 = class26.anInt535;
 		anInt1664 = class26.anInt536;
@@ -1865,91 +1951,5 @@ public class Model extends Entity {
 		if (i < j1 && i < k1 && i < l1)
 			return false;
 		return i <= j1 || i <= k1 || i <= l1;
-	}
-
-	public int anInt1636;
-	public int anInt1637;
-	public boolean aBoolean1638;
-	public boolean aBoolean1639;
-	public int anInt1640;
-	public boolean aBoolean1641;
-	public static int anInt1642;
-	public static Model aClass50_Sub1_Sub4_Sub4_1643 = new Model(852);
-	public static int anIntArray1644[] = new int[2000];
-	public static int anIntArray1645[] = new int[2000];
-	public static int anIntArray1646[] = new int[2000];
-	public static int anIntArray1647[] = new int[2000];
-	public int anInt1648;
-	public int anIntArray1649[];
-	public int anIntArray1650[];
-	public int anIntArray1651[];
-	public int anInt1652;
-	public int anIntArray1653[];
-	public int anIntArray1654[];
-	public int anIntArray1655[];
-	public int anIntArray1656[];
-	public int anIntArray1657[];
-	public int anIntArray1658[];
-	public int anIntArray1659[];
-	public int anIntArray1660[];
-	public int anIntArray1661[];
-	public int colors[];
-	public int anInt1663;
-	public int anInt1664;
-	public int anIntArray1665[];
-	public int anIntArray1666[];
-	public int anIntArray1667[];
-	public int anInt1668;
-	public int anInt1669;
-	public int anInt1670;
-	public int anInt1671;
-	public int anInt1672;
-	public int anInt1673;
-	public int anInt1674;
-	public int anInt1675;
-	public int anIntArray1676[];
-	public int anIntArray1677[];
-	public int anIntArrayArray1678[][];
-	public int anIntArrayArray1679[][];
-	public boolean aBoolean1680;
-	public VertexNormal aClass40Array1681[];
-	public static Class26 aClass26Array1682[];
-	public static ModelProvider aClass32_1683;
-	public static boolean aBooleanArray1684[] = new boolean[4096];
-	public static boolean aBooleanArray1685[] = new boolean[4096];
-	public static int anIntArray1686[] = new int[4096];
-	public static int anIntArray1687[] = new int[4096];
-	public static int anIntArray1688[] = new int[4096];
-	public static int anIntArray1689[] = new int[4096];
-	public static int anIntArray1690[] = new int[4096];
-	public static int anIntArray1691[] = new int[4096];
-	public static int anIntArray1692[] = new int[1500];
-	public static int anIntArrayArray1693[][] = new int[1500][512];
-	public static int anIntArray1694[] = new int[12];
-	public static int anIntArrayArray1695[][] = new int[12][2000];
-	public static int anIntArray1696[] = new int[2000];
-	public static int anIntArray1697[] = new int[2000];
-	public static int anIntArray1698[] = new int[12];
-	public static int anIntArray1699[] = new int[10];
-	public static int anIntArray1700[] = new int[10];
-	public static int anIntArray1701[] = new int[10];
-	public static int anInt1702;
-	public static int anInt1703;
-	public static int anInt1704;
-	public static boolean aBoolean1705;
-	public static int anInt1706;
-	public static int anInt1707;
-	public static int anInt1708;
-	public static int anIntArray1709[] = new int[1000];
-	public static int anIntArray1710[];
-	public static int anIntArray1711[];
-	public static int anIntArray1712[];
-	public static int anIntArray1713[];
-
-	static {
-		anIntArray1710 = ThreeDimensionalCanvas.sineTable;
-		anIntArray1711 = ThreeDimensionalCanvas.cosineTable;
-		anIntArray1712 = ThreeDimensionalCanvas.anIntArray1548;
-		anIntArray1713 = ThreeDimensionalCanvas.anIntArray1535;
 	}
 }

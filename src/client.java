@@ -195,16 +195,15 @@ public class client extends JagApplet {
         delayedResetter1320 = false;
     }
 
-    public void method18(byte byte0) {
-        if (byte0 != 3)
-            return;
-        for (Class50_Sub2 class50_sub2 = (Class50_Sub2) aClass6_1261.first(); class50_sub2 != null; class50_sub2 = (Class50_Sub2) aClass6_1261
-                .next())
-            if (class50_sub2.anInt1390 == -1) {
-                class50_sub2.anInt1395 = 0;
-                method140((byte) -61, class50_sub2);
+    public void processGameObjectSpawnRequests() {
+        for (GameObjectSpawnRequest objectSpawnRequest = (GameObjectSpawnRequest) gameObjectSpawnsRequestList.first();
+             objectSpawnRequest != null;
+             objectSpawnRequest = (GameObjectSpawnRequest) gameObjectSpawnsRequestList.next())
+            if (objectSpawnRequest.delayUntilRespawn == -1) {
+                objectSpawnRequest.anInt1395 = 0;
+                method140((byte) -61, objectSpawnRequest);
             } else {
-                class50_sub2.unlink();
+                objectSpawnRequest.unlink();
             }
 
     }
@@ -348,7 +347,7 @@ public class client extends JagApplet {
         aStringArray1184 = null;
         groundItems = null;
         i = 96 / i;
-        aClass6_1261 = null;
+        gameObjectSpawnsRequestList = null;
         resetWhenBoolTrue();
         ObjectDefinition.method433(false);
         NpcDefinition.method358(false);
@@ -1942,12 +1941,13 @@ public class client extends JagApplet {
 
                 }
 
-                for (Class50_Sub2 class50_sub2 = (Class50_Sub2) aClass6_1261.first(); class50_sub2 != null; class50_sub2 = (Class50_Sub2) aClass6_1261
-                        .next())
-                    if (class50_sub2.anInt1393 >= placementX && class50_sub2.anInt1393 < placementX + 8
-                            && class50_sub2.anInt1394 >= placementY && class50_sub2.anInt1394 < placementY + 8
-                            && class50_sub2.anInt1391 == plane)
-                        class50_sub2.anInt1390 = 0;
+                for (GameObjectSpawnRequest gameObjectSpawnRequest = (GameObjectSpawnRequest) gameObjectSpawnsRequestList.first();
+                     gameObjectSpawnRequest != null;
+                     gameObjectSpawnRequest = (GameObjectSpawnRequest) gameObjectSpawnsRequestList.next())
+                    if (gameObjectSpawnRequest.anInt1393 >= placementX && gameObjectSpawnRequest.anInt1393 < placementX + 8
+                            && gameObjectSpawnRequest.anInt1394 >= placementY && gameObjectSpawnRequest.anInt1394 < placementY + 8
+                            && gameObjectSpawnRequest.anInt1391 == plane)
+                        gameObjectSpawnRequest.delayUntilRespawn = 0;
 
                 opcode = -1;
                 return true;
@@ -2309,7 +2309,7 @@ public class client extends JagApplet {
 
                 }
 
-                for (Class50_Sub2 class50_sub2_1 = (Class50_Sub2) aClass6_1261.first(); class50_sub2_1 != null; class50_sub2_1 = (Class50_Sub2) aClass6_1261
+                for (GameObjectSpawnRequest class50_sub2_1 = (GameObjectSpawnRequest) gameObjectSpawnsRequestList.first(); class50_sub2_1 != null; class50_sub2_1 = (GameObjectSpawnRequest) gameObjectSpawnsRequestList
                         .next()) {
                     class50_sub2_1.anInt1393 -= deltaX;
                     class50_sub2_1.anInt1394 -= deltaY;
@@ -2789,11 +2789,11 @@ public class client extends JagApplet {
         if (i != 16220)
             anInt1328 = 458;
         if (loadingStage == 2) {
-            for (Class50_Sub2 class50_sub2 = (Class50_Sub2) aClass6_1261.first(); class50_sub2 != null; class50_sub2 = (Class50_Sub2) aClass6_1261
+            for (GameObjectSpawnRequest class50_sub2 = (GameObjectSpawnRequest) gameObjectSpawnsRequestList.first(); class50_sub2 != null; class50_sub2 = (GameObjectSpawnRequest) gameObjectSpawnsRequestList
                     .next()) {
-                if (class50_sub2.anInt1390 > 0)
-                    class50_sub2.anInt1390--;
-                if (class50_sub2.anInt1390 == 0) {
+                if (class50_sub2.delayUntilRespawn > 0)
+                    class50_sub2.delayUntilRespawn--;
+                if (class50_sub2.delayUntilRespawn == 0) {
                     if (class50_sub2.anInt1387 < 0
                             || Region.method170(class50_sub2.anInt1389, aByte1143, class50_sub2.anInt1387)) {
                         method45(class50_sub2.anInt1388, class50_sub2.anInt1393, class50_sub2.anInt1387,
@@ -4003,10 +4003,8 @@ public class client extends JagApplet {
         return class2_1;
     }
 
-    public void method10(byte byte0) {
+    public void needsUIRedraw() {
         shouldRenderUI = true;
-        if (byte0 == -99)
-            ;
     }
 
     public void parseNpcBlocks(JagBuffer buf, int i, int j) {
@@ -4283,7 +4281,7 @@ public class client extends JagApplet {
     public void load() {
         drawLoadingText(20, "Starting up");
         if (signlink.sunjava)
-            super.anInt8 = 5;
+            super.minDelay = 5;
         if (started) {
             aBoolean1016 = true;
             return;
@@ -4659,7 +4657,7 @@ public class client extends JagApplet {
             ChatFilter.unpack(chatArchive);
             mouseRecorder = new MouseRecorder(this);
             startThread(mouseRecorder, 10);
-            Class50_Sub1_Sub4_Sub5.aClient1723 = this;
+            GameObject.aClient1723 = this;
             ObjectDefinition.aClient770 = this;
             NpcDefinition.aClient629 = this;
             return;
@@ -5732,7 +5730,7 @@ public class client extends JagApplet {
 
                 }
 
-                aClass6_1261 = new LinkedList();
+                gameObjectSpawnsRequestList = new LinkedList();
                 anInt860 = 0;
                 friendsCount = 0;
                 method44(aBoolean1190, anInt1191);
@@ -6909,7 +6907,7 @@ public class client extends JagApplet {
 
             }
 
-            method18((byte) 3);
+            processGameObjectSpawnRequests();
         } catch (Exception exception) {
         }
         ObjectDefinition.aClass33_779.clear();
@@ -9296,12 +9294,12 @@ public class client extends JagApplet {
         }
     }
 
-    public void method123(int i) {
+    public void drawErrorScreen(int i) {
         Graphics g = getParentComponent().getGraphics();
         g.setColor(Color.black);
         i = 68 / i;
         g.fillRect(0, 0, 765, 503);
-        method4(1);
+        setFramerate(1);
         if (aBoolean1283) {
             isThreadStarted = false;
             g.setFont(new Font("Helvetica", 1, 16));
@@ -9438,7 +9436,7 @@ public class client extends JagApplet {
     @Override
     public void repaintGame(int i) {
         if (aBoolean1016 || aBoolean1283 || aBoolean1097) {
-            method123(281);
+            drawErrorScreen(281);
             return;
         }
         anInt1309++;
@@ -9528,8 +9526,8 @@ public class client extends JagApplet {
                 if (j1 == 8)
                     k1 = thisPlayer.anInt1753;
                 if (j1 == 9) {
-                    for (int l1 = 0; l1 < Class42.anInt700; l1++)
-                        if (Class42.aBooleanArray702[l1])
+                    for (int l1 = 0; l1 < Skills.anInt700; l1++)
+                        if (Skills.aBooleanArray702[l1])
                             k1 += anIntArray1054[l1];
 
                 }
@@ -9836,35 +9834,30 @@ public class client extends JagApplet {
                     if (class44 != null) {
                         int k21 = class44.uid >> 14 & 0x7fff;
                         if (k6 == 2) {
-                            class44.aClass50_Sub1_Sub4_724 = new Class50_Sub1_Sub4_Sub5(i1, i20, l20, j19, 2, (byte) 3,
-                                    k21, false, l18, 4 + j9);
-                            class44.aClass50_Sub1_Sub4_725 = new Class50_Sub1_Sub4_Sub5(i1, i20, l20, j19, 2, (byte) 3,
-                                    k21, false, l18, j9 + 1 & 3);
+                            class44.aClass50_Sub1_Sub4_724 = new GameObject(k21, i1, i20, l20, j19, 2, false, l18, 4 + j9);
+                            class44.aClass50_Sub1_Sub4_725 = new GameObject(k21, i1, i20, l20, j19, 2, false, l18, j9 + 1 & 3);
                         } else {
-                            class44.aClass50_Sub1_Sub4_724 = new Class50_Sub1_Sub4_Sub5(i1, i20, l20, j19, k6,
-                                    (byte) 3, k21, false, l18, j9);
+                            class44.aClass50_Sub1_Sub4_724 = new GameObject(k21, i1, i20, l20, j19, k6,
+                                    false, l18, j9);
                         }
                     }
                 }
                 if (i12 == 1) {
-                    Class35 class35 = aClass22_1164.method264(plane, y, x, false);
+                    ScenegraphMember35 class35 = aClass22_1164.method264(plane, y, x, false);
                     if (class35 != null)
-                        class35.aClass50_Sub1_Sub4_608 = new Class50_Sub1_Sub4_Sub5(i1, i20, l20, j19, 4, (byte) 3,
-                                class35.anInt609 >> 14 & 0x7fff, false, l18, 0);
+                        class35.aClass50_Sub1_Sub4_608 = new GameObject(class35.anInt609 >> 14 & 0x7fff, i1, i20, l20, j19, 4, false, l18, 0);
                 }
                 if (i12 == 2) {
                     Class5 class5 = aClass22_1164.method265(x, (byte) 32, y, plane);
                     if (k6 == 11)
                         k6 = 10;
                     if (class5 != null)
-                        class5.aClass50_Sub1_Sub4_117 = new Class50_Sub1_Sub4_Sub5(i1, i20, l20, j19, k6, (byte) 3,
-                                class5.anInt125 >> 14 & 0x7fff, false, l18, j9);
+                        class5.aClass50_Sub1_Sub4_117 = new GameObject(class5.anInt125 >> 14 & 0x7fff, i1, i20, l20, j19, k6, false, l18, j9);
                 }
                 if (i12 == 3) {
                     ScenegraphMember28 class28 = aClass22_1164.method266(plane, y, 0, x);
                     if (class28 != null)
-                        class28.aClass50_Sub1_Sub4_570 = new Class50_Sub1_Sub4_Sub5(i1, i20, l20, j19, 22, (byte) 3,
-                                class28.anInt571 >> 14 & 0x7fff, false, l18, j9);
+                        class28.aClass50_Sub1_Sub4_570 = new GameObject(class28.anInt571 >> 14 & 0x7fff, i1, i20, l20, j19, 22, false, l18, j9);
                 }
             }
             return;
@@ -10115,12 +10108,12 @@ public class client extends JagApplet {
             return this;
     }
 
-    public void drawLoadingText(int i, String s) {
+    public void drawLoadingText(int i, String text) {
         anInt1322 = i;
-        aString1027 = s;
+        aString1027 = text;
         method64(-188);
         if (titleArchive == null) {
-            super.drawLoadingText(i, s);
+            super.drawLoadingText(i, text);
             return;
         }
         aClass18_1200.method230();
@@ -10134,7 +10127,7 @@ public class client extends JagApplet {
         Drawable.method450(j + 1, 32, 0, c / 2 - 151, 302);
         Drawable.drawFullRect2(30, j + 2, 0x8c1111, i * 3, c / 2 - 150);
         Drawable.drawFullRect2(30, j + 2, 0, 300 - i * 3, (c / 2 - 150) + i * 3);
-        loginScreenFont.method470(c / 2, 452, (c1 / 2 + 5) - byte0, 0xffffff, s);
+        loginScreenFont.method470(c / 2, 452, (c1 / 2 + 5) - byte0, 0xffffff, text);
         aClass18_1200.drawImage(202, 171, super.graphics);
         if (shouldRenderUI) {
             shouldRenderUI = false;
@@ -10213,7 +10206,7 @@ public class client extends JagApplet {
         System.gc();
     }
 
-    public void method140(byte byte0, Class50_Sub2 class50_sub2) {
+    public void method140(byte byte0, GameObjectSpawnRequest class50_sub2) {
         int i = 0;
         int j = -1;
         int k = 0;
@@ -10650,8 +10643,8 @@ public class client extends JagApplet {
     }
 
     public void method145(boolean flag, int plane, int x, int y, int k, int l, int i1, int j1, int k1, int l1) {
-        Class50_Sub2 class50_sub2 = null;
-        for (Class50_Sub2 class50_sub2_1 = (Class50_Sub2) aClass6_1261.first(); class50_sub2_1 != null; class50_sub2_1 = (Class50_Sub2) aClass6_1261
+        GameObjectSpawnRequest class50_sub2 = null;
+        for (GameObjectSpawnRequest class50_sub2_1 = (GameObjectSpawnRequest) gameObjectSpawnsRequestList.first(); class50_sub2_1 != null; class50_sub2_1 = (GameObjectSpawnRequest) gameObjectSpawnsRequestList
                 .next()) {
             if (class50_sub2_1.anInt1391 != plane || class50_sub2_1.anInt1393 != x || class50_sub2_1.anInt1394 != y
                     || class50_sub2_1.anInt1392 != l1)
@@ -10661,19 +10654,19 @@ public class client extends JagApplet {
         }
 
         if (class50_sub2 == null) {
-            class50_sub2 = new Class50_Sub2();
+            class50_sub2 = new GameObjectSpawnRequest();
             class50_sub2.anInt1391 = plane;
             class50_sub2.anInt1392 = l1;
             class50_sub2.anInt1393 = x;
             class50_sub2.anInt1394 = y;
             method140((byte) -61, class50_sub2);
-            aClass6_1261.addLast(class50_sub2);
+            gameObjectSpawnsRequestList.addLast(class50_sub2);
         }
         class50_sub2.anInt1384 = j1;
         class50_sub2.anInt1386 = i1;
         class50_sub2.anInt1385 = k;
         class50_sub2.anInt1395 = k1;
-        class50_sub2.anInt1390 = l;
+        class50_sub2.delayUntilRespawn = l;
         aBoolean1137 &= flag;
     }
 
@@ -11111,7 +11104,7 @@ public class client extends JagApplet {
     public client() {
         archiveHashes = new int[9];
         aString839 = "";
-        anIntArray843 = new int[Class42.anInt700];
+        anIntArray843 = new int[Skills.anInt700];
         aStringArray849 = new String[200];
         cameraAmplitude = new int[5];
         anInt854 = 2;
@@ -11183,7 +11176,7 @@ public class client extends JagApplet {
         anIntArray1019 = new int[151];
         userInputString = "";
         aBoolean1028 = false;
-        anIntArray1029 = new int[Class42.anInt700];
+        anIntArray1029 = new int[Skills.anInt700];
         aClass50_Sub1_Sub1_Sub1Array1031 = new RgbSprite[100];
         aBoolean1033 = false;
         aBoolean1038 = true;
@@ -11191,7 +11184,7 @@ public class client extends JagApplet {
         shouldRenderUI = false;
         anInt1051 = 69;
         anInt1053 = -1;
-        anIntArray1054 = new int[Class42.anInt700];
+        anIntArray1054 = new int[Skills.anInt700];
         anInt1055 = 2;
         anInt1056 = 3;
         aBoolean1065 = false;
@@ -11267,7 +11260,7 @@ public class client extends JagApplet {
         anIntArray1258 = new int[100];
         anIntArray1259 = new int[50];
         clippingPlanes = new ClippingPlane[4];
-        aClass6_1261 = new LinkedList();
+        gameObjectSpawnsRequestList = new LinkedList();
         aBoolean1265 = false;
         musicEnabled = true;
         anIntArray1267 = new int[200];
@@ -11728,7 +11721,7 @@ public class client extends JagApplet {
     public int anIntArray1258[];
     public int anIntArray1259[];
     public ClippingPlane clippingPlanes[];
-    public LinkedList aClass6_1261;
+    public LinkedList gameObjectSpawnsRequestList;
     public int anInt1262;
     public int anInt1263;
     public int anInt1264;

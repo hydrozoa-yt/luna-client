@@ -2,10 +2,7 @@
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) 
 
-public class Class26 {
-
-	public Class26() {
-	}
+public class ModelRelated26 {
 
 	public byte aByteArray533[];
 	public int anInt534;
@@ -24,4 +21,7 @@ public class Class26 {
 	public int anInt547;
 	public int anInt548;
 	public int anInt549;
+
+	public ModelRelated26() {
+	}
 }

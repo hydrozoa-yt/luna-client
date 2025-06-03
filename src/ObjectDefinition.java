@@ -4,6 +4,59 @@
 
 public class ObjectDefinition {
 
+    public static int indices[];
+    public boolean aBoolean759;
+    public int anInt760;
+    public int anInt761;
+    public static LruHashTable aClass33_762 = new LruHashTable(40);
+    public int anIntArray763[];
+    public int anInt764;
+    public boolean aBoolean765;
+    public int anInt766;
+    public static JagBuffer buf;
+    public int anInt768;
+    public boolean aBoolean769;
+    public static client aClient770;
+    public static Model aClass50_Sub1_Sub4_Sub4Array771[] = new Model[4];
+    public static boolean lowMemory;
+    public int id;
+    public boolean aBoolean774;
+    public int anInt775;
+    public String name;
+    public static int cachePos;
+    public int varbitId;
+    public static LruHashTable aClass33_779 = new LruHashTable(500);
+    public int anInt780;
+    public int anInt781;
+    public static ObjectDefinition cache[];
+    public byte description[];
+    public byte aByte784;
+    public int anInt785;
+    public boolean aBoolean786;
+    public byte aByte787;
+    public int anInt788;
+    public int anIntArray789[];
+    public String options[];
+    public boolean aBoolean791;
+    public int originalModelColors[];
+    public byte aByte793;
+    public int anInt794;
+    public int anInt795;
+    public int anInt796;
+    public boolean aBoolean797;
+    public boolean aBoolean798;
+    public int modifiedModelColors[];
+    public int anInt801;
+    public int anInt802;
+    public int animationId;
+    public boolean aBoolean804;
+    public int anIntArray805[];
+    public int anInt806;
+    public boolean aBoolean807;
+    public static int count;
+    public boolean aBoolean809;
+    public boolean aBoolean810;
+
     public static ObjectDefinition forId(int id) {
         for (int j = 0; j < 20; j++)
             if (cache[j].id == id)
@@ -428,58 +481,4 @@ public class ObjectDefinition {
         aBoolean786 = true;
         aByte793 = -113;
     }
-
-    public static int indices[];
-    public boolean aBoolean759;
-    public int anInt760;
-    public int anInt761;
-    public static LruHashTable aClass33_762 = new LruHashTable(40);
-    public int anIntArray763[];
-    public int anInt764;
-    public boolean aBoolean765;
-    public int anInt766;
-    public static JagBuffer buf;
-    public int anInt768;
-    public boolean aBoolean769;
-    public static client aClient770;
-    public static Model aClass50_Sub1_Sub4_Sub4Array771[] = new Model[4];
-    public static boolean lowMemory;
-    public int id;
-    public boolean aBoolean774;
-    public int anInt775;
-    public String name;
-    public static int cachePos;
-    public int varbitId;
-    public static LruHashTable aClass33_779 = new LruHashTable(500);
-    public int anInt780;
-    public int anInt781;
-    public static ObjectDefinition cache[];
-    public byte description[];
-    public byte aByte784;
-    public int anInt785;
-    public boolean aBoolean786;
-    public byte aByte787;
-    public int anInt788;
-    public int anIntArray789[];
-    public String options[];
-    public boolean aBoolean791;
-    public int originalModelColors[];
-    public byte aByte793;
-    public int anInt794;
-    public int anInt795;
-    public int anInt796;
-    public boolean aBoolean797;
-    public boolean aBoolean798;
-    public int modifiedModelColors[];
-    public int anInt801;
-    public int anInt802;
-    public int animationId;
-    public boolean aBoolean804;
-    public int anIntArray805[];
-    public int anInt806;
-    public boolean aBoolean807;
-    public static int count;
-    public boolean aBoolean809;
-    public boolean aBoolean810;
-
 }

@@ -80,8 +80,7 @@ public class Region {
                 if (class47.animationId == -1 && class47.anIntArray805 == null)
                     class50_sub1_sub4 = class47.method431(22, i_18_, i_22_, i_23_, i_24_, i_25_, -1);
                 else
-                    class50_sub1_sub4 = new Class50_Sub1_Sub4_Sub5(class47.animationId, i_24_, i_25_, i_23_, 22, (byte) 3,
-                            i, true, i_22_, i_18_);
+                    class50_sub1_sub4 = new GameObject(i, class47.animationId, i_24_, i_25_, i_23_, 22, true, i_22_, i_18_);
                 class22.addSomethingToScenegraph(i_21_, i_19_, i_17_, 669, i_28_, i_27_, i_26_, class50_sub1_sub4);
                 if (class47.aBoolean810 && class47.aBoolean759)
                     class46.method414(8, i_17_, i_19_);
@@ -90,8 +89,7 @@ public class Region {
                 if (class47.animationId == -1 && class47.anIntArray805 == null)
                     class50_sub1_sub4 = class47.method431(10, i_18_, i_22_, i_23_, i_24_, i_25_, -1);
                 else
-                    class50_sub1_sub4 = new Class50_Sub1_Sub4_Sub5(class47.animationId, i_24_, i_25_, i_23_, 10, (byte) 3,
-                            i, true, i_22_, i_18_);
+                    class50_sub1_sub4 = new GameObject(i, class47.animationId, i_24_, i_25_, i_23_, 10, true, i_22_, i_18_);
                 if (class50_sub1_sub4 != null) {
                     int i_29_ = 0;
                     if (i_16_ == 11)
@@ -116,8 +114,8 @@ public class Region {
                 if (class47.animationId == -1 && class47.anIntArray805 == null)
                     class50_sub1_sub4 = class47.method431(i_16_, i_18_, i_22_, i_23_, i_24_, i_25_, -1);
                 else
-                    class50_sub1_sub4 = new Class50_Sub1_Sub4_Sub5(class47.animationId, i_24_, i_25_, i_23_, i_16_,
-                            (byte) 3, i, true, i_22_, i_18_);
+                    class50_sub1_sub4 = new GameObject(i, class47.animationId, i_24_, i_25_, i_23_, i_16_,
+                            true, i_22_, i_18_);
                 class22.method251(i_21_, 1, i_17_, class50_sub1_sub4, i_28_, 0, i_19_, -896, 1, i_26_, i_27_);
                 if (class47.aBoolean810)
                     class46.method413(i_17_, i_18_, class47.anInt775, class47.anInt801, class47.aBoolean809, i_19_,
@@ -127,8 +125,7 @@ public class Region {
                 if (class47.animationId == -1 && class47.anIntArray805 == null)
                     class50_sub1_sub4 = class47.method431(0, i_18_, i_22_, i_23_, i_24_, i_25_, -1);
                 else
-                    class50_sub1_sub4 = new Class50_Sub1_Sub4_Sub5(class47.animationId, i_24_, i_25_, i_23_, 0, (byte) 3,
-                            i, true, i_22_, i_18_);
+                    class50_sub1_sub4 = new GameObject(i, class47.animationId, i_24_, i_25_, i_23_, 0, true, i_22_, i_18_);
                 class22.addSomethingToScenegraph3(i_19_, i_17_, i_26_, 49878, 0, anIntArray158[i_18_], null, i_27_, i_28_,
                         class50_sub1_sub4, i_21_);
                 if (class47.aBoolean810)
@@ -138,8 +135,7 @@ public class Region {
                 if (class47.animationId == -1 && class47.anIntArray805 == null)
                     class50_sub1_sub4 = class47.method431(1, i_18_, i_22_, i_23_, i_24_, i_25_, -1);
                 else
-                    class50_sub1_sub4 = new Class50_Sub1_Sub4_Sub5(class47.animationId, i_24_, i_25_, i_23_, 1, (byte) 3,
-                            i, true, i_22_, i_18_);
+                    class50_sub1_sub4 = new GameObject(i, class47.animationId, i_24_, i_25_, i_23_, 1, true, i_22_, i_18_);
                 class22.addSomethingToScenegraph3(i_19_, i_17_, i_26_, 49878, 0, anIntArray167[i_18_], null, i_27_, i_28_,
                         class50_sub1_sub4, i_21_);
                 if (class47.aBoolean810)
@@ -152,10 +148,9 @@ public class Region {
                     class50_sub1_sub4 = class47.method431(2, 4 + i_18_, i_22_, i_23_, i_24_, i_25_, -1);
                     class50_sub1_sub4_33_ = class47.method431(2, i_32_, i_22_, i_23_, i_24_, i_25_, -1);
                 } else {
-                    class50_sub1_sub4 = new Class50_Sub1_Sub4_Sub5(class47.animationId, i_24_, i_25_, i_23_, 2, (byte) 3,
-                            i, true, i_22_, 4 + i_18_);
-                    class50_sub1_sub4_33_ = new Class50_Sub1_Sub4_Sub5(class47.animationId, i_24_, i_25_, i_23_, 2,
-                            (byte) 3, i, true, i_22_, i_32_);
+                    class50_sub1_sub4 = new GameObject(i, class47.animationId, i_24_, i_25_, i_23_, 2, true, i_22_, 4 + i_18_);
+                    class50_sub1_sub4_33_ = new GameObject(i, class47.animationId, i_24_, i_25_, i_23_, 2,
+                            true, i_22_, i_32_);
                 }
                 class22.addSomethingToScenegraph3(i_19_, i_17_, i_26_, 49878, anIntArray158[i_32_], anIntArray158[i_18_], class50_sub1_sub4_33_,
                         i_27_, i_28_, class50_sub1_sub4, i_21_);
@@ -166,8 +161,7 @@ public class Region {
                 if (class47.animationId == -1 && class47.anIntArray805 == null)
                     class50_sub1_sub4 = class47.method431(3, i_18_, i_22_, i_23_, i_24_, i_25_, -1);
                 else
-                    class50_sub1_sub4 = new Class50_Sub1_Sub4_Sub5(class47.animationId, i_24_, i_25_, i_23_, 3, (byte) 3,
-                            i, true, i_22_, i_18_);
+                    class50_sub1_sub4 = new GameObject(i, class47.animationId, i_24_, i_25_, i_23_, 3, true, i_22_, i_18_);
                 class22.addSomethingToScenegraph3(i_19_, i_17_, i_26_, 49878, 0, anIntArray167[i_18_], null, i_27_, i_28_,
                         class50_sub1_sub4, i_21_);
                 if (class47.aBoolean810)
@@ -177,8 +171,8 @@ public class Region {
                 if (class47.animationId == -1 && class47.anIntArray805 == null)
                     class50_sub1_sub4 = class47.method431(i_16_, i_18_, i_22_, i_23_, i_24_, i_25_, -1);
                 else
-                    class50_sub1_sub4 = new Class50_Sub1_Sub4_Sub5(class47.animationId, i_24_, i_25_, i_23_, i_16_,
-                            (byte) 3, i, true, i_22_, i_18_);
+                    class50_sub1_sub4 = new GameObject(i, class47.animationId, i_24_, i_25_, i_23_, i_16_,
+                            true, i_22_, i_18_);
                 class22.method251(i_21_, 1, i_17_, class50_sub1_sub4, i_28_, 0, i_19_, -896, 1, i_26_, i_27_);
                 if (class47.aBoolean810)
                     class46.method413(i_17_, i_18_, class47.anInt775, class47.anInt801, class47.aBoolean809, i_19_,
@@ -211,8 +205,8 @@ public class Region {
                     if (class47.animationId == -1 && class47.anIntArray805 == null)
                         class50_sub1_sub4 = class47.method431(4, 0, i_22_, i_23_, i_24_, i_25_, -1);
                     else
-                        class50_sub1_sub4 = new Class50_Sub1_Sub4_Sub5(class47.animationId, i_24_, i_25_, i_23_, 4,
-                                (byte) 3, i, true, i_22_, 0);
+                        class50_sub1_sub4 = new GameObject(i, class47.animationId, i_24_, i_25_, i_23_, 4,
+                                true, i_22_, 0);
                     class22.method250(i_21_, anIntArray158[i_18_], i_18_ * 512, i_27_, i_28_, i_19_, 0, i_17_, 0,
                             i_26_, class50_sub1_sub4, -930);
                 } else if (i_16_ == 5) {
@@ -224,8 +218,8 @@ public class Region {
                     if (class47.animationId == -1 && class47.anIntArray805 == null)
                         class50_sub1_sub4 = class47.method431(4, 0, i_22_, i_23_, i_24_, i_25_, -1);
                     else
-                        class50_sub1_sub4 = new Class50_Sub1_Sub4_Sub5(class47.animationId, i_24_, i_25_, i_23_, 4,
-                                (byte) 3, i, true, i_22_, 0);
+                        class50_sub1_sub4 = new GameObject(i, class47.animationId, i_24_, i_25_, i_23_, 4,
+                                true, i_22_, 0);
                     class22.method250(i_21_, anIntArray158[i_18_], i_18_ * 512, i_27_, i_28_, i_19_,
                             anIntArray143[i_18_] * i_37_, i_17_, anIntArray161[i_18_] * i_37_, i_26_,
                             class50_sub1_sub4, -930);
@@ -234,8 +228,8 @@ public class Region {
                     if (class47.animationId == -1 && class47.anIntArray805 == null)
                         class50_sub1_sub4 = class47.method431(4, 0, i_22_, i_23_, i_24_, i_25_, -1);
                     else
-                        class50_sub1_sub4 = new Class50_Sub1_Sub4_Sub5(class47.animationId, i_24_, i_25_, i_23_, 4,
-                                (byte) 3, i, true, i_22_, 0);
+                        class50_sub1_sub4 = new GameObject(i, class47.animationId, i_24_, i_25_, i_23_, 4,
+                                true, i_22_, 0);
                     class22.method250(i_21_, 256, i_18_, i_27_, i_28_, i_19_, 0, i_17_, 0, i_26_, class50_sub1_sub4,
                             -930);
                 } else if (i_16_ == 7) {
@@ -243,8 +237,8 @@ public class Region {
                     if (class47.animationId == -1 && class47.anIntArray805 == null)
                         class50_sub1_sub4 = class47.method431(4, 0, i_22_, i_23_, i_24_, i_25_, -1);
                     else
-                        class50_sub1_sub4 = new Class50_Sub1_Sub4_Sub5(class47.animationId, i_24_, i_25_, i_23_, 4,
-                                (byte) 3, i, true, i_22_, 0);
+                        class50_sub1_sub4 = new GameObject(i, class47.animationId, i_24_, i_25_, i_23_, 4,
+                                true, i_22_, 0);
                     class22.method250(i_21_, 512, i_18_, i_27_, i_28_, i_19_, 0, i_17_, 0, i_26_, class50_sub1_sub4,
                             -930);
                 } else if (i_16_ == 8) {
@@ -252,8 +246,8 @@ public class Region {
                     if (class47.animationId == -1 && class47.anIntArray805 == null)
                         class50_sub1_sub4 = class47.method431(4, 0, i_22_, i_23_, i_24_, i_25_, -1);
                     else
-                        class50_sub1_sub4 = new Class50_Sub1_Sub4_Sub5(class47.animationId, i_24_, i_25_, i_23_, 4,
-                                (byte) 3, i, true, i_22_, 0);
+                        class50_sub1_sub4 = new GameObject(i, class47.animationId, i_24_, i_25_, i_23_, 4,
+                                true, i_22_, 0);
                     class22.method250(i_21_, 768, i_18_, i_27_, i_28_, i_19_, 0, i_17_, 0, i_26_, class50_sub1_sub4,
                             -930);
                 }
@@ -755,8 +749,8 @@ public class Region {
                     if (objectDef.animationId == -1 && objectDef.anIntArray805 == null)
                         class50_sub1_sub4 = objectDef.method431(22, i_188_, i_191_, i_192_, i_193_, i_194_, -1);
                     else
-                        class50_sub1_sub4 = new Class50_Sub1_Sub4_Sub5(objectDef.animationId, i_193_, i_194_, i_192_, 22,
-                                (byte) 3, i_190_, true, i_191_, i_188_);
+                        class50_sub1_sub4 = new GameObject(i_190_, objectDef.animationId, i_193_, i_194_, i_192_, 22,
+                                true, i_191_, i_188_);
                     class22.addSomethingToScenegraph(z, x, y, 669, i_197_, i_196_, i_195_, class50_sub1_sub4);
                     if (objectDef.aBoolean810 && objectDef.aBoolean759 && class46 != null)
                         class46.method414(8, y, x);
@@ -766,8 +760,8 @@ public class Region {
                 if (objectDef.animationId == -1 && objectDef.anIntArray805 == null)
                     class50_sub1_sub4 = objectDef.method431(10, i_188_, i_191_, i_192_, i_193_, i_194_, -1);
                 else
-                    class50_sub1_sub4 = new Class50_Sub1_Sub4_Sub5(objectDef.animationId, i_193_, i_194_, i_192_, 10,
-                            (byte) 3, i_190_, true, i_191_, i_188_);
+                    class50_sub1_sub4 = new GameObject(i_190_, objectDef.animationId, i_193_, i_194_, i_192_, 10,
+                            true, i_191_, i_188_);
                 if (class50_sub1_sub4 != null) {
                     int i_198_ = 0;
                     if (objectType == 11)
@@ -810,8 +804,8 @@ public class Region {
                 if (objectDef.animationId == -1 && objectDef.anIntArray805 == null)
                     class50_sub1_sub4 = objectDef.method431(objectType, i_188_, i_191_, i_192_, i_193_, i_194_, -1);
                 else
-                    class50_sub1_sub4 = new Class50_Sub1_Sub4_Sub5(objectDef.animationId, i_193_, i_194_, i_192_, objectType,
-                            (byte) 3, i_190_, true, i_191_, i_188_);
+                    class50_sub1_sub4 = new GameObject(i_190_, objectDef.animationId, i_193_, i_194_, i_192_, objectType,
+                            true, i_191_, i_188_);
                 class22.method251(z, 1, y, class50_sub1_sub4, i_197_, 0, x, -896, 1, i_195_, i_196_);
                 if (objectType >= 12 && objectType <= 17 && objectType != 13 && z > 0)
                     anIntArrayArrayArray168[z][x][y] |= 0x924;
@@ -823,8 +817,8 @@ public class Region {
                 if (objectDef.animationId == -1 && objectDef.anIntArray805 == null)
                     class50_sub1_sub4 = objectDef.method431(0, i_188_, i_191_, i_192_, i_193_, i_194_, -1);
                 else
-                    class50_sub1_sub4 = new Class50_Sub1_Sub4_Sub5(objectDef.animationId, i_193_, i_194_, i_192_, 0,
-                            (byte) 3, i_190_, true, i_191_, i_188_);
+                    class50_sub1_sub4 = new GameObject(i_190_, objectDef.animationId, i_193_, i_194_, i_192_, 0,
+                            true, i_191_, i_188_);
                 class22.addSomethingToScenegraph3(x, y, i_195_, 49878, 0, anIntArray158[i_188_], null, i_196_, i_197_,
                         class50_sub1_sub4, z);
                 if (i_188_ == 0) {
@@ -865,8 +859,8 @@ public class Region {
                 if (objectDef.animationId == -1 && objectDef.anIntArray805 == null)
                     class50_sub1_sub4 = objectDef.method431(1, i_188_, i_191_, i_192_, i_193_, i_194_, -1);
                 else
-                    class50_sub1_sub4 = new Class50_Sub1_Sub4_Sub5(objectDef.animationId, i_193_, i_194_, i_192_, 1,
-                            (byte) 3, i_190_, true, i_191_, i_188_);
+                    class50_sub1_sub4 = new GameObject(i_190_, objectDef.animationId, i_193_, i_194_, i_192_, 1,
+                            true, i_191_, i_188_);
                 class22.addSomethingToScenegraph3(x, y, i_195_, 49878, 0, anIntArray167[i_188_], null, i_196_, i_197_,
                         class50_sub1_sub4, z);
                 if (objectDef.aBoolean807) {
@@ -889,10 +883,10 @@ public class Region {
                     class50_sub1_sub4 = objectDef.method431(2, 4 + i_188_, i_191_, i_192_, i_193_, i_194_, -1);
                     class50_sub1_sub4_205_ = objectDef.method431(2, i_204_, i_191_, i_192_, i_193_, i_194_, -1);
                 } else {
-                    class50_sub1_sub4 = new Class50_Sub1_Sub4_Sub5(objectDef.animationId, i_193_, i_194_, i_192_, 2,
-                            (byte) 3, i_190_, true, i_191_, 4 + i_188_);
-                    class50_sub1_sub4_205_ = new Class50_Sub1_Sub4_Sub5(objectDef.animationId, i_193_, i_194_, i_192_, 2,
-                            (byte) 3, i_190_, true, i_191_, i_204_);
+                    class50_sub1_sub4 = new GameObject(i_190_, objectDef.animationId, i_193_, i_194_, i_192_, 2,
+                            true, i_191_, 4 + i_188_);
+                    class50_sub1_sub4_205_ = new GameObject(i_190_, objectDef.animationId, i_193_, i_194_, i_192_, 2,
+                            true, i_191_, i_204_);
                 }
                 class22.addSomethingToScenegraph3(x, y, i_195_, 49878, anIntArray158[i_204_], anIntArray158[i_188_], class50_sub1_sub4_205_,
                         i_196_, i_197_, class50_sub1_sub4, z);
@@ -920,8 +914,8 @@ public class Region {
                 if (objectDef.animationId == -1 && objectDef.anIntArray805 == null)
                     class50_sub1_sub4 = objectDef.method431(3, i_188_, i_191_, i_192_, i_193_, i_194_, -1);
                 else
-                    class50_sub1_sub4 = new Class50_Sub1_Sub4_Sub5(objectDef.animationId, i_193_, i_194_, i_192_, 3,
-                            (byte) 3, i_190_, true, i_191_, i_188_);
+                    class50_sub1_sub4 = new GameObject(i_190_, objectDef.animationId, i_193_, i_194_, i_192_, 3,
+                            true, i_191_, i_188_);
                 class22.addSomethingToScenegraph3(x, y, i_195_, 49878, 0, anIntArray167[i_188_], null, i_196_, i_197_,
                         class50_sub1_sub4, z);
                 if (objectDef.aBoolean807) {
@@ -941,8 +935,8 @@ public class Region {
                 if (objectDef.animationId == -1 && objectDef.anIntArray805 == null)
                     class50_sub1_sub4 = objectDef.method431(objectType, i_188_, i_191_, i_192_, i_193_, i_194_, -1);
                 else
-                    class50_sub1_sub4 = new Class50_Sub1_Sub4_Sub5(objectDef.animationId, i_193_, i_194_, i_192_, objectType,
-                            (byte) 3, i_190_, true, i_191_, i_188_);
+                    class50_sub1_sub4 = new GameObject(i_190_, objectDef.animationId, i_193_, i_194_, i_192_, objectType,
+                            true, i_191_, i_188_);
                 class22.method251(z, 1, y, class50_sub1_sub4, i_197_, 0, x, -896, 1, i_195_, i_196_);
                 if (objectDef.aBoolean810 && class46 != null)
                     class46.method413(y, i_188_, objectDef.anInt775, objectDef.anInt801, objectDef.aBoolean809, x,
@@ -975,8 +969,8 @@ public class Region {
                     if (objectDef.animationId == -1 && objectDef.anIntArray805 == null)
                         class50_sub1_sub4 = objectDef.method431(4, 0, i_191_, i_192_, i_193_, i_194_, -1);
                     else
-                        class50_sub1_sub4 = new Class50_Sub1_Sub4_Sub5(objectDef.animationId, i_193_, i_194_, i_192_, 4,
-                                (byte) 3, i_190_, true, i_191_, 0);
+                        class50_sub1_sub4 = new GameObject(i_190_, objectDef.animationId, i_193_, i_194_, i_192_, 4,
+                                true, i_191_, 0);
                     class22.method250(z, anIntArray158[i_188_], i_188_ * 512, i_196_, i_197_, x, 0, y, 0,
                             i_195_, class50_sub1_sub4, -930);
                 } else if (objectType == 5) {
@@ -988,8 +982,8 @@ public class Region {
                     if (objectDef.animationId == -1 && objectDef.anIntArray805 == null)
                         class50_sub1_sub4 = objectDef.method431(4, 0, i_191_, i_192_, i_193_, i_194_, -1);
                     else
-                        class50_sub1_sub4 = new Class50_Sub1_Sub4_Sub5(objectDef.animationId, i_193_, i_194_, i_192_, 4,
-                                (byte) 3, i_190_, true, i_191_, 0);
+                        class50_sub1_sub4 = new GameObject(i_190_, objectDef.animationId, i_193_, i_194_, i_192_, 4,
+                                true, i_191_, 0);
                     class22.method250(z, anIntArray158[i_188_], i_188_ * 512, i_196_, i_197_, x,
                             anIntArray143[i_188_] * i_209_, y, anIntArray161[i_188_] * i_209_, i_195_,
                             class50_sub1_sub4, -930);
@@ -998,8 +992,8 @@ public class Region {
                     if (objectDef.animationId == -1 && objectDef.anIntArray805 == null)
                         class50_sub1_sub4 = objectDef.method431(4, 0, i_191_, i_192_, i_193_, i_194_, -1);
                     else
-                        class50_sub1_sub4 = new Class50_Sub1_Sub4_Sub5(objectDef.animationId, i_193_, i_194_, i_192_, 4,
-                                (byte) 3, i_190_, true, i_191_, 0);
+                        class50_sub1_sub4 = new GameObject(i_190_, objectDef.animationId, i_193_, i_194_, i_192_, 4,
+                                true, i_191_, 0);
                     class22.method250(z, 256, i_188_, i_196_, i_197_, x, 0, y, 0, i_195_, class50_sub1_sub4,
                             -930);
                 } else if (objectType == 7) {
@@ -1007,8 +1001,8 @@ public class Region {
                     if (objectDef.animationId == -1 && objectDef.anIntArray805 == null)
                         class50_sub1_sub4 = objectDef.method431(4, 0, i_191_, i_192_, i_193_, i_194_, -1);
                     else
-                        class50_sub1_sub4 = new Class50_Sub1_Sub4_Sub5(objectDef.animationId, i_193_, i_194_, i_192_, 4,
-                                (byte) 3, i_190_, true, i_191_, 0);
+                        class50_sub1_sub4 = new GameObject(i_190_, objectDef.animationId, i_193_, i_194_, i_192_, 4,
+                                true, i_191_, 0);
                     class22.method250(z, 512, i_188_, i_196_, i_197_, x, 0, y, 0, i_195_, class50_sub1_sub4,
                             -930);
                 } else if (objectType == 8) {
@@ -1016,8 +1010,8 @@ public class Region {
                     if (objectDef.animationId == -1 && objectDef.anIntArray805 == null)
                         class50_sub1_sub4 = objectDef.method431(4, 0, i_191_, i_192_, i_193_, i_194_, -1);
                     else
-                        class50_sub1_sub4 = new Class50_Sub1_Sub4_Sub5(objectDef.animationId, i_193_, i_194_, i_192_, 4,
-                                (byte) 3, i_190_, true, i_191_, 0);
+                        class50_sub1_sub4 = new GameObject(i_190_, objectDef.animationId, i_193_, i_194_, i_192_, 4,
+                                true, i_191_, 0);
                     class22.method250(z, 768, i_188_, i_196_, i_197_, x, 0, y, 0, i_195_, class50_sub1_sub4,
                             -930);
                 }
