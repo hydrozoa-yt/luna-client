@@ -78,7 +78,7 @@ public class Region {
             if (i_16_ == 22) {
                 Entity class50_sub1_sub4;
                 if (class47.animationId == -1 && class47.anIntArray805 == null)
-                    class50_sub1_sub4 = class47.method431(22, i_18_, i_22_, i_23_, i_24_, i_25_, -1);
+                    class50_sub1_sub4 = class47.getRotatedModel(22, i_18_, i_22_, i_23_, i_24_, i_25_, -1);
                 else
                     class50_sub1_sub4 = new GameObject(i, class47.animationId, i_24_, i_25_, i_23_, 22, true, i_22_, i_18_);
                 class22.addSomethingToScenegraph(i_21_, i_19_, i_17_, 669, i_28_, i_27_, i_26_, class50_sub1_sub4);
@@ -87,7 +87,7 @@ public class Region {
             } else if (i_16_ == 10 || i_16_ == 11) {
                 Entity class50_sub1_sub4;
                 if (class47.animationId == -1 && class47.anIntArray805 == null)
-                    class50_sub1_sub4 = class47.method431(10, i_18_, i_22_, i_23_, i_24_, i_25_, -1);
+                    class50_sub1_sub4 = class47.getRotatedModel(10, i_18_, i_22_, i_23_, i_24_, i_25_, -1);
                 else
                     class50_sub1_sub4 = new GameObject(i, class47.animationId, i_24_, i_25_, i_23_, 10, true, i_22_, i_18_);
                 if (class50_sub1_sub4 != null) {
@@ -112,7 +112,7 @@ public class Region {
             } else if (i_16_ >= 12) {
                 Entity class50_sub1_sub4;
                 if (class47.animationId == -1 && class47.anIntArray805 == null)
-                    class50_sub1_sub4 = class47.method431(i_16_, i_18_, i_22_, i_23_, i_24_, i_25_, -1);
+                    class50_sub1_sub4 = class47.getRotatedModel(i_16_, i_18_, i_22_, i_23_, i_24_, i_25_, -1);
                 else
                     class50_sub1_sub4 = new GameObject(i, class47.animationId, i_24_, i_25_, i_23_, i_16_,
                             true, i_22_, i_18_);
@@ -123,7 +123,7 @@ public class Region {
             } else if (i_16_ == 0) {
                 Entity class50_sub1_sub4;
                 if (class47.animationId == -1 && class47.anIntArray805 == null)
-                    class50_sub1_sub4 = class47.method431(0, i_18_, i_22_, i_23_, i_24_, i_25_, -1);
+                    class50_sub1_sub4 = class47.getRotatedModel(0, i_18_, i_22_, i_23_, i_24_, i_25_, -1);
                 else
                     class50_sub1_sub4 = new GameObject(i, class47.animationId, i_24_, i_25_, i_23_, 0, true, i_22_, i_18_);
                 class22.addSomethingToScenegraph3(i_19_, i_17_, i_26_, 49878, 0, anIntArray158[i_18_], null, i_27_, i_28_,
@@ -133,7 +133,7 @@ public class Region {
             } else if (i_16_ == 1) {
                 Entity class50_sub1_sub4;
                 if (class47.animationId == -1 && class47.anIntArray805 == null)
-                    class50_sub1_sub4 = class47.method431(1, i_18_, i_22_, i_23_, i_24_, i_25_, -1);
+                    class50_sub1_sub4 = class47.getRotatedModel(1, i_18_, i_22_, i_23_, i_24_, i_25_, -1);
                 else
                     class50_sub1_sub4 = new GameObject(i, class47.animationId, i_24_, i_25_, i_23_, 1, true, i_22_, i_18_);
                 class22.addSomethingToScenegraph3(i_19_, i_17_, i_26_, 49878, 0, anIntArray167[i_18_], null, i_27_, i_28_,
@@ -145,8 +145,8 @@ public class Region {
                 Entity class50_sub1_sub4;
                 Entity class50_sub1_sub4_33_;
                 if (class47.animationId == -1 && class47.anIntArray805 == null) {
-                    class50_sub1_sub4 = class47.method431(2, 4 + i_18_, i_22_, i_23_, i_24_, i_25_, -1);
-                    class50_sub1_sub4_33_ = class47.method431(2, i_32_, i_22_, i_23_, i_24_, i_25_, -1);
+                    class50_sub1_sub4 = class47.getRotatedModel(2, 4 + i_18_, i_22_, i_23_, i_24_, i_25_, -1);
+                    class50_sub1_sub4_33_ = class47.getRotatedModel(2, i_32_, i_22_, i_23_, i_24_, i_25_, -1);
                 } else {
                     class50_sub1_sub4 = new GameObject(i, class47.animationId, i_24_, i_25_, i_23_, 2, true, i_22_, 4 + i_18_);
                     class50_sub1_sub4_33_ = new GameObject(i, class47.animationId, i_24_, i_25_, i_23_, 2,
@@ -159,7 +159,7 @@ public class Region {
             } else if (i_16_ == 3) {
                 Entity class50_sub1_sub4;
                 if (class47.animationId == -1 && class47.anIntArray805 == null)
-                    class50_sub1_sub4 = class47.method431(3, i_18_, i_22_, i_23_, i_24_, i_25_, -1);
+                    class50_sub1_sub4 = class47.getRotatedModel(3, i_18_, i_22_, i_23_, i_24_, i_25_, -1);
                 else
                     class50_sub1_sub4 = new GameObject(i, class47.animationId, i_24_, i_25_, i_23_, 3, true, i_22_, i_18_);
                 class22.addSomethingToScenegraph3(i_19_, i_17_, i_26_, 49878, 0, anIntArray167[i_18_], null, i_27_, i_28_,
@@ -169,7 +169,7 @@ public class Region {
             } else if (i_16_ == 9) {
                 Entity class50_sub1_sub4;
                 if (class47.animationId == -1 && class47.anIntArray805 == null)
-                    class50_sub1_sub4 = class47.method431(i_16_, i_18_, i_22_, i_23_, i_24_, i_25_, -1);
+                    class50_sub1_sub4 = class47.getRotatedModel(i_16_, i_18_, i_22_, i_23_, i_24_, i_25_, -1);
                 else
                     class50_sub1_sub4 = new GameObject(i, class47.animationId, i_24_, i_25_, i_23_, i_16_,
                             true, i_22_, i_18_);
@@ -203,7 +203,7 @@ public class Region {
                 if (i_16_ == 4) {
                     Entity class50_sub1_sub4;
                     if (class47.animationId == -1 && class47.anIntArray805 == null)
-                        class50_sub1_sub4 = class47.method431(4, 0, i_22_, i_23_, i_24_, i_25_, -1);
+                        class50_sub1_sub4 = class47.getRotatedModel(4, 0, i_22_, i_23_, i_24_, i_25_, -1);
                     else
                         class50_sub1_sub4 = new GameObject(i, class47.animationId, i_24_, i_25_, i_23_, 4,
                                 true, i_22_, 0);
@@ -216,7 +216,7 @@ public class Region {
                         i_37_ = ObjectDefinition.forId(i_38_ >> 14 & 0x7fff).anInt802;
                     Entity class50_sub1_sub4;
                     if (class47.animationId == -1 && class47.anIntArray805 == null)
-                        class50_sub1_sub4 = class47.method431(4, 0, i_22_, i_23_, i_24_, i_25_, -1);
+                        class50_sub1_sub4 = class47.getRotatedModel(4, 0, i_22_, i_23_, i_24_, i_25_, -1);
                     else
                         class50_sub1_sub4 = new GameObject(i, class47.animationId, i_24_, i_25_, i_23_, 4,
                                 true, i_22_, 0);
@@ -226,7 +226,7 @@ public class Region {
                 } else if (i_16_ == 6) {
                     Entity class50_sub1_sub4;
                     if (class47.animationId == -1 && class47.anIntArray805 == null)
-                        class50_sub1_sub4 = class47.method431(4, 0, i_22_, i_23_, i_24_, i_25_, -1);
+                        class50_sub1_sub4 = class47.getRotatedModel(4, 0, i_22_, i_23_, i_24_, i_25_, -1);
                     else
                         class50_sub1_sub4 = new GameObject(i, class47.animationId, i_24_, i_25_, i_23_, 4,
                                 true, i_22_, 0);
@@ -235,7 +235,7 @@ public class Region {
                 } else if (i_16_ == 7) {
                     Entity class50_sub1_sub4;
                     if (class47.animationId == -1 && class47.anIntArray805 == null)
-                        class50_sub1_sub4 = class47.method431(4, 0, i_22_, i_23_, i_24_, i_25_, -1);
+                        class50_sub1_sub4 = class47.getRotatedModel(4, 0, i_22_, i_23_, i_24_, i_25_, -1);
                     else
                         class50_sub1_sub4 = new GameObject(i, class47.animationId, i_24_, i_25_, i_23_, 4,
                                 true, i_22_, 0);
@@ -244,7 +244,7 @@ public class Region {
                 } else if (i_16_ == 8) {
                     Entity class50_sub1_sub4;
                     if (class47.animationId == -1 && class47.anIntArray805 == null)
-                        class50_sub1_sub4 = class47.method431(4, 0, i_22_, i_23_, i_24_, i_25_, -1);
+                        class50_sub1_sub4 = class47.getRotatedModel(4, 0, i_22_, i_23_, i_24_, i_25_, -1);
                     else
                         class50_sub1_sub4 = new GameObject(i, class47.animationId, i_24_, i_25_, i_23_, 4,
                                 true, i_22_, 0);
@@ -747,7 +747,7 @@ public class Region {
                 if (!lowMemory || objectDef.aBoolean759 || objectDef.aBoolean765) {
                     Entity class50_sub1_sub4;
                     if (objectDef.animationId == -1 && objectDef.anIntArray805 == null)
-                        class50_sub1_sub4 = objectDef.method431(22, i_188_, i_191_, i_192_, i_193_, i_194_, -1);
+                        class50_sub1_sub4 = objectDef.getRotatedModel(22, i_188_, i_191_, i_192_, i_193_, i_194_, -1);
                     else
                         class50_sub1_sub4 = new GameObject(i_190_, objectDef.animationId, i_193_, i_194_, i_192_, 22,
                                 true, i_191_, i_188_);
@@ -758,7 +758,7 @@ public class Region {
             } else if (objectType == 10 || objectType == 11) {
                 Entity class50_sub1_sub4;
                 if (objectDef.animationId == -1 && objectDef.anIntArray805 == null)
-                    class50_sub1_sub4 = objectDef.method431(10, i_188_, i_191_, i_192_, i_193_, i_194_, -1);
+                    class50_sub1_sub4 = objectDef.getRotatedModel(10, i_188_, i_191_, i_192_, i_193_, i_194_, -1);
                 else
                     class50_sub1_sub4 = new GameObject(i_190_, objectDef.animationId, i_193_, i_194_, i_192_, 10,
                             true, i_191_, i_188_);
@@ -782,7 +782,7 @@ public class Region {
                         if (class50_sub1_sub4 instanceof Model)
                             class50_sub1_sub4_sub4 = (Model) class50_sub1_sub4;
                         else
-                            class50_sub1_sub4_sub4 = objectDef.method431(10, i_188_, i_191_, i_192_, i_193_, i_194_, -1);
+                            class50_sub1_sub4_sub4 = objectDef.getRotatedModel(10, i_188_, i_191_, i_192_, i_193_, i_194_, -1);
                         if (class50_sub1_sub4_sub4 != null) {
                             for (int i_201_ = 0; i_201_ <= i_199_; i_201_++) {
                                 for (int i_202_ = 0; i_202_ <= i_200_; i_202_++) {
@@ -802,7 +802,7 @@ public class Region {
             } else if (objectType >= 12) {
                 Entity class50_sub1_sub4;
                 if (objectDef.animationId == -1 && objectDef.anIntArray805 == null)
-                    class50_sub1_sub4 = objectDef.method431(objectType, i_188_, i_191_, i_192_, i_193_, i_194_, -1);
+                    class50_sub1_sub4 = objectDef.getRotatedModel(objectType, i_188_, i_191_, i_192_, i_193_, i_194_, -1);
                 else
                     class50_sub1_sub4 = new GameObject(i_190_, objectDef.animationId, i_193_, i_194_, i_192_, objectType,
                             true, i_191_, i_188_);
@@ -815,7 +815,7 @@ public class Region {
             } else if (objectType == 0) {
                 Entity class50_sub1_sub4;
                 if (objectDef.animationId == -1 && objectDef.anIntArray805 == null)
-                    class50_sub1_sub4 = objectDef.method431(0, i_188_, i_191_, i_192_, i_193_, i_194_, -1);
+                    class50_sub1_sub4 = objectDef.getRotatedModel(0, i_188_, i_191_, i_192_, i_193_, i_194_, -1);
                 else
                     class50_sub1_sub4 = new GameObject(i_190_, objectDef.animationId, i_193_, i_194_, i_192_, 0,
                             true, i_191_, i_188_);
@@ -857,7 +857,7 @@ public class Region {
             } else if (objectType == 1) {
                 Entity class50_sub1_sub4;
                 if (objectDef.animationId == -1 && objectDef.anIntArray805 == null)
-                    class50_sub1_sub4 = objectDef.method431(1, i_188_, i_191_, i_192_, i_193_, i_194_, -1);
+                    class50_sub1_sub4 = objectDef.getRotatedModel(1, i_188_, i_191_, i_192_, i_193_, i_194_, -1);
                 else
                     class50_sub1_sub4 = new GameObject(i_190_, objectDef.animationId, i_193_, i_194_, i_192_, 1,
                             true, i_191_, i_188_);
@@ -880,8 +880,8 @@ public class Region {
                 Entity class50_sub1_sub4;
                 Entity class50_sub1_sub4_205_;
                 if (objectDef.animationId == -1 && objectDef.anIntArray805 == null) {
-                    class50_sub1_sub4 = objectDef.method431(2, 4 + i_188_, i_191_, i_192_, i_193_, i_194_, -1);
-                    class50_sub1_sub4_205_ = objectDef.method431(2, i_204_, i_191_, i_192_, i_193_, i_194_, -1);
+                    class50_sub1_sub4 = objectDef.getRotatedModel(2, 4 + i_188_, i_191_, i_192_, i_193_, i_194_, -1);
+                    class50_sub1_sub4_205_ = objectDef.getRotatedModel(2, i_204_, i_191_, i_192_, i_193_, i_194_, -1);
                 } else {
                     class50_sub1_sub4 = new GameObject(i_190_, objectDef.animationId, i_193_, i_194_, i_192_, 2,
                             true, i_191_, 4 + i_188_);
@@ -912,7 +912,7 @@ public class Region {
             } else if (objectType == 3) {
                 Entity class50_sub1_sub4;
                 if (objectDef.animationId == -1 && objectDef.anIntArray805 == null)
-                    class50_sub1_sub4 = objectDef.method431(3, i_188_, i_191_, i_192_, i_193_, i_194_, -1);
+                    class50_sub1_sub4 = objectDef.getRotatedModel(3, i_188_, i_191_, i_192_, i_193_, i_194_, -1);
                 else
                     class50_sub1_sub4 = new GameObject(i_190_, objectDef.animationId, i_193_, i_194_, i_192_, 3,
                             true, i_191_, i_188_);
@@ -933,7 +933,7 @@ public class Region {
             } else if (objectType == 9) {
                 Entity class50_sub1_sub4;
                 if (objectDef.animationId == -1 && objectDef.anIntArray805 == null)
-                    class50_sub1_sub4 = objectDef.method431(objectType, i_188_, i_191_, i_192_, i_193_, i_194_, -1);
+                    class50_sub1_sub4 = objectDef.getRotatedModel(objectType, i_188_, i_191_, i_192_, i_193_, i_194_, -1);
                 else
                     class50_sub1_sub4 = new GameObject(i_190_, objectDef.animationId, i_193_, i_194_, i_192_, objectType,
                             true, i_191_, i_188_);
@@ -967,7 +967,7 @@ public class Region {
                 if (objectType == 4) {
                     Entity class50_sub1_sub4;
                     if (objectDef.animationId == -1 && objectDef.anIntArray805 == null)
-                        class50_sub1_sub4 = objectDef.method431(4, 0, i_191_, i_192_, i_193_, i_194_, -1);
+                        class50_sub1_sub4 = objectDef.getRotatedModel(4, 0, i_191_, i_192_, i_193_, i_194_, -1);
                     else
                         class50_sub1_sub4 = new GameObject(i_190_, objectDef.animationId, i_193_, i_194_, i_192_, 4,
                                 true, i_191_, 0);
@@ -980,7 +980,7 @@ public class Region {
                         i_209_ = ObjectDefinition.forId(i_210_ >> 14 & 0x7fff).anInt802;
                     Entity class50_sub1_sub4;
                     if (objectDef.animationId == -1 && objectDef.anIntArray805 == null)
-                        class50_sub1_sub4 = objectDef.method431(4, 0, i_191_, i_192_, i_193_, i_194_, -1);
+                        class50_sub1_sub4 = objectDef.getRotatedModel(4, 0, i_191_, i_192_, i_193_, i_194_, -1);
                     else
                         class50_sub1_sub4 = new GameObject(i_190_, objectDef.animationId, i_193_, i_194_, i_192_, 4,
                                 true, i_191_, 0);
@@ -990,7 +990,7 @@ public class Region {
                 } else if (objectType == 6) {
                     Entity class50_sub1_sub4;
                     if (objectDef.animationId == -1 && objectDef.anIntArray805 == null)
-                        class50_sub1_sub4 = objectDef.method431(4, 0, i_191_, i_192_, i_193_, i_194_, -1);
+                        class50_sub1_sub4 = objectDef.getRotatedModel(4, 0, i_191_, i_192_, i_193_, i_194_, -1);
                     else
                         class50_sub1_sub4 = new GameObject(i_190_, objectDef.animationId, i_193_, i_194_, i_192_, 4,
                                 true, i_191_, 0);
@@ -999,7 +999,7 @@ public class Region {
                 } else if (objectType == 7) {
                     Entity class50_sub1_sub4;
                     if (objectDef.animationId == -1 && objectDef.anIntArray805 == null)
-                        class50_sub1_sub4 = objectDef.method431(4, 0, i_191_, i_192_, i_193_, i_194_, -1);
+                        class50_sub1_sub4 = objectDef.getRotatedModel(4, 0, i_191_, i_192_, i_193_, i_194_, -1);
                     else
                         class50_sub1_sub4 = new GameObject(i_190_, objectDef.animationId, i_193_, i_194_, i_192_, 4,
                                 true, i_191_, 0);
@@ -1008,7 +1008,7 @@ public class Region {
                 } else if (objectType == 8) {
                     Entity class50_sub1_sub4;
                     if (objectDef.animationId == -1 && objectDef.anIntArray805 == null)
-                        class50_sub1_sub4 = objectDef.method431(4, 0, i_191_, i_192_, i_193_, i_194_, -1);
+                        class50_sub1_sub4 = objectDef.getRotatedModel(4, 0, i_191_, i_192_, i_193_, i_194_, -1);
                     else
                         class50_sub1_sub4 = new GameObject(i_190_, objectDef.animationId, i_193_, i_194_, i_192_, 4,
                                 true, i_191_, 0);

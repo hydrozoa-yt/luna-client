@@ -820,12 +820,12 @@ public class SceneGraph {
 		anInt503++;
 		int l = 0;
 		int ai[] = class50_sub1_sub4_sub4_1.anIntArray1649;
-		int i1 = class50_sub1_sub4_sub4_1.anInt1648;
+		int i1 = class50_sub1_sub4_sub4_1.addedForSubmodels1648;
 		int j1 = class50_sub1_sub4_sub4_1.anInt1669 >> 16;
 		int k1 = (class50_sub1_sub4_sub4_1.anInt1669 << 16) >> 16;
 		int l1 = class50_sub1_sub4_sub4_1.anInt1670 >> 16;
 		int i2 = (class50_sub1_sub4_sub4_1.anInt1670 << 16) >> 16;
-		for (int j2 = 0; j2 < class50_sub1_sub4_sub4.anInt1648; j2++) {
+		for (int j2 = 0; j2 < class50_sub1_sub4_sub4.addedForSubmodels1648; j2++) {
 			VertexNormal class40 = ((Entity) (class50_sub1_sub4_sub4)).normals[j2];
 			VertexNormal class40_1 = class50_sub1_sub4_sub4.aClass40Array1681[j2];
 			if (class40_1.magnitude != 0) {
@@ -862,13 +862,13 @@ public class SceneGraph {
 
 		if (l < 3 || !flag)
 			return;
-		for (int k2 = 0; k2 < class50_sub1_sub4_sub4.anInt1652; k2++)
+		for (int k2 = 0; k2 < class50_sub1_sub4_sub4.addedForSubmodels1652; k2++)
 			if (anIntArray501[class50_sub1_sub4_sub4.anIntArray1653[k2]] == anInt503
 					&& anIntArray501[class50_sub1_sub4_sub4.anIntArray1654[k2]] == anInt503
 					&& anIntArray501[class50_sub1_sub4_sub4.anIntArray1655[k2]] == anInt503)
 				class50_sub1_sub4_sub4.anIntArray1659[k2] = -1;
 
-		for (int l2 = 0; l2 < class50_sub1_sub4_sub4_1.anInt1652; l2++)
+		for (int l2 = 0; l2 < class50_sub1_sub4_sub4_1.addedForSubmodels1652; l2++)
 			if (anIntArray502[class50_sub1_sub4_sub4_1.anIntArray1653[l2]] == anInt503
 					&& anIntArray502[class50_sub1_sub4_sub4_1.anIntArray1654[l2]] == anInt503
 					&& anIntArray502[class50_sub1_sub4_sub4_1.anIntArray1655[l2]] == anInt503)

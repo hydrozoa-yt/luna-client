@@ -90,7 +90,7 @@ public class GameObject extends Entity {
 		if (class47 == null) {
 			return null;
 		} else {
-			Model class50_sub1_sub4_sub4 = class47.method431(anInt1721, anInt1722, anInt1715,
+			Model class50_sub1_sub4_sub4 = class47.getRotatedModel(anInt1721, anInt1722, anInt1715,
 					anInt1716, anInt1717, anInt1718, i);
 			return class50_sub1_sub4_sub4;
 		}

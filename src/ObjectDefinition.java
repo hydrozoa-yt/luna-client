@@ -123,8 +123,8 @@ public class ObjectDefinition {
 
     }
 
-    public Model method427(int i, int j, int k, int l) {
-        Model class50_sub1_sub4_sub4 = null;
+    public Model getModel(int i, int j, int k, int l) {
+        Model result = null;
         long l1;
         if (anIntArray789 == null) {
             if (l != 10)
@@ -141,21 +141,21 @@ public class ObjectDefinition {
                 int l2 = anIntArray763[i2];
                 if (flag1)
                     l2 += 0x10000;
-                class50_sub1_sub4_sub4 = (Model) aClass33_779.get(l2);
-                if (class50_sub1_sub4_sub4 == null) {
-                    class50_sub1_sub4_sub4 = Model.forId(l2 & 0xffff);
-                    if (class50_sub1_sub4_sub4 == null)
+                result = (Model) aClass33_779.get(l2);
+                if (result == null) {
+                    result = Model.forId(l2 & 0xffff);
+                    if (result == null)
                         return null;
                     if (flag1)
-                        class50_sub1_sub4_sub4.method592(0);
-                    aClass33_779.put(class50_sub1_sub4_sub4, l2);
+                        result.method592(0);
+                    aClass33_779.put(result, l2);
                 }
                 if (k1 > 1)
-                    aClass50_Sub1_Sub4_Sub4Array771[i2] = class50_sub1_sub4_sub4;
+                    aClass50_Sub1_Sub4_Sub4Array771[i2] = result;
             }
 
             if (k1 > 1)
-                class50_sub1_sub4_sub4 = new Model(k1, aClass50_Sub1_Sub4_Sub4Array771);
+                result = new Model(k1, aClass50_Sub1_Sub4_Sub4Array771);
         } else {
             int i1 = -1;
             for (int j1 = 0; j1 < anIntArray789.length; j1++) {
@@ -168,21 +168,21 @@ public class ObjectDefinition {
             if (i1 == -1)
                 return null;
             l1 = ((id << 6) + (i1 << 3) + i) + ((long) (j + 1) << 32);
-            Model class50_sub1_sub4_sub4_2 = (Model) aClass33_762.get(l1);
-            if (class50_sub1_sub4_sub4_2 != null)
-                return class50_sub1_sub4_sub4_2;
+            Model quickModel = (Model) aClass33_762.get(l1);
+            if (quickModel != null)
+                return quickModel;
             int j2 = anIntArray763[i1];
             boolean flag3 = aBoolean798 ^ (i > 3);
             if (flag3)
                 j2 += 0x10000;
-            class50_sub1_sub4_sub4 = (Model) aClass33_779.get(j2);
-            if (class50_sub1_sub4_sub4 == null) {
-                class50_sub1_sub4_sub4 = Model.forId(j2 & 0xffff);
-                if (class50_sub1_sub4_sub4 == null)
+            result = (Model) aClass33_779.get(j2);
+            if (result == null) {
+                result = Model.forId(j2 & 0xffff);
+                if (result == null)
                     return null;
                 if (flag3)
-                    class50_sub1_sub4_sub4.method592(0);
-                aClass33_779.put(class50_sub1_sub4_sub4, j2);
+                    result.method592(0);
+                aClass33_779.put(result, j2);
             }
         }
         boolean flag;
@@ -195,32 +195,32 @@ public class ObjectDefinition {
             flag2 = true;
         else
             flag2 = false;
-        Model class50_sub1_sub4_sub4_3 = new Model(i == 0 && j == -1 && !flag
-                && !flag2, false, modifiedModelColors == null, class50_sub1_sub4_sub4, Class21.method239(j));
+        Model finalResult = new Model(i == 0 && j == -1 && !flag
+                && !flag2, false, modifiedModelColors == null, result, Class21.method239(j));
         if (k != 0)
             anInt768 = 487;
         if (j != -1) {
-            class50_sub1_sub4_sub4_3.method584(7);
-            class50_sub1_sub4_sub4_3.method585(j, (byte) 6);
-            class50_sub1_sub4_sub4_3.anIntArrayArray1679 = null;
-            class50_sub1_sub4_sub4_3.anIntArrayArray1678 = null;
+            finalResult.method584(7);
+            finalResult.method585(j, (byte) 6);
+            finalResult.anIntArrayArray1679 = null;
+            finalResult.anIntArrayArray1678 = null;
         }
         while (i-- > 0)
-            class50_sub1_sub4_sub4_3.method588(true);
+            finalResult.method588(true);
         if (modifiedModelColors != null) {
             for (int k2 = 0; k2 < modifiedModelColors.length; k2++)
-                class50_sub1_sub4_sub4_3.replaceColor(modifiedModelColors[k2], originalModelColors[k2]);
+                finalResult.replaceColor(modifiedModelColors[k2], originalModelColors[k2]);
 
         }
         if (flag)
-            class50_sub1_sub4_sub4_3.method593(anInt760, anInt796, 9, anInt780);
+            finalResult.method593(anInt760, anInt796, 9, anInt780);
         if (flag2)
-            class50_sub1_sub4_sub4_3.method590(anInt761, anInt766, false, anInt785);
-        class50_sub1_sub4_sub4_3.method594(64 + aByte784, 768 + aByte787 * 5, -50, -10, -50, !aBoolean804);
+            finalResult.method590(anInt761, anInt766, false, anInt785);
+        finalResult.method594(64 + aByte784, 768 + aByte787 * 5, -50, -10, -50, !aBoolean804);
         if (anInt794 == 1)
-            class50_sub1_sub4_sub4_3.anInt1675 = ((Entity) (class50_sub1_sub4_sub4_3)).height;
-        aClass33_762.put(class50_sub1_sub4_sub4_3, l1);
-        return class50_sub1_sub4_sub4_3;
+            finalResult.anInt1675 = ((Entity) (finalResult)).height;
+        aClass33_762.put(finalResult, l1);
+        return finalResult;
     }
 
     public boolean method428(int i) {
@@ -419,15 +419,15 @@ public class ObjectDefinition {
             anInt794 = aBoolean810 ? 1 : 0;
     }
 
-    public Model method431(int i, int j, int k, int l, int i1, int j1, int k1) {
-        Model class50_sub1_sub4_sub4 = method427(j, k1, 0, i);
+    public Model getRotatedModel(int i, int j, int k, int l, int i1, int j1, int k1) {
+        Model class50_sub1_sub4_sub4 = getModel(j, k1, 0, i);
         if (class50_sub1_sub4_sub4 == null)
             return null;
         if (aBoolean769 || aBoolean804)
             class50_sub1_sub4_sub4 = new Model(aBoolean769, aBoolean804, 0, class50_sub1_sub4_sub4);
         if (aBoolean769) {
             int l1 = (k + l + i1 + j1) / 4;
-            for (int i2 = 0; i2 < class50_sub1_sub4_sub4.anInt1648; i2++) {
+            for (int i2 = 0; i2 < class50_sub1_sub4_sub4.addedForSubmodels1648; i2++) {
                 int j2 = class50_sub1_sub4_sub4.anIntArray1649[i2];
                 int k2 = class50_sub1_sub4_sub4.anIntArray1651[i2];
                 int l2 = k + ((l - k) * (j2 + 64)) / 128;

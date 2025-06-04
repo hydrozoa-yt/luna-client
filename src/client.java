@@ -9764,7 +9764,7 @@ public class client extends JagApplet {
                 int j22 = intGroundArray[plane][x + 1][y];
                 int k22 = intGroundArray[plane][x + 1][y + 1];
                 int l22 = intGroundArray[plane][x][y + 1];
-                Model class50_sub1_sub4_sub4 = class47.method431(i6, rotation, i22, j22, k22, l22, -1);
+                Model class50_sub1_sub4_sub4 = class47.getRotatedModel(i6, rotation, i22, j22, k22, l22, -1);
                 if (class50_sub1_sub4_sub4 != null) {
                     method145(true, plane, x, y, 0, l19 + 1, 0, -1, l21 + 1, k11);
                     player.anInt1764 = l21 + pulseCycle;
