@@ -355,7 +355,7 @@ public class client extends JagApplet {
         JagInterface.method202(false);
         TileDefinition.tiles = null;
         IdentityKit.identityKits = null;
-        Class4.aClass4Array103 = null;
+        UnusedClass4.aUnusedClass4Array103 = null;
         Animation.animations = null;
         SpotAnimation.spotAnimations = null;
         SpotAnimation.models = null;
@@ -365,7 +365,7 @@ public class client extends JagApplet {
         ThreeDimensionalCanvas.method492(false);
         SceneGraph.method240(false);
         Model.method573(false);
-        Class21.method237(false);
+        ModelRelated21.method237(false);
         System.gc();
     }
 
@@ -4347,7 +4347,7 @@ public class client extends JagApplet {
             drawLoadingText(60, "Connecting to update server");
             fileFetcher = new OnDemandFetcher();
             fileFetcher.init(versionListArchive, this);
-            Class21.method235(fileFetcher.method343(553));
+            ModelRelated21.method235(fileFetcher.method343(553));
             Model.method574(fileFetcher.method340(0, -31140), fileFetcher);
             if (!lowMemory) {
                 anInt1270 = 0;
@@ -5567,7 +5567,7 @@ public class client extends JagApplet {
                     }
                 }
                 if (class50_sub1_sub3.type == 1 && class50_sub1_sub3.buf != null)
-                    Class21.method236(class50_sub1_sub3.buf, true);
+                    ModelRelated21.method236(class50_sub1_sub3.buf, true);
                 if (class50_sub1_sub3.type == 2 && class50_sub1_sub3.id == anInt1270 && class50_sub1_sub3.buf != null)
                     method24(aBoolean1271, class50_sub1_sub3.buf, 659);
                 if (class50_sub1_sub3.type == 3 && loadingStage == 1) {

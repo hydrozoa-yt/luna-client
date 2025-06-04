@@ -21,9 +21,9 @@ public class Animation {
 		if (i != 0)
 			return 1;
 		if (k == 0) {
-			Class21 class21 = Class21.method238(anIntArray295[j]);
-			if (class21 != null)
-				k = anIntArray297[j] = class21.anInt431;
+			ModelRelated21 modelRelated21 = ModelRelated21.method238(anIntArray295[j]);
+			if (modelRelated21 != null)
+				k = anIntArray297[j] = modelRelated21.anInt431;
 		}
 		if (k == 0)
 			k = 1;

@@ -969,10 +969,10 @@ public class Model extends Entity {
 			return;
 		if (i == -1)
 			return;
-		Class21 class21 = Class21.method238(i);
-		if (class21 == null)
+		ModelRelated21 modelRelated21 = ModelRelated21.method238(i);
+		if (modelRelated21 == null)
 			return;
-		Class41 class41 = class21.aClass41_432;
+		ModelRelated41 modelRelated41 = modelRelated21.aModelRelated41_432;
 		if (byte0 == 6)
 			byte0 = 0;
 		else
@@ -980,10 +980,10 @@ public class Model extends Entity {
 		anInt1702 = 0;
 		anInt1703 = 0;
 		anInt1704 = 0;
-		for (int j = 0; j < class21.anInt433; j++) {
-			int k = class21.anIntArray434[j];
-			method587(class41.anIntArray698[k], class41.anIntArrayArray699[k], class21.anIntArray435[j],
-					class21.anIntArray436[j], class21.anIntArray437[j]);
+		for (int j = 0; j < modelRelated21.anInt433; j++) {
+			int k = modelRelated21.anIntArray434[j];
+			method587(modelRelated41.anIntArray698[k], modelRelated41.anIntArrayArray699[k], modelRelated21.anIntArray435[j],
+					modelRelated21.anIntArray436[j], modelRelated21.anIntArray437[j]);
 		}
 
 	}
@@ -995,15 +995,15 @@ public class Model extends Entity {
 			method585(k, (byte) 6);
 			return;
 		}
-		Class21 class21 = Class21.method238(k);
-		if (class21 == null)
+		ModelRelated21 modelRelated21 = ModelRelated21.method238(k);
+		if (modelRelated21 == null)
 			return;
-		Class21 class21_1 = Class21.method238(i);
-		if (class21_1 == null) {
+		ModelRelated21 modelRelated21_1 = ModelRelated21.method238(i);
+		if (modelRelated21_1 == null) {
 			method585(k, (byte) 6);
 			return;
 		}
-		Class41 class41 = class21.aClass41_432;
+		ModelRelated41 modelRelated41 = modelRelated21.aModelRelated41_432;
 		anInt1702 = 0;
 		if (j != 0)
 			aBoolean1641 = !aBoolean1641;
@@ -1011,12 +1011,12 @@ public class Model extends Entity {
 		anInt1704 = 0;
 		int l = 0;
 		int i1 = ai[l++];
-		for (int j1 = 0; j1 < class21.anInt433; j1++) {
+		for (int j1 = 0; j1 < modelRelated21.anInt433; j1++) {
 			int k1;
-			for (k1 = class21.anIntArray434[j1]; k1 > i1; i1 = ai[l++]);
-			if (k1 != i1 || class41.anIntArray698[k1] == 0)
-				method587(class41.anIntArray698[k1], class41.anIntArrayArray699[k1], class21.anIntArray435[j1],
-						class21.anIntArray436[j1], class21.anIntArray437[j1]);
+			for (k1 = modelRelated21.anIntArray434[j1]; k1 > i1; i1 = ai[l++]);
+			if (k1 != i1 || modelRelated41.anIntArray698[k1] == 0)
+				method587(modelRelated41.anIntArray698[k1], modelRelated41.anIntArrayArray699[k1], modelRelated21.anIntArray435[j1],
+						modelRelated21.anIntArray436[j1], modelRelated21.anIntArray437[j1]);
 		}
 
 		anInt1702 = 0;
@@ -1024,12 +1024,12 @@ public class Model extends Entity {
 		anInt1704 = 0;
 		l = 0;
 		i1 = ai[l++];
-		for (int l1 = 0; l1 < class21_1.anInt433; l1++) {
+		for (int l1 = 0; l1 < modelRelated21_1.anInt433; l1++) {
 			int i2;
-			for (i2 = class21_1.anIntArray434[l1]; i2 > i1; i1 = ai[l++]);
-			if (i2 == i1 || class41.anIntArray698[i2] == 0)
-				method587(class41.anIntArray698[i2], class41.anIntArrayArray699[i2], class21_1.anIntArray435[l1],
-						class21_1.anIntArray436[l1], class21_1.anIntArray437[l1]);
+			for (i2 = modelRelated21_1.anIntArray434[l1]; i2 > i1; i1 = ai[l++]);
+			if (i2 == i1 || modelRelated41.anIntArray698[i2] == 0)
+				method587(modelRelated41.anIntArray698[i2], modelRelated41.anIntArrayArray699[i2], modelRelated21_1.anIntArray435[l1],
+						modelRelated21_1.anIntArray436[l1], modelRelated21_1.anIntArray437[l1]);
 		}
 
 	}

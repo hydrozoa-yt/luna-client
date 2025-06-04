@@ -196,7 +196,7 @@ public class ObjectDefinition {
         else
             flag2 = false;
         Model finalResult = new Model(i == 0 && j == -1 && !flag
-                && !flag2, false, modifiedModelColors == null, result, Class21.method239(j));
+                && !flag2, false, modifiedModelColors == null, result, ModelRelated21.method239(j));
         if (k != 0)
             anInt768 = 487;
         if (j != -1) {

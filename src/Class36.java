@@ -87,7 +87,7 @@ public class Class36 {
 		return anIntArray613[i] * 2;
 	}
 
-	public void method356(int i, Class29 class29, JagBuffer class50_sub1_sub2) {
+	public void method356(int i, SoundRelated29 soundRelated29, JagBuffer class50_sub1_sub2) {
 		int j = class50_sub1_sub2.getByte();
 		anIntArray613[0] = j >> 4;
 		while (i >= 0) {
@@ -119,7 +119,7 @@ public class Class36 {
 			}
 
 			if (l != 0 || anIntArray616[1] != anIntArray616[0])
-				class29.method309(class50_sub1_sub2, 0);
+				soundRelated29.method309(class50_sub1_sub2, 0);
 			return;
 		} else {
 			anIntArray616[0] = anIntArray616[1] = 0;

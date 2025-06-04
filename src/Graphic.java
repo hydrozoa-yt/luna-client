@@ -43,7 +43,7 @@ public class Graphic extends Entity {
 			return null;
 		int i = aClass27_1739.animation.anIntArray295[anInt1737];
 		Model class50_sub1_sub4_sub4_1 = new Model(false, false, true,
-				class50_sub1_sub4_sub4, Class21.method239(i));
+				class50_sub1_sub4_sub4, ModelRelated21.method239(i));
 		if (!aBoolean1736) {
 			class50_sub1_sub4_sub4_1.method584(7);
 			class50_sub1_sub4_sub4_1.method585(i, (byte) 6);
