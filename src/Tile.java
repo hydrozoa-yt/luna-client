@@ -6,7 +6,7 @@ public class Tile extends Node {
 
 	public Tile(int i, int j, int k) {
 		aBoolean1396 = false;
-		aClass5Array1408 = new Class5[5];
+		aScenegraphRelated5Array1408 = new ScenegraphRelated5[5];
 		anIntArray1409 = new int[5];
 		anInt1400 = anInt1397 = i;
 		anInt1398 = j;
@@ -25,7 +25,7 @@ public class Tile extends Node {
 	public ScenegraphMember28 aClass28_1405;
 	public ScenegraphMember10 aClass10_1406;
 	public int anInt1407;
-	public Class5 aClass5Array1408[];
+	public ScenegraphRelated5 aScenegraphRelated5Array1408[];
 	public int anIntArray1409[];
 	public int anInt1410;
 	public int anInt1411;

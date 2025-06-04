@@ -626,8 +626,8 @@ public class Region {
                     if (i_156_ == i_150_ && i_157_ >= i_153_ && i_157_ < i_153_ + 8 && i_158_ >= i_148_
                             && i_158_ < i_148_ + 8)
                         method183(0, 0, class50_sub1_sub2, i, i_151_
-                                + Class34.method348((byte) 7, i, i_157_ & 0x7, i_158_ & 0x7), i_149_, i_152_
-                                + Class34.method349(i_158_ & 0x7, i_157_ & 0x7, i, (byte) 5));
+                                + RegionRelated34.method348((byte) 7, i, i_157_ & 0x7, i_158_ & 0x7), i_149_, i_152_
+                                + RegionRelated34.method349(i_158_ & 0x7, i_157_ & 0x7, i, (byte) 5));
                     else
                         method183(0, 0, class50_sub1_sub2, 0, -1, 0, -1);
                 }
@@ -705,9 +705,9 @@ public class Region {
                 if (plane == i_171_ && offsetX >= i_168_ && offsetX < i_168_ + 8 && offsetY >= i_170_
                         && offsetY < i_170_ + 8) {
                     ObjectDefinition def = ObjectDefinition.forId(objectId);
-                    int i_182_ = (i_169_ + Class34.method350(i_167_, def.anInt775, rotation, offsetX & 0x7,
+                    int i_182_ = (i_169_ + RegionRelated34.method350(i_167_, def.anInt775, rotation, offsetX & 0x7,
                             (byte) -117, def.anInt801, offsetY & 0x7));
-                    int i_183_ = (i_166_ + Class34.method351(def.anInt801, i_167_, 671, offsetX & 0x7,
+                    int i_183_ = (i_166_ + RegionRelated34.method351(def.anInt801, i_167_, 671, offsetX & 0x7,
                             offsetY & 0x7, def.anInt775, rotation));
                     if (i_182_ > 0 && i_183_ > 0 && i_182_ < 103 && i_183_ < 103) {
                         int i_184_ = i;

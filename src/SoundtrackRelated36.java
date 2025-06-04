@@ -2,7 +2,7 @@
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) 
 
-public class Class36 {
+public class SoundtrackRelated36 {
 
 	public int anInt611;
 	public boolean aBoolean612;
@@ -15,7 +15,7 @@ public class Class36 {
 	public static float aFloat619;
 	public static int anInt620;
 
-	public Class36() {
+	public SoundtrackRelated36() {
 		aBoolean612 = true;
 		anIntArray613 = new int[2];
 		anIntArrayArrayArray614 = new int[2][2][4];

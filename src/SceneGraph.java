@@ -24,7 +24,7 @@ public class SceneGraph {
 	public Tile tiles[][][];
 	public int anInt457;
 	public int anInt458;
-	public Class5 aClass5Array459[];
+	public ScenegraphRelated5 aScenegraphRelated5Array459[];
 	public int anIntArrayArrayArray460[][][];
 	public static int anInt461;
 	public static int anInt462;
@@ -42,7 +42,7 @@ public class SceneGraph {
 	public static int anInt474;
 	public static int anInt475;
 	public static int anInt476;
-	public static Class5 aClass5Array477[] = new Class5[100];
+	public static ScenegraphRelated5 aScenegraphRelated5Array477[] = new ScenegraphRelated5[100];
 	public static final int anIntArray478[] = { 53, -53, -53, 53 };
 	public static final int anIntArray479[] = { -53, -53, 53, 53 };
 	public static final int anIntArray480[] = { -45, 45, 45, -45 };
@@ -107,7 +107,7 @@ public class SceneGraph {
 		aBoolean448 = true;
 		aBoolean449 = false;
 		anInt450 = -68;
-		aClass5Array459 = new Class5[5000];
+		aScenegraphRelated5Array459 = new ScenegraphRelated5[5000];
 		anIntArray501 = new int[10000];
 		anIntArray502 = new int[10000];
 		anInt452 = j;
@@ -124,7 +124,7 @@ public class SceneGraph {
 	}
 
 	public static void method240(boolean flag) {
-		aClass5Array477 = null;
+		aScenegraphRelated5Array477 = null;
 		anIntArray488 = null;
 		aClass39ArrayArray489 = null;
 		aClass6_492 = null;
@@ -157,11 +157,11 @@ public class SceneGraph {
 		}
 
 		for (int k1 = 0; k1 < anInt458; k1++)
-			aClass5Array459[k1] = null;
+			aScenegraphRelated5Array459[k1] = null;
 
 		anInt458 = 0;
-		for (int l1 = 0; l1 < aClass5Array477.length; l1++)
-			aClass5Array477[l1] = null;
+		for (int l1 = 0; l1 < aScenegraphRelated5Array477.length; l1++)
+			aScenegraphRelated5Array477[l1] = null;
 
 	}
 
@@ -185,9 +185,9 @@ public class SceneGraph {
 			if (class50_sub3_1 != null) {
 				class50_sub3_1.anInt1397--;
 				for (int i1 = 0; i1 < class50_sub3_1.anInt1407; i1++) {
-					Class5 class5 = class50_sub3_1.aClass5Array1408[i1];
-					if ((class5.anInt125 >> 29 & 3) == 2 && class5.anInt119 == i && class5.anInt121 == j)
-						class5.anInt113--;
+					ScenegraphRelated5 scenegraphRelated5 = class50_sub3_1.aScenegraphRelated5Array1408[i1];
+					if ((scenegraphRelated5.anInt125 >> 29 & 3) == 2 && scenegraphRelated5.anInt119 == i && scenegraphRelated5.anInt121 == j)
+						scenegraphRelated5.anInt113--;
 				}
 
 			}
@@ -292,8 +292,8 @@ public class SceneGraph {
 		Tile class50_sub3 = tiles[coord1][coord2][coord3];
 		if (class50_sub3 != null) {
 			for (int l1 = 0; l1 < class50_sub3.anInt1407; l1++)
-				if (class50_sub3.aClass5Array1408[l1].aClass50_Sub1_Sub4_117 instanceof Model) {
-					int i2 = ((Model) class50_sub3.aClass5Array1408[l1].aClass50_Sub1_Sub4_117).anInt1675;
+				if (class50_sub3.aScenegraphRelated5Array1408[l1].aClass50_Sub1_Sub4_117 instanceof Model) {
+					int i2 = ((Model) class50_sub3.aScenegraphRelated5Array1408[l1].aClass50_Sub1_Sub4_117).anInt1675;
 					if (i2 > k1)
 						k1 = i2;
 				}
@@ -415,19 +415,19 @@ public class SceneGraph {
 
 		}
 
-		Class5 class5 = new Class5();
-		class5.anInt125 = j2;
-		class5.aByte126 = byte0;
-		class5.anInt113 = i;
-		class5.anInt115 = j1;
-		class5.anInt116 = k1;
-		class5.anInt114 = l1;
-		class5.aClass50_Sub1_Sub4_117 = class50_sub1_sub4;
-		class5.anInt118 = i2;
-		class5.anInt119 = j;
-		class5.anInt121 = k;
-		class5.anInt120 = (j + l) - 1;
-		class5.anInt122 = (k + i1) - 1;
+		ScenegraphRelated5 scenegraphRelated5 = new ScenegraphRelated5();
+		scenegraphRelated5.anInt125 = j2;
+		scenegraphRelated5.aByte126 = byte0;
+		scenegraphRelated5.anInt113 = i;
+		scenegraphRelated5.anInt115 = j1;
+		scenegraphRelated5.anInt116 = k1;
+		scenegraphRelated5.anInt114 = l1;
+		scenegraphRelated5.aClass50_Sub1_Sub4_117 = class50_sub1_sub4;
+		scenegraphRelated5.anInt118 = i2;
+		scenegraphRelated5.anInt119 = j;
+		scenegraphRelated5.anInt121 = k;
+		scenegraphRelated5.anInt120 = (j + l) - 1;
+		scenegraphRelated5.anInt122 = (k + i1) - 1;
 		for (int i3 = j; i3 < j + l; i3++) {
 			for (int j3 = k; j3 < k + i1; j3++) {
 				int k3 = 0;
@@ -444,7 +444,7 @@ public class SceneGraph {
 						tiles[l3][i3][j3] = new Tile(l3, i3, j3);
 
 				Tile class50_sub3_1 = tiles[i][i3][j3];
-				class50_sub3_1.aClass5Array1408[class50_sub3_1.anInt1407] = class5;
+				class50_sub3_1.aScenegraphRelated5Array1408[class50_sub3_1.anInt1407] = scenegraphRelated5;
 				class50_sub3_1.anIntArray1409[class50_sub3_1.anInt1407] = k3;
 				class50_sub3_1.anInt1410 |= k3;
 				class50_sub3_1.anInt1407++;
@@ -453,36 +453,36 @@ public class SceneGraph {
 		}
 
 		if (flag)
-			aClass5Array459[anInt458++] = class5;
+			aScenegraphRelated5Array459[anInt458++] = scenegraphRelated5;
 		return true;
 	}
 
 	public void method255(int i) {
 		i = 16 / i;
 		for (int j = 0; j < anInt458; j++) {
-			Class5 class5 = aClass5Array459[j];
-			method256(class5, 0);
-			aClass5Array459[j] = null;
+			ScenegraphRelated5 scenegraphRelated5 = aScenegraphRelated5Array459[j];
+			method256(scenegraphRelated5, 0);
+			aScenegraphRelated5Array459[j] = null;
 		}
 
 		anInt458 = 0;
 	}
 
-	public void method256(Class5 class5, int i) {
-		for (int j = class5.anInt119; j <= class5.anInt120; j++) {
-			for (int k = class5.anInt121; k <= class5.anInt122; k++) {
-				Tile class50_sub3 = tiles[class5.anInt113][j][k];
+	public void method256(ScenegraphRelated5 scenegraphRelated5, int i) {
+		for (int j = scenegraphRelated5.anInt119; j <= scenegraphRelated5.anInt120; j++) {
+			for (int k = scenegraphRelated5.anInt121; k <= scenegraphRelated5.anInt122; k++) {
+				Tile class50_sub3 = tiles[scenegraphRelated5.anInt113][j][k];
 				if (class50_sub3 != null) {
 					for (int l = 0; l < class50_sub3.anInt1407; l++) {
-						if (class50_sub3.aClass5Array1408[l] != class5)
+						if (class50_sub3.aScenegraphRelated5Array1408[l] != scenegraphRelated5)
 							continue;
 						class50_sub3.anInt1407--;
 						for (int i1 = l; i1 < class50_sub3.anInt1407; i1++) {
-							class50_sub3.aClass5Array1408[i1] = class50_sub3.aClass5Array1408[i1 + 1];
+							class50_sub3.aScenegraphRelated5Array1408[i1] = class50_sub3.aScenegraphRelated5Array1408[i1 + 1];
 							class50_sub3.anIntArray1409[i1] = class50_sub3.anIntArray1409[i1 + 1];
 						}
 
-						class50_sub3.aClass5Array1408[class50_sub3.anInt1407] = null;
+						class50_sub3.aScenegraphRelated5Array1408[class50_sub3.anInt1407] = null;
 						break;
 					}
 
@@ -545,9 +545,9 @@ public class SceneGraph {
 		if (class50_sub3 == null)
 			return;
 		for (int i1 = 0; i1 < class50_sub3.anInt1407; i1++) {
-			Class5 class5 = class50_sub3.aClass5Array1408[i1];
-			if ((class5.anInt125 >> 29 & 3) == 2 && class5.anInt119 == l && class5.anInt121 == i) {
-				method256(class5, 0);
+			ScenegraphRelated5 scenegraphRelated5 = class50_sub3.aScenegraphRelated5Array1408[i1];
+			if ((scenegraphRelated5.anInt125 >> 29 & 3) == 2 && scenegraphRelated5.anInt119 == l && scenegraphRelated5.anInt121 == i) {
+				method256(scenegraphRelated5, 0);
 				return;
 			}
 		}
@@ -594,7 +594,7 @@ public class SceneGraph {
 			return class50_sub3.aClass35_1404;
 	}
 
-	public Class5 method265(int i, byte byte0, int j, int k) {
+	public ScenegraphRelated5 method265(int i, byte byte0, int j, int k) {
 		if (byte0 != 32) {
 			for (int l = 1; l > 0; l++);
 		}
@@ -602,9 +602,9 @@ public class SceneGraph {
 		if (class50_sub3 == null)
 			return null;
 		for (int i1 = 0; i1 < class50_sub3.anInt1407; i1++) {
-			Class5 class5 = class50_sub3.aClass5Array1408[i1];
-			if ((class5.anInt125 >> 29 & 3) == 2 && class5.anInt119 == i && class5.anInt121 == j)
-				return class5;
+			ScenegraphRelated5 scenegraphRelated5 = class50_sub3.aScenegraphRelated5Array1408[i1];
+			if ((scenegraphRelated5.anInt125 >> 29 & 3) == 2 && scenegraphRelated5.anInt119 == i && scenegraphRelated5.anInt121 == j)
+				return scenegraphRelated5;
 		}
 
 		return null;
@@ -643,9 +643,9 @@ public class SceneGraph {
 		if (class50_sub3 == null)
 			return 0;
 		for (int l = 0; l < class50_sub3.anInt1407; l++) {
-			Class5 class5 = class50_sub3.aClass5Array1408[l];
-			if ((class5.anInt125 >> 29 & 3) == 2 && class5.anInt119 == j && class5.anInt121 == k)
-				return class5.anInt125;
+			ScenegraphRelated5 scenegraphRelated5 = class50_sub3.aScenegraphRelated5Array1408[l];
+			if ((scenegraphRelated5.anInt125 >> 29 & 3) == 2 && scenegraphRelated5.anInt119 == j && scenegraphRelated5.anInt121 == k)
+				return scenegraphRelated5.anInt125;
 		}
 
 		return 0;
@@ -670,8 +670,8 @@ public class SceneGraph {
 		if (class50_sub3.aClass28_1405 != null && class50_sub3.aClass28_1405.anInt571 == l)
 			return class50_sub3.aClass28_1405.aByte572 & 0xff;
 		for (int i1 = 0; i1 < class50_sub3.anInt1407; i1++)
-			if (class50_sub3.aClass5Array1408[i1].anInt125 == l)
-				return class50_sub3.aClass5Array1408[i1].aByte126 & 0xff;
+			if (class50_sub3.aScenegraphRelated5Array1408[i1].anInt125 == l)
+				return class50_sub3.aScenegraphRelated5Array1408[i1].aByte126 & 0xff;
 
 		return -1;
 	}
@@ -696,13 +696,13 @@ public class SceneGraph {
 							((Model) class44.aClass50_Sub1_Sub4_724).method595(i, j, 0, k);
 						}
 						for (int k1 = 0; k1 < class50_sub3.anInt1407; k1++) {
-							Class5 class5 = class50_sub3.aClass5Array1408[k1];
-							if (class5 != null && class5.aClass50_Sub1_Sub4_117 != null
-									&& class5.aClass50_Sub1_Sub4_117.normals != null) {
-								method274(j1, l, 0, (class5.anInt120 - class5.anInt119) + 1,
-										(Model) class5.aClass50_Sub1_Sub4_117, i1,
-										(class5.anInt122 - class5.anInt121) + 1);
-								((Model) class5.aClass50_Sub1_Sub4_117).method595(i, j, 0, k);
+							ScenegraphRelated5 scenegraphRelated5 = class50_sub3.aScenegraphRelated5Array1408[k1];
+							if (scenegraphRelated5 != null && scenegraphRelated5.aClass50_Sub1_Sub4_117 != null
+									&& scenegraphRelated5.aClass50_Sub1_Sub4_117.normals != null) {
+								method274(j1, l, 0, (scenegraphRelated5.anInt120 - scenegraphRelated5.anInt119) + 1,
+										(Model) scenegraphRelated5.aClass50_Sub1_Sub4_117, i1,
+										(scenegraphRelated5.anInt122 - scenegraphRelated5.anInt121) + 1);
+								((Model) scenegraphRelated5.aClass50_Sub1_Sub4_117).method595(i, j, 0, k);
 							}
 						}
 
@@ -790,15 +790,15 @@ public class SceneGraph {
 												(Model) class44.aClass50_Sub1_Sub4_725, (l2 - i1)
 														* 128 + (1 - l) * 64, j3, (i3 - i) * 128 + (1 - j1) * 64, flag);
 									for (int k3 = 0; k3 < class50_sub3.anInt1407; k3++) {
-										Class5 class5 = class50_sub3.aClass5Array1408[k3];
-										if (class5 != null && class5.aClass50_Sub1_Sub4_117 != null
-												&& class5.aClass50_Sub1_Sub4_117.normals != null) {
-											int l3 = (class5.anInt120 - class5.anInt119) + 1;
-											int i4 = (class5.anInt122 - class5.anInt121) + 1;
+										ScenegraphRelated5 scenegraphRelated5 = class50_sub3.aScenegraphRelated5Array1408[k3];
+										if (scenegraphRelated5 != null && scenegraphRelated5.aClass50_Sub1_Sub4_117 != null
+												&& scenegraphRelated5.aClass50_Sub1_Sub4_117.normals != null) {
+											int l3 = (scenegraphRelated5.anInt120 - scenegraphRelated5.anInt119) + 1;
+											int i4 = (scenegraphRelated5.anInt122 - scenegraphRelated5.anInt121) + 1;
 											method275(class50_sub1_sub4_sub4,
-													(Model) class5.aClass50_Sub1_Sub4_117,
-													(class5.anInt119 - i1) * 128 + (l3 - l) * 64, j3,
-													(class5.anInt121 - i) * 128 + (i4 - j1) * 64, flag);
+													(Model) scenegraphRelated5.aClass50_Sub1_Sub4_117,
+													(scenegraphRelated5.anInt119 - i1) * 128 + (l3 - l) * 64, j3,
+													(scenegraphRelated5.anInt121 - i) * 128 + (i4 - j1) * 64, flag);
 										}
 									}
 
@@ -1247,11 +1247,11 @@ public class SceneGraph {
 								class44.anInt720 - anInt470, class44.anInt719 - anInt471, class44.anInt721 - anInt472,
 								class44.uid);
 					for (int i2 = 0; i2 < class50_sub3_7.anInt1407; i2++) {
-						Class5 class5 = class50_sub3_7.aClass5Array1408[i2];
-						if (class5 != null)
-							class5.aClass50_Sub1_Sub4_117.method560(class5.anInt118, anInt473, anInt474, anInt475,
-									anInt476, class5.anInt115 - anInt470, class5.anInt114 - anInt471, class5.anInt116
-											- anInt472, class5.anInt125);
+						ScenegraphRelated5 scenegraphRelated5 = class50_sub3_7.aScenegraphRelated5Array1408[i2];
+						if (scenegraphRelated5 != null)
+							scenegraphRelated5.aClass50_Sub1_Sub4_117.method560(scenegraphRelated5.anInt118, anInt473, anInt474, anInt475,
+									anInt476, scenegraphRelated5.anInt115 - anInt470, scenegraphRelated5.anInt114 - anInt471, scenegraphRelated5.anInt116
+											- anInt472, scenegraphRelated5.anInt125);
 					}
 
 				}
@@ -1394,7 +1394,7 @@ public class SceneGraph {
 			if (class50_sub3_1.anInt1415 != 0) {
 				boolean flag2 = true;
 				for (int k1 = 0; k1 < class50_sub3_1.anInt1407; k1++) {
-					if (class50_sub3_1.aClass5Array1408[k1].anInt124 == anInt463
+					if (class50_sub3_1.aScenegraphRelated5Array1408[k1].anInt124 == anInt463
 							|| (class50_sub3_1.anIntArray1409[k1] & class50_sub3_1.anInt1415) != class50_sub3_1.anInt1416)
 						continue;
 					flag2 = false;
@@ -1416,11 +1416,11 @@ public class SceneGraph {
 					class50_sub3_1.aBoolean1414 = false;
 					int l1 = 0;
 					label0: for (int k2 = 0; k2 < i1; k2++) {
-						Class5 class5_1 = class50_sub3_1.aClass5Array1408[k2];
-						if (class5_1.anInt124 == anInt463)
+						ScenegraphRelated5 scenegraphRelated5_1 = class50_sub3_1.aScenegraphRelated5Array1408[k2];
+						if (scenegraphRelated5_1.anInt124 == anInt463)
 							continue;
-						for (int k3 = class5_1.anInt119; k3 <= class5_1.anInt120; k3++) {
-							for (int l4 = class5_1.anInt121; l4 <= class5_1.anInt122; l4++) {
+						for (int k3 = scenegraphRelated5_1.anInt119; k3 <= scenegraphRelated5_1.anInt120; k3++) {
+							for (int l4 = scenegraphRelated5_1.anInt121; l4 <= scenegraphRelated5_1.anInt122; l4++) {
 								Tile class50_sub3_21 = aclass50_sub3[k3][l4];
 								if (class50_sub3_21.aBoolean1412) {
 									class50_sub3_1.aBoolean1414 = true;
@@ -1428,13 +1428,13 @@ public class SceneGraph {
 									if (class50_sub3_21.anInt1415 == 0)
 										continue;
 									int l6 = 0;
-									if (k3 > class5_1.anInt119)
+									if (k3 > scenegraphRelated5_1.anInt119)
 										l6++;
-									if (k3 < class5_1.anInt120)
+									if (k3 < scenegraphRelated5_1.anInt120)
 										l6 += 4;
-									if (l4 > class5_1.anInt121)
+									if (l4 > scenegraphRelated5_1.anInt121)
 										l6 += 8;
-									if (l4 < class5_1.anInt122)
+									if (l4 < scenegraphRelated5_1.anInt122)
 										l6 += 2;
 									if ((l6 & class50_sub3_21.anInt1415) != class50_sub3_1.anInt1417)
 										continue;
@@ -1445,33 +1445,33 @@ public class SceneGraph {
 
 						}
 
-						aClass5Array477[l1++] = class5_1;
-						int i5 = anInt468 - class5_1.anInt119;
-						int i6 = class5_1.anInt120 - anInt468;
+						aScenegraphRelated5Array477[l1++] = scenegraphRelated5_1;
+						int i5 = anInt468 - scenegraphRelated5_1.anInt119;
+						int i6 = scenegraphRelated5_1.anInt120 - anInt468;
 						if (i6 > i5)
 							i5 = i6;
-						int i7 = anInt469 - class5_1.anInt121;
-						int j8 = class5_1.anInt122 - anInt469;
+						int i7 = anInt469 - scenegraphRelated5_1.anInt121;
+						int j8 = scenegraphRelated5_1.anInt122 - anInt469;
 						if (j8 > i7)
-							class5_1.anInt123 = i5 + j8;
+							scenegraphRelated5_1.anInt123 = i5 + j8;
 						else
-							class5_1.anInt123 = i5 + i7;
+							scenegraphRelated5_1.anInt123 = i5 + i7;
 					}
 
 					while (l1 > 0) {
 						int i3 = -50;
 						int l3 = -1;
 						for (int j5 = 0; j5 < l1; j5++) {
-							Class5 class5_2 = aClass5Array477[j5];
-							if (class5_2.anInt124 != anInt463)
-								if (class5_2.anInt123 > i3) {
-									i3 = class5_2.anInt123;
+							ScenegraphRelated5 scenegraphRelated5_2 = aScenegraphRelated5Array477[j5];
+							if (scenegraphRelated5_2.anInt124 != anInt463)
+								if (scenegraphRelated5_2.anInt123 > i3) {
+									i3 = scenegraphRelated5_2.anInt123;
 									l3 = j5;
-								} else if (class5_2.anInt123 == i3) {
-									int j7 = class5_2.anInt115 - anInt470;
-									int k8 = class5_2.anInt116 - anInt472;
-									int l9 = aClass5Array477[l3].anInt115 - anInt470;
-									int l10 = aClass5Array477[l3].anInt116 - anInt472;
+								} else if (scenegraphRelated5_2.anInt123 == i3) {
+									int j7 = scenegraphRelated5_2.anInt115 - anInt470;
+									int k8 = scenegraphRelated5_2.anInt116 - anInt472;
+									int l9 = aScenegraphRelated5Array477[l3].anInt115 - anInt470;
+									int l10 = aScenegraphRelated5Array477[l3].anInt116 - anInt472;
 									if (j7 * j7 + k8 * k8 > l9 * l9 + l10 * l10)
 										l3 = j5;
 								}
@@ -1479,15 +1479,15 @@ public class SceneGraph {
 
 						if (l3 == -1)
 							break;
-						Class5 class5_3 = aClass5Array477[l3];
-						class5_3.anInt124 = anInt463;
-						if (!method290(l, class5_3.anInt119, class5_3.anInt120, class5_3.anInt121, class5_3.anInt122,
-								class5_3.aClass50_Sub1_Sub4_117.height))
-							class5_3.aClass50_Sub1_Sub4_117.method560(class5_3.anInt118, anInt473, anInt474, anInt475,
-									anInt476, class5_3.anInt115 - anInt470, class5_3.anInt114 - anInt471,
-									class5_3.anInt116 - anInt472, class5_3.anInt125);
-						for (int k7 = class5_3.anInt119; k7 <= class5_3.anInt120; k7++) {
-							for (int l8 = class5_3.anInt121; l8 <= class5_3.anInt122; l8++) {
+						ScenegraphRelated5 scenegraphRelated5_3 = aScenegraphRelated5Array477[l3];
+						scenegraphRelated5_3.anInt124 = anInt463;
+						if (!method290(l, scenegraphRelated5_3.anInt119, scenegraphRelated5_3.anInt120, scenegraphRelated5_3.anInt121, scenegraphRelated5_3.anInt122,
+								scenegraphRelated5_3.aClass50_Sub1_Sub4_117.height))
+							scenegraphRelated5_3.aClass50_Sub1_Sub4_117.method560(scenegraphRelated5_3.anInt118, anInt473, anInt474, anInt475,
+									anInt476, scenegraphRelated5_3.anInt115 - anInt470, scenegraphRelated5_3.anInt114 - anInt471,
+									scenegraphRelated5_3.anInt116 - anInt472, scenegraphRelated5_3.anInt125);
+						for (int k7 = scenegraphRelated5_3.anInt119; k7 <= scenegraphRelated5_3.anInt120; k7++) {
+							for (int l8 = scenegraphRelated5_3.anInt121; l8 <= scenegraphRelated5_3.anInt122; l8++) {
 								Tile class50_sub3_22 = aclass50_sub3[k7][l8];
 								if (class50_sub3_22.anInt1415 != 0)
 									aClass6_492.addLast(class50_sub3_22);

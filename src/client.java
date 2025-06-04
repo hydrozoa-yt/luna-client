@@ -9848,11 +9848,11 @@ public class client extends JagApplet {
                         class35.aClass50_Sub1_Sub4_608 = new GameObject(class35.anInt609 >> 14 & 0x7fff, i1, i20, l20, j19, 4, false, l18, 0);
                 }
                 if (i12 == 2) {
-                    Class5 class5 = aClass22_1164.method265(x, (byte) 32, y, plane);
+                    ScenegraphRelated5 scenegraphRelated5 = aClass22_1164.method265(x, (byte) 32, y, plane);
                     if (k6 == 11)
                         k6 = 10;
-                    if (class5 != null)
-                        class5.aClass50_Sub1_Sub4_117 = new GameObject(class5.anInt125 >> 14 & 0x7fff, i1, i20, l20, j19, k6, false, l18, j9);
+                    if (scenegraphRelated5 != null)
+                        scenegraphRelated5.aClass50_Sub1_Sub4_117 = new GameObject(scenegraphRelated5.anInt125 >> 14 & 0x7fff, i1, i20, l20, j19, k6, false, l18, j9);
                 }
                 if (i12 == 3) {
                     ScenegraphMember28 class28 = aClass22_1164.method266(plane, y, 0, x);

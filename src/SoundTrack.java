@@ -111,24 +111,24 @@ public class SoundTrack {
                 anIntArray200[l4] += (anIntArray200[l4 - j3] * anInt195) / 100;
 
         }
-        if (aClass36_196.anIntArray613[0] > 0 || aClass36_196.anIntArray613[1] > 0) {
+        if (aSoundtrackRelated36_196.anIntArray613[0] > 0 || aSoundtrackRelated36_196.anIntArray613[1] > 0) {
             aSoundRelated29_197.method310(true);
             int k3 = aSoundRelated29_197.method311(0, i + 1);
-            int i5 = aClass36_196.method355(0, true, k3 / 65536F);
-            int i6 = aClass36_196.method355(1, true, k3 / 65536F);
+            int i5 = aSoundtrackRelated36_196.method355(0, true, k3 / 65536F);
+            int i6 = aSoundtrackRelated36_196.method355(1, true, k3 / 65536F);
             if (i >= i5 + i6) {
                 int j7 = 0;
                 int l7 = i6;
                 if (l7 > i - i5)
                     l7 = i - i5;
                 for (; j7 < l7; j7++) {
-                    int j8 = (int) ((long) anIntArray200[j7 + i5] * (long) Class36.anInt620 >> 16);
+                    int j8 = (int) ((long) anIntArray200[j7 + i5] * (long) SoundtrackRelated36.anInt620 >> 16);
                     for (int k8 = 0; k8 < i5; k8++)
                         j8 += (int) ((long) anIntArray200[(j7 + i5) - 1 - k8]
-                                * (long) Class36.anIntArrayArray618[0][k8] >> 16);
+                                * (long) SoundtrackRelated36.anIntArrayArray618[0][k8] >> 16);
 
                     for (int j9 = 0; j9 < j7; j9++)
-                        j8 -= (int) ((long) anIntArray200[j7 - 1 - j9] * (long) Class36.anIntArrayArray618[1][j9] >> 16);
+                        j8 -= (int) ((long) anIntArray200[j7 - 1 - j9] * (long) SoundtrackRelated36.anIntArrayArray618[1][j9] >> 16);
 
                     anIntArray200[j7] = j8;
                     k3 = aSoundRelated29_197.method311(0, i + 1);
@@ -140,13 +140,13 @@ public class SoundTrack {
                     if (l7 > i - i5)
                         l7 = i - i5;
                     for (; j7 < l7; j7++) {
-                        int l8 = (int) ((long) anIntArray200[j7 + i5] * (long) Class36.anInt620 >> 16);
+                        int l8 = (int) ((long) anIntArray200[j7 + i5] * (long) SoundtrackRelated36.anInt620 >> 16);
                         for (int k9 = 0; k9 < i5; k9++)
                             l8 += (int) ((long) anIntArray200[(j7 + i5) - 1 - k9]
-                                    * (long) Class36.anIntArrayArray618[0][k9] >> 16);
+                                    * (long) SoundtrackRelated36.anIntArrayArray618[0][k9] >> 16);
 
                         for (int i10 = 0; i10 < i6; i10++)
-                            l8 -= (int) ((long) anIntArray200[j7 - 1 - i10] * (long) Class36.anIntArrayArray618[1][i10] >> 16);
+                            l8 -= (int) ((long) anIntArray200[j7 - 1 - i10] * (long) SoundtrackRelated36.anIntArrayArray618[1][i10] >> 16);
 
                         anIntArray200[j7] = l8;
                         k3 = aSoundRelated29_197.method311(0, i + 1);
@@ -154,18 +154,18 @@ public class SoundTrack {
 
                     if (j7 >= i - i5)
                         break;
-                    i5 = aClass36_196.method355(0, true, k3 / 65536F);
-                    i6 = aClass36_196.method355(1, true, k3 / 65536F);
+                    i5 = aSoundtrackRelated36_196.method355(0, true, k3 / 65536F);
+                    i6 = aSoundtrackRelated36_196.method355(1, true, k3 / 65536F);
                     l7 += c;
                 } while (true);
                 for (; j7 < i; j7++) {
                     int i9 = 0;
                     for (int l9 = (j7 + i5) - i; l9 < i5; l9++)
                         i9 += (int) ((long) anIntArray200[(j7 + i5) - 1 - l9]
-                                * (long) Class36.anIntArrayArray618[0][l9] >> 16);
+                                * (long) SoundtrackRelated36.anIntArrayArray618[0][l9] >> 16);
 
                     for (int j10 = 0; j10 < i6; j10++)
-                        i9 -= (int) ((long) anIntArray200[j7 - 1 - j10] * (long) Class36.anIntArrayArray618[1][j10] >> 16);
+                        i9 -= (int) ((long) anIntArray200[j7 - 1 - j10] * (long) SoundtrackRelated36.anIntArrayArray618[1][j10] >> 16);
 
                     anIntArray200[j7] = i9;
                     aSoundRelated29_197.method311(0, i + 1);
@@ -241,9 +241,9 @@ public class SoundTrack {
         anInt195 = buf.getSmart();
         soundMillis = buf.getShort();
         pauseMillis = buf.getShort();
-        aClass36_196 = new Class36();
+        aSoundtrackRelated36_196 = new SoundtrackRelated36();
         aSoundRelated29_197 = new SoundRelated29();
-        aClass36_196.method356(-954, aSoundRelated29_197, buf);
+        aSoundtrackRelated36_196.method356(-954, aSoundRelated29_197, buf);
     }
 
     public SoundTrack() {
@@ -271,7 +271,7 @@ public class SoundTrack {
     public int anIntArray193[];
     public int anInt194;
     public int anInt195;
-    public Class36 aClass36_196;
+    public SoundtrackRelated36 aSoundtrackRelated36_196;
     public SoundRelated29 aSoundRelated29_197;
     public int soundMillis;
     public int pauseMillis;
