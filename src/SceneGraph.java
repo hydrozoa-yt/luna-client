@@ -940,9 +940,9 @@ public class SceneGraph {
 		boolean aflag[][][][] = new boolean[9][32][53][53];
 		for (int j1 = 128; j1 <= 384; j1 += 32) {
 			for (int k1 = 0; k1 < 2048; k1 += 64) {
-				anInt473 = Model.anIntArray1710[j1];
+				anInt473 = Model.sinetable[j1];
 				anInt474 = Model.anIntArray1711[j1];
-				anInt475 = Model.anIntArray1710[k1];
+				anInt475 = Model.sinetable[k1];
 				anInt476 = Model.anIntArray1711[k1];
 				int i2 = (j1 - 128) / 32;
 				int k2 = k1 / 64;
@@ -1040,9 +1040,9 @@ public class SceneGraph {
 		else if (i1 >= anInt454 * 128)
 			i1 = anInt454 * 128 - 1;
 		anInt463++;
-		anInt473 = Model.anIntArray1710[k1];
+		anInt473 = Model.sinetable[k1];
 		anInt474 = Model.anIntArray1711[k1];
-		anInt475 = Model.anIntArray1710[j1];
+		anInt475 = Model.sinetable[j1];
 		anInt476 = Model.anIntArray1711[j1];
 		aBooleanArrayArray507 = aBooleanArrayArrayArrayArray506[(k1 - 128) / 32][j1 / 64];
 		anInt470 = i;

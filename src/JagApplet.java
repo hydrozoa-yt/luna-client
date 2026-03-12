@@ -23,28 +23,31 @@ import java.awt.event.WindowListener;
 public class JagApplet extends Applet implements Runnable, MouseListener, MouseMotionListener, KeyListener,
 		FocusListener, WindowListener {
 
+	public JagFrame frame;
+
+	public int width;
+	public int height;
+	public Graphics graphics;
+
+	public int mouseX;
+	public int mouseY;
+	public int keyStatus[];
+	public int inputBuffer[];
+
 	public boolean aBoolean2;
 	public boolean aBoolean3;
-	public int anInt4;
 	public int anInt5;
 	public int gameState;
 	public int delayTime;
 	public int minDelay;
-	public long aLongArray9[];
+	public long otims[];
 	public int fps;
 	public boolean aBoolean11;
-	public int width;
-	public int height;
-	public Graphics graphics;
 	public JagImageProducer imageProducer;
-	public RgbSprite aClass50_Sub1_Sub1_Sub1Array16[];
-	public JagFrame frame;
 	public boolean clearBackground;
-	public boolean aBoolean19;
+	public boolean awtFocus;
 	public int anInt20;
 	public int anInt21;
-	public int mouseX;
-	public int mouseY;
 	public int anInt24;
 	public int anInt25;
 	public int anInt26;
@@ -53,25 +56,20 @@ public class JagApplet extends Applet implements Runnable, MouseListener, MouseM
 	public int anInt29;
 	public int anInt30;
 	public long aLong31;
-	public int anIntArray32[];
-	public int anIntArray33[];
 	public int anInt34;
 	public int anInt35;
-	public static int anInt36;
 
 	public JagApplet() {
 		aBoolean2 = false;
 		aBoolean3 = false;
-		anInt4 = 3;
 		delayTime = 20;
 		minDelay = 1;
-		aLongArray9 = new long[10];
+		otims = new long[10];
 		aBoolean11 = false;
-		aClass50_Sub1_Sub1_Sub1Array16 = new RgbSprite[6];
 		clearBackground = true;
-		aBoolean19 = true;
-		anIntArray32 = new int[128];
-		anIntArray33 = new int[128];
+		awtFocus = true;
+		keyStatus = new int[128];
+		inputBuffer = new int[128];
 	}
 
 	public void start(int _width, int _height) {
@@ -111,7 +109,7 @@ public class JagApplet extends Applet implements Runnable, MouseListener, MouseM
 		int i1 = 0;
 		int j1 = 0;
 		for (int k1 = 0; k1 < 10; k1++)
-			aLongArray9[k1] = System.currentTimeMillis();
+			otims[k1] = System.currentTimeMillis();
 
 		while (gameState >= 0) {
 			if (gameState > 0) {
@@ -126,25 +124,25 @@ public class JagApplet extends Applet implements Runnable, MouseListener, MouseM
 			j = 300;
 			k = 1;
 			long l1 = System.currentTimeMillis();
-			if (aLongArray9[i] == 0L) {
+			if (otims[i] == 0L) {
 				j = i2;
 				k = j2;
-			} else if (l1 > aLongArray9[i])
-				j = (int) ((2560 * delayTime) / (l1 - aLongArray9[i]));
+			} else if (l1 > otims[i])
+				j = (int) ((2560 * delayTime) / (l1 - otims[i]));
 			if (j < 25)
 				j = 25;
 			if (j > 256) {
 				j = 256;
-				k = (int) (delayTime - (l1 - aLongArray9[i]) / 10L);
+				k = (int) (delayTime - (l1 - otims[i]) / 10L);
 			}
 			if (k > delayTime)
 				k = delayTime;
-			aLongArray9[i] = l1;
+			otims[i] = l1;
 			i = (i + 1) % 10;
 			if (k > 1) {
 				for (int k2 = 0; k2 < 10; k2++)
-					if (aLongArray9[k2] != 0L)
-						aLongArray9[k2] += k;
+					if (otims[k2] != 0L)
+						otims[k2] += k;
 
 			}
 			if (k < minDelay)
@@ -172,7 +170,7 @@ public class JagApplet extends Applet implements Runnable, MouseListener, MouseM
 				System.out.println("ntime:" + l1);
 				for (int l2 = 0; l2 < 10; l2++) {
 					int i3 = ((i - l2 - 1) + 20) % 10;
-					System.out.println("otim" + i3 + ":" + aLongArray9[i3]);
+					System.out.println("otim" + i3 + ":" + otims[i3]);
 				}
 
 				System.out.println("fps:" + fps + " ratio:" + j + " count:" + i1);
@@ -345,9 +343,9 @@ public class JagApplet extends Applet implements Runnable, MouseListener, MouseM
 		if (keycode == 34)
 			keychar = 1003;
 		if (keychar > 0 && keychar < 128)
-			anIntArray32[keychar] = 1;
+			keyStatus[keychar] = 1;
 		if (keychar > 4) {
-			anIntArray33[anInt35] = keychar;
+			inputBuffer[anInt35] = keychar;
 			anInt35 = anInt35 + 1 & 0x7f;
 		}
 	}
@@ -377,7 +375,7 @@ public class JagApplet extends Applet implements Runnable, MouseListener, MouseM
 		if (i == 10)
 			c = '\n';
 		if (c > 0 && c < '\200')
-			anIntArray32[c] = 0;
+			keyStatus[c] = 0;
 	}
 
 	public void keyTyped(KeyEvent keyevent) {
@@ -388,22 +386,22 @@ public class JagApplet extends Applet implements Runnable, MouseListener, MouseM
 			anInt5 = -9;
 		int j = -1;
 		if (anInt35 != anInt34) {
-			j = anIntArray33[anInt34];
+			j = inputBuffer[anInt34];
 			anInt34 = anInt34 + 1 & 0x7f;
 		}
 		return j;
 	}
 
 	public void focusGained(FocusEvent focusevent) {
-		aBoolean19 = true;
+		awtFocus = true;
 		clearBackground = true;
 		needsUIRedraw();
 	}
 
 	public void focusLost(FocusEvent focusevent) {
-		aBoolean19 = false;
+		awtFocus = false;
 		for (int i = 0; i < 128; i++)
-			anIntArray32[i] = 0;
+			keyStatus[i] = 0;
 
 	}
 

@@ -8,8 +8,10 @@ import java.awt.Graphics;
 @SuppressWarnings("serial")
 public class JagFrame extends Frame {
 
-	public JagFrame(int width, int height, JagApplet _applet) {
-		applet = _applet;
+	public JagApplet applet;
+
+	public JagFrame(int width, int height, JagApplet applet) {
+		this.applet = applet;
 		setTitle("Jagex");
 		setResizable(false);
 		setSize(width + 8, height + 28);
@@ -34,6 +36,4 @@ public class JagFrame extends Frame {
 	public void paint(Graphics g) {
 		applet.paint(g);
 	}
-
-	public JagApplet applet;
 }

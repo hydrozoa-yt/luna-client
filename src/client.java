@@ -28,6 +28,25 @@ import sign.signlink;
 @SuppressWarnings("serial")
 public class client extends JagApplet {
 
+    private static int PROCESS_PACKET_COUNT = 100;//5
+
+    public static void main(String args[]) {
+        try {
+            System.out.println("RS2 user client - release #" + 377);
+            RsaParser.parse();
+            world = 10;
+            portOffset = 0;
+            switchToHighMem();
+            memberServer = true;
+            signlink.storeid = 32;
+            signlink.startpriv(InetAddress.getLocalHost());
+            client cl = new client();
+            cl.start(765, 503);
+        } catch (Exception exception) {
+            return;
+        }
+    }
+
     public void method14(String s, int i) {
         if (s == null || s.length() == 0) {
             anInt862 = 0;
@@ -129,23 +148,6 @@ public class client extends JagApplet {
                     discardQueue == 1);
         }
         buf.finishBitAccess();
-    }
-
-    public static void main(String args[]) {
-        try {
-            System.out.println("RS2 user client - release #" + 377);
-            RsaParser.parse();
-            world = 10;
-            portOffset = 0;
-            switchToHighMem();
-            memberServer = true;
-            signlink.storeid = 32;
-            signlink.startpriv(InetAddress.getLocalHost());
-            client cl = new client();
-            cl.start(765, 503);
-        } catch (Exception exception) {
-            return;
-        }
     }
 
     private void stopMidi() {
@@ -473,15 +475,15 @@ public class client extends JagApplet {
                 anInt1262 += (j - anInt1262) / 16;
             if (anInt1263 != k)
                 anInt1263 += (k - anInt1263) / 16;
-            if (super.anIntArray32[1] == 1)
+            if (super.keyStatus[1] == 1)
                 anInt1253 += (-24 - anInt1253) / 2;
-            else if (super.anIntArray32[2] == 1)
+            else if (super.keyStatus[2] == 1)
                 anInt1253 += (24 - anInt1253) / 2;
             else
                 anInt1253 /= 2;
-            if (super.anIntArray32[3] == 1)
+            if (super.keyStatus[3] == 1)
                 anInt1254 += (12 - anInt1254) / 2;
-            else if (super.anIntArray32[4] == 1)
+            else if (super.keyStatus[4] == 1)
                 anInt1254 += (-12 - anInt1254) / 2;
             else
                 anInt1254 /= 2;
@@ -635,8 +637,6 @@ public class client extends JagApplet {
         ObjectDefinition.lowMemory = false;
     }
 
-    private static int PROCESS_PACKET_COUNT = 100;//5
-
     public void method28(byte byte0) {
         if (anInt1057 > 1)
             anInt1057--;
@@ -739,8 +739,8 @@ public class client extends JagApplet {
         }
         if (anInt1264 > 0)
             anInt1264--;
-        if (super.anIntArray32[1] == 1 || super.anIntArray32[2] == 1 || super.anIntArray32[3] == 1
-                || super.anIntArray32[4] == 1)
+        if (super.keyStatus[1] == 1 || super.keyStatus[2] == 1 || super.keyStatus[3] == 1
+                || super.keyStatus[4] == 1)
             aBoolean1265 = true;
         if (aBoolean1265 && anInt1264 <= 0) {
             anInt1264 = 20;
@@ -749,12 +749,12 @@ public class client extends JagApplet {
             outBuffer.putLEShortDup(anInt1251);
             outBuffer.putLEShortDup(anInt1252);
         }
-        if (super.aBoolean19 && !aBoolean1275) {
+        if (super.awtFocus && !aBoolean1275) {
             aBoolean1275 = true;
             outBuffer.putOpcode(187);
             outBuffer.putByte(1);
         }
-        if (!super.aBoolean19 && aBoolean1275) {
+        if (!super.awtFocus && aBoolean1275) {
             aBoolean1275 = false;
             outBuffer.putOpcode(187);
             outBuffer.putByte(0);
@@ -2771,7 +2771,7 @@ public class client extends JagApplet {
                 outBuffer.putByte(walkingPathSize + walkingPathSize + 3);
             }
             outBuffer.putLEShortAdded(clickedX + nextTopLeftTileX);
-            outBuffer.putByte(super.anIntArray32[5] != 1 ? 0 : 1);
+            outBuffer.putByte(super.keyStatus[5] != 1 ? 0 : 1);
             outBuffer.putLEShortAdded(clickedY + nextTopLeftTileY);
             anInt1120 = walkingPathX[0];
             anInt1121 = walkingPathY[0];
@@ -3685,7 +3685,7 @@ public class client extends JagApplet {
             opcode = -1;
         if (l > 4225 && l < 0x15f90) {
             int i1 = anInt1252 + anInt916 & 0x7ff;
-            int j1 = Model.anIntArray1710[i1];
+            int j1 = Model.sinetable[i1];
             int k1 = Model.anIntArray1711[i1];
             j1 = (j1 * 256) / (anInt1233 + 256);
             k1 = (k1 * 256) / (anInt1233 + 256);
@@ -5674,7 +5674,7 @@ public class client extends JagApplet {
                 aLong902 = 0L;
                 anInt1299 = 0;
                 mouseRecorder.pos = 0;
-                super.aBoolean19 = true;
+                super.awtFocus = true;
                 aBoolean1275 = true;
                 aBoolean1137 = true;
                 outBuffer.position = 0;
@@ -6961,14 +6961,14 @@ public class client extends JagApplet {
         int j2 = 0;
         int k2 = l;
         if (k1 != 0) {
-            int l2 = Model.anIntArray1710[k1];
+            int l2 = Model.sinetable[k1];
             int j3 = Model.anIntArray1711[k1];
             int l3 = j2 * j3 - k2 * l2 >> 16;
             k2 = j2 * l2 + k2 * j3 >> 16;
             j2 = l3;
         }
         if (l1 != 0) {
-            int i3 = Model.anIntArray1710[l1];
+            int i3 = Model.sinetable[l1];
             int k3 = Model.anIntArray1711[l1];
             int i4 = k2 * i3 + i2 * k3 >> 16;
             k2 = k2 * k3 - i2 * i3 >> 16;
@@ -9600,7 +9600,7 @@ public class client extends JagApplet {
         int l = j * j + i * i;
         if (l > 6400)
             return;
-        int i1 = Model.anIntArray1710[k];
+        int i1 = Model.sinetable[k];
         int j1 = Model.anIntArray1711[k];
         i1 = (i1 * 256) / (anInt1233 + 256);
         j1 = (j1 * 256) / (anInt1233 + 256);
@@ -10060,9 +10060,9 @@ public class client extends JagApplet {
         i -= anInt1216;
         i1 -= anInt1217;
         k -= anInt1218;
-        int j1 = Model.anIntArray1710[anInt1219];
+        int j1 = Model.sinetable[anInt1219];
         int k1 = Model.anIntArray1711[anInt1219];
-        int l1 = Model.anIntArray1710[anInt1220];
+        int l1 = Model.sinetable[anInt1220];
         int i2 = Model.anIntArray1711[anInt1220];
         int j2 = k * l1 + i * i2 >> 16;
         k = k * i2 - i * l1 >> 16;

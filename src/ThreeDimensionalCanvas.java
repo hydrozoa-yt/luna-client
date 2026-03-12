@@ -4,6 +4,51 @@
 
 public class ThreeDimensionalCanvas extends Drawable {
 
+	public static int anInt1524 = -20714;
+	public static int anInt1525;
+	public static boolean aBoolean1526;
+	public static boolean lowMemory = true;
+	public static boolean aBoolean1528;
+	public static boolean aBoolean1529;
+	public static boolean aBoolean1530 = true;
+	public static int anInt1531;
+	public static int anInt1532;
+	public static int anInt1533;
+	public static int anIntArray1534[];
+	public static int anIntArray1535[];
+	public static int sineTable[];
+	public static int cosineTable[];
+	public static int anIntArray1538[];
+	public static int anInt1539;
+	public static IndexedSprite aClass50_Sub1_Sub1_Sub3Array1540[] = new IndexedSprite[50];
+	public static boolean aBooleanArray1541[] = new boolean[50];
+	public static int anIntArray1542[] = new int[50];
+	public static int anInt1543;
+	public static int anIntArrayArray1544[][];
+	public static int anIntArrayArray1545[][] = new int[50][];
+	public static int anIntArray1546[] = new int[50];
+	public static int anInt1547;
+	public static int anIntArray1548[] = new int[0x10000];
+	public static int anIntArrayArray1549[][] = new int[50][];
+
+	static {
+		anIntArray1534 = new int[512];
+		anIntArray1535 = new int[2048];
+		sineTable = new int[2048];
+		cosineTable = new int[2048];
+		for (int i = 1; i < 512; i++)
+			anIntArray1534[i] = 32768 / i;
+
+		for (int j = 1; j < 2048; j++)
+			anIntArray1535[j] = 0x10000 / j;
+
+		for (int k = 0; k < 2048; k++) {
+			sineTable[k] = (int) (65536D * Math.sin(k * 0.0030679614999999999D));
+			cosineTable[k] = (int) (65536D * Math.cos(k * 0.0030679614999999999D));
+		}
+
+	}
+
 	public static void method492(boolean flag) {
 		anIntArray1534 = null;
 		anIntArray1534 = null;
@@ -1968,51 +2013,6 @@ public class ThreeDimensionalCanvas extends Drawable {
 			k++;
 			i += j7;
 			j += l7;
-		}
-
-	}
-
-	public static int anInt1524 = -20714;
-	public static int anInt1525;
-	public static boolean aBoolean1526;
-	public static boolean lowMemory = true;
-	public static boolean aBoolean1528;
-	public static boolean aBoolean1529;
-	public static boolean aBoolean1530 = true;
-	public static int anInt1531;
-	public static int anInt1532;
-	public static int anInt1533;
-	public static int anIntArray1534[];
-	public static int anIntArray1535[];
-	public static int sineTable[];
-	public static int cosineTable[];
-	public static int anIntArray1538[];
-	public static int anInt1539;
-	public static IndexedSprite aClass50_Sub1_Sub1_Sub3Array1540[] = new IndexedSprite[50];
-	public static boolean aBooleanArray1541[] = new boolean[50];
-	public static int anIntArray1542[] = new int[50];
-	public static int anInt1543;
-	public static int anIntArrayArray1544[][];
-	public static int anIntArrayArray1545[][] = new int[50][];
-	public static int anIntArray1546[] = new int[50];
-	public static int anInt1547;
-	public static int anIntArray1548[] = new int[0x10000];
-	public static int anIntArrayArray1549[][] = new int[50][];
-
-	static {
-		anIntArray1534 = new int[512];
-		anIntArray1535 = new int[2048];
-		sineTable = new int[2048];
-		cosineTable = new int[2048];
-		for (int i = 1; i < 512; i++)
-			anIntArray1534[i] = 32768 / i;
-
-		for (int j = 1; j < 2048; j++)
-			anIntArray1535[j] = 0x10000 / j;
-
-		for (int k = 0; k < 2048; k++) {
-			sineTable[k] = (int) (65536D * Math.sin(k * 0.0030679614999999999D));
-			cosineTable[k] = (int) (65536D * Math.cos(k * 0.0030679614999999999D));
 		}
 
 	}

@@ -78,13 +78,13 @@ public class Model extends Entity {
 	public static int anInt1707;
 	public static int anInt1708;
 	public static int anIntArray1709[] = new int[1000];
-	public static int anIntArray1710[];
+	public static int sinetable[];
 	public static int anIntArray1711[];
 	public static int anIntArray1712[];
 	public static int anIntArray1713[];
 
 	static {
-		anIntArray1710 = ThreeDimensionalCanvas.sineTable;
+		sinetable = ThreeDimensionalCanvas.sineTable;
 		anIntArray1711 = ThreeDimensionalCanvas.cosineTable;
 		anIntArray1712 = ThreeDimensionalCanvas.anIntArray1548;
 		anIntArray1713 = ThreeDimensionalCanvas.anIntArray1535;
@@ -640,7 +640,7 @@ public class Model extends Entity {
 		anIntArray1696 = null;
 		anIntArray1697 = null;
 		anIntArray1698 = null;
-		anIntArray1710 = null;
+		sinetable = null;
 		anIntArray1711 = null;
 		anIntArray1712 = null;
 		if (flag) {
@@ -1099,21 +1099,21 @@ public class Model extends Entity {
 						int l6 = (k & 0xff) * 8;
 						int i7 = (l & 0xff) * 8;
 						if (i7 != 0) {
-							int j7 = anIntArray1710[i7];
+							int j7 = sinetable[i7];
 							int i8 = anIntArray1711[i7];
 							int l8 = anIntArray1650[k5] * j7 + anIntArray1649[k5] * i8 >> 16;
 							anIntArray1650[k5] = anIntArray1650[k5] * i8 - anIntArray1649[k5] * j7 >> 16;
 							anIntArray1649[k5] = l8;
 						}
 						if (k6 != 0) {
-							int k7 = anIntArray1710[k6];
+							int k7 = sinetable[k6];
 							int j8 = anIntArray1711[k6];
 							int i9 = anIntArray1650[k5] * j8 - anIntArray1651[k5] * k7 >> 16;
 							anIntArray1651[k5] = anIntArray1650[k5] * k7 + anIntArray1651[k5] * j8 >> 16;
 							anIntArray1650[k5] = i9;
 						}
 						if (l6 != 0) {
-							int l7 = anIntArray1710[l6];
+							int l7 = sinetable[l6];
 							int k8 = anIntArray1711[l6];
 							int j9 = anIntArray1651[k5] * l7 + anIntArray1649[k5] * k8 >> 16;
 							anIntArray1651[k5] = anIntArray1651[k5] * k8 - anIntArray1649[k5] * l7 >> 16;
@@ -1184,7 +1184,7 @@ public class Model extends Entity {
 	}
 
 	public void method589(int i, int j) {
-		int k = anIntArray1710[i];
+		int k = sinetable[i];
 		int l = anIntArray1711[i];
 		for (int i1 = 0; i1 < addedForSubmodels1648; i1++) {
 			int j1 = anIntArray1650[i1] * l - anIntArray1651[i1] * k >> 16;
@@ -1400,13 +1400,13 @@ public class Model extends Entity {
 	public void method598(int i, int j, int k, int l, int i1, int j1, int k1) {
 		int l1 = ThreeDimensionalCanvas.anInt1532;
 		int i2 = ThreeDimensionalCanvas.anInt1533;
-		int j2 = anIntArray1710[i];
+		int j2 = sinetable[i];
 		int k2 = anIntArray1711[i];
-		int l2 = anIntArray1710[j];
+		int l2 = sinetable[j];
 		int i3 = anIntArray1711[j];
-		int j3 = anIntArray1710[k];
+		int j3 = sinetable[k];
 		int k3 = anIntArray1711[k];
-		int l3 = anIntArray1710[l];
+		int l3 = sinetable[l];
 		int i4 = anIntArray1711[l];
 		int j4 = j1 * l3 + k1 * i4 >> 16;
 		for (int k4 = 0; k4 < addedForSubmodels1648; k4++) {
@@ -1512,7 +1512,7 @@ public class Model extends Entity {
 		int l6 = 0;
 		int i7 = 0;
 		if (i != 0) {
-			l6 = anIntArray1710[i];
+			l6 = sinetable[i];
 			i7 = anIntArray1711[i];
 		}
 		for (int j7 = 0; j7 < addedForSubmodels1648; j7++) {
