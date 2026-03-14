@@ -3776,7 +3776,7 @@ public class client extends JagApplet {
         JagSocket class17 = connection;
         aBoolean1137 = false;
         anInt850 = 0;
-        login(thisPlayerName, aString1093, true);
+        login(thisPlayerName, thisPlayerPassword, true);
         if (!aBoolean1137)
             method124(true);
         try {
@@ -9656,7 +9656,7 @@ public class client extends JagApplet {
                     + ((anInt977 == 0) & (pulseCycle % 40 < 20) ? "@yel@|" : ""), 0xffffff, c / 2 - 90, k, true);
             k += 15;
             loginScreenFont.drawString("Password: "
-                            + StringUtils.asterisks(aString1093) + ((anInt977 == 1) & (pulseCycle % 40 < 20) ? "@yel@|" : ""), 0xffffff, c / 2 - 88, k, true);
+                            + StringUtils.asterisks(thisPlayerPassword) + ((anInt977 == 1) & (pulseCycle % 40 < 20) ? "@yel@|" : ""), 0xffffff, c / 2 - 88, k, true);
             k += 15;
             if (!flag) {
                 int j1 = c / 2 - 80;
@@ -10785,7 +10785,7 @@ public class client extends JagApplet {
                 if (super.anInt28 == 1 && super.anInt29 >= j1 - 75 && super.anInt29 <= j1 + 75
                         && super.anInt30 >= l1 - 20 && super.anInt30 <= l1 + 20) {
                     anInt850 = 0;
-                    login(thisPlayerName, aString1093, false);
+                    login(thisPlayerName, thisPlayerPassword, false);
                     if (aBoolean1137)
                         return;
                 }
@@ -10818,14 +10818,14 @@ public class client extends JagApplet {
                         if (thisPlayerName.length() > 12)
                             thisPlayerName = thisPlayerName.substring(0, 12);
                     } else if (anInt977 == 1) {
-                        if (i2 == 8 && aString1093.length() > 0)
-                            aString1093 = aString1093.substring(0, aString1093.length() - 1);
+                        if (i2 == 8 && thisPlayerPassword.length() > 0)
+                            thisPlayerPassword = thisPlayerPassword.substring(0, thisPlayerPassword.length() - 1);
                         if (i2 == 9 || i2 == 10 || i2 == 13)
                             anInt977 = 0;
                         if (flag)
-                            aString1093 += (char) i2;
-                        if (aString1093.length() > 20)
-                            aString1093 = aString1093.substring(0, 20);
+                            thisPlayerPassword += (char) i2;
+                        if (thisPlayerPassword.length() > 20)
+                            thisPlayerPassword = thisPlayerPassword.substring(0, 20);
                     }
                 } while (true);
                 return;
@@ -11201,8 +11201,8 @@ public class client extends JagApplet {
         aCRC32_1088 = new CRC32();
         anInt1089 = -1;
         anIntArray1090 = new int[50];
-        thisPlayerName = "";
-        aString1093 = "";
+        thisPlayerName = "hydro";
+        thisPlayerPassword = "hydro";
         aBoolean1097 = false;
         aBoolean1098 = false;
         anIntArray1099 = new int[5];
@@ -11554,7 +11554,7 @@ public class client extends JagApplet {
     public int anIntArray1090[];
     public int plane;
     public String thisPlayerName;
-    public String aString1093;
+    public String thisPlayerPassword;
     public int anInt1094;
     public IndexedSprite aClass50_Sub1_Sub1_Sub3_1095;
     public IndexedSprite aClass50_Sub1_Sub1_Sub3_1096;
