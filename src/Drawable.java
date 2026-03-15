@@ -98,26 +98,26 @@ public class Drawable extends QueueNode {
 
 	}
 
-	public static void drawFullRect2(int i, int j, int k, int l, int i1) {
-		if (i1 < startY) {
-			l -= startY - i1;
-			i1 = startY;
+	public static void drawFullRect2(int color, int i, int x, int l, int y) {
+		if (y < startY) {
+			l -= startY - y;
+			y = startY;
 		}
-		if (j < startX) {
-			i -= startX - j;
-			j = startX;
+		if (x < startX) {
+			i -= startX - x;
+			x = startX;
 		}
-		if (i1 + l > endX)
-			l = endX - i1;
-		if (j + i > endY)
-			i = endY - j;
-		int j1 = width - l;
-		int k1 = i1 + j * width;
+		if (y + l > endX)
+			l = endX - y;
+		if (x + i > endY)
+			i = endY - x;
+		int indexLineIncrease = width - l;
+		int pixelIndex = y + x * width;
 		for (int l1 = -i; l1 < 0; l1++) {
 			for (int i2 = -l; i2 < 0; i2++)
-				pixels[k1++] = k;
+				pixels[pixelIndex++] = color;
 
-			k1 += j1;
+			pixelIndex += indexLineIncrease;
 		}
 	}
 

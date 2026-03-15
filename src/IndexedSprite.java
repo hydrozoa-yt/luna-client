@@ -4,46 +4,80 @@
 
 public class IndexedSprite extends Drawable {
 
-	public IndexedSprite(Archive class2, String s, int i) {
+	public int anInt1509;
+	public boolean aBoolean1510;
+	public int anInt1511;
+	public int anInt1512;
+	public byte aByte1513;
+	public int anInt1514;
+	public boolean aBoolean1515;
+	public byte aByteArray1516[];
+	public int pixelColours_1517[];
+	public int width_1518;
+	public int height_1519;
+	public int anInt1520;
+	public int anInt1521;
+	public int width_1522;
+	public int height_1523;
+
+	/**
+	 *
+	 * @param archive
+	 * @param s				name of the sprite
+	 * @param length_i		array index of the sprite, somehow
+	 */
+	public IndexedSprite(Archive archive, String s, int length_i) {
 		anInt1509 = 3;
 		aBoolean1510 = true;
 		anInt1512 = -235;
 		aByte1513 = 5;
 		anInt1514 = -3539;
 		aBoolean1515 = true;
-		JagBuffer class50_sub1_sub2 = new JagBuffer(class2.get(s + ".dat"));
-		JagBuffer class50_sub1_sub2_1 = new JagBuffer(class2.get("index.dat"));
-		class50_sub1_sub2_1.position = class50_sub1_sub2.getShort();
-		anInt1522 = class50_sub1_sub2_1.getShort();
-		anInt1523 = class50_sub1_sub2_1.getShort();
-		int j = class50_sub1_sub2_1.getByte();
-		anIntArray1517 = new int[j];
-		for (int k = 0; k < j - 1; k++)
-			anIntArray1517[k + 1] = class50_sub1_sub2_1.getTriByte();
-
-		for (int l = 0; l < i; l++) {
-			class50_sub1_sub2_1.position += 2;
-			class50_sub1_sub2.position += class50_sub1_sub2_1.getShort() * class50_sub1_sub2_1.getShort();
-			class50_sub1_sub2_1.position++;
+		JagBuffer jagBuffer_data = new JagBuffer(archive.get(s + ".dat"));
+		JagBuffer jagBuffer_index = new JagBuffer(archive.get("index.dat"));
+		jagBuffer_index.position = jagBuffer_data.getShort();
+		System.out.println(s+": index="+jagBuffer_index.position);
+		width_1522 = jagBuffer_index.getShort();
+		System.out.println(s+": width_1522="+width_1522);
+		height_1523 = jagBuffer_index.getShort();
+		System.out.println(s+": height_1523="+height_1523);
+		int length_j = jagBuffer_index.getByte();
+		System.out.println(s+": length_j="+length_j);
+		pixelColours_1517 = new int[length_j];
+		for (int iterator_k = 0; iterator_k < length_j - 1; iterator_k++) {
+			pixelColours_1517[iterator_k + 1] = jagBuffer_index.getTriByte();
+			System.out.println(s+": pixelColor["+(iterator_k+1)+"] = "+pixelColours_1517[iterator_k + 1]);
 		}
 
-		anInt1520 = class50_sub1_sub2_1.getByte();
-		anInt1521 = class50_sub1_sub2_1.getByte();
-		anInt1518 = class50_sub1_sub2_1.getShort();
-		anInt1519 = class50_sub1_sub2_1.getShort();
-		int i1 = class50_sub1_sub2_1.getByte();
-		int j1 = anInt1518 * anInt1519;
-		aByteArray1516 = new byte[j1];
-		if (i1 == 0) {
-			for (int k1 = 0; k1 < j1; k1++)
-				aByteArray1516[k1] = class50_sub1_sub2.getSignedByte();
+		// doesnt run for titlebox, used for arrays of images
+		for (int l = 0; l < length_i; l++) {
+			jagBuffer_index.position += 2;
+			jagBuffer_data.position += jagBuffer_index.getShort() * jagBuffer_index.getShort();
+			jagBuffer_index.position++;
+		}
+
+		anInt1520 = jagBuffer_index.getByte();
+		System.out.println(s+": unknownByte1="+anInt1520);
+		anInt1521 = jagBuffer_index.getByte();
+		System.out.println(s+": unknownByte2="+anInt1521);
+		width_1518 = jagBuffer_index.getShort();
+		System.out.println(s+": width_1518="+width_1518);
+		height_1519 = jagBuffer_index.getShort();
+		System.out.println(s+": height_1519="+height_1519);
+		int typeByte_i1 = jagBuffer_index.getByte();
+		System.out.println(s+": typeByte_i1="+typeByte_i1);
+		int byteLength_j1 = width_1518 * height_1519;
+		aByteArray1516 = new byte[byteLength_j1];
+		if (typeByte_i1 == 0) {
+			for (int k1 = 0; k1 < byteLength_j1; k1++)
+				aByteArray1516[k1] = jagBuffer_data.getSignedByte();
 
 			return;
 		}
-		if (i1 == 1) {
-			for (int l1 = 0; l1 < anInt1518; l1++) {
-				for (int i2 = 0; i2 < anInt1519; i2++)
-					aByteArray1516[l1 + i2 * anInt1518] = class50_sub1_sub2.getSignedByte();
+		if (typeByte_i1 == 1) {
+			for (int l1 = 0; l1 < width_1518; l1++) {
+				for (int i2 = 0; i2 < height_1519; i2++)
+					aByteArray1516[l1 + i2 * width_1518] = jagBuffer_data.getSignedByte();
 
 			}
 
@@ -51,42 +85,42 @@ public class IndexedSprite extends Drawable {
 	}
 
 	public void method485(int i) {
-		anInt1522 /= 2;
-		anInt1523 /= 2;
-		byte abyte0[] = new byte[anInt1522 * anInt1523];
+		width_1522 /= 2;
+		height_1523 /= 2;
+		byte abyte0[] = new byte[width_1522 * height_1523];
 		int j = 0;
 		if (i != 0)
 			return;
-		for (int k = 0; k < anInt1519; k++) {
-			for (int l = 0; l < anInt1518; l++)
-				abyte0[(l + anInt1520 >> 1) + (k + anInt1521 >> 1) * anInt1522] = aByteArray1516[j++];
+		for (int k = 0; k < height_1519; k++) {
+			for (int l = 0; l < width_1518; l++)
+				abyte0[(l + anInt1520 >> 1) + (k + anInt1521 >> 1) * width_1522] = aByteArray1516[j++];
 
 		}
 
 		aByteArray1516 = abyte0;
-		anInt1518 = anInt1522;
-		anInt1519 = anInt1523;
+		width_1518 = width_1522;
+		height_1519 = height_1523;
 		anInt1520 = 0;
 		anInt1521 = 0;
 	}
 
 	public void method486(boolean flag) {
-		if (anInt1518 == anInt1522 && anInt1519 == anInt1523)
+		if (width_1518 == width_1522 && height_1519 == height_1523)
 			return;
-		byte abyte0[] = new byte[anInt1522 * anInt1523];
+		byte abyte0[] = new byte[width_1522 * height_1523];
 		int i = 0;
-		for (int j = 0; j < anInt1519; j++) {
-			for (int k = 0; k < anInt1518; k++)
-				abyte0[k + anInt1520 + (j + anInt1521) * anInt1522] = aByteArray1516[i++];
+		for (int j = 0; j < height_1519; j++) {
+			for (int k = 0; k < width_1518; k++)
+				abyte0[k + anInt1520 + (j + anInt1521) * width_1522] = aByteArray1516[i++];
 
 		}
 
 		aByteArray1516 = abyte0;
-		anInt1518 = anInt1522;
+		width_1518 = width_1522;
 		if (!flag) {
 			return;
 		} else {
-			anInt1519 = anInt1523;
+			height_1519 = height_1523;
 			anInt1520 = 0;
 			anInt1521 = 0;
 			return;
@@ -94,11 +128,11 @@ public class IndexedSprite extends Drawable {
 	}
 
 	public void method487(int i) {
-		byte abyte0[] = new byte[anInt1518 * anInt1519];
+		byte abyte0[] = new byte[width_1518 * height_1519];
 		int j = 0;
-		for (int k = 0; k < anInt1519; k++) {
-			for (int l = anInt1518 - 1; l >= 0; l--)
-				abyte0[j++] = aByteArray1516[l + k * anInt1518];
+		for (int k = 0; k < height_1519; k++) {
+			for (int l = width_1518 - 1; l >= 0; l--)
+				abyte0[j++] = aByteArray1516[l + k * width_1518];
 
 		}
 
@@ -106,54 +140,54 @@ public class IndexedSprite extends Drawable {
 		if (i != 0) {
 			return;
 		} else {
-			anInt1520 = anInt1522 - anInt1518 - anInt1520;
+			anInt1520 = width_1522 - width_1518 - anInt1520;
 			return;
 		}
 	}
 
 	public void method488(byte byte0) {
-		byte abyte0[] = new byte[anInt1518 * anInt1519];
+		byte abyte0[] = new byte[width_1518 * height_1519];
 		int i = 0;
 		if (byte0 != 7)
 			aBoolean1515 = !aBoolean1515;
-		for (int j = anInt1519 - 1; j >= 0; j--) {
-			for (int k = 0; k < anInt1518; k++)
-				abyte0[i++] = aByteArray1516[k + j * anInt1518];
+		for (int j = height_1519 - 1; j >= 0; j--) {
+			for (int k = 0; k < width_1518; k++)
+				abyte0[i++] = aByteArray1516[k + j * width_1518];
 
 		}
 
 		aByteArray1516 = abyte0;
-		anInt1521 = anInt1523 - anInt1519 - anInt1521;
+		anInt1521 = height_1523 - height_1519 - anInt1521;
 	}
 
-	public void method489(int i, int j, int k, int l) {
-		for (int i1 = 0; i1 < anIntArray1517.length; i1++) {
-			int j1 = anIntArray1517[i1] >> 16 & 0xff;
-			j1 += k;
-			if (j1 < 0)
-				j1 = 0;
-			else if (j1 > 255)
-				j1 = 255;
-			int k1 = anIntArray1517[i1] >> 8 & 0xff;
-			k1 += j;
-			if (k1 < 0)
-				k1 = 0;
-			else if (k1 > 255)
-				k1 = 255;
-			int l1 = anIntArray1517[i1] & 0xff;
-			l1 += i;
-			if (l1 < 0)
-				l1 = 0;
-			else if (l1 > 255)
-				l1 = 255;
-			anIntArray1517[i1] = (j1 << 16) + (k1 << 8) + l1;
+	public void rgbAdjust_489(int blueAdjust_i, int greenAdjust_j, int redAdjust_k, int unused_l) {
+		for (int index_i1 = 0; index_i1 < pixelColours_1517.length; index_i1++) {
+			int red_j1 = pixelColours_1517[index_i1] >> 16 & 0xff;
+			red_j1 += redAdjust_k;
+			if (red_j1 < 0)
+				red_j1 = 0;
+			else if (red_j1 > 255)
+				red_j1 = 255;
+			int green_k1 = pixelColours_1517[index_i1] >> 8 & 0xff;
+			green_k1 += greenAdjust_j;
+			if (green_k1 < 0)
+				green_k1 = 0;
+			else if (green_k1 > 255)
+				green_k1 = 255;
+			int blue_l1 = pixelColours_1517[index_i1] & 0xff;
+			blue_l1 += blueAdjust_i;
+			if (blue_l1 < 0)
+				blue_l1 = 0;
+			else if (blue_l1 > 255)
+				blue_l1 = 255;
+			pixelColours_1517[index_i1] = (red_j1 << 16) + (green_k1 << 8) + blue_l1;
 		}
 
-		if (l == anInt1512)
+		if (unused_l == anInt1512)
 			;
 	}
 
-	public void method490(int i, int j, int k) {
+	public void draw_490(int i, int j, int k) {
 		j += anInt1520;
 		i += anInt1521;
 		while (k >= 0) {
@@ -161,8 +195,8 @@ public class IndexedSprite extends Drawable {
 		}
 		int i1 = j + i * Drawable.width;
 		int j1 = 0;
-		int k1 = anInt1519;
-		int l1 = anInt1518;
+		int k1 = height_1519;
+		int l1 = width_1518;
 		int i2 = Drawable.width - l1;
 		int j2 = 0;
 		if (i < Drawable.startX) {
@@ -192,12 +226,12 @@ public class IndexedSprite extends Drawable {
 		if (l1 <= 0 || k1 <= 0) {
 			return;
 		} else {
-			method491(j1, Drawable.pixels, aByteArray1516, j2, anIntArray1517, k1, l1, i1, false, i2);
+			drawRelated_491(j1, Drawable.pixels, aByteArray1516, j2, pixelColours_1517, k1, l1, i1, false, i2);
 			return;
 		}
 	}
 
-	public void method491(int i, int ai[], byte abyte0[], int j, int ai1[], int k, int l, int i1, boolean flag, int j1) {
+	public void drawRelated_491(int i, int ai[], byte abyte0[], int j, int ai1[], int k, int l, int i1, boolean flag, int j1) {
 		int k1 = -(l >> 2);
 		l = -(l & 3);
 		if (flag)
@@ -239,20 +273,4 @@ public class IndexedSprite extends Drawable {
 		}
 
 	}
-
-	public int anInt1509;
-	public boolean aBoolean1510;
-	public int anInt1511;
-	public int anInt1512;
-	public byte aByte1513;
-	public int anInt1514;
-	public boolean aBoolean1515;
-	public byte aByteArray1516[];
-	public int anIntArray1517[];
-	public int anInt1518;
-	public int anInt1519;
-	public int anInt1520;
-	public int anInt1521;
-	public int anInt1522;
-	public int anInt1523;
 }

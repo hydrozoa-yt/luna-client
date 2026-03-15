@@ -23,9 +23,9 @@ public class RgbSprite extends Drawable {
 		aBoolean1486 = false;
 		aBoolean1487 = true;
 		anInt1488 = 3600;
-		anIntArray1489 = new int[i * j];
-		anInt1490 = anInt1494 = i;
-		anInt1491 = anInt1495 = j;
+		pixels_1489 = new int[i * j];
+		width_1490 = width_1494 = i;
+		height_1491 = height_1495 = j;
 		anInt1492 = anInt1493 = 0;
 	}
 
@@ -47,15 +47,15 @@ public class RgbSprite extends Drawable {
 			MediaTracker mediatracker = new MediaTracker(component);
 			mediatracker.addImage(image, 0);
 			mediatracker.waitForAll();
-			anInt1490 = image.getWidth(component);
-			anInt1491 = image.getHeight(component);
-			anInt1494 = anInt1490;
-			anInt1495 = anInt1491;
+			width_1490 = image.getWidth(component);
+			height_1491 = image.getHeight(component);
+			width_1494 = width_1490;
+			height_1495 = height_1491;
 			anInt1492 = 0;
 			anInt1493 = 0;
-			anIntArray1489 = new int[anInt1490 * anInt1491];
-			PixelGrabber pixelgrabber = new PixelGrabber(image, 0, 0, anInt1490, anInt1491, anIntArray1489, 0,
-					anInt1490);
+			pixels_1489 = new int[width_1490 * height_1491];
+			PixelGrabber pixelgrabber = new PixelGrabber(image, 0, 0, width_1490, height_1491, pixels_1489, 0,
+					width_1490);
 			pixelgrabber.grabPixels();
 			return;
 		} catch (Exception _ex) {
@@ -63,7 +63,7 @@ public class RgbSprite extends Drawable {
 		}
 	}
 
-	public RgbSprite(Archive class2, String s, int i) {
+	public RgbSprite(Archive archive, String name, int i) {
 		anInt1477 = -235;
 		aBoolean1478 = true;
 		aByte1479 = 5;
@@ -76,42 +76,44 @@ public class RgbSprite extends Drawable {
 		aBoolean1486 = false;
 		aBoolean1487 = true;
 		anInt1488 = 3600;
-		JagBuffer class50_sub1_sub2 = new JagBuffer(class2.get(s + ".dat"));
-		JagBuffer class50_sub1_sub2_1 = new JagBuffer(class2.get("index.dat"));
-		class50_sub1_sub2_1.position = class50_sub1_sub2.getShort();
-		anInt1494 = class50_sub1_sub2_1.getShort();
-		anInt1495 = class50_sub1_sub2_1.getShort();
-		int j = class50_sub1_sub2_1.getByte();
+		JagBuffer jagBuffer_2 = new JagBuffer(archive.get(name + ".dat"));
+		JagBuffer jagBuffer_1 = new JagBuffer(archive.get("index.dat"));
+		jagBuffer_1.position = jagBuffer_2.getShort();
+		width_1494 = jagBuffer_1.getShort();
+		height_1495 = jagBuffer_1.getShort();
+		int j = jagBuffer_1.getByte();
 		int ai[] = new int[j];
 		for (int k = 0; k < j - 1; k++) {
-			ai[k + 1] = class50_sub1_sub2_1.getTriByte();
+			ai[k + 1] = jagBuffer_1.getTriByte();
 			if (ai[k + 1] == 0)
 				ai[k + 1] = 1;
 		}
 
 		for (int l = 0; l < i; l++) {
-			class50_sub1_sub2_1.position += 2;
-			class50_sub1_sub2.position += class50_sub1_sub2_1.getShort() * class50_sub1_sub2_1.getShort();
-			class50_sub1_sub2_1.position++;
+			jagBuffer_1.position += 2;
+			jagBuffer_2.position += jagBuffer_1.getShort() * jagBuffer_1.getShort();
+			jagBuffer_1.position++;
 		}
 
-		anInt1492 = class50_sub1_sub2_1.getByte();
-		anInt1493 = class50_sub1_sub2_1.getByte();
-		anInt1490 = class50_sub1_sub2_1.getShort();
-		anInt1491 = class50_sub1_sub2_1.getShort();
-		int i1 = class50_sub1_sub2_1.getByte();
-		int j1 = anInt1490 * anInt1491;
-		anIntArray1489 = new int[j1];
+		anInt1492 = jagBuffer_1.getByte();
+		anInt1493 = jagBuffer_1.getByte();
+		width_1490 = jagBuffer_1.getShort();
+		height_1491 = jagBuffer_1.getShort();
+
+		int i1 = jagBuffer_1.getByte();
+		int pixelsAmount_j1 = width_1490 * height_1491;
+
+		pixels_1489 = new int[pixelsAmount_j1];
 		if (i1 == 0) {
-			for (int k1 = 0; k1 < j1; k1++)
-				anIntArray1489[k1] = ai[class50_sub1_sub2.getByte()];
+			for (int k1 = 0; k1 < pixelsAmount_j1; k1++)
+				pixels_1489[k1] = ai[jagBuffer_2.getByte()];
 
 			return;
 		}
 		if (i1 == 1) {
-			for (int l1 = 0; l1 < anInt1490; l1++) {
-				for (int i2 = 0; i2 < anInt1491; i2++)
-					anIntArray1489[l1 + i2 * anInt1490] = ai[class50_sub1_sub2.getByte()];
+			for (int l1 = 0; l1 < width_1490; l1++) {
+				for (int i2 = 0; i2 < height_1491; i2++)
+					pixels_1489[l1 + i2 * width_1490] = ai[jagBuffer_2.getByte()];
 
 			}
 
@@ -122,14 +124,14 @@ public class RgbSprite extends Drawable {
 		if (flag) {
 			return;
 		} else {
-			Drawable.putPixels(anInt1490, anInt1491, anIntArray1489);
+			Drawable.putPixels(width_1490, height_1491, pixels_1489);
 			return;
 		}
 	}
 
 	public void method457(int i, int j, int k, int l) {
-		for (int i1 = 0; i1 < anIntArray1489.length; i1++) {
-			int j1 = anIntArray1489[i1];
+		for (int i1 = 0; i1 < pixels_1489.length; i1++) {
+			int j1 = pixels_1489[i1];
 			if (j1 != 0) {
 				int k1 = j1 >> 16 & 0xff;
 				k1 += k;
@@ -149,7 +151,7 @@ public class RgbSprite extends Drawable {
 					i2 = 1;
 				else if (i2 > 255)
 					i2 = 255;
-				anIntArray1489[i1] = (k1 << 16) + (l1 << 8) + i2;
+				pixels_1489[i1] = (k1 << 16) + (l1 << 8) + i2;
 			}
 		}
 
@@ -158,16 +160,16 @@ public class RgbSprite extends Drawable {
 	}
 
 	public void method458(int i) {
-		int ai[] = new int[anInt1494 * anInt1495];
-		for (int j = 0; j < anInt1491; j++) {
-			for (int k = 0; k < anInt1490; k++)
-				ai[(j + anInt1493) * anInt1494 + (k + anInt1492)] = anIntArray1489[j * anInt1490 + k];
+		int ai[] = new int[width_1494 * height_1495];
+		for (int j = 0; j < height_1491; j++) {
+			for (int k = 0; k < width_1490; k++)
+				ai[(j + anInt1493) * width_1494 + (k + anInt1492)] = pixels_1489[j * width_1490 + k];
 
 		}
 
-		anIntArray1489 = ai;
-		anInt1490 = anInt1494;
-		anInt1491 = anInt1495;
+		pixels_1489 = ai;
+		width_1490 = width_1494;
+		height_1491 = height_1495;
 		anInt1492 = 0;
 		anInt1493 = 0;
 		if (i == 1790)
@@ -179,8 +181,8 @@ public class RgbSprite extends Drawable {
 		i += anInt1493;
 		int l = k + i * Drawable.width;
 		int i1 = 0;
-		int j1 = anInt1491;
-		int k1 = anInt1490;
+		int j1 = height_1491;
+		int k1 = width_1490;
 		int l1 = Drawable.width - k1;
 		int i2 = 0;
 		if (i < Drawable.startX) {
@@ -209,7 +211,7 @@ public class RgbSprite extends Drawable {
 		}
 		if (k1 <= 0 || j1 <= 0)
 			return;
-		method460(k1, l1, j1, anIntArray1489, i1, i2, l, (byte) -39, Drawable.pixels);
+		method460(k1, l1, j1, pixels_1489, i1, i2, l, (byte) -39, Drawable.pixels);
 		if (j >= 0)
 			aBoolean1487 = !aBoolean1487;
 	}
@@ -243,8 +245,8 @@ public class RgbSprite extends Drawable {
 		i += anInt1493;
 		int l = j + i * Drawable.width;
 		int i1 = 0;
-		int j1 = anInt1491;
-		int k1 = anInt1490;
+		int j1 = height_1491;
+		int k1 = width_1490;
 		int l1 = Drawable.width - k1;
 		int i2 = 0;
 		if (i < Drawable.startX) {
@@ -274,7 +276,7 @@ public class RgbSprite extends Drawable {
 		if (k1 <= 0 || j1 <= 0) {
 			return;
 		} else {
-			method462(Drawable.pixels, anIntArray1489, 0, i1, l, k1, j1, l1, i2);
+			method462(Drawable.pixels, pixels_1489, 0, i1, l, k1, j1, l1, i2);
 			return;
 		}
 	}
@@ -327,8 +329,8 @@ public class RgbSprite extends Drawable {
 		int j1 = 0;
 		if (i != 0)
 			return;
-		int k1 = anInt1491;
-		int l1 = anInt1490;
+		int k1 = height_1491;
+		int l1 = width_1490;
 		int i2 = Drawable.width - l1;
 		int j2 = 0;
 		if (k < Drawable.startX) {
@@ -358,7 +360,7 @@ public class RgbSprite extends Drawable {
 		if (l1 <= 0 || k1 <= 0) {
 			return;
 		} else {
-			method464(l1, j2, 0, i2, j1, anInt1481, l, i1, k1, Drawable.pixels, anIntArray1489);
+			method464(l1, j2, 0, i2, j1, anInt1481, l, i1, k1, Drawable.pixels, pixels_1489);
 			return;
 		}
 	}
@@ -403,7 +405,7 @@ public class RgbSprite extends Drawable {
 				int k4 = j3 + i3 * i4;
 				int l4 = k3 - l2 * i4;
 				for (j1 = -ai[i]; j1 < 0; j1++) {
-					Drawable.pixels[j4++] = anIntArray1489[(k4 >> 16) + (l4 >> 16) * anInt1490];
+					Drawable.pixels[j4++] = pixels_1489[(k4 >> 16) + (l4 >> 16) * width_1490];
 					k4 += i3;
 					l4 -= l2;
 				}
@@ -437,7 +439,7 @@ public class RgbSprite extends Drawable {
 				int i4 = i3;
 				int j4 = j3;
 				for (k = -k1; k < 0; k++) {
-					int k4 = anIntArray1489[(i4 >> 16) + (j4 >> 16) * anInt1490];
+					int k4 = pixels_1489[(i4 >> 16) + (j4 >> 16) * width_1490];
 					if (k4 != 0)
 						Drawable.pixels[l3++] = k4;
 					else
@@ -464,8 +466,8 @@ public class RgbSprite extends Drawable {
 		i += anInt1493;
 		int l = k + i * Drawable.width;
 		int i1 = 0;
-		int j1 = anInt1491;
-		int k1 = anInt1490;
+		int j1 = height_1491;
+		int k1 = width_1490;
 		int l1 = Drawable.width - k1;
 		int i2 = 0;
 		if (i < Drawable.startX) {
@@ -495,7 +497,7 @@ public class RgbSprite extends Drawable {
 		if (k1 <= 0 || j1 <= 0) {
 			return;
 		} else {
-			method468(l, l1, anIntArray1489, k1, Drawable.pixels,
+			method468(l, l1, pixels_1489, k1, Drawable.pixels,
 					class50_sub1_sub1_sub3.aByteArray1516, 40303, j1, i1, 0, i2);
 			return;
 		}
@@ -556,11 +558,11 @@ public class RgbSprite extends Drawable {
 	public boolean aBoolean1486;
 	public boolean aBoolean1487;
 	public int anInt1488;
-	public int anIntArray1489[];
-	public int anInt1490;
-	public int anInt1491;
+	public int pixels_1489[];
+	public int width_1490;
+	public int height_1491;
 	public int anInt1492;
 	public int anInt1493;
-	public int anInt1494;
-	public int anInt1495;
+	public int width_1494;
+	public int height_1495;
 }

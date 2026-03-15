@@ -122,7 +122,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 		for (int k = 0; k < 50; k++)
 			try {
 				aClass50_Sub1_Sub1_Sub3Array1540[k] = new IndexedSprite(class2, String.valueOf(k), 0);
-				if (lowMemory && aClass50_Sub1_Sub1_Sub3Array1540[k].anInt1522 == 128)
+				if (lowMemory && aClass50_Sub1_Sub1_Sub3Array1540[k].width_1522 == 128)
 					aClass50_Sub1_Sub1_Sub3Array1540[k].method485(0);
 				else
 					aClass50_Sub1_Sub1_Sub3Array1540[k].method486(true);
@@ -202,7 +202,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 			}
 
 		} else {
-			if (class50_sub1_sub1_sub3.anInt1518 == 64) {
+			if (class50_sub1_sub1_sub3.width_1518 == 64) {
 				for (int j1 = 0; j1 < 128; j1++) {
 					for (int j2 = 0; j2 < 128; j2++)
 						ai[j2 + (j1 << 7)] = ai1[class50_sub1_sub1_sub3.aByteArray1516[(j2 >> 1) + ((j1 >> 1) << 6)]];
@@ -293,7 +293,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 
 		for (int k = 0; k < 50; k++)
 			if (aClass50_Sub1_Sub1_Sub3Array1540[k] != null) {
-				int ai[] = aClass50_Sub1_Sub1_Sub3Array1540[k].anIntArray1517;
+				int ai[] = aClass50_Sub1_Sub1_Sub3Array1540[k].pixelColours_1517;
 				anIntArrayArray1549[k] = new int[ai.length];
 				for (int i1 = 0; i1 < ai.length; i1++) {
 					anIntArrayArray1549[k][i1] = method502(ai[i1], d);
