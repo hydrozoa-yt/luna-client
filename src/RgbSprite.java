@@ -29,6 +29,7 @@ public class RgbSprite extends Drawable {
 		anInt1492 = anInt1493 = 0;
 	}
 
+	// used for title.dat in index 0 archive 1 named "title"
 	public RgbSprite(byte abyte0[], Component component) {
 		anInt1477 = -235;
 		aBoolean1478 = true;

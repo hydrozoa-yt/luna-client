@@ -69,9 +69,12 @@ public class IndexedSprite extends Drawable {
 		int byteLength_j1 = width_1518 * height_1519;
 		aByteArray1516 = new byte[byteLength_j1];
 		if (typeByte_i1 == 0) {
-			for (int k1 = 0; k1 < byteLength_j1; k1++)
+			for (int k1 = 0; k1 < byteLength_j1; k1++) {
 				aByteArray1516[k1] = jagBuffer_data.getSignedByte();
-
+				/*if (s.equalsIgnoreCase("titlebox")) {
+					System.out.println(s + ": byte["+k1+"]=" + aByteArray1516[k1]);
+				}*/
+			}
 			return;
 		}
 		if (typeByte_i1 == 1) {
