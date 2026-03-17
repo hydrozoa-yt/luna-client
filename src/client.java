@@ -19,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 import java.util.zip.CRC32;
 
 import luna.Constants;
@@ -165,10 +166,9 @@ public class client extends JagApplet {
 
     public void method17(byte byte0) {
         delayedResetter1320 = true;
-        if (byte0 == 4)
-            byte0 = 0;
-        else
+        if (byte0 != 4) {
             groundItems = null;
+        }
         try {
             long l = System.currentTimeMillis();
             int i = 0;
@@ -10100,12 +10100,10 @@ public class client extends JagApplet {
     }
 
     public Component getParentComponent() {
-        if (signlink.mainapp != null)
+        if (signlink.mainapp != null) {
             return signlink.mainapp;
-        if (super.frame != null)
-            return super.frame;
-        else
-            return this;
+        }
+        return Objects.requireNonNullElse(super.frame, this);
     }
 
     public void drawLoadingText(int i, String text) {
@@ -10145,7 +10143,7 @@ public class client extends JagApplet {
     }
 
     public void method139(boolean flag) {
-        byte abyte0[] = titleArchive.get("title.dat");
+        byte[] abyte0 = titleArchive.get("title.dat");
         RgbSprite class50_sub1_sub1_sub1 = new RgbSprite(abyte0, this);
         aClass18_1201.method230();
         class50_sub1_sub1_sub1.method459(0, -192, 0);
@@ -10165,7 +10163,7 @@ public class client extends JagApplet {
         class50_sub1_sub1_sub1.method459(-171, -192, -128);
         aClass18_1206.method230();
         class50_sub1_sub1_sub1.method459(-171, -192, -562);
-        int ai[] = new int[class50_sub1_sub1_sub1.width_1490];
+        int[] ai = new int[class50_sub1_sub1_sub1.width_1490];
         for (int i = 0; i < class50_sub1_sub1_sub1.height_1491; i++) {
             for (int j = 0; j < class50_sub1_sub1_sub1.width_1490; j++)
                 ai[j] = class50_sub1_sub1_sub1.pixels_1489[(class50_sub1_sub1_sub1.width_1490 - j - 1)
