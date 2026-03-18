@@ -4591,7 +4591,7 @@ public class client extends JagApplet {
                 drawLoadingText(90, "Unpacking sounds");
                 byte abyte0[] = soundArchive.get("sounds.dat");
                 JagBuffer buf = new JagBuffer(abyte0);
-                Sound.unpack(buf, 36135);
+                Sound.unpack(buf);
             }
             drawLoadingText(95, "Unpacking interfaces");
             JagFont aclass50_sub1_sub1_sub2[] = {aClass50_Sub1_Sub1_Sub2_1059,
