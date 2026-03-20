@@ -81,19 +81,6 @@ public class JagApplet extends Applet implements Runnable, MouseListener, MouseM
 		startThread(this, 1);
 	}
 
-	public void method2(int i, int j, int k) {
-		width = i;
-		if (k != 2) {
-			return;
-		} else {
-			height = j;
-			graphics = getParentComponent().getGraphics();
-			imageProducer = new JagImageProducer(width, height, getParentComponent());
-			startThread(this, 1);
-			return;
-		}
-	}
-
 	public void run() {
 		getParentComponent().addMouseListener(this);
 		getParentComponent().addMouseMotionListener(this);

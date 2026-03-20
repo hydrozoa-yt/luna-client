@@ -118,8 +118,7 @@ public class Player extends Actor {
 						aclass50_sub1_sub4_sub4[l1++] = class50_sub1_sub4_sub4_3;
 				}
 				if (k2 >= 512) {
-					Model class50_sub1_sub4_sub4_4 = ItemDefinition.forId(k2 - 512).method213(
-							(byte) -98, gender);
+					Model class50_sub1_sub4_sub4_4 = ItemDefinition.forId(k2 - 512).method213(gender);
 					if (class50_sub1_sub4_sub4_4 != null)
 						aclass50_sub1_sub4_sub4[l1++] = class50_sub1_sub4_sub4_4;
 				}

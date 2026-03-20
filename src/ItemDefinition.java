@@ -4,6 +4,64 @@
 
 public class ItemDefinition {
 
+	public int anInt326;
+	public int modelOffsetX;
+	public byte description[];
+	public String name;
+	public byte aByte330;
+	public int anInt331;
+	public int team;
+	public int notedInfoId;
+	public int anInt334;
+	public static int count;
+	public static ItemDefinition cache[];
+	public static LruHashTable aClass33_337 = new LruHashTable(50);
+	public String groundActions[];
+	public int anInt339;
+	public int modelOffsetY;
+	public int destColors[];
+	public static int indices[];
+	public int notedGraphicsId;
+	public static boolean memberServer = true;
+	public int value;
+	public static LruHashTable spriteCache = new LruHashTable(100);
+	public static byte aByte347 = 6;
+	public String inventoryActions[];
+	public static boolean aBoolean350 = true;
+	public int anInt351;
+	public static int cachePos;
+	public int anInt353;
+	public int anInt354;
+	public int anInt355;
+	public int modelRotationY;
+	public int anInt357;
+	public int anInt358;
+	public int modelRotationX;
+	public int modelId;
+	public int anInt361;
+	public int anInt362;
+	public int id;
+	public int srcColors[];
+	public int stackIds[];
+	public int anInt366;
+	public int anInt367;
+	public int anInt368;
+	public int modelScale;
+	public int anInt370;
+	public boolean stackable;
+	public int anInt372;
+	public static JagBuffer buf;
+	public boolean aBoolean374;
+	public int anInt375;
+	public int stackAmounts[];
+	public boolean members;
+	public byte aByte378;
+
+	public ItemDefinition() {
+		anInt351 = -68;
+		id = -1;
+	}
+
 	public boolean method211(int i) {
 		int k = anInt334;
 		int l = anInt361;
@@ -22,9 +80,11 @@ public class ItemDefinition {
 	}
 	
 	public static ItemDefinition forId(int id) {
-		for (int j = 0; j < 10; j++)
-			if (cache[j].id == id)
-				return cache[j];
+		for (int j = 0; j < 10; j++) {
+            if (cache[j].id == id) {
+                return cache[j];
+            }
+        }
 
 		cachePos = (cachePos + 1) % 10;
 		ItemDefinition def = cache[cachePos];
@@ -44,42 +104,40 @@ public class ItemDefinition {
 		return def;
 	}
 
-	public Model method213(byte byte0, int i) {
+	public Model method213(int gender) {
 		int j = anInt353;
 		int k = anInt331;
 		int l = anInt370;
-		if (i == 1) {
+		if (gender == 1) {
 			j = anInt326;
 			k = anInt355;
 			l = anInt367;
 		}
 		if (j == -1)
 			return null;
-		Model class50_sub1_sub4_sub4 = Model.forId(j);
-		if (byte0 != -98)
-			throw new NullPointerException();
+		Model result = Model.forId(j);
 		if (k != -1)
 			if (l != -1) {
 				Model class50_sub1_sub4_sub4_1 = Model.forId(k);
 				Model class50_sub1_sub4_sub4_3 = Model.forId(l);
-				Model aclass50_sub1_sub4_sub4_1[] = { class50_sub1_sub4_sub4,
+				Model aclass50_sub1_sub4_sub4_1[] = { result,
 						class50_sub1_sub4_sub4_1, class50_sub1_sub4_sub4_3 };
-				class50_sub1_sub4_sub4 = new Model(3, aclass50_sub1_sub4_sub4_1);
+				result = new Model(3, aclass50_sub1_sub4_sub4_1);
 			} else {
 				Model class50_sub1_sub4_sub4_2 = Model.forId(k);
-				Model aclass50_sub1_sub4_sub4[] = { class50_sub1_sub4_sub4, class50_sub1_sub4_sub4_2 };
-				class50_sub1_sub4_sub4 = new Model(2, aclass50_sub1_sub4_sub4);
+				Model aclass50_sub1_sub4_sub4[] = { result, class50_sub1_sub4_sub4_2 };
+				result = new Model(2, aclass50_sub1_sub4_sub4);
 			}
-		if (i == 0 && aByte378 != 0)
-			class50_sub1_sub4_sub4.method590(0, 0, false, aByte378);
-		if (i == 1 && aByte330 != 0)
-			class50_sub1_sub4_sub4.method590(0, 0, false, aByte330);
+		if (gender == 0 && aByte378 != 0)
+			result.method590(0, 0, false, aByte378);
+		if (gender == 1 && aByte330 != 0)
+			result.method590(0, 0, false, aByte330);
 		if (srcColors != null) {
 			for (int color = 0; color < srcColors.length; color++)
-				class50_sub1_sub4_sub4.replaceColor(srcColors[color], destColors[color]);
+				result.replaceColor(srcColors[color], destColors[color]);
 
 		}
-		return class50_sub1_sub4_sub4;
+		return result;
 	}
 
 	public static void unpack(Archive archive) {
@@ -496,63 +554,4 @@ public class ItemDefinition {
 		anInt358 = 0;
 		team = 0;
 	}
-
-	public ItemDefinition() {
-		anInt351 = -68;
-		id = -1;
-	}
-
-	public int anInt326;
-	public int modelOffsetX;
-	public byte description[];
-	public String name;
-	public byte aByte330;
-	public int anInt331;
-	public int team;
-	public int notedInfoId;
-	public int anInt334;
-	public static int count;
-	public static ItemDefinition cache[];
-	public static LruHashTable aClass33_337 = new LruHashTable(50);
-	public String groundActions[];
-	public int anInt339;
-	public int modelOffsetY;
-	public int destColors[];
-	public static int indices[];
-	public int notedGraphicsId;
-	public static boolean memberServer = true;
-	public int value;
-	public static LruHashTable spriteCache = new LruHashTable(100);
-	public static byte aByte347 = 6;
-	public String inventoryActions[];
-	public static boolean aBoolean350 = true;
-	public int anInt351;
-	public static int cachePos;
-	public int anInt353;
-	public int anInt354;
-	public int anInt355;
-	public int modelRotationY;
-	public int anInt357;
-	public int anInt358;
-	public int modelRotationX;
-	public int modelId;
-	public int anInt361;
-	public int anInt362;
-	public int id;
-	public int srcColors[];
-	public int stackIds[];
-	public int anInt366;
-	public int anInt367;
-	public int anInt368;
-	public int modelScale;
-	public int anInt370;
-	public boolean stackable;
-	public int anInt372;
-	public static JagBuffer buf;
-	public boolean aBoolean374;
-	public int anInt375;
-	public int stackAmounts[];
-	public boolean members;
-	public byte aByte378;
-
 }

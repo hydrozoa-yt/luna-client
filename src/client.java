@@ -352,7 +352,7 @@ public class client extends JagApplet {
         gameObjectSpawnsRequestList = null;
         resetWhenBoolTrue();
         ObjectDefinition.method433(false);
-        NpcDefinition.method358(false);
+        NpcDefinition.clearBuffers();
         ItemDefinition.method222(false);
         JagInterface.method202(false);
         TileDefinition.tiles = null;
@@ -5527,7 +5527,7 @@ public class client extends JagApplet {
         portOffset = Integer.parseInt(getParameter("portoff"));
         switchToHighMem();
         memberServer = true;
-        method2(765, 503, 2);
+        start(765, 503);
     }
 
     public void method76(int i) {
@@ -6050,7 +6050,7 @@ public class client extends JagApplet {
             return;
         if (!class37.aBoolean631)
             return;
-        String s = class37.aString652;
+        String s = class37.name;
         if (class37.anInt639 != 0)
             s = s + method92(class37.anInt639, thisPlayer.anInt1753, 736) + " (level-" + class37.anInt639 + ")";
         if (anInt1146 == 1) {
@@ -8852,7 +8852,7 @@ public class client extends JagApplet {
                     if (class37.aByteArray660 != null)
                         s10 = new String(class37.aByteArray660);
                     else
-                        s10 = "It's a " + class37.aString652 + ".";
+                        s10 = "It's a " + class37.name + ".";
                     pushMessage("", (byte) -123, s10, 0);
                 }
             }
