@@ -193,7 +193,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 		if (lowMemory) {
 			aBooleanArray1541[i] = false;
 			for (int i1 = 0; i1 < 4096; i1++) {
-				int i2 = ai[i1] = ai1[class50_sub1_sub1_sub3.aByteArray1516[i1]] & 0xf8f8ff;
+				int i2 = ai[i1] = ai1[class50_sub1_sub1_sub3.pixels_1516[i1]] & 0xf8f8ff;
 				if (i2 == 0)
 					aBooleanArray1541[i] = true;
 				ai[4096 + i1] = i2 - (i2 >>> 3) & 0xf8f8ff;
@@ -205,13 +205,13 @@ public class ThreeDimensionalCanvas extends Drawable {
 			if (class50_sub1_sub1_sub3.width_1518 == 64) {
 				for (int j1 = 0; j1 < 128; j1++) {
 					for (int j2 = 0; j2 < 128; j2++)
-						ai[j2 + (j1 << 7)] = ai1[class50_sub1_sub1_sub3.aByteArray1516[(j2 >> 1) + ((j1 >> 1) << 6)]];
+						ai[j2 + (j1 << 7)] = ai1[class50_sub1_sub1_sub3.pixels_1516[(j2 >> 1) + ((j1 >> 1) << 6)]];
 
 				}
 
 			} else {
 				for (int k1 = 0; k1 < 16384; k1++)
-					ai[k1] = ai1[class50_sub1_sub1_sub3.aByteArray1516[k1]];
+					ai[k1] = ai1[class50_sub1_sub1_sub3.pixels_1516[k1]];
 
 			}
 			aBooleanArray1541[i] = false;

@@ -458,7 +458,7 @@ public class RgbSprite extends Drawable {
 			return;
 		} else {
 			method468(l, l1, pixels_1489, k1, Drawable.pixels,
-					class50_sub1_sub1_sub3.aByteArray1516, 40303, j1, i1, 0, i2);
+					class50_sub1_sub1_sub3.pixels_1516, 40303, j1, i1, 0, i2);
 			return;
 		}
 	}

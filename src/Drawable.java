@@ -4,7 +4,6 @@
 
 public class Drawable extends QueueNode {
 
-	public static boolean aBoolean1421;
 	public static int startX;
 	public static int endY;
 	public static int startY;
@@ -59,11 +58,11 @@ public class Drawable extends QueueNode {
 		}
 	}
 
-	public static void method447(int i) {
+	public static void clear_447() {
 		int pixelsTotal = width * height;
-		for (int k = 0; k < pixelsTotal; k++)
-			pixels[k] = 0;
-
+		for (int k = 0; k < pixelsTotal; k++) {
+            pixels[k] = 0;
+        }
 	}
 
 	public static void drawFullRect(int color, int x, int k, int l, int darkness, int y) {

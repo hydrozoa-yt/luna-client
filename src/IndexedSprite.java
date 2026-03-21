@@ -4,19 +4,12 @@
 
 public class IndexedSprite extends Drawable {
 
-	public int anInt1509;
-	public boolean aBoolean1510;
-	public int anInt1511;
-	public int anInt1512;
-	public byte aByte1513;
-	public int anInt1514;
-	public boolean aBoolean1515;
-	public byte aByteArray1516[];
+	public byte pixels_1516[];
 	public int pixelColours_1517[];
 	public int width_1518;
 	public int height_1519;
-	public int anInt1520;
-	public int anInt1521;
+	public int attrib_1520;
+	public int attrib_1521;
 	public int width_1522;
 	public int height_1523;
 
@@ -24,66 +17,51 @@ public class IndexedSprite extends Drawable {
 	 *
 	 * @param archive
 	 * @param s				name of the sprite
-	 * @param length_i		array index of the sprite, somehow
+	 * @param page		array index of the sprite, somehow
 	 */
-	public IndexedSprite(Archive archive, String s, int length_i) {
-		anInt1509 = 3;
-		aBoolean1510 = true;
-		anInt1512 = -235;
-		aByte1513 = 5;
-		anInt1514 = -3539;
-		aBoolean1515 = true;
-		JagBuffer jagBuffer_data = new JagBuffer(archive.get(s + ".dat"));
-		JagBuffer jagBuffer_index = new JagBuffer(archive.get("index.dat"));
-		jagBuffer_index.position = jagBuffer_data.getShort();
-		System.out.println(s+": index="+jagBuffer_index.position);
-		width_1522 = jagBuffer_index.getShort();
-		System.out.println(s+": width_1522="+width_1522);
-		height_1523 = jagBuffer_index.getShort();
-		System.out.println(s+": height_1523="+height_1523);
-		int length_j = jagBuffer_index.getByte();
-		System.out.println(s+": length_j="+length_j);
-		pixelColours_1517 = new int[length_j];
-		for (int iterator_k = 0; iterator_k < length_j - 1; iterator_k++) {
-			pixelColours_1517[iterator_k + 1] = jagBuffer_index.getTriByte();
-			System.out.println(s+": pixelColor["+(iterator_k+1)+"] = "+pixelColours_1517[iterator_k + 1]);
+	public IndexedSprite(Archive archive, String s, int page) {
+		JagBuffer dataBuf = new JagBuffer(archive.get(s + ".dat"));
+		JagBuffer idxBuf = new JagBuffer(archive.get("index.dat"));
+		idxBuf.position = dataBuf.getShort();
+		width_1522 = idxBuf.getShort();
+		height_1523 = idxBuf.getShort();
+		int colorLength = idxBuf.getByte();
+		pixelColours_1517 = new int[colorLength];
+		for (int colorIndex = 0; colorIndex < colorLength - 1; colorIndex++) {
+			pixelColours_1517[colorIndex + 1] = idxBuf.getTriByte();
+			System.out.println(s+": pixelColor["+(colorIndex+1)+"] = "+pixelColours_1517[colorIndex + 1]);
 		}
 
-		// doesnt run for titlebox, used for arrays of images
-		for (int l = 0; l < length_i; l++) {
-			jagBuffer_index.position += 2;
-			jagBuffer_data.position += jagBuffer_index.getShort() * jagBuffer_index.getShort();
-			jagBuffer_index.position++;
+		for (int l = 0; l < page; l++) {
+			idxBuf.position += 2;
+			dataBuf.position += idxBuf.getShort() * idxBuf.getShort();
+			idxBuf.position++;
 		}
 
-		anInt1520 = jagBuffer_index.getByte();
-		System.out.println(s+": unknownByte1="+anInt1520);
-		anInt1521 = jagBuffer_index.getByte();
-		System.out.println(s+": unknownByte2="+anInt1521);
-		width_1518 = jagBuffer_index.getShort();
+		attrib_1520 = idxBuf.getByte();
+		System.out.println(s+": unknownByte1="+ attrib_1520);
+		attrib_1521 = idxBuf.getByte();
+		System.out.println(s+": unknownByte2="+ attrib_1521);
+		width_1518 = idxBuf.getShort();
 		System.out.println(s+": width_1518="+width_1518);
-		height_1519 = jagBuffer_index.getShort();
+		height_1519 = idxBuf.getShort();
 		System.out.println(s+": height_1519="+height_1519);
-		int typeByte_i1 = jagBuffer_index.getByte();
+		int typeByte_i1 = idxBuf.getByte();
 		System.out.println(s+": typeByte_i1="+typeByte_i1);
-		int byteLength_j1 = width_1518 * height_1519;
-		aByteArray1516 = new byte[byteLength_j1];
+		int pixelsLength = width_1518 * height_1519;
+		pixels_1516 = new byte[pixelsLength];
 		if (typeByte_i1 == 0) {
-			for (int k1 = 0; k1 < byteLength_j1; k1++) {
-				aByteArray1516[k1] = jagBuffer_data.getSignedByte();
-				/*if (s.equalsIgnoreCase("titlebox")) {
-					System.out.println(s + ": byte["+k1+"]=" + aByteArray1516[k1]);
-				}*/
+			for (int k1 = 0; k1 < pixelsLength; k1++) {
+				pixels_1516[k1] = dataBuf.getSignedByte();
 			}
 			return;
 		}
 		if (typeByte_i1 == 1) {
-			for (int l1 = 0; l1 < width_1518; l1++) {
-				for (int i2 = 0; i2 < height_1519; i2++)
-					aByteArray1516[l1 + i2 * width_1518] = jagBuffer_data.getSignedByte();
-
+			for (int x = 0; x < width_1518; x++) {
+				for (int y = 0; y < height_1519; y++) {
+					pixels_1516[x + y * width_1518] = dataBuf.getSignedByte();
+				}
 			}
-
 		}
 	}
 
@@ -95,16 +73,16 @@ public class IndexedSprite extends Drawable {
 		if (i != 0)
 			return;
 		for (int k = 0; k < height_1519; k++) {
-			for (int l = 0; l < width_1518; l++)
-				abyte0[(l + anInt1520 >> 1) + (k + anInt1521 >> 1) * width_1522] = aByteArray1516[j++];
-
+			for (int l = 0; l < width_1518; l++) {
+				abyte0[(l + attrib_1520 >> 1) + (k + attrib_1521 >> 1) * width_1522] = pixels_1516[j++];
+			}
 		}
 
-		aByteArray1516 = abyte0;
+		pixels_1516 = abyte0;
 		width_1518 = width_1522;
 		height_1519 = height_1523;
-		anInt1520 = 0;
-		anInt1521 = 0;
+		attrib_1520 = 0;
+		attrib_1521 = 0;
 	}
 
 	public void method486(boolean flag) {
@@ -114,18 +92,18 @@ public class IndexedSprite extends Drawable {
 		int i = 0;
 		for (int j = 0; j < height_1519; j++) {
 			for (int k = 0; k < width_1518; k++)
-				abyte0[k + anInt1520 + (j + anInt1521) * width_1522] = aByteArray1516[i++];
+				abyte0[k + attrib_1520 + (j + attrib_1521) * width_1522] = pixels_1516[i++];
 
 		}
 
-		aByteArray1516 = abyte0;
+		pixels_1516 = abyte0;
 		width_1518 = width_1522;
 		if (!flag) {
 			return;
 		} else {
 			height_1519 = height_1523;
-			anInt1520 = 0;
-			anInt1521 = 0;
+			attrib_1520 = 0;
+			attrib_1521 = 0;
 			return;
 		}
 	}
@@ -135,15 +113,15 @@ public class IndexedSprite extends Drawable {
 		int j = 0;
 		for (int k = 0; k < height_1519; k++) {
 			for (int l = width_1518 - 1; l >= 0; l--)
-				abyte0[j++] = aByteArray1516[l + k * width_1518];
+				abyte0[j++] = pixels_1516[l + k * width_1518];
 
 		}
 
-		aByteArray1516 = abyte0;
+		pixels_1516 = abyte0;
 		if (i != 0) {
 			return;
 		} else {
-			anInt1520 = width_1522 - width_1518 - anInt1520;
+			attrib_1520 = width_1522 - width_1518 - attrib_1520;
 			return;
 		}
 	}
@@ -151,16 +129,13 @@ public class IndexedSprite extends Drawable {
 	public void method488(byte byte0) {
 		byte abyte0[] = new byte[width_1518 * height_1519];
 		int i = 0;
-		if (byte0 != 7)
-			aBoolean1515 = !aBoolean1515;
 		for (int j = height_1519 - 1; j >= 0; j--) {
-			for (int k = 0; k < width_1518; k++)
-				abyte0[i++] = aByteArray1516[k + j * width_1518];
-
+			for (int k = 0; k < width_1518; k++) {
+                abyte0[i++] = pixels_1516[k + j * width_1518];
+            }
 		}
-
-		aByteArray1516 = abyte0;
-		anInt1521 = height_1523 - height_1519 - anInt1521;
+		pixels_1516 = abyte0;
+		attrib_1521 = height_1523 - height_1519 - attrib_1521;
 	}
 
 	public void rgbAdjust_489(int blueAdjust_i, int greenAdjust_j, int redAdjust_k, int unused_l) {
@@ -185,14 +160,11 @@ public class IndexedSprite extends Drawable {
 				blue_l1 = 255;
 			pixelColours_1517[index_i1] = (red_j1 << 16) + (green_k1 << 8) + blue_l1;
 		}
-
-		if (unused_l == anInt1512)
-			;
 	}
 
 	public void draw_490(int i, int j, int k) {
-		j += anInt1520;
-		i += anInt1521;
+		j += attrib_1520;
+		i += attrib_1521;
 		while (k >= 0) {
 			for (int l = 1; l > 0; l++);
 		}
@@ -229,7 +201,7 @@ public class IndexedSprite extends Drawable {
 		if (l1 <= 0 || k1 <= 0) {
 			return;
 		} else {
-			drawRelated_491(j1, Drawable.pixels, aByteArray1516, j2, pixelColours_1517, k1, l1, i1, false, i2);
+			drawRelated_491(j1, Drawable.pixels, pixels_1516, j2, pixelColours_1517, k1, l1, i1, false, i2);
 			return;
 		}
 	}
@@ -237,8 +209,6 @@ public class IndexedSprite extends Drawable {
 	public void drawRelated_491(int i, int ai[], byte abyte0[], int j, int ai1[], int k, int l, int i1, boolean flag, int j1) {
 		int k1 = -(l >> 2);
 		l = -(l & 3);
-		if (flag)
-			anInt1511 = 264;
 		for (int l1 = -k; l1 < 0; l1++) {
 			for (int i2 = k1; i2 < 0; i2++) {
 				byte byte0 = abyte0[i++];
