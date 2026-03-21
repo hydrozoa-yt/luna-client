@@ -25,14 +25,14 @@ public class RgbSprite extends Drawable {
 		anInt1492 = anInt1493 = 0;
 	}
 
-	public RgbSprite(Archive archive, String name, int i) {
+	public RgbSprite(Archive archive, String name, int page) {
 		JagBuffer dataBuf = new JagBuffer(archive.get(name + ".dat"));
 		JagBuffer idxBuf = new JagBuffer(archive.get("index.dat"));
 		idxBuf.position = dataBuf.getShort();
 		width_1494 = idxBuf.getShort();
 		height_1495 = idxBuf.getShort();
 		int colorLength = idxBuf.getByte();
-		int colors[] = new int[colorLength];
+		int[] colors = new int[colorLength];
 		for (int k = 0; k < colorLength - 1; k++) {
 			colors[k + 1] = idxBuf.getTriByte();
 			if (colors[k + 1] == 0) {
@@ -40,7 +40,7 @@ public class RgbSprite extends Drawable {
             }
 		}
 
-		for (int l = 0; l < i; l++) {
+		for (int l = 0; l < page; l++) {
 			idxBuf.position += 2;
 			dataBuf.position += idxBuf.getShort() * idxBuf.getShort();
 			idxBuf.position++;
@@ -51,23 +51,21 @@ public class RgbSprite extends Drawable {
 		width_1490 = idxBuf.getShort();
 		height_1491 = idxBuf.getShort();
 
-		int i1 = idxBuf.getByte();
+		int typeData = idxBuf.getByte();
 		int pixelsAmount_j1 = width_1490 * height_1491;
 
 		pixels_1489 = new int[pixelsAmount_j1];
-		if (i1 == 0) {
-			for (int k1 = 0; k1 < pixelsAmount_j1; k1++)
-				pixels_1489[k1] = colors[dataBuf.getByte()];
-
-			return;
+		if (typeData == 0) {
+			for (int k1 = 0; k1 < pixelsAmount_j1; k1++) {
+                pixels_1489[k1] = colors[dataBuf.getByte()];
+            }
 		}
-		if (i1 == 1) {
+		if (typeData == 1) {
 			for (int l1 = 0; l1 < width_1490; l1++) {
-				for (int i2 = 0; i2 < height_1491; i2++)
-					pixels_1489[l1 + i2 * width_1490] = colors[dataBuf.getByte()];
-
+				for (int i2 = 0; i2 < height_1491; i2++) {
+                    pixels_1489[l1 + i2 * width_1490] = colors[dataBuf.getByte()];
+                }
 			}
-
 		}
 	}
 
@@ -128,21 +126,19 @@ public class RgbSprite extends Drawable {
 		}
 	}
 
-	public void method458(int i) {
-		int ai[] = new int[width_1494 * height_1495];
+	public void method458() {
+		int result[] = new int[width_1494 * height_1495];
 		for (int j = 0; j < height_1491; j++) {
-			for (int k = 0; k < width_1490; k++)
-				ai[(j + anInt1493) * width_1494 + (k + anInt1492)] = pixels_1489[j * width_1490 + k];
-
+			for (int k = 0; k < width_1490; k++) {
+				result[(j + anInt1493) * width_1494 + (k + anInt1492)] = pixels_1489[j * width_1490 + k];
+			}
 		}
 
-		pixels_1489 = ai;
+		pixels_1489 = result;
 		width_1490 = width_1494;
 		height_1491 = height_1495;
 		anInt1492 = 0;
 		anInt1493 = 0;
-		if (i == 1790)
-			;
 	}
 
 	public void method459(int y, int x) {

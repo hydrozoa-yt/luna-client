@@ -4480,7 +4480,7 @@ public class client extends JagApplet {
 
             rbgSprite_compass_1116 = new RgbSprite(mediaArchive, "compass", 0);
             aClass50_Sub1_Sub1_Sub1_1247 = new RgbSprite(mediaArchive, "mapedge", 0);
-            aClass50_Sub1_Sub1_Sub1_1247.method458(1790);
+            aClass50_Sub1_Sub1_Sub1_1247.method458();
             for (int l3 = 0; l3 < 72; l3++)
                 aClass50_Sub1_Sub1_Sub3Array1153[l3] = new IndexedSprite(mediaArchive, "mapscene", l3);
 
