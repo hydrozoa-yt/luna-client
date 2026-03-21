@@ -4567,7 +4567,7 @@ public class client extends JagApplet {
             int k6 = (int) (Math.random() * 41D) - 20;
             for (int l6 = 0; l6 < 100; l6++) {
                 if (aClass50_Sub1_Sub1_Sub1Array1031[l6] != null)
-                    aClass50_Sub1_Sub1_Sub1Array1031[l6].method457(j6 + k6, i6 + k6, l5 + k6, -235);
+                    aClass50_Sub1_Sub1_Sub1Array1031[l6].method457(j6 + k6, i6 + k6, l5 + k6);
                 if (aClass50_Sub1_Sub1_Sub3Array1153[l6] != null)
                     aClass50_Sub1_Sub1_Sub3Array1153[l6].rgbAdjust_489(j6 + k6, i6 + k6, l5 + k6, -235);
             }
