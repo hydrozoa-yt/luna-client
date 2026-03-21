@@ -10,75 +10,75 @@ public class JagFont extends Drawable {
 	public boolean aBoolean1497;
 	public int anInt1498;
 	public int anInt1499;
-	public byte aByteArrayArray1500[][];
-	public int anIntArray1501[];
-	public int anIntArray1502[];
-	public int anIntArray1503[];
-	public int anIntArray1504[];
+	public byte glyphData[][];
+	public int glyphWidth[];
+	public int glyphHeight[];
+	public int glyphAttribute1_1503[];
+	public int glyphAttribute2_1504[];
 	public int anIntArray1505[];
 	public int anInt1506;
 	public Random aRandom1507;
 	public boolean strikethrough;
 
-	public JagFont(boolean flag, Archive archive, int i, String name) {
+	public JagFont(Archive archive, String name, boolean flag) {
 		aBoolean1496 = true;
 		aBoolean1497 = true;
 		anInt1498 = 3;
 		anInt1499 = 3;
-		aByteArrayArray1500 = new byte[256][];
-		anIntArray1501 = new int[256];
-		anIntArray1502 = new int[256];
-		anIntArray1503 = new int[256];
-		anIntArray1504 = new int[256];
+		glyphData = new byte[256][];
+		glyphWidth = new int[256];
+		glyphHeight = new int[256];
+		glyphAttribute1_1503 = new int[256];
+		glyphAttribute2_1504 = new int[256];
 		anIntArray1505 = new int[256];
 		aRandom1507 = new Random();
 		strikethrough = false;
 		JagBuffer buf = new JagBuffer(archive.get(name + ".dat"));
 		JagBuffer indexBuf = new JagBuffer(archive.get("index.dat"));
 		indexBuf.position = buf.getShort() + 4;
-		while (i >= 0)
-			aBoolean1496 = !aBoolean1496;
 		int k = indexBuf.getByte();
-		if (k > 0)
-			indexBuf.position += 3 * (k - 1);
+		if (k > 0) {
+            indexBuf.position += 3 * (k - 1);
+        }
 		for (int l = 0; l < 256; l++) {
-			anIntArray1503[l] = indexBuf.getByte();
-			anIntArray1504[l] = indexBuf.getByte();
-			int i1 = anIntArray1501[l] = indexBuf.getShort();
-			int j1 = anIntArray1502[l] = indexBuf.getShort();
-			int k1 = indexBuf.getByte();
-			int l1 = i1 * j1;
-			aByteArrayArray1500[l] = new byte[l1];
-			if (k1 == 0) {
-				for (int i2 = 0; i2 < l1; i2++)
-					aByteArrayArray1500[l][i2] = buf.getSignedByte();
-
-			} else if (k1 == 1) {
-				for (int j2 = 0; j2 < i1; j2++) {
-					for (int l2 = 0; l2 < j1; l2++)
-						aByteArrayArray1500[l][j2 + l2 * i1] = buf.getSignedByte();
-
+			glyphAttribute1_1503[l] = indexBuf.getByte();
+			glyphAttribute2_1504[l] = indexBuf.getByte();
+			int width_i1 = glyphWidth[l] = indexBuf.getShort();
+			int height_j1 = glyphHeight[l] = indexBuf.getShort();
+			int dataType = indexBuf.getByte();
+			int dataLength = width_i1 * height_j1;
+			glyphData[l] = new byte[dataLength];
+			if (dataType == 0) {
+				for (int i2 = 0; i2 < dataLength; i2++) {
+                    glyphData[l][i2] = buf.getSignedByte();
+                }
+			} else if (dataType == 1) {
+				for (int j2 = 0; j2 < width_i1; j2++) {
+					for (int l2 = 0; l2 < height_j1; l2++) {
+                        glyphData[l][j2 + l2 * width_i1] = buf.getSignedByte();
+                    }
 				}
-
 			}
-			if (j1 > anInt1506 && l < 128)
-				anInt1506 = j1;
-			anIntArray1503[l] = 1;
-			anIntArray1505[l] = i1 + 2;
+			if (height_j1 > anInt1506 && l < 128) {
+                anInt1506 = height_j1;
+            }
+			glyphAttribute1_1503[l] = 1;
+			anIntArray1505[l] = width_i1 + 2;
 			int k2 = 0;
-			for (int i3 = j1 / 7; i3 < j1; i3++)
-				k2 += aByteArrayArray1500[l][i3 * i1];
-
-			if (k2 <= j1 / 7) {
+			for (int i3 = height_j1 / 7; i3 < height_j1; i3++) {
+                k2 += glyphData[l][i3 * width_i1];
+            }
+			if (k2 <= height_j1 / 7) {
 				anIntArray1505[l]--;
-				anIntArray1503[l] = 0;
+				glyphAttribute1_1503[l] = 0;
 			}
 			k2 = 0;
-			for (int j3 = j1 / 7; j3 < j1; j3++)
-				k2 += aByteArrayArray1500[l][(i1 - 1) + j3 * i1];
-
-			if (k2 <= j1 / 7)
-				anIntArray1505[l]--;
+			for (int j3 = height_j1 / 7; j3 < height_j1; j3++) {
+                k2 += glyphData[l][(width_i1 - 1) + j3 * width_i1];
+            }
+			if (k2 <= height_j1 / 7) {
+                anIntArray1505[l]--;
+            }
 		}
 
 		if (flag) {
@@ -145,8 +145,8 @@ public class JagFont extends Drawable {
 		for (int j1 = 0; j1 < s.length(); j1++) {
 			char c = s.charAt(j1);
 			if (c != ' ')
-				method481(aByteArrayArray1500[c], j + anIntArray1503[c], l + anIntArray1504[c], anIntArray1501[c],
-						anIntArray1502[c], k);
+				method481(glyphData[c], j + glyphAttribute1_1503[c], l + glyphAttribute2_1504[c], glyphWidth[c],
+						glyphHeight[c], k);
 			j += anIntArray1505[c];
 		}
 
@@ -164,27 +164,29 @@ public class JagFont extends Drawable {
 		for (int i1 = 0; i1 < s.length(); i1++) {
 			char c = s.charAt(i1);
 			if (c != ' ')
-				method481(aByteArrayArray1500[c], k + anIntArray1503[c], i + anIntArray1504[c]
-						+ (int) (Math.sin(i1 / 2D + j / 5D) * 5D), anIntArray1501[c], anIntArray1502[c], l);
+				method481(glyphData[c], k + glyphAttribute1_1503[c], i + glyphAttribute2_1504[c]
+						+ (int) (Math.sin(i1 / 2D + j / 5D) * 5D), glyphWidth[c], glyphHeight[c], l);
 			k += anIntArray1505[c];
 		}
 
 	}
 
-	public void method476(int i, int j, byte byte0, String s, int k, int l) {
-		if (s == null)
-			return;
-		k -= method473(s, (byte) -53) / 2;
+	public void drawString_476(String input, int i, int j, byte byte0, int k, int l) {
+		if (input == null) {
+            return;
+        }
+		k -= method473(input, (byte) -53) / 2;
 		if (byte0 != 1) {
 			for (int i1 = 1; i1 > 0; i1++);
 		}
 		i -= anInt1506;
-		for (int j1 = 0; j1 < s.length(); j1++) {
-			char c = s.charAt(j1);
-			if (c != ' ')
-				method481(aByteArrayArray1500[c], k + anIntArray1503[c] + (int) (Math.sin(j1 / 5D + l / 5D) * 5D), i
-						+ anIntArray1504[c] + (int) (Math.sin(j1 / 3D + l / 5D) * 5D), anIntArray1501[c],
-						anIntArray1502[c], j);
+		for (int j1 = 0; j1 < input.length(); j1++) {
+			char c = input.charAt(j1);
+			if (c != ' ') {
+                method481(glyphData[c], k + glyphAttribute1_1503[c] + (int) (Math.sin(j1 / 5D + l / 5D) * 5D), i
+                        + glyphAttribute2_1504[c] + (int) (Math.sin(j1 / 3D + l / 5D) * 5D), glyphWidth[c],
+                        glyphHeight[c], j);
+            }
 			k += anIntArray1505[c];
 		}
 
@@ -204,8 +206,8 @@ public class JagFont extends Drawable {
 		for (int l1 = 0; l1 < s.length(); l1++) {
 			char c = s.charAt(l1);
 			if (c != ' ')
-				method481(aByteArrayArray1500[c], k + anIntArray1503[c], l + anIntArray1504[c]
-						+ (int) (Math.sin(l1 / 1.5D + j1) * d), anIntArray1501[c], anIntArray1502[c], j);
+				method481(glyphData[c], k + glyphAttribute1_1503[c], l + glyphAttribute2_1504[c]
+						+ (int) (Math.sin(l1 / 1.5D + j1) * d), glyphWidth[c], glyphHeight[c], j);
 			k += anIntArray1505[c];
 		}
 
@@ -227,10 +229,10 @@ public class JagFont extends Drawable {
 				char c = text.charAt(j1);
 				if (c != ' ') {
 					if (flag)
-						method481(aByteArrayArray1500[c], j + anIntArray1503[c] + 1, k + anIntArray1504[c] + 1,
-								anIntArray1501[c], anIntArray1502[c], 0);
-					method481(aByteArrayArray1500[c], j + anIntArray1503[c], k + anIntArray1504[c], anIntArray1501[c],
-							anIntArray1502[c], i);
+						method481(glyphData[c], j + glyphAttribute1_1503[c] + 1, k + glyphAttribute2_1504[c] + 1,
+								glyphWidth[c], glyphHeight[c], 0);
+					method481(glyphData[c], j + glyphAttribute1_1503[c], k + glyphAttribute2_1504[c], glyphWidth[c],
+							glyphHeight[c], i);
 				}
 				j += anIntArray1505[c];
 			}
@@ -257,10 +259,10 @@ public class JagFont extends Drawable {
 				char c = s.charAt(k1);
 				if (c != ' ') {
 					if (flag)
-						method483(j + anIntArray1503[c] + 1, true, 0, aByteArrayArray1500[c],
-								l + anIntArray1504[c] + 1, anIntArray1502[c], anIntArray1501[c], 192);
-					method483(j + anIntArray1503[c], true, k, aByteArrayArray1500[c], l + anIntArray1504[c],
-							anIntArray1502[c], anIntArray1501[c], j1);
+						method483(j + glyphAttribute1_1503[c] + 1, true, 0, glyphData[c],
+								l + glyphAttribute2_1504[c] + 1, glyphHeight[c], glyphWidth[c], 192);
+					method483(j + glyphAttribute1_1503[c], true, k, glyphData[c], l + glyphAttribute2_1504[c],
+							glyphHeight[c], glyphWidth[c], j1);
 				}
 				j += anIntArray1505[c];
 				if ((aRandom1507.nextInt() & 3) == 0)

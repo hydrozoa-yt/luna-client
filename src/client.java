@@ -4324,10 +4324,10 @@ public class client extends JagApplet {
         try {
             //connectUpdateServer(false);
             titleArchive = loadArchive_61(14076, archiveHashes[1], "title", 25, 1, "title screen");
-            aClass50_Sub1_Sub1_Sub2_1059 = new JagFont(false, titleArchive, -914, "p11_full");
-            fontChatboxButtons = new JagFont(false, titleArchive, -914, "p12_full");
-            loginScreenFont = new JagFont(false, titleArchive, -914, "b12_full");
-            aClass50_Sub1_Sub1_Sub2_1062 = new JagFont(true, titleArchive, -914, "q8_full");
+            font_p11_full = new JagFont(titleArchive, "p11_full", false);
+            fontChatboxButtons = new JagFont(titleArchive, "p12_full", false);
+            loginScreenFont = new JagFont(titleArchive, "b12_full", false);
+            font_q9_full = new JagFont(titleArchive, "q8_full", true);
             method139(aBoolean1207);
             method52(false);
             Archive configArchive = loadArchive_61(14076, archiveHashes[2], "config", 30, 2, "config");
@@ -4594,8 +4594,8 @@ public class client extends JagApplet {
                 Sound.unpack(buf);
             }
             drawLoadingText(95, "Unpacking interfaces");
-            JagFont aclass50_sub1_sub1_sub2[] = {aClass50_Sub1_Sub1_Sub2_1059,
-                    fontChatboxButtons, loginScreenFont, aClass50_Sub1_Sub1_Sub2_1062};
+            JagFont aclass50_sub1_sub1_sub2[] = {font_p11_full,
+                    fontChatboxButtons, loginScreenFont, font_q9_full};
             JagInterface.unpack(-845, aclass50_sub1_sub1_sub2, interfaceArchive, mediaArchive);
             drawLoadingText(100, "Preparing game engine");
             for (int i7 = 0; i7 < 33; i7++) {
@@ -9144,9 +9144,9 @@ public class client extends JagApplet {
                         }
                         aClass50_Sub1_Sub1_Sub1Array1182[((Actor) (obj)).anIntArray1631[i1]].method461(
                                 anInt933 - 12, anInt932 - 12, -488);
-                        aClass50_Sub1_Sub1_Sub2_1059.method470(anInt932, 452, anInt933 + 4, 0, String
+                        font_p11_full.method470(anInt932, 452, anInt933 + 4, 0, String
                                 .valueOf(((Actor) (obj)).anIntArray1630[i1]));
-                        aClass50_Sub1_Sub1_Sub2_1059.method470(anInt932 - 1, 452, anInt933 + 3, 0xffffff, String
+                        font_p11_full.method470(anInt932 - 1, 452, anInt933 + 3, 0xffffff, String
                                 .valueOf(((Actor) (obj)).anIntArray1630[i1]));
                     }
                 }
@@ -9220,8 +9220,8 @@ public class client extends JagApplet {
                     loginScreenFont.method475(anInt933, (byte) 4, anInt1138, s, anInt932, k2);
                 }
                 if (anIntArray946[j] == 2) {
-                    loginScreenFont.method476(anInt933 + 1, 0, (byte) 1, s, anInt932, anInt1138);
-                    loginScreenFont.method476(anInt933, k2, (byte) 1, s, anInt932, anInt1138);
+                    loginScreenFont.drawString_476(s, anInt933 + 1, 0, (byte) 1, anInt932, anInt1138);
+                    loginScreenFont.drawString_476(s, anInt933, k2, (byte) 1, anInt932, anInt1138);
                 }
                 if (anIntArray946[j] == 3) {
                     loginScreenFont.method477(-601, s, 0, anInt932, anInt933 + 1, 150 - anIntArray947[j],
@@ -9630,7 +9630,7 @@ public class client extends JagApplet {
         }
         if (anInt1225 == 0) {
             int j = c1 / 2 + 80;
-            aClass50_Sub1_Sub1_Sub2_1059.drawString(fileFetcher.aString1347, c / 2, j, true, anInt1056, 0x75a9a9);
+            font_p11_full.drawString(fileFetcher.aString1347, c / 2, j, true, anInt1056, 0x75a9a9);
             j = c1 / 2 - 20;
             loginScreenFont.drawString("Welcome to RuneScape", c / 2, j, true, anInt1056, 0xffff00);
             j += 30;
@@ -10347,9 +10347,9 @@ public class client extends JagApplet {
                                             class50_sub1_sub1_sub1_2.method461(l6, i6, -488);
                                         if (class50_sub1_sub1_sub1_2.width_1494 == 33 || class13_1.itemAmounts[i3] != 1) {
                                             int k12 = class13_1.itemAmounts[i3];
-                                            aClass50_Sub1_Sub1_Sub2_1059.method474(2245, i6 + 1 + i7, 0, l6 + 10 + j8,
+                                            font_p11_full.method474(2245, i6 + 1 + i7, 0, l6 + 10 + j8,
                                                     addMoneySuffix(k12, -243));
-                                            aClass50_Sub1_Sub1_Sub2_1059.method474(2245, i6 + i7, 0xffff00,
+                                            font_p11_full.method474(2245, i6 + i7, 0xffff00,
                                                     l6 + 9 + j8, addMoneySuffix(k12, -243));
                                         }
                                     }
@@ -11519,10 +11519,10 @@ public class client extends JagApplet {
     public int anInt1056;
     public int anInt1057;
     public String aString1058;
-    public JagFont aClass50_Sub1_Sub1_Sub2_1059;
+    public JagFont font_p11_full;
     public JagFont fontChatboxButtons;
     public JagFont loginScreenFont;
-    public JagFont aClass50_Sub1_Sub1_Sub2_1062;
+    public JagFont font_q9_full;
     public int anInt1063;
     public int anInt1064;
     public boolean aBoolean1065;
