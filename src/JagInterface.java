@@ -417,7 +417,7 @@ public class JagInterface {
 		if (i == -1 && j == -1 && model.colors == null) {
             return model;
         }
-		Model model2 = new Model(false, false, true,
+		Model model2 = new Model(false, true,
 				model, ModelRelated21.method239(i) & ModelRelated21.method239(j));
 		if (i != -1 || j != -1) {
             model2.method584(7);

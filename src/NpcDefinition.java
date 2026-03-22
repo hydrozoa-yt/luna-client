@@ -292,8 +292,8 @@ public class NpcDefinition {
 		else if (i != -1)
 			class50_sub1_sub4_sub4_1.method585(i, (byte) 6);
 		if (anInt632 != 128 || anInt630 != 128)
-			class50_sub1_sub4_sub4_1.method593(anInt630, anInt632, 9, anInt632);
-		class50_sub1_sub4_sub4_1.method581(anInt624);
+			class50_sub1_sub4_sub4_1.method593(anInt630, anInt632, anInt632);
+		class50_sub1_sub4_sub4_1.method581();
 		class50_sub1_sub4_sub4_1.anIntArrayArray1679 = null;
 		class50_sub1_sub4_sub4_1.anIntArrayArray1678 = null;
 		if (aByte642 == 1)

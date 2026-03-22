@@ -197,7 +197,7 @@ public class ObjectDefinition {
         else
             flag2 = false;
         Model finalResult = new Model(i == 0 && j == -1 && !flag
-                && !flag2, false, modifiedModelColors == null, result, ModelRelated21.method239(j));
+                && !flag2, modifiedModelColors == null, result, ModelRelated21.method239(j));
         if (k != 0)
             anInt768 = 487;
         if (j != -1) {
@@ -214,9 +214,9 @@ public class ObjectDefinition {
 
         }
         if (flag)
-            finalResult.method593(anInt760, anInt796, 9, anInt780);
+            finalResult.method593(anInt760, anInt796, anInt780);
         if (flag2)
-            finalResult.method590(anInt761, anInt766, false, anInt785);
+            finalResult.method590(anInt761, anInt766, anInt785);
         finalResult.method594(64 + aByte784, 768 + aByte787 * 5, -50, -10, -50, !aBoolean804);
         if (anInt794 == 1)
             finalResult.anInt1675 = ((Entity) (finalResult)).height;

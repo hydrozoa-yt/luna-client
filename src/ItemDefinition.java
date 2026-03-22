@@ -126,9 +126,9 @@ public class ItemDefinition {
 				result = new Model(2, aclass50_sub1_sub4_sub4);
 			}
 		if (gender == 0 && aByte378 != 0)
-			result.method590(0, 0, false, aByte378);
+			result.method590(0, 0, aByte378);
 		if (gender == 1 && aByte330 != 0)
-			result.method590(0, 0, false, aByte330);
+			result.method590(0, 0, aByte330);
 		if (srcColors != null) {
 			for (int color = 0; color < srcColors.length; color++) {
                 result.replaceColor(srcColors[color], destColors[color]);
@@ -362,7 +362,7 @@ public class ItemDefinition {
 		if (model == null)
 			return null;
 		if (anInt366 != 128 || anInt357 != 128 || anInt368 != 128)
-			model.method593(anInt357, anInt368, 9, anInt366);
+			model.method593(anInt357, anInt368, anInt366);
 		if (srcColors != null) {
 			for (int l = 0; l < srcColors.length; l++)
 				model.replaceColor(srcColors[l], destColors[l]);

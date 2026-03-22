@@ -51,7 +51,7 @@ public class Projectile extends Entity {
 		int i = -1;
 		if (spotAnimation.animation != null)
 			i = spotAnimation.animation.anIntArray295[anInt1567];
-		Model class50_sub1_sub4_sub4_1 = new Model(false, false, true,
+		Model class50_sub1_sub4_sub4_1 = new Model(false, true,
 				class50_sub1_sub4_sub4, ModelRelated21.method239(i));
 		if (i != -1) {
 			class50_sub1_sub4_sub4_1.method584(7);
@@ -60,7 +60,7 @@ public class Projectile extends Entity {
 			class50_sub1_sub4_sub4_1.anIntArrayArray1678 = null;
 		}
 		if (spotAnimation.anInt561 != 128 || spotAnimation.anInt562 != 128)
-			class50_sub1_sub4_sub4_1.method593(spotAnimation.anInt562, spotAnimation.anInt561, 9,
+			class50_sub1_sub4_sub4_1.method593(spotAnimation.anInt562, spotAnimation.anInt561,
 					spotAnimation.anInt561);
 		class50_sub1_sub4_sub4_1.method589(anInt1563, 341);
 		class50_sub1_sub4_sub4_1.method594(64 + spotAnimation.anInt564, 850 + spotAnimation.anInt565, -30, -50, -30,

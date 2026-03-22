@@ -6,11 +6,9 @@ public class Model extends Entity {
 
 	public static Model aClass50_Sub1_Sub4_Sub4_1643 = new Model(852);
 
-	public int anInt1636;
 	public int anInt1637;
 	public boolean aBoolean1638;
 	public boolean aBoolean1639;
-	public int anInt1640;
 	public boolean aBoolean1641;
 	public int addedForSubmodels1648;
 	public int anIntArray1649[];
@@ -93,23 +91,17 @@ public class Model extends Entity {
 	}
 
 	public Model(int i) {
-		anInt1636 = 932;
 		anInt1637 = 426;
 		aBoolean1638 = false;
 		aBoolean1639 = true;
-		anInt1640 = -252;
 		aBoolean1641 = false;
 		aBoolean1680 = false;
-		if (i <= 0)
-			anInt1640 = -110;
 	}
 
 	public Model(int i, int j) {
-		anInt1636 = 932;
 		anInt1637 = 426;
 		aBoolean1638 = false;
 		aBoolean1639 = true;
-		anInt1640 = -252;
 		aBoolean1641 = false;
 		aBoolean1680 = false;
 		anInt1642++;
@@ -249,11 +241,9 @@ public class Model extends Entity {
 	}
 
 	public Model(int submodelCount, Model subModels[]) {
-		anInt1636 = 932;
 		anInt1637 = 426;
 		aBoolean1638 = false;
 		aBoolean1639 = true;
-		anInt1640 = -252;
 		aBoolean1641 = false;
 		aBoolean1680 = false;
 		anInt1642++;
@@ -360,12 +350,10 @@ public class Model extends Entity {
 
 	}
 
-	public Model(int i, boolean flag, int j, Model aclass50_sub1_sub4_sub4[]) {
-		anInt1636 = 932;
+	public Model(int i, int j, Model[] aclass50_sub1_sub4_sub4) {
 		anInt1637 = 426;
 		aBoolean1638 = false;
 		aBoolean1639 = true;
-		anInt1640 = -252;
 		aBoolean1641 = false;
 		aBoolean1680 = false;
 		anInt1642++;
@@ -476,24 +464,20 @@ public class Model extends Entity {
 			}
 		}
 
-		method581(anInt1636);
+		method581();
 	}
 
-	public Model(boolean flag, boolean flag1, boolean flag2,
+	public Model(boolean flag, boolean flag2,
 				 Model class50_sub1_sub4_sub4, boolean flag3) {
-		anInt1636 = 932;
 		anInt1637 = 426;
 		aBoolean1638 = false;
 		aBoolean1639 = true;
-		anInt1640 = -252;
 		aBoolean1641 = false;
 		aBoolean1680 = false;
 		anInt1642++;
 		addedForSubmodels1648 = class50_sub1_sub4_sub4.addedForSubmodels1648;
 		addedForSubmodels1652 = class50_sub1_sub4_sub4.addedForSubmodels1652;
 		addedForSubmodels1664 = class50_sub1_sub4_sub4.addedForSubmodels1664;
-		if (flag1)
-			anInt1640 = 498;
 		if (flag) {
 			anIntArray1649 = class50_sub1_sub4_sub4.anIntArray1649;
 			anIntArray1650 = class50_sub1_sub4_sub4.anIntArray1650;
@@ -545,11 +529,9 @@ public class Model extends Entity {
 	}
 
 	public Model(boolean flag, boolean flag1, int i, Model model) {
-		anInt1636 = 932;
 		anInt1637 = 426;
 		aBoolean1638 = false;
 		aBoolean1639 = true;
-		anInt1640 = -252;
 		aBoolean1641 = false;
 		aBoolean1680 = false;
 		anInt1642++;
@@ -830,7 +812,7 @@ public class Model extends Entity {
 		return j;
 	}
 
-	public void method581(int i) {
+	public void method581() {
 		super.height = 0;
 		anInt1671 = 0;
 		anInt1672 = 0;
@@ -849,7 +831,6 @@ public class Model extends Entity {
 
 		anInt1671 = (int) (Math.sqrt(anInt1671) + 0.98999999999999999D);
 		anInt1674 = (int) (Math.sqrt(anInt1671 * anInt1671 + super.height * super.height) + 0.98999999999999999D);
-		i = 64 / i;
 		anInt1673 = anInt1674 + (int) (Math.sqrt(anInt1671 * anInt1671 + anInt1672 * anInt1672) + 0.98999999999999999D);
 	}
 
@@ -1190,15 +1171,12 @@ public class Model extends Entity {
 		j = 61 / j;
 	}
 
-	public void method590(int i, int j, boolean flag, int k) {
-		if (flag)
-			anInt1636 = -310;
+	public void method590(int i, int j, int k) {
 		for (int l = 0; l < addedForSubmodels1648; l++) {
 			anIntArray1649[l] += i;
 			anIntArray1650[l] += k;
 			anIntArray1651[l] += j;
 		}
-
 	}
 
 	public void replaceColor(int oldColor, int newColor) {
@@ -1224,15 +1202,12 @@ public class Model extends Entity {
 
 	}
 
-	public void method593(int i, int j, int k, int l) {
+	public void method593(int i, int j, int l) {
 		for (int i1 = 0; i1 < addedForSubmodels1648; i1++) {
 			anIntArray1649[i1] = (anIntArray1649[i1] * l) / 128;
 			anIntArray1650[i1] = (anIntArray1650[i1] * i) / 128;
 			anIntArray1651[i1] = (anIntArray1651[i1] * j) / 128;
 		}
-
-		if (k != 9)
-			anInt1636 = 322;
 	}
 
 	public void method594(int i, int j, int k, int l, int i1, boolean flag) {
@@ -1311,7 +1286,7 @@ public class Model extends Entity {
 			anInt1668 = (i << 16) + (k1 & 0xffff);
 		}
 		if (flag) {
-			method581(anInt1636);
+			method581();
 			return;
 		} else {
 			method583(426);

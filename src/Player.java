@@ -145,7 +145,7 @@ public class Player extends Actor {
 			class50_sub1_sub4_sub4_2.method586(k, 0, j, Animation.animations[super.currentAnimation].anIntArray299);
 		else if (j != -1)
 			class50_sub1_sub4_sub4_2.method585(j, (byte) 6);
-		class50_sub1_sub4_sub4_2.method581(anInt1772);
+		class50_sub1_sub4_sub4_2.method581();
 		class50_sub1_sub4_sub4_2.anIntArrayArray1679 = null;
 		class50_sub1_sub4_sub4_2.anIntArrayArray1678 = null;
 		return class50_sub1_sub4_sub4_2;
@@ -171,18 +171,18 @@ public class Player extends Actor {
 			SpotAnimation class27 = SpotAnimation.spotAnimations[super.anInt1614];
 			Model class50_sub1_sub4_sub4_2 = class27.getModel();
 			if (class50_sub1_sub4_sub4_2 != null) {
-				Model class50_sub1_sub4_sub4_3 = new Model(false, false, true,
+				Model class50_sub1_sub4_sub4_3 = new Model(false, true,
 						class50_sub1_sub4_sub4_2, ModelRelated21.method239(super.anInt1615));
-				class50_sub1_sub4_sub4_3.method590(0, 0, false, -super.anInt1618);
+				class50_sub1_sub4_sub4_3.method590(0, 0, -super.anInt1618);
 				class50_sub1_sub4_sub4_3.method584(7);
 				class50_sub1_sub4_sub4_3.method585(class27.animation.anIntArray295[super.anInt1615], (byte) 6);
 				class50_sub1_sub4_sub4_3.anIntArrayArray1679 = null;
 				class50_sub1_sub4_sub4_3.anIntArrayArray1678 = null;
 				if (class27.anInt561 != 128 || class27.anInt562 != 128)
-					class50_sub1_sub4_sub4_3.method593(class27.anInt562, class27.anInt561, 9, class27.anInt561);
+					class50_sub1_sub4_sub4_3.method593(class27.anInt562, class27.anInt561, class27.anInt561);
 				class50_sub1_sub4_sub4_3.method594(64 + class27.anInt564, 850 + class27.anInt565, -30, -50, -30, true);
 				Model aclass50_sub1_sub4_sub4_1[] = { class50_sub1_sub4_sub4, class50_sub1_sub4_sub4_3 };
-				class50_sub1_sub4_sub4 = new Model(2, true, 0, aclass50_sub1_sub4_sub4_1);
+				class50_sub1_sub4_sub4 = new Model(2, 0, aclass50_sub1_sub4_sub4_1);
 			}
 		}
 		if (aClass50_Sub1_Sub4_Sub4_1746 != null) {
@@ -190,7 +190,7 @@ public class Player extends Actor {
 				aClass50_Sub1_Sub4_Sub4_1746 = null;
 			if (client.pulseCycle >= anInt1764 && client.pulseCycle < anInt1765) {
 				Model class50_sub1_sub4_sub4_1 = aClass50_Sub1_Sub4_Sub4_1746;
-				class50_sub1_sub4_sub4_1.method590(anInt1743 - super.unitX, anInt1745 - super.unitY, false,
+				class50_sub1_sub4_sub4_1.method590(anInt1743 - super.unitX, anInt1745 - super.unitY,
 						anInt1744 - anInt1750);
 				if (super.anInt1584 == 512) {
 					class50_sub1_sub4_sub4_1.method588(true);
@@ -202,7 +202,7 @@ public class Player extends Actor {
 				} else if (super.anInt1584 == 1536)
 					class50_sub1_sub4_sub4_1.method588(true);
 				Model aclass50_sub1_sub4_sub4[] = { class50_sub1_sub4_sub4, class50_sub1_sub4_sub4_1 };
-				class50_sub1_sub4_sub4 = new Model(2, true, 0, aclass50_sub1_sub4_sub4);
+				class50_sub1_sub4_sub4 = new Model(2, 0, aclass50_sub1_sub4_sub4);
 				if (super.anInt1584 == 512)
 					class50_sub1_sub4_sub4_1.method588(true);
 				else if (super.anInt1584 == 1024) {
@@ -213,7 +213,7 @@ public class Player extends Actor {
 					class50_sub1_sub4_sub4_1.method588(true);
 					class50_sub1_sub4_sub4_1.method588(true);
 				}
-				class50_sub1_sub4_sub4_1.method590(super.unitX - anInt1743, super.unitY - anInt1745, false,
+				class50_sub1_sub4_sub4_1.method590(super.unitX - anInt1743, super.unitY - anInt1745,
 						anInt1750 - anInt1744);
 			}
 		}

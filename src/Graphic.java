@@ -42,7 +42,7 @@ public class Graphic extends Entity {
 		if (class50_sub1_sub4_sub4 == null)
 			return null;
 		int i = aClass27_1739.animation.anIntArray295[anInt1737];
-		Model class50_sub1_sub4_sub4_1 = new Model(false, false, true,
+		Model class50_sub1_sub4_sub4_1 = new Model(false, true,
 				class50_sub1_sub4_sub4, ModelRelated21.method239(i));
 		if (!aBoolean1736) {
 			class50_sub1_sub4_sub4_1.method584(7);
@@ -51,7 +51,7 @@ public class Graphic extends Entity {
 			class50_sub1_sub4_sub4_1.anIntArrayArray1678 = null;
 		}
 		if (aClass27_1739.anInt561 != 128 || aClass27_1739.anInt562 != 128)
-			class50_sub1_sub4_sub4_1.method593(aClass27_1739.anInt562, aClass27_1739.anInt561, 9,
+			class50_sub1_sub4_sub4_1.method593(aClass27_1739.anInt562, aClass27_1739.anInt561,
 					aClass27_1739.anInt561);
 		if (aClass27_1739.anInt563 != 0) {
 			if (aClass27_1739.anInt563 == 90)
