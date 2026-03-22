@@ -298,7 +298,7 @@ public class client extends JagApplet {
         clippingPlanes = null;
         rbgSprite_1122 = null;
         imageProducer_1201 = null;
-        aClass18_1202 = null;
+        imageProducer_1202 = null;
         aClass18_1198 = null;
         aClass18_1199 = null;
         aClass18_1200 = null;
@@ -366,7 +366,7 @@ public class client extends JagApplet {
         Player.aClass33_1761 = null;
         ThreeDimensionalCanvas.method492(false);
         SceneGraph.method240(false);
-        Model.method573(false);
+        Model.reset573(false);
         ModelRelated21.method237(false);
         System.gc();
     }
@@ -1181,7 +1181,7 @@ public class client extends JagApplet {
                             }
                         }
                         if (chatInput.equals("::prefetchmusic")) {
-                            for (int i1 = 0; i1 < fileFetcher.method340(2, -31140); i1++)
+                            for (int i1 = 0; i1 < fileFetcher.method340(2); i1++)
                                 fileFetcher.method327(-44, 2, (byte) 1, i1);
 
                         }
@@ -3495,7 +3495,7 @@ public class client extends JagApplet {
             sprite_1017.pixels_1489[j] = imageProducer_1201.pixels[j];
 
         for (int k = 0; k < 33920; k++)
-            sprite_1018.pixels_1489[k] = aClass18_1202.pixels[k];
+            sprite_1018.pixels_1489[k] = imageProducer_1202.pixels[k];
 
         anIntArray1311 = new int[256];
         for (int l = 0; l < 64; l++)
@@ -3704,8 +3704,8 @@ public class client extends JagApplet {
     }
 
     public void method56(boolean flag, int i, int j, int k, int l, int i1) {
-        aClass50_Sub1_Sub1_Sub3_1095.draw_490(i1, j, -488);
-        aClass50_Sub1_Sub1_Sub3_1096.draw_490((i1 + k) - 16, j, -488);
+        aClass50_Sub1_Sub1_Sub3_1095.draw_490(i1, j);
+        aClass50_Sub1_Sub1_Sub3_1096.draw_490((i1 + k) - 16, j);
         Drawable.drawFullRect2(anInt931, k - 32, i1 + 16, 16, j);
         int j1 = ((k - 32) * k) / l;
         if (j1 < 8)
@@ -4255,7 +4255,7 @@ public class client extends JagApplet {
 
         imageProducer_1201 = new JagImageProducer(128, 265, getParentComponent());
         Drawable.clear_447();
-        aClass18_1202 = new JagImageProducer(128, 265, getParentComponent());
+        imageProducer_1202 = new JagImageProducer(128, 265, getParentComponent());
         Drawable.clear_447();
         aClass18_1198 = new JagImageProducer(509, 171, getParentComponent());
         Drawable.clear_447();
@@ -4272,7 +4272,7 @@ public class client extends JagApplet {
         aClass18_1206 = new JagImageProducer(75, 94, getParentComponent());
         Drawable.clear_447();
         if (titleArchive != null) {
-            method139(aBoolean1207);
+            loadPixelsLoginScreen_139();
             prepareLoginScreen_52(false);
         }
         shouldRenderUI = true;
@@ -4328,7 +4328,7 @@ public class client extends JagApplet {
             fontChatboxButtons = new JagFont(titleArchive, "p12_full", false);
             loginScreenFont = new JagFont(titleArchive, "b12_full", false);
             font_q9_full = new JagFont(titleArchive, "q8_full", true);
-            method139(aBoolean1207);
+            loadPixelsLoginScreen_139();
             prepareLoginScreen_52(false);
             Archive configArchive = loadArchive_61(archiveHashes[2], "config", 30, 2, "config");
             Archive interfaceArchive = loadArchive_61(archiveHashes[3], "interface", 35, 3, "interface");
@@ -4349,7 +4349,7 @@ public class client extends JagApplet {
             fileFetcher = new OnDemandFetcher();
             fileFetcher.init(versionListArchive, this);
             ModelRelated21.method235(fileFetcher.method343(553));
-            Model.method574(fileFetcher.method340(0, -31140), fileFetcher);
+            Model.initModelRelated574(fileFetcher.method340(0), fileFetcher);
             if (!lowMemory) {
                 anInt1270 = 0;
                 aBoolean1271 = true;
@@ -4367,7 +4367,7 @@ public class client extends JagApplet {
                 }
             }
             drawLoadingText(65, "Requesting animations");
-            int k = fileFetcher.method340(1, -31140);
+            int k = fileFetcher.method340(1);
             for (int l = 0; l < k; l++)
                 fileFetcher.request(1, l);
 
@@ -4386,7 +4386,7 @@ public class client extends JagApplet {
                 }
             }
             drawLoadingText(70, "Requesting models");
-            k = fileFetcher.method340(0, -31140);
+            k = fileFetcher.method340(0);
             for (int j1 = 0; j1 < k; j1++) {
                 int k1 = fileFetcher.method325(j1, -493);
                 if ((k1 & 1) != 0)
@@ -4430,7 +4430,7 @@ public class client extends JagApplet {
                     }
                 }
             }
-            k = fileFetcher.method340(0, -31140);
+            k = fileFetcher.method340(0);
             for (int j2 = 0; j2 < k; j2++) {
                 int k2 = fileFetcher.method325(j2, -493);
                 byte byte0 = 0;
@@ -4456,13 +4456,13 @@ public class client extends JagApplet {
 
             fileFetcher.method332(memberServer, (byte) 109);
             if (!lowMemory) {
-                k = fileFetcher.method340(2, -31140);
+                k = fileFetcher.method340(2);
                 for (int l2 = 1; l2 < k; l2++)
                     if (fileFetcher.method328(l2, aBoolean963))
                         fileFetcher.method327(-44, 2, (byte) 1, l2);
 
             }
-            k = fileFetcher.method340(0, -31140);
+            k = fileFetcher.method340(0);
             for (int i3 = 0; i3 < k; i3++) {
                 int j3 = fileFetcher.method325(i3, -493);
                 if (j3 == 0 && fileFetcher.anInt1350 < 200)
@@ -4685,7 +4685,7 @@ public class client extends JagApplet {
 
                     class50_sub1_sub1_sub3.pixels_1516 = abyte1;
                     aByteArray1245 = abyte0;
-                    ThreeDimensionalCanvas.method499(l, 9);
+                    ThreeDimensionalCanvas.method499(l);
                 }
             }
 
@@ -5357,71 +5357,71 @@ public class client extends JagApplet {
             }
             aBoolean950 = false;
             aClass18_1110.putPixels_230();
-            aClass50_Sub1_Sub1_Sub3_967.draw_490(0, 0, -488);
+            aClass50_Sub1_Sub1_Sub3_967.draw_490(0, 0);
             if (anInt1089 == -1) {
                 if (anIntArray1081[tabId] != -1) {
                     if (tabId == 0)
-                        aClass50_Sub1_Sub1_Sub3_880.draw_490(10, 22, -488);
+                        aClass50_Sub1_Sub1_Sub3_880.draw_490(10, 22);
                     if (tabId == 1)
-                        aClass50_Sub1_Sub1_Sub3_881.draw_490(8, 54, -488);
+                        aClass50_Sub1_Sub1_Sub3_881.draw_490(8, 54);
                     if (tabId == 2)
-                        aClass50_Sub1_Sub1_Sub3_881.draw_490(8, 82, -488);
+                        aClass50_Sub1_Sub1_Sub3_881.draw_490(8, 82);
                     if (tabId == 3)
-                        aClass50_Sub1_Sub1_Sub3_882.draw_490(8, 110, -488);
+                        aClass50_Sub1_Sub1_Sub3_882.draw_490(8, 110);
                     if (tabId == 4)
-                        aClass50_Sub1_Sub1_Sub3_884.draw_490(8, 153, -488);
+                        aClass50_Sub1_Sub1_Sub3_884.draw_490(8, 153);
                     if (tabId == 5)
-                        aClass50_Sub1_Sub1_Sub3_884.draw_490(8, 181, -488);
+                        aClass50_Sub1_Sub1_Sub3_884.draw_490(8, 181);
                     if (tabId == 6)
-                        aClass50_Sub1_Sub1_Sub3_883.draw_490(9, 209, -488);
+                        aClass50_Sub1_Sub1_Sub3_883.draw_490(9, 209);
                 }
                 if (anIntArray1081[0] != -1 && (anInt1213 != 0 || pulseCycle % 20 < 10))
-                    aClass50_Sub1_Sub1_Sub3Array976[0].draw_490(13, 29, -488);
+                    aClass50_Sub1_Sub1_Sub3Array976[0].draw_490(13, 29);
                 if (anIntArray1081[1] != -1 && (anInt1213 != 1 || pulseCycle % 20 < 10))
-                    aClass50_Sub1_Sub1_Sub3Array976[1].draw_490(11, 53, -488);
+                    aClass50_Sub1_Sub1_Sub3Array976[1].draw_490(11, 53);
                 if (anIntArray1081[2] != -1 && (anInt1213 != 2 || pulseCycle % 20 < 10))
-                    aClass50_Sub1_Sub1_Sub3Array976[2].draw_490(11, 82, -488);
+                    aClass50_Sub1_Sub1_Sub3Array976[2].draw_490(11, 82);
                 if (anIntArray1081[3] != -1 && (anInt1213 != 3 || pulseCycle % 20 < 10))
-                    aClass50_Sub1_Sub1_Sub3Array976[3].draw_490(12, 115, -488);
+                    aClass50_Sub1_Sub1_Sub3Array976[3].draw_490(12, 115);
                 if (anIntArray1081[4] != -1 && (anInt1213 != 4 || pulseCycle % 20 < 10))
-                    aClass50_Sub1_Sub1_Sub3Array976[4].draw_490(13, 153, -488);
+                    aClass50_Sub1_Sub1_Sub3Array976[4].draw_490(13, 153);
                 if (anIntArray1081[5] != -1 && (anInt1213 != 5 || pulseCycle % 20 < 10))
-                    aClass50_Sub1_Sub1_Sub3Array976[5].draw_490(11, 180, -488);
+                    aClass50_Sub1_Sub1_Sub3Array976[5].draw_490(11, 180);
                 if (anIntArray1081[6] != -1 && (anInt1213 != 6 || pulseCycle % 20 < 10))
-                    aClass50_Sub1_Sub1_Sub3Array976[6].draw_490(13, 208, -488);
+                    aClass50_Sub1_Sub1_Sub3Array976[6].draw_490(13, 208);
             }
             aClass18_1110.drawImage(516, 160, super.graphics);
             aClass18_1109.putPixels_230();
-            aClass50_Sub1_Sub1_Sub3_966.draw_490(0, 0, -488);
+            aClass50_Sub1_Sub1_Sub3_966.draw_490(0, 0);
             if (anInt1089 == -1) {
                 if (anIntArray1081[tabId] != -1) {
                     if (tabId == 7)
-                        aClass50_Sub1_Sub1_Sub3_983.draw_490(0, 42, -488);
+                        aClass50_Sub1_Sub1_Sub3_983.draw_490(0, 42);
                     if (tabId == 8)
-                        aClass50_Sub1_Sub1_Sub3_984.draw_490(0, 74, -488);
+                        aClass50_Sub1_Sub1_Sub3_984.draw_490(0, 74);
                     if (tabId == 9)
-                        aClass50_Sub1_Sub1_Sub3_984.draw_490(0, 102, -488);
+                        aClass50_Sub1_Sub1_Sub3_984.draw_490(0, 102);
                     if (tabId == 10)
-                        aClass50_Sub1_Sub1_Sub3_985.draw_490(1, 130, -488);
+                        aClass50_Sub1_Sub1_Sub3_985.draw_490(1, 130);
                     if (tabId == 11)
-                        aClass50_Sub1_Sub1_Sub3_987.draw_490(0, 173, -488);
+                        aClass50_Sub1_Sub1_Sub3_987.draw_490(0, 173);
                     if (tabId == 12)
-                        aClass50_Sub1_Sub1_Sub3_987.draw_490(0, 201, -488);
+                        aClass50_Sub1_Sub1_Sub3_987.draw_490(0, 201);
                     if (tabId == 13)
-                        aClass50_Sub1_Sub1_Sub3_986.draw_490(0, 229, -488);
+                        aClass50_Sub1_Sub1_Sub3_986.draw_490(0, 229);
                 }
                 if (anIntArray1081[8] != -1 && (anInt1213 != 8 || pulseCycle % 20 < 10))
-                    aClass50_Sub1_Sub1_Sub3Array976[7].draw_490(2, 74, -488);
+                    aClass50_Sub1_Sub1_Sub3Array976[7].draw_490(2, 74);
                 if (anIntArray1081[9] != -1 && (anInt1213 != 9 || pulseCycle % 20 < 10))
-                    aClass50_Sub1_Sub1_Sub3Array976[8].draw_490(3, 102, -488);
+                    aClass50_Sub1_Sub1_Sub3Array976[8].draw_490(3, 102);
                 if (anIntArray1081[10] != -1 && (anInt1213 != 10 || pulseCycle % 20 < 10))
-                    aClass50_Sub1_Sub1_Sub3Array976[9].draw_490(4, 137, -488);
+                    aClass50_Sub1_Sub1_Sub3Array976[9].draw_490(4, 137);
                 if (anIntArray1081[11] != -1 && (anInt1213 != 11 || pulseCycle % 20 < 10))
-                    aClass50_Sub1_Sub1_Sub3Array976[10].draw_490(2, 174, -488);
+                    aClass50_Sub1_Sub1_Sub3Array976[10].draw_490(2, 174);
                 if (anIntArray1081[12] != -1 && (anInt1213 != 12 || pulseCycle % 20 < 10))
-                    aClass50_Sub1_Sub1_Sub3Array976[11].draw_490(2, 201, -488);
+                    aClass50_Sub1_Sub1_Sub3Array976[11].draw_490(2, 201);
                 if (anIntArray1081[13] != -1 && (anInt1213 != 13 || pulseCycle % 20 < 10))
-                    aClass50_Sub1_Sub1_Sub3Array976[12].draw_490(2, 226, -488);
+                    aClass50_Sub1_Sub1_Sub3Array976[12].draw_490(2, 226);
             }
             aClass18_1109.drawImage(496, 466, super.graphics);
             aClass18_1158.putPixels_230();
@@ -5430,7 +5430,7 @@ public class client extends JagApplet {
         if (aBoolean1212) {
             aBoolean1212 = false;
             chatboxButtons.putPixels_230();
-            aClass50_Sub1_Sub1_Sub3_965.draw_490(0, 0, -488);
+            aClass50_Sub1_Sub1_Sub3_965.draw_490(0, 0);
             fontChatboxButtons.drawString("Public chat", 55, 28, true, anInt1056, 0xffffff);
             if (publicChatMode == 0)
                 fontChatboxButtons.drawString("On", 55, 41, true, anInt1056, 65280);
@@ -5493,11 +5493,11 @@ public class client extends JagApplet {
                     class50_sub1_sub1_sub2.method474(2245, l1, 65535, i1 - 1, "From");
                     l1 += class50_sub1_sub1_sub2.method472((byte) 35, "From ");
                     if (byte0 == 1) {
-                        aClass50_Sub1_Sub1_Sub3Array1142[0].draw_490(i1 - 12, l1, -488);
+                        aClass50_Sub1_Sub1_Sub3Array1142[0].draw_490(i1 - 12, l1);
                         l1 += 14;
                     }
                     if (byte0 == 2) {
-                        aClass50_Sub1_Sub1_Sub3Array1142[1].draw_490(i1 - 12, l1, -488);
+                        aClass50_Sub1_Sub1_Sub3Array1142[1].draw_490(i1 - 12, l1);
                         l1 += 14;
                     }
                     class50_sub1_sub1_sub2.method474(2245, l1, 0, i1, s + ": " + aStringArray1298[k]);
@@ -5560,7 +5560,7 @@ public class client extends JagApplet {
                 if (class50_sub1_sub3 == null)
                     return;
                 if (class50_sub1_sub3.type == 0) {
-                    Model.method575(class50_sub1_sub3.buf, class50_sub1_sub3.id, (byte) 7);
+                    Model.load575(class50_sub1_sub3.buf, class50_sub1_sub3.id);
                     if ((fileFetcher.method325(class50_sub1_sub3.id, -493) & 0x62) != 0) {
                         aBoolean1181 = true;
                         if (anInt988 != -1 || anInt1191 != -1)
@@ -6172,7 +6172,7 @@ public class client extends JagApplet {
     public void method84(int i) {
         aClass18_1159.putPixels_230();
         ThreeDimensionalCanvas.anIntArray1538 = anIntArray1000;
-        aClass50_Sub1_Sub1_Sub3_1187.draw_490(0, 0, -488);
+        aClass50_Sub1_Sub1_Sub3_1187.draw_490(0, 0);
         if (aBoolean866) {
             loginScreenFont.method470(239, 452, 40, 0, aString937);
             loginScreenFont.method470(239, 452, 60, 128, userInputString + "*");
@@ -6239,11 +6239,11 @@ public class client extends JagApplet {
                         if (k1 > 0 && k1 < 110) {
                             int l1 = 4;
                             if (byte0 == 1) {
-                                aClass50_Sub1_Sub1_Sub3Array1142[0].draw_490(k1 - 12, l1, -488);
+                                aClass50_Sub1_Sub1_Sub3Array1142[0].draw_490(k1 - 12, l1);
                                 l1 += 14;
                             }
                             if (byte0 == 2) {
-                                aClass50_Sub1_Sub1_Sub3Array1142[1].draw_490(k1 - 12, l1, -488);
+                                aClass50_Sub1_Sub1_Sub3Array1142[1].draw_490(k1 - 12, l1);
                                 l1 += 14;
                             }
                             class50_sub1_sub1_sub2_1.method474(2245, l1, 0, k1, s1 + ":");
@@ -6259,11 +6259,11 @@ public class client extends JagApplet {
                             class50_sub1_sub1_sub2_1.method474(2245, i2, 0, k1, "From");
                             i2 += class50_sub1_sub1_sub2_1.method472((byte) 35, "From ");
                             if (byte0 == 1) {
-                                aClass50_Sub1_Sub1_Sub3Array1142[0].draw_490(k1 - 12, i2, -488);
+                                aClass50_Sub1_Sub1_Sub3Array1142[0].draw_490(k1 - 12, i2);
                                 i2 += 14;
                             }
                             if (byte0 == 2) {
-                                aClass50_Sub1_Sub1_Sub3Array1142[1].draw_490(k1 - 12, i2, -488);
+                                aClass50_Sub1_Sub1_Sub3Array1142[1].draw_490(k1 - 12, i2);
                                 i2 += 14;
                             }
                             class50_sub1_sub1_sub2_1.method474(2245, i2, 0, k1, s1 + ":");
@@ -6917,11 +6917,11 @@ public class client extends JagApplet {
             outBuffer.putInt(0x3f008edd);
         }
         if (lowMemory && signlink.cache_dat != null) {
-            int k = fileFetcher.method340(0, -31140);
+            int k = fileFetcher.method340(0);
             for (int j1 = 0; j1 < k; j1++) {
                 int i2 = fileFetcher.method325(j1, -493);
                 if ((i2 & 0x79) == 0)
-                    Model.method576(j1, 1);
+                    Model.removeModelRelated576(j1);
             }
 
         }
@@ -7124,7 +7124,7 @@ public class client extends JagApplet {
         imageProducer_1201.drawImage(0, 0, super.graphics);
         i = 66 / i;
         for (int j2 = 0; j2 < 33920; j2++)
-            aClass18_1202.pixels[j2] = sprite_1018.pixels_1489[j2];
+            imageProducer_1202.pixels[j2] = sprite_1018.pixels_1489[j2];
 
         j1 = 0;
         k1 = 1176;
@@ -7138,8 +7138,8 @@ public class client extends JagApplet {
                     int j5 = l4;
                     int k5 = 256 - l4;
                     l4 = anIntArray1310[l4];
-                    int l5 = aClass18_1202.pixels[k1];
-                    aClass18_1202.pixels[k1++] = ((l4 & 0xff00ff) * j5 + (l5 & 0xff00ff) * k5 & 0xff00ff00)
+                    int l5 = imageProducer_1202.pixels[k1];
+                    imageProducer_1202.pixels[k1++] = ((l4 & 0xff00ff) * j5 + (l5 & 0xff00ff) * k5 & 0xff00ff00)
                             + ((l4 & 0xff00) * j5 + (l5 & 0xff00) * k5 & 0xff0000) >> 8;
                 } else {
                     k1++;
@@ -7150,7 +7150,7 @@ public class client extends JagApplet {
             k1 += 128 - l3 - j3;
         }
 
-        aClass18_1202.drawImage(637, 0, super.graphics);
+        imageProducer_1202.drawImage(637, 0, super.graphics);
     }
 
     public void adjustVolume(boolean flag, byte byte0, int i) {
@@ -9217,8 +9217,8 @@ public class client extends JagApplet {
                     loginScreenFont.method470(anInt932, 452, anInt933, k2, s);
                 }
                 if (anIntArray946[j] == 1) {
-                    loginScreenFont.method475(anInt933 + 1, (byte) 4, anInt1138, s, anInt932, 0);
-                    loginScreenFont.method475(anInt933, (byte) 4, anInt1138, s, anInt932, k2);
+                    loginScreenFont.method475(anInt933 + 1, anInt1138, s, anInt932, 0);
+                    loginScreenFont.method475(anInt933, anInt1138, s, anInt932, k2);
                 }
                 if (anIntArray946[j] == 2) {
                     loginScreenFont.drawString_476(s, anInt933 + 1, 0, (byte) 1, anInt932, anInt1138);
@@ -9273,7 +9273,7 @@ public class client extends JagApplet {
             aClass18_1199 = null;
             aClass18_1200 = null;
             imageProducer_1201 = null;
-            aClass18_1202 = null;
+            imageProducer_1202 = null;
             aClass18_1203 = null;
             aClass18_1204 = null;
             aClass18_1205 = null;
@@ -9281,7 +9281,7 @@ public class client extends JagApplet {
             aClass18_1159 = new JagImageProducer(479, 96, getParentComponent());
             aClass18_1157 = new JagImageProducer(172, 156, getParentComponent());
             Drawable.clear_447();
-            mapback_1186.draw_490(0, 0, -488);
+            mapback_1186.draw_490(0, 0);
             inventoryPanelBackground = new JagImageProducer(190, 261, getParentComponent());
             aClass18_1158 = new JagImageProducer(512, 334, getParentComponent());
             Drawable.clear_447();
@@ -9623,7 +9623,7 @@ public class client extends JagApplet {
     public void method131(byte byte0, boolean flag) {
         method64(-188);
         aClass18_1200.putPixels_230();
-        titlebox_1292.draw_490(0, 0, -488);
+        titlebox_1292.draw_490(0, 0);
         char c = '\u0168';
         char c1 = '\310';
         if (byte0 != -50) {
@@ -9637,10 +9637,10 @@ public class client extends JagApplet {
             j += 30;
             int i1 = c / 2 - 80;
             int l1 = c1 / 2 + 20;
-            titlebutton_1293.draw_490(l1 - 20, i1 - 73, -488);
+            titlebutton_1293.draw_490(l1 - 20, i1 - 73);
             loginScreenFont.drawString("New User", i1, l1 + 5, true, anInt1056, 0xffffff);
             i1 = c / 2 + 80;
-            titlebutton_1293.draw_490(l1 - 20, i1 - 73, -488);
+            titlebutton_1293.draw_490(l1 - 20, i1 - 73);
             loginScreenFont.drawString("Existing User", i1, l1 + 5, true, anInt1056, 0xffffff);
         }
         if (anInt1225 == 2) {
@@ -9662,10 +9662,10 @@ public class client extends JagApplet {
             if (!flag) {
                 int j1 = c / 2 - 80;
                 int i2 = c1 / 2 + 50;
-                titlebutton_1293.draw_490(i2 - 20, j1 - 73, -488);
+                titlebutton_1293.draw_490(i2 - 20, j1 - 73);
                 loginScreenFont.drawString("Login", j1, i2 + 5, true, anInt1056, 0xffffff);
                 j1 = c / 2 + 80;
-                titlebutton_1293.draw_490(i2 - 20, j1 - 73, -488);
+                titlebutton_1293.draw_490(i2 - 20, j1 - 73);
                 loginScreenFont.drawString("Cancel", j1, i2 + 5, true, anInt1056, 0xffffff);
             }
         }
@@ -9687,7 +9687,7 @@ public class client extends JagApplet {
             l += 15;
             int k1 = c / 2;
             int j2 = c1 / 2 + 50;
-            titlebutton_1293.draw_490(j2 - 20, k1 - 73, -488);
+            titlebutton_1293.draw_490(j2 - 20, k1 - 73);
             loginScreenFont.drawString("Cancel", k1, j2 + 5, true, anInt1056, 0xffffff);
         }
         aClass18_1200.drawImage(202, 171, super.graphics);
@@ -10017,7 +10017,7 @@ public class client extends JagApplet {
     public void method134(byte byte0) {
         inventoryPanelBackground.putPixels_230();
         ThreeDimensionalCanvas.anIntArray1538 = anIntArray1001;
-        aClass50_Sub1_Sub1_Sub3_1185.draw_490(0, 0, -488);
+        aClass50_Sub1_Sub1_Sub3_1185.draw_490(0, 0);
         if (anInt1089 != -1)
             renderInterface(0, 0, JagInterface.forId(anInt1089), 0, 8);
         else if (anIntArray1081[tabId] != -1)
@@ -10132,7 +10132,7 @@ public class client extends JagApplet {
             shouldRenderUI = false;
             if (!isThreadStarted) {
                 imageProducer_1201.drawImage(0, 0, super.graphics);
-                aClass18_1202.drawImage(637, 0, super.graphics);
+                imageProducer_1202.drawImage(637, 0, super.graphics);
             }
             aClass18_1198.drawImage(128, 0, super.graphics);
             aClass18_1199.drawImage(202, 371, super.graphics);
@@ -10143,12 +10143,12 @@ public class client extends JagApplet {
         }
     }
 
-    public void method139(boolean flag) {
+    public void loadPixelsLoginScreen_139() {
         byte[] titleBytes = titleArchive.get("title.dat");
         RgbSprite tmpSprite = new RgbSprite(titleBytes, this);
         imageProducer_1201.putPixels_230();
         tmpSprite.method459(0, 0);
-        aClass18_1202.putPixels_230();
+        imageProducer_1202.putPixels_230();
         tmpSprite.method459(0, -637);
         aClass18_1198.putPixels_230();
         tmpSprite.method459(0, -128);
@@ -10166,18 +10166,19 @@ public class client extends JagApplet {
         tmpSprite.method459(-171, -562);
         int[] ai = new int[tmpSprite.width_1490];
         for (int i = 0; i < tmpSprite.height_1491; i++) {
-            for (int j = 0; j < tmpSprite.width_1490; j++)
+            for (int j = 0; j < tmpSprite.width_1490; j++) {
                 ai[j] = tmpSprite.pixels_1489[(tmpSprite.width_1490 - j - 1)
                         + tmpSprite.width_1490 * i];
+            }
 
-            for (int l = 0; l < tmpSprite.width_1490; l++)
+            for (int l = 0; l < tmpSprite.width_1490; l++) {
                 tmpSprite.pixels_1489[l + tmpSprite.width_1490 * i] = ai[l];
-
+            }
         }
 
         imageProducer_1201.putPixels_230();
         tmpSprite.method459(0, 382);
-        aClass18_1202.putPixels_230();
+        imageProducer_1202.putPixels_230();
         tmpSprite.method459(0, -255);
         aClass18_1198.putPixels_230();
         tmpSprite.method459(0, 254);
@@ -10186,9 +10187,6 @@ public class client extends JagApplet {
         aClass18_1200.putPixels_230();
         tmpSprite.method459(-171, 180);
         aClass18_1203.putPixels_230();
-        if (flag) {
-            for (int k = 1; k > 0; k++) ;
-        }
         tmpSprite.method459(-265, 382);
         aClass18_1204.putPixels_230();
         tmpSprite.method459(-265, -180);
@@ -10198,6 +10196,7 @@ public class client extends JagApplet {
         tmpSprite.method459(-171, -180);
         tmpSprite = new RgbSprite(titleArchive, "logo", 0);
         aClass18_1198.putPixels_230();
+        // draw the logo on the login screen
         tmpSprite.method461(18, 382 - tmpSprite.width_1490 / 2 - 128, -488);
         tmpSprite = null;
         titleBytes = null;
@@ -10492,14 +10491,14 @@ public class client extends JagApplet {
                         k7 = class13_1.anInt286;
                     Model class50_sub1_sub4_sub4;
                     if (k7 == -1) {
-                        class50_sub1_sub4_sub4 = class13_1.method203(-1, -1, 0, flag2);
+                        class50_sub1_sub4_sub4 = class13_1.method203(-1, -1, flag2);
                     } else {
                         Animation class14 = Animation.animations[k7];
                         class50_sub1_sub4_sub4 = class13_1.method203(class14.anIntArray295[class13_1.anInt235],
-                                class14.anIntArray296[class13_1.anInt235], 0, flag2);
+                                class14.anIntArray296[class13_1.anInt235], flag2);
                     }
                     if (class50_sub1_sub4_sub4 != null)
-                        class50_sub1_sub4_sub4.method598(0, class13_1.anInt253, 0, class13_1.anInt252, 0, k5, j6);
+                        class50_sub1_sub4_sub4.draw598(0, class13_1.anInt253, 0, class13_1.anInt252, 0, k5, j6);
                     ThreeDimensionalCanvas.anInt1532 = k3;
                     ThreeDimensionalCanvas.anInt1533 = k4;
                 } else {
@@ -10718,7 +10717,7 @@ public class client extends JagApplet {
         if (i >= 0)
             anInt1004 = -4;
         imageProducer_1201 = null;
-        aClass18_1202 = null;
+        imageProducer_1202 = null;
         aClass18_1203 = null;
         aClass18_1204 = null;
         aClass18_1205 = null;
@@ -10859,8 +10858,8 @@ public class client extends JagApplet {
                 if (class50_sub1_sub1_sub3_2 != null) {
                     int i6 = (class47_2.anInt801 * 4 - class50_sub1_sub1_sub3_2.width_1518) / 2;
                     int j6 = (class47_2.anInt775 * 4 - class50_sub1_sub1_sub3_2.height_1519) / 2;
-                    class50_sub1_sub1_sub3_2.draw_490(48 + (104 - i - class47_2.anInt775) * 4 + j6, 48 + k * 4 + i6,
-                            -488);
+                    class50_sub1_sub1_sub3_2.draw_490(48 + (104 - i - class47_2.anInt775) * 4 + j6, 48 + k * 4 + i6
+                    );
                 }
             } else {
                 if (i3 == 0 || i3 == 2)
@@ -10930,8 +10929,8 @@ public class client extends JagApplet {
                 if (class50_sub1_sub1_sub3_1 != null) {
                     int j5 = (class47_1.anInt801 * 4 - class50_sub1_sub1_sub3_1.width_1518) / 2;
                     int k5 = (class47_1.anInt775 * 4 - class50_sub1_sub1_sub3_1.height_1519) / 2;
-                    class50_sub1_sub1_sub3_1.draw_490(48 + (104 - i - class47_1.anInt775) * 4 + k5, 48 + k * 4 + j5,
-                            -488);
+                    class50_sub1_sub1_sub3_1.draw_490(48 + (104 - i - class47_1.anInt775) * 4 + k5, 48 + k * 4 + j5
+                    );
                 }
             } else if (j3 == 9) {
                 int l4 = 0xeeeeee;
@@ -10961,7 +10960,7 @@ public class client extends JagApplet {
                 if (class50_sub1_sub1_sub3 != null) {
                     int i4 = (class47.anInt801 * 4 - class50_sub1_sub1_sub3.width_1518) / 2;
                     int j4 = (class47.anInt775 * 4 - class50_sub1_sub1_sub3.height_1519) / 2;
-                    class50_sub1_sub1_sub3.draw_490(48 + (104 - i - class47.anInt775) * 4 + j4, 48 + k * 4 + i4, -488);
+                    class50_sub1_sub1_sub3.draw_490(48 + (104 - i - class47.anInt775) * 4 + j4, 48 + k * 4 + i4);
                 }
             }
         }
@@ -11662,7 +11661,7 @@ public class client extends JagApplet {
     public JagImageProducer aClass18_1199;
     public JagImageProducer aClass18_1200;
     public JagImageProducer imageProducer_1201;
-    public JagImageProducer aClass18_1202;
+    public JagImageProducer imageProducer_1202;
     public JagImageProducer aClass18_1203;
     public JagImageProducer aClass18_1204;
     public JagImageProducer aClass18_1205;

@@ -691,9 +691,9 @@ public class SceneGraph {
 								method274(j1, l, 0, 1, (Model) class44.aClass50_Sub1_Sub4_725, i1, 1);
 								method275((Model) class44.aClass50_Sub1_Sub4_724,
 										(Model) class44.aClass50_Sub1_Sub4_725, 0, 0, 0, false);
-								((Model) class44.aClass50_Sub1_Sub4_725).method595(i, j, 0, k);
+								((Model) class44.aClass50_Sub1_Sub4_725).method595(i, j, k);
 							}
-							((Model) class44.aClass50_Sub1_Sub4_724).method595(i, j, 0, k);
+							((Model) class44.aClass50_Sub1_Sub4_724).method595(i, j, k);
 						}
 						for (int k1 = 0; k1 < class50_sub3.anInt1407; k1++) {
 							ScenegraphRelated5 scenegraphRelated5 = class50_sub3.aScenegraphRelated5Array1408[k1];
@@ -702,14 +702,14 @@ public class SceneGraph {
 								method274(j1, l, 0, (scenegraphRelated5.anInt120 - scenegraphRelated5.anInt119) + 1,
 										(Model) scenegraphRelated5.aClass50_Sub1_Sub4_117, i1,
 										(scenegraphRelated5.anInt122 - scenegraphRelated5.anInt121) + 1);
-								((Model) scenegraphRelated5.aClass50_Sub1_Sub4_117).method595(i, j, 0, k);
+								((Model) scenegraphRelated5.aClass50_Sub1_Sub4_117).method595(i, j, k);
 							}
 						}
 
 						ScenegraphMember28 class28 = class50_sub3.aClass28_1405;
 						if (class28 != null && class28.aClass50_Sub1_Sub4_570.normals != null) {
 							method273(i1, (Model) class28.aClass50_Sub1_Sub4_570, j1, l, 0);
-							((Model) class28.aClass50_Sub1_Sub4_570).method595(i, j, 0, k);
+							((Model) class28.aClass50_Sub1_Sub4_570).method595(i, j, k);
 						}
 					}
 				}
@@ -1243,13 +1243,13 @@ public class SceneGraph {
 						method283(anInt474, anInt476, class50_sub3_7.aClass20_1402, anInt473, j, i, anInt475, (byte) 3);
 					ScenegraphMember44 class44 = class50_sub3_7.aClass44_1403;
 					if (class44 != null)
-						class44.aClass50_Sub1_Sub4_724.method560(0, anInt473, anInt474, anInt475, anInt476,
+						class44.aClass50_Sub1_Sub4_724.draw560(0, anInt473, anInt474, anInt475, anInt476,
 								class44.anInt720 - anInt470, class44.anInt719 - anInt471, class44.anInt721 - anInt472,
 								class44.uid);
 					for (int i2 = 0; i2 < class50_sub3_7.anInt1407; i2++) {
 						ScenegraphRelated5 scenegraphRelated5 = class50_sub3_7.aScenegraphRelated5Array1408[i2];
 						if (scenegraphRelated5 != null)
-							scenegraphRelated5.aClass50_Sub1_Sub4_117.method560(scenegraphRelated5.anInt118, anInt473, anInt474, anInt475,
+							scenegraphRelated5.aClass50_Sub1_Sub4_117.draw560(scenegraphRelated5.anInt118, anInt473, anInt474, anInt475,
 									anInt476, scenegraphRelated5.anInt115 - anInt470, scenegraphRelated5.anInt114 - anInt471, scenegraphRelated5.anInt116
 											- anInt472, scenegraphRelated5.anInt125);
 					}
@@ -1304,17 +1304,17 @@ public class SceneGraph {
 						class50_sub3_1.anInt1415 = 0;
 					}
 					if ((class44_3.anInt722 & j2) != 0 && !method288(l, i, j, class44_3.anInt722))
-						class44_3.aClass50_Sub1_Sub4_724.method560(0, anInt473, anInt474, anInt475, anInt476,
+						class44_3.aClass50_Sub1_Sub4_724.draw560(0, anInt473, anInt474, anInt475, anInt476,
 								class44_3.anInt720 - anInt470, class44_3.anInt719 - anInt471, class44_3.anInt721
 										- anInt472, class44_3.uid);
 					if ((class44_3.anInt723 & j2) != 0 && !method288(l, i, j, class44_3.anInt723))
-						class44_3.aClass50_Sub1_Sub4_725.method560(0, anInt473, anInt474, anInt475, anInt476,
+						class44_3.aClass50_Sub1_Sub4_725.draw560(0, anInt473, anInt474, anInt475, anInt476,
 								class44_3.anInt720 - anInt470, class44_3.anInt719 - anInt471, class44_3.anInt721
 										- anInt472, class44_3.uid);
 				}
 				if (class35_1 != null && !method289(l, i, j, class35_1.aClass50_Sub1_Sub4_608.height))
 					if ((class35_1.anInt606 & j2) != 0)
-						class35_1.aClass50_Sub1_Sub4_608.method560(class35_1.anInt607, anInt473, anInt474, anInt475,
+						class35_1.aClass50_Sub1_Sub4_608.draw560(class35_1.anInt607, anInt473, anInt474, anInt475,
 								anInt476, class35_1.anInt604 - anInt470, class35_1.anInt603 - anInt471,
 								class35_1.anInt605 - anInt472, class35_1.anInt609);
 					else if ((class35_1.anInt606 & 0x300) != 0) {
@@ -1335,34 +1335,34 @@ public class SceneGraph {
 						if ((class35_1.anInt606 & 0x100) != 0 && k10 < k9) {
 							int i11 = j4 + anIntArray478[i8];
 							int k11 = k6 + anIntArray479[i8];
-							class35_1.aClass50_Sub1_Sub4_608.method560(i8 * 512 + 256, anInt473, anInt474, anInt475,
+							class35_1.aClass50_Sub1_Sub4_608.draw560(i8 * 512 + 256, anInt473, anInt474, anInt475,
 									anInt476, i11, l5, k11, class35_1.anInt609);
 						}
 						if ((class35_1.anInt606 & 0x200) != 0 && k10 > k9) {
 							int j11 = j4 + anIntArray480[i8];
 							int l11 = k6 + anIntArray481[i8];
-							class35_1.aClass50_Sub1_Sub4_608.method560(i8 * 512 + 1280 & 0x7ff, anInt473, anInt474,
+							class35_1.aClass50_Sub1_Sub4_608.draw560(i8 * 512 + 1280 & 0x7ff, anInt473, anInt474,
 									anInt475, anInt476, j11, l5, l11, class35_1.anInt609);
 						}
 					}
 				if (flag1) {
 					ScenegraphMember28 class28 = class50_sub3_1.aClass28_1405;
 					if (class28 != null)
-						class28.aClass50_Sub1_Sub4_570.method560(0, anInt473, anInt474, anInt475, anInt476,
+						class28.aClass50_Sub1_Sub4_570.draw560(0, anInt473, anInt474, anInt475, anInt476,
 								class28.anInt568 - anInt470, class28.anInt567 - anInt471, class28.anInt569 - anInt472,
 								class28.anInt571);
 					ScenegraphMember10 class10_1 = class50_sub3_1.aClass10_1406;
 					if (class10_1 != null && class10_1.anInt180 == 0) {
 						if (class10_1.aClass50_Sub1_Sub4_177 != null)
-							class10_1.aClass50_Sub1_Sub4_177.method560(0, anInt473, anInt474, anInt475, anInt476,
+							class10_1.aClass50_Sub1_Sub4_177.draw560(0, anInt473, anInt474, anInt475, anInt476,
 									class10_1.anInt174 - anInt470, class10_1.anInt173 - anInt471, class10_1.anInt175
 											- anInt472, class10_1.anInt179);
 						if (class10_1.aClass50_Sub1_Sub4_178 != null)
-							class10_1.aClass50_Sub1_Sub4_178.method560(0, anInt473, anInt474, anInt475, anInt476,
+							class10_1.aClass50_Sub1_Sub4_178.draw560(0, anInt473, anInt474, anInt475, anInt476,
 									class10_1.anInt174 - anInt470, class10_1.anInt173 - anInt471, class10_1.anInt175
 											- anInt472, class10_1.anInt179);
 						if (class10_1.aClass50_Sub1_Sub4_176 != null)
-							class10_1.aClass50_Sub1_Sub4_176.method560(0, anInt473, anInt474, anInt475, anInt476,
+							class10_1.aClass50_Sub1_Sub4_176.draw560(0, anInt473, anInt474, anInt475, anInt476,
 									class10_1.anInt174 - anInt470, class10_1.anInt173 - anInt471, class10_1.anInt175
 											- anInt472, class10_1.anInt179);
 					}
@@ -1404,7 +1404,7 @@ public class SceneGraph {
 				if (flag2) {
 					ScenegraphMember44 class44_1 = class50_sub3_1.aClass44_1403;
 					if (!method288(l, i, j, class44_1.anInt722))
-						class44_1.aClass50_Sub1_Sub4_724.method560(0, anInt473, anInt474, anInt475, anInt476,
+						class44_1.aClass50_Sub1_Sub4_724.draw560(0, anInt473, anInt474, anInt475, anInt476,
 								class44_1.anInt720 - anInt470, class44_1.anInt719 - anInt471, class44_1.anInt721
 										- anInt472, class44_1.uid);
 					class50_sub3_1.anInt1415 = 0;
@@ -1483,7 +1483,7 @@ public class SceneGraph {
 						scenegraphRelated5_3.anInt124 = anInt463;
 						if (!method290(l, scenegraphRelated5_3.anInt119, scenegraphRelated5_3.anInt120, scenegraphRelated5_3.anInt121, scenegraphRelated5_3.anInt122,
 								scenegraphRelated5_3.aClass50_Sub1_Sub4_117.height))
-							scenegraphRelated5_3.aClass50_Sub1_Sub4_117.method560(scenegraphRelated5_3.anInt118, anInt473, anInt474, anInt475,
+							scenegraphRelated5_3.aClass50_Sub1_Sub4_117.draw560(scenegraphRelated5_3.anInt118, anInt473, anInt474, anInt475,
 									anInt476, scenegraphRelated5_3.anInt115 - anInt470, scenegraphRelated5_3.anInt114 - anInt471,
 									scenegraphRelated5_3.anInt116 - anInt472, scenegraphRelated5_3.anInt125);
 						for (int k7 = scenegraphRelated5_3.anInt119; k7 <= scenegraphRelated5_3.anInt120; k7++) {
@@ -1530,15 +1530,15 @@ public class SceneGraph {
 			ScenegraphMember10 class10 = class50_sub3_1.aClass10_1406;
 			if (class10 != null && class10.anInt180 != 0) {
 				if (class10.aClass50_Sub1_Sub4_177 != null)
-					class10.aClass50_Sub1_Sub4_177.method560(0, anInt473, anInt474, anInt475, anInt476,
+					class10.aClass50_Sub1_Sub4_177.draw560(0, anInt473, anInt474, anInt475, anInt476,
 							class10.anInt174 - anInt470, class10.anInt173 - anInt471 - class10.anInt180,
 							class10.anInt175 - anInt472, class10.anInt179);
 				if (class10.aClass50_Sub1_Sub4_178 != null)
-					class10.aClass50_Sub1_Sub4_178.method560(0, anInt473, anInt474, anInt475, anInt476,
+					class10.aClass50_Sub1_Sub4_178.draw560(0, anInt473, anInt474, anInt475, anInt476,
 							class10.anInt174 - anInt470, class10.anInt173 - anInt471 - class10.anInt180,
 							class10.anInt175 - anInt472, class10.anInt179);
 				if (class10.aClass50_Sub1_Sub4_176 != null)
-					class10.aClass50_Sub1_Sub4_176.method560(0, anInt473, anInt474, anInt475, anInt476,
+					class10.aClass50_Sub1_Sub4_176.draw560(0, anInt473, anInt474, anInt475, anInt476,
 							class10.anInt174 - anInt470, class10.anInt173 - anInt471 - class10.anInt180,
 							class10.anInt175 - anInt472, class10.anInt179);
 			}
@@ -1546,7 +1546,7 @@ public class SceneGraph {
 				ScenegraphMember35 class35 = class50_sub3_1.aClass35_1404;
 				if (class35 != null && !method289(l, i, j, class35.aClass50_Sub1_Sub4_608.height))
 					if ((class35.anInt606 & class50_sub3_1.anInt1418) != 0)
-						class35.aClass50_Sub1_Sub4_608.method560(class35.anInt607, anInt473, anInt474, anInt475,
+						class35.aClass50_Sub1_Sub4_608.draw560(class35.anInt607, anInt473, anInt474, anInt475,
 								anInt476, class35.anInt604 - anInt470, class35.anInt603 - anInt471, class35.anInt605
 										- anInt472, class35.anInt609);
 					else if ((class35.anInt606 & 0x300) != 0) {
@@ -1567,24 +1567,24 @@ public class SceneGraph {
 						if ((class35.anInt606 & 0x100) != 0 && l7 >= j6) {
 							int i9 = l2 + anIntArray478[k5];
 							int i10 = i4 + anIntArray479[k5];
-							class35.aClass50_Sub1_Sub4_608.method560(k5 * 512 + 256, anInt473, anInt474, anInt475,
+							class35.aClass50_Sub1_Sub4_608.draw560(k5 * 512 + 256, anInt473, anInt474, anInt475,
 									anInt476, i9, j3, i10, class35.anInt609);
 						}
 						if ((class35.anInt606 & 0x200) != 0 && l7 <= j6) {
 							int j9 = l2 + anIntArray480[k5];
 							int j10 = i4 + anIntArray481[k5];
-							class35.aClass50_Sub1_Sub4_608.method560(k5 * 512 + 1280 & 0x7ff, anInt473, anInt474,
+							class35.aClass50_Sub1_Sub4_608.draw560(k5 * 512 + 1280 & 0x7ff, anInt473, anInt474,
 									anInt475, anInt476, j9, j3, j10, class35.anInt609);
 						}
 					}
 				ScenegraphMember44 class44_2 = class50_sub3_1.aClass44_1403;
 				if (class44_2 != null) {
 					if ((class44_2.anInt723 & class50_sub3_1.anInt1418) != 0 && !method288(l, i, j, class44_2.anInt723))
-						class44_2.aClass50_Sub1_Sub4_725.method560(0, anInt473, anInt474, anInt475, anInt476,
+						class44_2.aClass50_Sub1_Sub4_725.draw560(0, anInt473, anInt474, anInt475, anInt476,
 								class44_2.anInt720 - anInt470, class44_2.anInt719 - anInt471, class44_2.anInt721
 										- anInt472, class44_2.uid);
 					if ((class44_2.anInt722 & class50_sub3_1.anInt1418) != 0 && !method288(l, i, j, class44_2.anInt722))
-						class44_2.aClass50_Sub1_Sub4_724.method560(0, anInt473, anInt474, anInt475, anInt476,
+						class44_2.aClass50_Sub1_Sub4_724.draw560(0, anInt473, anInt474, anInt475, anInt476,
 								class44_2.anInt720 - anInt470, class44_2.anInt719 - anInt471, class44_2.anInt721
 										- anInt472, class44_2.uid);
 				}

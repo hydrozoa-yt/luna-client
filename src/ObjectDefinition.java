@@ -58,10 +58,11 @@ public class ObjectDefinition {
     public boolean aBoolean810;
 
     public static ObjectDefinition forId(int id) {
-        for (int j = 0; j < 20; j++)
-            if (cache[j].id == id)
+        for (int j = 0; j < 20; j++) {
+            if (cache[j].id == id) {
                 return cache[j];
-
+            }
+        }
         cachePos = (cachePos + 1) % 20;
         ObjectDefinition def = cache[cachePos];
         buf.position = indices[id];

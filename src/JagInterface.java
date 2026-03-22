@@ -402,30 +402,34 @@ public class JagInterface {
 		data = null;
 	}
 
-	public Model method203(int i, int j, int k, boolean flag) {
+	public Model method203(int i, int j, boolean flag) {
 		anInt280 = 64;
 		anInt243 = 768;
 		Model model;
-		if (flag)
-			model = method197(anInt266, anInt267);
-		else
-			model = method197(anInt283, anInt284);
-		if (model == null)
-			return null;
-		if (i == -1 && j == -1 && model.colors == null)
-			return model;
-		Model class50_sub1_sub4_sub4_1 = new Model(false, false, true,
+		if (flag) {
+            model = method197(anInt266, anInt267);
+        } else {
+            model = method197(anInt283, anInt284);
+        }
+		if (model == null) {
+            return null;
+        }
+		if (i == -1 && j == -1 && model.colors == null) {
+            return model;
+        }
+		Model model2 = new Model(false, false, true,
 				model, ModelRelated21.method239(i) & ModelRelated21.method239(j));
-		if (k != 0)
-			aBoolean271 = !aBoolean271;
-		if (i != -1 || j != -1)
-			class50_sub1_sub4_sub4_1.method584(7);
-		if (i != -1)
-			class50_sub1_sub4_sub4_1.method585(i, (byte) 6);
-		if (j != -1)
-			class50_sub1_sub4_sub4_1.method585(j, (byte) 6);
-		class50_sub1_sub4_sub4_1.method594(anInt280, anInt243, -50, -10, -50, true);
-		return class50_sub1_sub4_sub4_1;
+		if (i != -1 || j != -1) {
+            model2.method584(7);
+        }
+		if (i != -1) {
+            model2.method585(i, (byte) 6);
+        }
+		if (j != -1) {
+            model2.method585(j, (byte) 6);
+        }
+		model2.method594(anInt280, anInt243, -50, -10, -50, true);
+		return model2;
 	}
 
 	public JagInterface() {

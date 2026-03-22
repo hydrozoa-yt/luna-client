@@ -506,9 +506,7 @@ public class OnDemandFetcher extends ModelProvider implements Runnable {
 		aBoolean1339 = false;
 	}
 
-	public int method340(int i, int j) {
-		if (j != -31140)
-			aBoolean1380 = !aBoolean1380;
+	public int method340(int i) {
 		return anIntArrayArray1377[i].length;
 	}
 

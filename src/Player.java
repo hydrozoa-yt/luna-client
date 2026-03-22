@@ -48,7 +48,7 @@ public class Player extends Actor {
 		return model;
 	}
 
-	public Model method571(byte byte0) {
+	public Model method571() {
 		if (npc != null) {
 			int i = -1;
 			if (super.currentAnimation >= 0 && super.animationDelay == 0)
@@ -63,8 +63,6 @@ public class Player extends Actor {
 		int k = -1;
 		int i1 = -1;
 		int j1 = -1;
-		if (byte0 != 122)
-			aBoolean1767 = !aBoolean1767;
 		if (super.currentAnimation >= 0 && super.animationDelay == 0) {
 			Animation class14 = Animation.animations[super.currentAnimation];
 			j = class14.anIntArray295[super.animationFrame];
@@ -91,7 +89,7 @@ public class Player extends Actor {
 					i2 = i1;
 				if (i2 >= 256 && i2 < 512 && !IdentityKit.identityKits[i2 - 256].isBodyDownloaded())
 					flag = true;
-				if (i2 >= 512 && !ItemDefinition.forId(i2 - 512).method216(-861, gender))
+				if (i2 >= 512 && !ItemDefinition.forId(i2 - 512).method216(gender))
 					flag = true;
 			}
 
@@ -141,7 +139,7 @@ public class Player extends Actor {
 		if (aBoolean1763)
 			return class50_sub1_sub4_sub4_1;
 		Model class50_sub1_sub4_sub4_2 = Model.aClass50_Sub1_Sub4_Sub4_1643;
-		class50_sub1_sub4_sub4_2.method579(ModelRelated21.method239(j) & ModelRelated21.method239(k),
+		class50_sub1_sub4_sub4_2.copy579(ModelRelated21.method239(j) & ModelRelated21.method239(k),
 				class50_sub1_sub4_sub4_1, 1244);
 		if (j != -1 && k != -1)
 			class50_sub1_sub4_sub4_2.method586(k, 0, j, Animation.animations[super.currentAnimation].anIntArray299);
@@ -162,7 +160,7 @@ public class Player extends Actor {
 	public Model getModel() {
 		if (!visible)
 			return null;
-		Model class50_sub1_sub4_sub4 = method571((byte) 122);
+		Model class50_sub1_sub4_sub4 = method571();
 		if (class50_sub1_sub4_sub4 == null)
 			return null;
 		super.anInt1594 = ((Entity) (class50_sub1_sub4_sub4)).height;

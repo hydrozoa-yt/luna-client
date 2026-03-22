@@ -155,17 +155,12 @@ public class ThreeDimensionalCanvas extends Drawable {
 		return l1;
 	}
 
-	public static void method499(int i, int j) {
-		if (j != 9)
-			anInt1524 = -48;
-		if (anIntArrayArray1545[i] == null) {
-			return;
-		} else {
-			anIntArrayArray1544[anInt1543++] = anIntArrayArray1545[i];
-			anIntArrayArray1545[i] = null;
-			return;
-		}
-	}
+	public static void method499(int i) {
+        if (anIntArrayArray1545[i] != null) {
+            anIntArrayArray1544[anInt1543++] = anIntArrayArray1545[i];
+            anIntArrayArray1545[i] = null;
+        }
+    }
 
 	public static int[] method500(int i) {
 		anIntArray1546[i] = anInt1547++;
@@ -308,7 +303,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 		else
 			return;
 		for (int l = 0; l < 50; l++)
-			method499(l, 9);
+			method499(l);
 
 	}
 

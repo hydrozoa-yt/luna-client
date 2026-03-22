@@ -13,8 +13,8 @@ public class RgbSprite extends Drawable {
 	public int pixels_1489[];
 	public int width_1490;
 	public int height_1491;
-	public int anInt1492;
-	public int anInt1493;
+	public int attrib_492;
+	public int attrib_1493;
 	public int width_1494;
 	public int height_1495;
 
@@ -22,7 +22,7 @@ public class RgbSprite extends Drawable {
 		pixels_1489 = new int[width * height];
 		width_1490 = width_1494 = width;
 		height_1491 = height_1495 = height;
-		anInt1492 = anInt1493 = 0;
+		attrib_492 = attrib_1493 = 0;
 	}
 
 	public RgbSprite(Archive archive, String name, int page) {
@@ -31,13 +31,23 @@ public class RgbSprite extends Drawable {
 		idxBuf.position = dataBuf.getShort();
 		width_1494 = idxBuf.getShort();
 		height_1495 = idxBuf.getShort();
+
+
+		if (name.equalsIgnoreCase("logo")) {
+			System.out.println("width "+width_1494);
+			System.out.println("height "+height_1495);
+		}
+
 		int colorLength = idxBuf.getByte();
 		int[] colors = new int[colorLength];
 		for (int k = 0; k < colorLength - 1; k++) {
 			colors[k + 1] = idxBuf.getTriByte();
-			if (colors[k + 1] == 0) {
+			if (colors[k + 1] == 0) { // transparency?
                 colors[k + 1] = 1;
             }
+			if (name.equalsIgnoreCase("logo")) {
+				System.out.println("pixelColor[" + (k + 1) + "] = " + colors[k + 1]);
+			}
 		}
 
 		for (int l = 0; l < page; l++) {
@@ -46,12 +56,26 @@ public class RgbSprite extends Drawable {
 			idxBuf.position++;
 		}
 
-		anInt1492 = idxBuf.getByte();
-		anInt1493 = idxBuf.getByte();
+		attrib_492 = idxBuf.getByte();
+		attrib_1493 = idxBuf.getByte();
+
+		if (name.equalsIgnoreCase("logo")) {
+			System.out.println("attrib1 " + attrib_492 + " attrib2 " + attrib_1493);
+		}
+
 		width_1490 = idxBuf.getShort();
 		height_1491 = idxBuf.getShort();
 
+		if (name.equalsIgnoreCase("logo")) {
+			System.out.println("width2 " + width_1490 + " height2 " + height_1491);
+		}
+
 		int typeData = idxBuf.getByte();
+
+		if (name.equalsIgnoreCase("logo")) {
+			System.out.println("typeData " + typeData);
+		}
+
 		int pixelsAmount_j1 = width_1490 * height_1491;
 
 		pixels_1489 = new int[pixelsAmount_j1];
@@ -80,8 +104,8 @@ public class RgbSprite extends Drawable {
 			height_1491 = image.getHeight(component);
 			width_1494 = width_1490;
 			height_1495 = height_1491;
-			anInt1492 = 0;
-			anInt1493 = 0;
+			attrib_492 = 0;
+			attrib_1493 = 0;
 			pixels_1489 = new int[width_1490 * height_1491];
 			PixelGrabber pixelgrabber = new PixelGrabber(image, 0, 0, width_1490, height_1491, pixels_1489, 0, width_1490);
 			pixelgrabber.grabPixels();
@@ -130,20 +154,20 @@ public class RgbSprite extends Drawable {
 		int result[] = new int[width_1494 * height_1495];
 		for (int j = 0; j < height_1491; j++) {
 			for (int k = 0; k < width_1490; k++) {
-				result[(j + anInt1493) * width_1494 + (k + anInt1492)] = pixels_1489[j * width_1490 + k];
+				result[(j + attrib_1493) * width_1494 + (k + attrib_492)] = pixels_1489[j * width_1490 + k];
 			}
 		}
 
 		pixels_1489 = result;
 		width_1490 = width_1494;
 		height_1491 = height_1495;
-		anInt1492 = 0;
-		anInt1493 = 0;
+		attrib_492 = 0;
+		attrib_1493 = 0;
 	}
 
 	public void method459(int y, int x) {
-		x += anInt1492;
-		y += anInt1493;
+		x += attrib_492;
+		y += attrib_1493;
 		int l = x + y * Drawable.width;
 		int i1 = 0;
 		int j1 = height_1491;
@@ -202,10 +226,10 @@ public class RgbSprite extends Drawable {
 	}
 
 	public void method461(int i, int j, int k) {
-		j += anInt1492;
+		j += attrib_492;
 		if (k >= 0)
 			return;
-		i += anInt1493;
+		i += attrib_1493;
 		int l = j + i * Drawable.width;
 		int i1 = 0;
 		int j1 = height_1491;
@@ -286,8 +310,8 @@ public class RgbSprite extends Drawable {
 	}
 
 	public void method463(int i, int j, int k, int l) {
-		j += anInt1492;
-		k += anInt1493;
+		j += attrib_492;
+		k += attrib_1493;
 		int i1 = j + k * Drawable.width;
 		int j1 = 0;
 		if (i != 0)
@@ -422,8 +446,8 @@ public class RgbSprite extends Drawable {
 	public void method467(IndexedSprite class50_sub1_sub1_sub3, int i, int j, int k) {
 		if (j != -49993)
 			return;
-		k += anInt1492;
-		i += anInt1493;
+		k += attrib_492;
+		i += attrib_1493;
 		int l = k + i * Drawable.width;
 		int i1 = 0;
 		int j1 = height_1491;

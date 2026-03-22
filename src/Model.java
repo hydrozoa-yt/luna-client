@@ -5,17 +5,13 @@
 public class Model extends Entity {
 
 	public static Model aClass50_Sub1_Sub4_Sub4_1643 = new Model(852);
+
 	public int anInt1636;
 	public int anInt1637;
 	public boolean aBoolean1638;
 	public boolean aBoolean1639;
 	public int anInt1640;
 	public boolean aBoolean1641;
-	public static int anInt1642;
-	public static int anIntArray1644[] = new int[2000];
-	public static int anIntArray1645[] = new int[2000];
-	public static int anIntArray1646[] = new int[2000];
-	public static int anIntArray1647[] = new int[2000];
 	public int addedForSubmodels1648;
 	public int anIntArray1649[];
 	public int anIntArray1650[];
@@ -50,8 +46,14 @@ public class Model extends Entity {
 	public int anIntArrayArray1679[][];
 	public boolean aBoolean1680;
 	public VertexNormal aClass40Array1681[];
-	public static ModelRelated26 aClass26Array1682[];
-	public static ModelProvider aClass32_1683;
+
+	public static ModelRelated26 modelRelated1682[];
+	public static ModelProvider modelProvider_1683;
+	public static int anInt1642;
+	public static int anIntArray1644[] = new int[2000];
+	public static int anIntArray1645[] = new int[2000];
+	public static int anIntArray1646[] = new int[2000];
+	public static int anIntArray1647[] = new int[2000];
 	public static boolean aBooleanArray1684[] = new boolean[4096];
 	public static boolean aBooleanArray1685[] = new boolean[4096];
 	public static int anIntArray1686[] = new int[4096];
@@ -111,7 +113,7 @@ public class Model extends Entity {
 		aBoolean1641 = false;
 		aBoolean1680 = false;
 		anInt1642++;
-		ModelRelated26 class26 = aClass26Array1682[i];
+		ModelRelated26 class26 = modelRelated1682[i];
 		addedForSubmodels1648 = class26.anInt534;
 		addedForSubmodels1652 = class26.anInt535;
 		addedForSubmodels1664 = class26.anInt536;
@@ -542,7 +544,7 @@ public class Model extends Entity {
 		anIntArray1667 = class50_sub1_sub4_sub4.anIntArray1667;
 	}
 
-	public Model(boolean flag, boolean flag1, int i, Model class50_sub1_sub4_sub4) {
+	public Model(boolean flag, boolean flag1, int i, Model model) {
 		anInt1636 = 932;
 		anInt1637 = 426;
 		aBoolean1638 = false;
@@ -551,80 +553,80 @@ public class Model extends Entity {
 		aBoolean1641 = false;
 		aBoolean1680 = false;
 		anInt1642++;
-		addedForSubmodels1648 = class50_sub1_sub4_sub4.addedForSubmodels1648;
-		addedForSubmodels1652 = class50_sub1_sub4_sub4.addedForSubmodels1652;
-		addedForSubmodels1664 = class50_sub1_sub4_sub4.addedForSubmodels1664;
+		addedForSubmodels1648 = model.addedForSubmodels1648;
+		addedForSubmodels1652 = model.addedForSubmodels1652;
+		addedForSubmodels1664 = model.addedForSubmodels1664;
 		if (flag) {
 			anIntArray1650 = new int[addedForSubmodels1648];
 			for (int j = 0; j < addedForSubmodels1648; j++)
-				anIntArray1650[j] = class50_sub1_sub4_sub4.anIntArray1650[j];
+				anIntArray1650[j] = model.anIntArray1650[j];
 
 		} else {
-			anIntArray1650 = class50_sub1_sub4_sub4.anIntArray1650;
+			anIntArray1650 = model.anIntArray1650;
 		}
 		if (flag1) {
 			anIntArray1656 = new int[addedForSubmodels1652];
 			anIntArray1657 = new int[addedForSubmodels1652];
 			anIntArray1658 = new int[addedForSubmodels1652];
 			for (int k = 0; k < addedForSubmodels1652; k++) {
-				anIntArray1656[k] = class50_sub1_sub4_sub4.anIntArray1656[k];
-				anIntArray1657[k] = class50_sub1_sub4_sub4.anIntArray1657[k];
-				anIntArray1658[k] = class50_sub1_sub4_sub4.anIntArray1658[k];
+				anIntArray1656[k] = model.anIntArray1656[k];
+				anIntArray1657[k] = model.anIntArray1657[k];
+				anIntArray1658[k] = model.anIntArray1658[k];
 			}
 
 			anIntArray1659 = new int[addedForSubmodels1652];
-			if (class50_sub1_sub4_sub4.anIntArray1659 == null) {
+			if (model.anIntArray1659 == null) {
 				for (int l = 0; l < addedForSubmodels1652; l++)
 					anIntArray1659[l] = 0;
 
 			} else {
 				for (int i1 = 0; i1 < addedForSubmodels1652; i1++)
-					anIntArray1659[i1] = class50_sub1_sub4_sub4.anIntArray1659[i1];
+					anIntArray1659[i1] = model.anIntArray1659[i1];
 
 			}
 			super.normals = new VertexNormal[addedForSubmodels1648];
 			for (int j1 = 0; j1 < addedForSubmodels1648; j1++) {
 				VertexNormal class40 = super.normals[j1] = new VertexNormal();
-				VertexNormal class40_1 = ((Entity) (class50_sub1_sub4_sub4)).normals[j1];
+				VertexNormal class40_1 = ((Entity) (model)).normals[j1];
 				class40.x = class40_1.x;
 				class40.y = class40_1.y;
 				class40.z = class40_1.z;
 				class40.magnitude = class40_1.magnitude;
 			}
 
-			aClass40Array1681 = class50_sub1_sub4_sub4.aClass40Array1681;
+			aClass40Array1681 = model.aClass40Array1681;
 		} else {
-			anIntArray1656 = class50_sub1_sub4_sub4.anIntArray1656;
-			anIntArray1657 = class50_sub1_sub4_sub4.anIntArray1657;
-			anIntArray1658 = class50_sub1_sub4_sub4.anIntArray1658;
-			anIntArray1659 = class50_sub1_sub4_sub4.anIntArray1659;
+			anIntArray1656 = model.anIntArray1656;
+			anIntArray1657 = model.anIntArray1657;
+			anIntArray1658 = model.anIntArray1658;
+			anIntArray1659 = model.anIntArray1659;
 		}
-		anIntArray1649 = class50_sub1_sub4_sub4.anIntArray1649;
-		anIntArray1651 = class50_sub1_sub4_sub4.anIntArray1651;
+		anIntArray1649 = model.anIntArray1649;
+		anIntArray1651 = model.anIntArray1651;
 		if (i != 0)
 			aBoolean1638 = !aBoolean1638;
-		colors = class50_sub1_sub4_sub4.colors;
-		anIntArray1661 = class50_sub1_sub4_sub4.anIntArray1661;
-		anIntArray1660 = class50_sub1_sub4_sub4.anIntArray1660;
-		anInt1663 = class50_sub1_sub4_sub4.anInt1663;
-		anIntArray1653 = class50_sub1_sub4_sub4.anIntArray1653;
-		anIntArray1654 = class50_sub1_sub4_sub4.anIntArray1654;
-		anIntArray1655 = class50_sub1_sub4_sub4.anIntArray1655;
-		anIntArray1665 = class50_sub1_sub4_sub4.anIntArray1665;
-		anIntArray1666 = class50_sub1_sub4_sub4.anIntArray1666;
-		anIntArray1667 = class50_sub1_sub4_sub4.anIntArray1667;
-		super.height = ((Entity) (class50_sub1_sub4_sub4)).height;
-		anInt1672 = class50_sub1_sub4_sub4.anInt1672;
-		anInt1671 = class50_sub1_sub4_sub4.anInt1671;
-		anInt1674 = class50_sub1_sub4_sub4.anInt1674;
-		anInt1673 = class50_sub1_sub4_sub4.anInt1673;
-		anInt1669 = class50_sub1_sub4_sub4.anInt1669;
-		anInt1670 = class50_sub1_sub4_sub4.anInt1670;
-		anInt1668 = class50_sub1_sub4_sub4.anInt1668;
+		colors = model.colors;
+		anIntArray1661 = model.anIntArray1661;
+		anIntArray1660 = model.anIntArray1660;
+		anInt1663 = model.anInt1663;
+		anIntArray1653 = model.anIntArray1653;
+		anIntArray1654 = model.anIntArray1654;
+		anIntArray1655 = model.anIntArray1655;
+		anIntArray1665 = model.anIntArray1665;
+		anIntArray1666 = model.anIntArray1666;
+		anIntArray1667 = model.anIntArray1667;
+		super.height = ((Entity) (model)).height;
+		anInt1672 = model.anInt1672;
+		anInt1671 = model.anInt1671;
+		anInt1674 = model.anInt1674;
+		anInt1673 = model.anInt1673;
+		anInt1669 = model.anInt1669;
+		anInt1670 = model.anInt1670;
+		anInt1668 = model.anInt1668;
 	}
 
-	public static void method573(boolean flag) {
-		aClass26Array1682 = null;
+	public static void reset573(boolean flag) {
+		modelRelated1682 = null;
 		aBooleanArray1684 = null;
 		aBooleanArray1685 = null;
 		anIntArray1686 = null;
@@ -651,37 +653,35 @@ public class Model extends Entity {
 		}
 	}
 
-	public static void method574(int i, ModelProvider class32) {
-		aClass26Array1682 = new ModelRelated26[i];
-		aClass32_1683 = class32;
+	public static void initModelRelated574(int index, ModelProvider modelProvider) {
+		modelRelated1682 = new ModelRelated26[index];
+		modelProvider_1683 = modelProvider;
 	}
 
-	public static void method575(byte abyte0[], int i, byte byte0) {
-		if (byte0 != 7)
-			return;
+	public static void load575(byte[] abyte0, int i) {
 		if (abyte0 == null) {
-			ModelRelated26 class26 = aClass26Array1682[i] = new ModelRelated26();
+			ModelRelated26 class26 = modelRelated1682[i] = new ModelRelated26();
 			class26.anInt534 = 0;
 			class26.anInt535 = 0;
 			class26.anInt536 = 0;
 			return;
 		}
-		JagBuffer class50_sub1_sub2 = new JagBuffer(abyte0);
-		class50_sub1_sub2.position = abyte0.length - 18;
-		ModelRelated26 class26_1 = aClass26Array1682[i] = new ModelRelated26();
+		JagBuffer buffer = new JagBuffer(abyte0);
+		buffer.position = abyte0.length - 18;
+		ModelRelated26 class26_1 = modelRelated1682[i] = new ModelRelated26();
 		class26_1.aByteArray533 = abyte0;
-		class26_1.anInt534 = class50_sub1_sub2.getShort();
-		class26_1.anInt535 = class50_sub1_sub2.getShort();
-		class26_1.anInt536 = class50_sub1_sub2.getByte();
-		int j = class50_sub1_sub2.getByte();
-		int k = class50_sub1_sub2.getByte();
-		int l = class50_sub1_sub2.getByte();
-		int i1 = class50_sub1_sub2.getByte();
-		int j1 = class50_sub1_sub2.getByte();
-		int k1 = class50_sub1_sub2.getShort();
-		int l1 = class50_sub1_sub2.getShort();
-		int i2 = class50_sub1_sub2.getShort();
-		int j2 = class50_sub1_sub2.getShort();
+		class26_1.anInt534 = buffer.getShort();
+		class26_1.anInt535 = buffer.getShort();
+		class26_1.anInt536 = buffer.getByte();
+		int j = buffer.getByte();
+		int k = buffer.getByte();
+		int l = buffer.getByte();
+		int i1 = buffer.getByte();
+		int j1 = buffer.getByte();
+		int k1 = buffer.getShort();
+		int l1 = buffer.getShort();
+		int i2 = buffer.getShort();
+		int j2 = buffer.getShort();
 		int k2 = 0;
 		class26_1.anInt537 = k2;
 		k2 += class26_1.anInt534;
@@ -726,21 +726,16 @@ public class Model extends Entity {
 		k2 += i2;
 	}
 
-	public static void method576(int i, int j) {
-		if (j != 1) {
-			return;
-		} else {
-			aClass26Array1682[i] = null;
-			return;
-		}
+	public static void removeModelRelated576(int index) {
+		modelRelated1682[index] = null;
 	}
 
 	public static Model forId(int i) {
-		if (aClass26Array1682 == null)
+		if (modelRelated1682 == null)
 			return null;
-		ModelRelated26 class26 = aClass26Array1682[i];
+		ModelRelated26 class26 = modelRelated1682[i];
 		if (class26 == null) {
-			aClass32_1683.requestModel(i);
+			modelProvider_1683.requestModel(i);
 			return null;
 		} else {
 			return new Model(i, -478);
@@ -748,21 +743,21 @@ public class Model extends Entity {
 	}
 
 	public static boolean isDownloaded(int id) {
-		if (aClass26Array1682 == null)
+		if (modelRelated1682 == null)
 			return false;
-		ModelRelated26 class26 = aClass26Array1682[id];
+		ModelRelated26 class26 = modelRelated1682[id];
 		if (class26 == null) {
-			aClass32_1683.requestModel(id);
+			modelProvider_1683.requestModel(id);
 			return false;
 		} else {
 			return true;
 		}
 	}
 
-	public void method579(boolean flag, Model class50_sub1_sub4_sub4, int i) {
-		addedForSubmodels1648 = class50_sub1_sub4_sub4.addedForSubmodels1648;
-		addedForSubmodels1652 = class50_sub1_sub4_sub4.addedForSubmodels1652;
-		addedForSubmodels1664 = class50_sub1_sub4_sub4.addedForSubmodels1664;
+	public void copy579(boolean flag, Model model, int i) {
+		addedForSubmodels1648 = model.addedForSubmodels1648;
+		addedForSubmodels1652 = model.addedForSubmodels1652;
+		addedForSubmodels1664 = model.addedForSubmodels1664;
 		if (anIntArray1644.length < addedForSubmodels1648) {
 			anIntArray1644 = new int[addedForSubmodels1648 + 100];
 			anIntArray1645 = new int[addedForSubmodels1648 + 100];
@@ -774,49 +769,49 @@ public class Model extends Entity {
 			return;
 		anIntArray1651 = anIntArray1646;
 		for (int j = 0; j < addedForSubmodels1648; j++) {
-			anIntArray1649[j] = class50_sub1_sub4_sub4.anIntArray1649[j];
-			anIntArray1650[j] = class50_sub1_sub4_sub4.anIntArray1650[j];
-			anIntArray1651[j] = class50_sub1_sub4_sub4.anIntArray1651[j];
+			anIntArray1649[j] = model.anIntArray1649[j];
+			anIntArray1650[j] = model.anIntArray1650[j];
+			anIntArray1651[j] = model.anIntArray1651[j];
 		}
 
 		if (flag) {
-			anIntArray1661 = class50_sub1_sub4_sub4.anIntArray1661;
+			anIntArray1661 = model.anIntArray1661;
 		} else {
 			if (anIntArray1647.length < addedForSubmodels1652)
 				anIntArray1647 = new int[addedForSubmodels1652 + 100];
 			anIntArray1661 = anIntArray1647;
-			if (class50_sub1_sub4_sub4.anIntArray1661 == null) {
+			if (model.anIntArray1661 == null) {
 				for (int k = 0; k < addedForSubmodels1652; k++)
 					anIntArray1661[k] = 0;
 
 			} else {
 				for (int l = 0; l < addedForSubmodels1652; l++)
-					anIntArray1661[l] = class50_sub1_sub4_sub4.anIntArray1661[l];
+					anIntArray1661[l] = model.anIntArray1661[l];
 
 			}
 		}
-		anIntArray1659 = class50_sub1_sub4_sub4.anIntArray1659;
-		colors = class50_sub1_sub4_sub4.colors;
-		anIntArray1660 = class50_sub1_sub4_sub4.anIntArray1660;
-		anInt1663 = class50_sub1_sub4_sub4.anInt1663;
-		anIntArrayArray1679 = class50_sub1_sub4_sub4.anIntArrayArray1679;
-		anIntArrayArray1678 = class50_sub1_sub4_sub4.anIntArrayArray1678;
-		anIntArray1653 = class50_sub1_sub4_sub4.anIntArray1653;
-		anIntArray1654 = class50_sub1_sub4_sub4.anIntArray1654;
-		anIntArray1655 = class50_sub1_sub4_sub4.anIntArray1655;
-		anIntArray1656 = class50_sub1_sub4_sub4.anIntArray1656;
-		anIntArray1657 = class50_sub1_sub4_sub4.anIntArray1657;
-		anIntArray1658 = class50_sub1_sub4_sub4.anIntArray1658;
-		anIntArray1665 = class50_sub1_sub4_sub4.anIntArray1665;
-		anIntArray1666 = class50_sub1_sub4_sub4.anIntArray1666;
-		anIntArray1667 = class50_sub1_sub4_sub4.anIntArray1667;
+		anIntArray1659 = model.anIntArray1659;
+		colors = model.colors;
+		anIntArray1660 = model.anIntArray1660;
+		anInt1663 = model.anInt1663;
+		anIntArrayArray1679 = model.anIntArrayArray1679;
+		anIntArrayArray1678 = model.anIntArrayArray1678;
+		anIntArray1653 = model.anIntArray1653;
+		anIntArray1654 = model.anIntArray1654;
+		anIntArray1655 = model.anIntArray1655;
+		anIntArray1656 = model.anIntArray1656;
+		anIntArray1657 = model.anIntArray1657;
+		anIntArray1658 = model.anIntArray1658;
+		anIntArray1665 = model.anIntArray1665;
+		anIntArray1666 = model.anIntArray1666;
+		anIntArray1667 = model.anIntArray1667;
 	}
 
-	public int method580(Model class50_sub1_sub4_sub4, int i) {
+	public int method580(Model model, int i) {
 		int j = -1;
-		int k = class50_sub1_sub4_sub4.anIntArray1649[i];
-		int l = class50_sub1_sub4_sub4.anIntArray1650[i];
-		int i1 = class50_sub1_sub4_sub4.anIntArray1651[i];
+		int k = model.anIntArray1649[i];
+		int l = model.anIntArray1650[i];
+		int i1 = model.anIntArray1651[i];
 		for (int j1 = 0; j1 < addedForSubmodels1648; j1++) {
 			if (k != anIntArray1649[j1] || l != anIntArray1650[j1] || i1 != anIntArray1651[j1])
 				continue;
@@ -828,8 +823,8 @@ public class Model extends Entity {
 			anIntArray1649[addedForSubmodels1648] = k;
 			anIntArray1650[addedForSubmodels1648] = l;
 			anIntArray1651[addedForSubmodels1648] = i1;
-			if (class50_sub1_sub4_sub4.anIntArray1676 != null)
-				anIntArray1676[addedForSubmodels1648] = class50_sub1_sub4_sub4.anIntArray1676[i];
+			if (model.anIntArray1676 != null)
+				anIntArray1676[addedForSubmodels1648] = model.anIntArray1676[i];
 			j = addedForSubmodels1648++;
 		}
 		return j;
@@ -1207,10 +1202,11 @@ public class Model extends Entity {
 	}
 
 	public void replaceColor(int oldColor, int newColor) {
-		for (int i = 0; i < addedForSubmodels1652; i++)
-			if (colors[i] == oldColor)
-				colors[i] = newColor;
-
+		for (int i = 0; i < addedForSubmodels1652; i++) {
+            if (colors[i] == oldColor) {
+                colors[i] = newColor;
+            }
+        }
 	}
 
 	public void method592(int i) {
@@ -1295,12 +1291,12 @@ public class Model extends Entity {
 				class40_2.magnitude++;
 			} else {
 				int l5 = i + (k * l4 + l * i5 + i1 * j5) / (k1 + k1 / 2);
-				anIntArray1656[i2] = method597(colors[i2], l5, anIntArray1659[i2]);
+				anIntArray1656[i2] = colorCalc597(colors[i2], l5, anIntArray1659[i2]);
 			}
 		}
 
 		if (flag) {
-			method596(i, k1, k, l, i1);
+			initSubmodels596(i, k1, k, l, i1);
 		} else {
 			aClass40Array1681 = new VertexNormal[addedForSubmodels1648];
 			for (int k2 = 0; k2 < addedForSubmodels1648; k2++) {
@@ -1323,16 +1319,13 @@ public class Model extends Entity {
 		}
 	}
 
-	public void method595(int i, int j, int k, int l) {
+	public void method595(int i, int j, int l) {
 		int i1 = anInt1668 >> 16;
 		int j1 = (anInt1668 << 16) >> 16;
-		if (k != 0) {
-			for (int k1 = 1; k1 > 0; k1++);
-		}
-		method596(i1, j1, l, i, j);
+		initSubmodels596(i1, j1, l, i, j);
 	}
 
-	public void method596(int i, int j, int k, int l, int i1) {
+	public void initSubmodels596(int i, int j, int k, int l, int i1) {
 		for (int j1 = 0; j1 < addedForSubmodels1652; j1++) {
 			int k1 = anIntArray1653[j1];
 			int i2 = anIntArray1654[j1];
@@ -1342,28 +1335,28 @@ public class Model extends Entity {
 				VertexNormal class40 = super.normals[k1];
 				int k2 = i + (k * class40.x + l * class40.y + i1 * class40.z)
 						/ (j * class40.magnitude);
-				anIntArray1656[j1] = method597(i3, k2, 0);
+				anIntArray1656[j1] = colorCalc597(i3, k2, 0);
 				class40 = super.normals[i2];
 				k2 = i + (k * class40.x + l * class40.y + i1 * class40.z) / (j * class40.magnitude);
-				anIntArray1657[j1] = method597(i3, k2, 0);
+				anIntArray1657[j1] = colorCalc597(i3, k2, 0);
 				class40 = super.normals[j2];
 				k2 = i + (k * class40.x + l * class40.y + i1 * class40.z) / (j * class40.magnitude);
-				anIntArray1658[j1] = method597(i3, k2, 0);
+				anIntArray1658[j1] = colorCalc597(i3, k2, 0);
 			} else if ((anIntArray1659[j1] & 1) == 0) {
 				int j3 = colors[j1];
 				int k3 = anIntArray1659[j1];
 				VertexNormal class40_1 = super.normals[k1];
 				int l2 = i + (k * class40_1.x + l * class40_1.y + i1 * class40_1.z)
 						/ (j * class40_1.magnitude);
-				anIntArray1656[j1] = method597(j3, l2, k3);
+				anIntArray1656[j1] = colorCalc597(j3, l2, k3);
 				class40_1 = super.normals[i2];
 				l2 = i + (k * class40_1.x + l * class40_1.y + i1 * class40_1.z)
 						/ (j * class40_1.magnitude);
-				anIntArray1657[j1] = method597(j3, l2, k3);
+				anIntArray1657[j1] = colorCalc597(j3, l2, k3);
 				class40_1 = super.normals[j2];
 				l2 = i + (k * class40_1.x + l * class40_1.y + i1 * class40_1.z)
 						/ (j * class40_1.magnitude);
-				anIntArray1658[j1] = method597(j3, l2, k3);
+				anIntArray1658[j1] = colorCalc597(j3, l2, k3);
 			}
 		}
 
@@ -1380,24 +1373,24 @@ public class Model extends Entity {
 		colors = null;
 	}
 
-	public static int method597(int i, int j, int k) {
+	public static int colorCalc597(int color, int intensity, int k) {
 		if ((k & 2) == 2) {
-			if (j < 0)
-				j = 0;
-			else if (j > 127)
-				j = 127;
-			j = 127 - j;
-			return j;
+			if (intensity < 0)
+				intensity = 0;
+			else if (intensity > 127)
+				intensity = 127;
+			intensity = 127 - intensity;
+			return intensity;
 		}
-		j = j * (i & 0x7f) >> 7;
-		if (j < 2)
-			j = 2;
-		else if (j > 126)
-			j = 126;
-		return (i & 0xff80) + j;
+		intensity = intensity * (color & 0x7f) >> 7;
+		if (intensity < 2)
+			intensity = 2;
+		else if (intensity > 126)
+			intensity = 126;
+		return (color & 0xff80) + intensity;
 	}
 
-	public void method598(int i, int j, int k, int l, int i1, int j1, int k1) {
+	public void draw598(int i, int j, int k, int l, int i1, int j1, int k1) {
 		int l1 = ThreeDimensionalCanvas.anInt1532;
 		int i2 = ThreeDimensionalCanvas.anInt1533;
 		int j2 = sinetable[i];
@@ -1445,7 +1438,7 @@ public class Model extends Entity {
 		}
 
 		try {
-			method599(false, false, 0);
+			draw599(false, false, 0);
 			return;
 		} catch (Exception _ex) {
 			return;
@@ -1453,7 +1446,7 @@ public class Model extends Entity {
 	}
 
 	@Override
-	public void method560(int i, int j, int k, int l, int i1, int j1, int k1, int l1, int i2) {
+	public void draw560(int i, int j, int k, int l, int i1, int j1, int k1, int l1, int i2) {
 		int j2 = l1 * i1 - j1 * l >> 16;
 		int k2 = k1 * j + j2 * k >> 16;
 		int l2 = anInt1671 * k >> 16;
@@ -1549,14 +1542,14 @@ public class Model extends Entity {
 		}
 
 		try {
-			method599(flag, flag1, i2);
+			draw599(flag, flag1, i2);
 			return;
 		} catch (Exception _ex) {
 			return;
 		}
 	}
 
-	public void method599(boolean flag, boolean flag1, int i) {
+	public void draw599(boolean flag, boolean flag1, int i) {
 		for (int j = 0; j < anInt1673; j++)
 			anIntArray1692[j] = 0;
 
@@ -1599,7 +1592,7 @@ public class Model extends Entity {
 				if (l1 > 0) {
 					int ai[] = anIntArrayArray1693[i1];
 					for (int j3 = 0; j3 < l1; j3++)
-						method600(ai[j3]);
+						draw600(ai[j3]);
 
 				}
 			}
@@ -1657,7 +1650,7 @@ public class Model extends Entity {
 			i5 = -1000;
 		for (int l6 = 0; l6 < 10; l6++) {
 			while (l6 == 0 && i5 > l2) {
-				method600(ai2[i6++]);
+				draw600(ai2[i6++]);
 				if (i6 == k6 && ai2 != anIntArrayArray1695[11]) {
 					i6 = 0;
 					k6 = anIntArray1694[11];
@@ -1670,7 +1663,7 @@ public class Model extends Entity {
 					i5 = -1000;
 			}
 			while (l6 == 3 && i5 > k3) {
-				method600(ai2[i6++]);
+				draw600(ai2[i6++]);
 				if (i6 == k6 && ai2 != anIntArrayArray1695[11]) {
 					i6 = 0;
 					k6 = anIntArray1694[11];
@@ -1683,7 +1676,7 @@ public class Model extends Entity {
 					i5 = -1000;
 			}
 			while (l6 == 5 && i5 > j4) {
-				method600(ai2[i6++]);
+				draw600(ai2[i6++]);
 				if (i6 == k6 && ai2 != anIntArrayArray1695[11]) {
 					i6 = 0;
 					k6 = anIntArray1694[11];
@@ -1698,12 +1691,12 @@ public class Model extends Entity {
 			int i7 = anIntArray1694[l6];
 			int ai4[] = anIntArrayArray1695[l6];
 			for (int j7 = 0; j7 < i7; j7++)
-				method600(ai4[j7]);
+				draw600(ai4[j7]);
 
 		}
 
 		while (i5 != -1000) {
-			method600(ai2[i6++]);
+			draw600(ai2[i6++]);
 			if (i6 == k6 && ai2 != anIntArrayArray1695[11]) {
 				i6 = 0;
 				ai2 = anIntArrayArray1695[11];
@@ -1717,7 +1710,7 @@ public class Model extends Entity {
 		}
 	}
 
-	public void method600(int i) {
+	public void draw600(int i) {
 		if (aBooleanArray1685[i]) {
 			method601(i);
 			return;
@@ -1726,50 +1719,52 @@ public class Model extends Entity {
 		int k = anIntArray1654[i];
 		int l = anIntArray1655[i];
 		ThreeDimensionalCanvas.aBoolean1528 = aBooleanArray1684[i];
-		if (anIntArray1661 == null)
-			ThreeDimensionalCanvas.anInt1531 = 0;
-		else
-			ThreeDimensionalCanvas.anInt1531 = anIntArray1661[i];
+		if (anIntArray1661 == null) {
+            ThreeDimensionalCanvas.anInt1531 = 0;
+        } else {
+            ThreeDimensionalCanvas.anInt1531 = anIntArray1661[i];
+        }
 		int i1;
-		if (anIntArray1659 == null)
-			i1 = 0;
-		else
+		if (anIntArray1659 == null) {
+            i1 = 0;
+        } else
 			i1 = anIntArray1659[i] & 3;
-		if (i1 == 0) {
-			ThreeDimensionalCanvas.method503(anIntArray1687[j], anIntArray1687[k], anIntArray1687[l],
-					anIntArray1686[j], anIntArray1686[k], anIntArray1686[l], anIntArray1656[i], anIntArray1657[i],
-					anIntArray1658[i]);
-			return;
-		}
-		if (i1 == 1) {
-			ThreeDimensionalCanvas.method505(anIntArray1687[j], anIntArray1687[k], anIntArray1687[l],
-					anIntArray1686[j], anIntArray1686[k], anIntArray1686[l], anIntArray1712[anIntArray1656[i]]);
-			return;
-		}
-		if (i1 == 2) {
-			int j1 = anIntArray1659[i] >> 2;
-			int l1 = anIntArray1665[j1];
-			int j2 = anIntArray1666[j1];
-			int l2 = anIntArray1667[j1];
-			ThreeDimensionalCanvas.method507(anIntArray1687[j], anIntArray1687[k], anIntArray1687[l],
-					anIntArray1686[j], anIntArray1686[k], anIntArray1686[l], anIntArray1656[i], anIntArray1657[i],
-					anIntArray1658[i], anIntArray1689[l1], anIntArray1689[j2], anIntArray1689[l2], anIntArray1690[l1],
-					anIntArray1690[j2], anIntArray1690[l2], anIntArray1691[l1], anIntArray1691[j2], anIntArray1691[l2],
-					colors[i]);
-			return;
-		}
-		if (i1 == 3) {
-			int k1 = anIntArray1659[i] >> 2;
-			int i2 = anIntArray1665[k1];
-			int k2 = anIntArray1666[k1];
-			int i3 = anIntArray1667[k1];
-			ThreeDimensionalCanvas.method507(anIntArray1687[j], anIntArray1687[k], anIntArray1687[l],
-					anIntArray1686[j], anIntArray1686[k], anIntArray1686[l], anIntArray1656[i], anIntArray1656[i],
-					anIntArray1656[i], anIntArray1689[i2], anIntArray1689[k2], anIntArray1689[i3], anIntArray1690[i2],
-					anIntArray1690[k2], anIntArray1690[i3], anIntArray1691[i2], anIntArray1691[k2], anIntArray1691[i3],
-					colors[i]);
-		}
-	}
+        if (i1 != 0) {
+            if (i1 == 1) {
+                ThreeDimensionalCanvas.method505(anIntArray1687[j], anIntArray1687[k], anIntArray1687[l],
+                        anIntArray1686[j], anIntArray1686[k], anIntArray1686[l], anIntArray1712[anIntArray1656[i]]);
+                return;
+            }
+            if (i1 == 2) {
+                int j1 = anIntArray1659[i] >> 2;
+                int l1 = anIntArray1665[j1];
+                int j2 = anIntArray1666[j1];
+                int l2 = anIntArray1667[j1];
+                ThreeDimensionalCanvas.method507(anIntArray1687[j], anIntArray1687[k], anIntArray1687[l],
+                        anIntArray1686[j], anIntArray1686[k], anIntArray1686[l], anIntArray1656[i], anIntArray1657[i],
+                        anIntArray1658[i], anIntArray1689[l1], anIntArray1689[j2], anIntArray1689[l2], anIntArray1690[l1],
+                        anIntArray1690[j2], anIntArray1690[l2], anIntArray1691[l1], anIntArray1691[j2], anIntArray1691[l2],
+                        colors[i]);
+                return;
+            }
+            if (i1 == 3) {
+                int k1 = anIntArray1659[i] >> 2;
+                int i2 = anIntArray1665[k1];
+                int k2 = anIntArray1666[k1];
+                int i3 = anIntArray1667[k1];
+                ThreeDimensionalCanvas.method507(anIntArray1687[j], anIntArray1687[k], anIntArray1687[l],
+                        anIntArray1686[j], anIntArray1686[k], anIntArray1686[l], anIntArray1656[i], anIntArray1656[i],
+                        anIntArray1656[i], anIntArray1689[i2], anIntArray1689[k2], anIntArray1689[i3], anIntArray1690[i2],
+                        anIntArray1690[k2], anIntArray1690[i3], anIntArray1691[i2], anIntArray1691[k2], anIntArray1691[i3],
+                        colors[i]);
+            }
+        } else {
+            ThreeDimensionalCanvas.method503(anIntArray1687[j], anIntArray1687[k], anIntArray1687[l],
+                    anIntArray1686[j], anIntArray1686[k], anIntArray1686[l], anIntArray1656[i], anIntArray1657[i],
+                    anIntArray1658[i]);
+            return;
+        }
+    }
 
 	public void method601(int i) {
 		int j = ThreeDimensionalCanvas.anInt1532;

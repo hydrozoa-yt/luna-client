@@ -28,7 +28,6 @@ public class ItemDefinition {
 	public static byte aByte347 = 6;
 	public String inventoryActions[];
 	public static boolean aBoolean350 = true;
-	public int anInt351;
 	public static int cachePos;
 	public int anInt353;
 	public int anInt354;
@@ -51,14 +50,12 @@ public class ItemDefinition {
 	public boolean stackable;
 	public int anInt372;
 	public static JagBuffer buf;
-	public boolean aBoolean374;
 	public int anInt375;
 	public int stackAmounts[];
 	public boolean members;
 	public byte aByte378;
 
 	public ItemDefinition() {
-		anInt351 = -68;
 		id = -1;
 	}
 
@@ -118,14 +115,14 @@ public class ItemDefinition {
 		Model result = Model.forId(j);
 		if (k != -1)
 			if (l != -1) {
-				Model class50_sub1_sub4_sub4_1 = Model.forId(k);
-				Model class50_sub1_sub4_sub4_3 = Model.forId(l);
+				Model rootModel = Model.forId(k);
+				Model childModel = Model.forId(l);
 				Model aclass50_sub1_sub4_sub4_1[] = { result,
-						class50_sub1_sub4_sub4_1, class50_sub1_sub4_sub4_3 };
+						rootModel, childModel };
 				result = new Model(3, aclass50_sub1_sub4_sub4_1);
 			} else {
-				Model class50_sub1_sub4_sub4_2 = Model.forId(k);
-				Model aclass50_sub1_sub4_sub4[] = { result, class50_sub1_sub4_sub4_2 };
+				Model rootModel = Model.forId(k);
+				Model aclass50_sub1_sub4_sub4[] = { result, rootModel };
 				result = new Model(2, aclass50_sub1_sub4_sub4);
 			}
 		if (gender == 0 && aByte378 != 0)
@@ -133,9 +130,9 @@ public class ItemDefinition {
 		if (gender == 1 && aByte330 != 0)
 			result.method590(0, 0, false, aByte330);
 		if (srcColors != null) {
-			for (int color = 0; color < srcColors.length; color++)
-				result.replaceColor(srcColors[color], destColors[color]);
-
+			for (int color = 0; color < srcColors.length; color++) {
+                result.replaceColor(srcColors[color], destColors[color]);
+            }
 		}
 		return result;
 	}
@@ -152,9 +149,9 @@ public class ItemDefinition {
 		}
 
 		cache = new ItemDefinition[10];
-		for (int k = 0; k < 10; k++)
-			cache[k] = new ItemDefinition();
-
+		for (int k = 0; k < 10; k++) {
+            cache[k] = new ItemDefinition();
+        }
 	}
 
 	public void toNote() {
@@ -174,15 +171,14 @@ public class ItemDefinition {
 		value = info.value;
 		String prefix = "a";
 		char firstChar = info.name.charAt(0);
-		if (firstChar == 'A' || firstChar == 'E' || firstChar == 'I' || firstChar == 'O' || firstChar == 'U')
-			prefix = "an";
+		if (firstChar == 'A' || firstChar == 'E' || firstChar == 'I' || firstChar == 'O' || firstChar == 'U') {
+            prefix = "an";
+        }
 		description = ("Swap this note at any bank for " + prefix + " " + info.name + ".").getBytes();
 		stackable = true;
 	}
 
-	public boolean method216(int i, int j) {
-		while (i >= 0)
-			aBoolean350 = !aBoolean350;
+	public boolean method216(int j) {
 		int k = anInt353;
 		int l = anInt331;
 		int i1 = anInt370;
@@ -225,105 +221,105 @@ public class ItemDefinition {
 	}
 
 	public void init(JagBuffer vec) {
-		do {
-			int i = vec.getByte();
-			if (i == 0)
-				return;
-			if (i == 1)
-				modelId = vec.getShort();
-			else if (i == 2)
-				name = vec.getString();
-			else if (i == 3)
-				description = vec.getStringBytes();
-			else if (i == 4)
-				modelScale = vec.getShort();
-			else if (i == 5)
-				modelRotationX = vec.getShort();
-			else if (i == 6)
-				modelRotationY = vec.getShort();
-			else if (i == 7) {
-				modelOffsetX = vec.getShort();
-				if (modelOffsetX > 32767)
-					modelOffsetX -= 0x10000;
-			} else if (i == 8) {
-				modelOffsetY = vec.getShort();
-				if (modelOffsetY > 32767)
-					modelOffsetY -= 0x10000;
-			} else if (i == 10)
-				anInt372 = vec.getShort();
-			else if (i == 11)
-				stackable = true;
-			else if (i == 12)
-				value = vec.getInt();
-			else if (i == 16)
-				members = true;
-			else if (i == 23) {
-				anInt353 = vec.getShort();
-				aByte378 = vec.getSignedByte();
-			} else if (i == 24)
-				anInt331 = vec.getShort();
-			else if (i == 25) {
-				anInt326 = vec.getShort();
-				aByte330 = vec.getSignedByte();
-			} else if (i == 26)
-				anInt355 = vec.getShort();
-			else if (i >= 30 && i < 35) {
-				if (groundActions == null)
-					groundActions = new String[5];
-				groundActions[i - 30] = vec.getString();
-				if (groundActions[i - 30].equalsIgnoreCase("hidden"))
-					groundActions[i - 30] = null;
-			} else if (i >= 35 && i < 40) {
-				if (inventoryActions == null)
-					inventoryActions = new String[5];
-				inventoryActions[i - 35] = vec.getString();
-			} else if (i == 40) {
-				int colorCount = vec.getByte();
-				srcColors = new int[colorCount];
-				destColors = new int[colorCount];
-				for (int k = 0; k < colorCount; k++) {
-					srcColors[k] = vec.getShort();
-					destColors[k] = vec.getShort();
-				}
+        while (true) {
+            int i = vec.getByte();
+            if (i == 0)
+                return;
+            if (i == 1)
+                modelId = vec.getShort();
+            else if (i == 2)
+                name = vec.getString();
+            else if (i == 3)
+                description = vec.getStringBytes();
+            else if (i == 4)
+                modelScale = vec.getShort();
+            else if (i == 5)
+                modelRotationX = vec.getShort();
+            else if (i == 6)
+                modelRotationY = vec.getShort();
+            else if (i == 7) {
+                modelOffsetX = vec.getShort();
+                if (modelOffsetX > 32767)
+                    modelOffsetX -= 0x10000;
+            } else if (i == 8) {
+                modelOffsetY = vec.getShort();
+                if (modelOffsetY > 32767)
+                    modelOffsetY -= 0x10000;
+            } else if (i == 10)
+                anInt372 = vec.getShort();
+            else if (i == 11)
+                stackable = true;
+            else if (i == 12)
+                value = vec.getInt();
+            else if (i == 16)
+                members = true;
+            else if (i == 23) {
+                anInt353 = vec.getShort();
+                aByte378 = vec.getSignedByte();
+            } else if (i == 24)
+                anInt331 = vec.getShort();
+            else if (i == 25) {
+                anInt326 = vec.getShort();
+                aByte330 = vec.getSignedByte();
+            } else if (i == 26)
+                anInt355 = vec.getShort();
+            else if (i >= 30 && i < 35) {
+                if (groundActions == null)
+                    groundActions = new String[5];
+                groundActions[i - 30] = vec.getString();
+                if (groundActions[i - 30].equalsIgnoreCase("hidden"))
+                    groundActions[i - 30] = null;
+            } else if (i >= 35 && i < 40) {
+                if (inventoryActions == null)
+                    inventoryActions = new String[5];
+                inventoryActions[i - 35] = vec.getString();
+            } else if (i == 40) { //color
+                int colorCount = vec.getByte();
+                srcColors = new int[colorCount];
+                destColors = new int[colorCount];
+                for (int k = 0; k < colorCount; k++) {
+                    srcColors[k] = vec.getShort();
+                    destColors[k] = vec.getShort();
+                }
 
-			} else if (i == 78)
-				anInt370 = vec.getShort();
-			else if (i == 79)
-				anInt367 = vec.getShort();
-			else if (i == 90)
-				anInt334 = vec.getShort();
-			else if (i == 91)
-				anInt375 = vec.getShort();
-			else if (i == 92)
-				anInt361 = vec.getShort();
-			else if (i == 93)
-				anInt362 = vec.getShort();
-			else if (i == 95)
-				anInt339 = vec.getShort();
-			else if (i == 97)
-				notedInfoId = vec.getShort();
-			else if (i == 98)
-				notedGraphicsId = vec.getShort();
-			else if (i >= 100 && i < 110) {
-				if (stackIds == null) {
-					stackIds = new int[10];
-					stackAmounts = new int[10];
-				}
-				stackIds[i - 100] = vec.getShort();
-				stackAmounts[i - 100] = vec.getShort();
-			} else if (i == 110)
-				anInt366 = vec.getShort();
-			else if (i == 111)
-				anInt357 = vec.getShort();
-			else if (i == 112)
-				anInt368 = vec.getShort();
-			else if (i == 113)
-				anInt354 = vec.getSignedByte();
-			else if (i == 114)
-				anInt358 = vec.getSignedByte() * 5;
-			else if (i == 115)
-				team = vec.getByte();
-		} while (true);
+            } else if (i == 78)
+                anInt370 = vec.getShort();
+            else if (i == 79)
+                anInt367 = vec.getShort();
+            else if (i == 90)
+                anInt334 = vec.getShort();
+            else if (i == 91)
+                anInt375 = vec.getShort();
+            else if (i == 92)
+                anInt361 = vec.getShort();
+            else if (i == 93)
+                anInt362 = vec.getShort();
+            else if (i == 95)
+                anInt339 = vec.getShort();
+            else if (i == 97)
+                notedInfoId = vec.getShort();
+            else if (i == 98)
+                notedGraphicsId = vec.getShort();
+            else if (i >= 100 && i < 110) {
+                if (stackIds == null) {
+                    stackIds = new int[10];
+                    stackAmounts = new int[10];
+                }
+                stackIds[i - 100] = vec.getShort();
+                stackAmounts[i - 100] = vec.getShort();
+            } else if (i == 110)
+                anInt366 = vec.getShort();
+            else if (i == 111)
+                anInt357 = vec.getShort();
+            else if (i == 112)
+                anInt368 = vec.getShort();
+            else if (i == 113)
+                anInt354 = vec.getSignedByte();
+            else if (i == 114)
+                anInt358 = vec.getSignedByte() * 5;
+            else if (i == 115)
+                team = vec.getByte();
+        }
 	}
 
 	public Model getGenderModel(int gender) {
@@ -432,7 +428,7 @@ public class ItemDefinition {
 			j3 = (int) (j3 * 1.04D);
 		int k3 = ThreeDimensionalCanvas.sineTable[class16.modelRotationX] * j3 >> 16;
 		int l3 = ThreeDimensionalCanvas.cosineTable[class16.modelRotationX] * j3 >> 16;
-		class50_sub1_sub4_sub4.method598(0, class16.modelRotationY, class16.anInt339, class16.modelRotationX, class16.modelOffsetX, k3
+		class50_sub1_sub4_sub4.draw598(0, class16.modelRotationY, class16.anInt339, class16.modelRotationX, class16.modelOffsetX, k3
 				+ ((Entity) (class50_sub1_sub4_sub4)).height / 2 + class16.modelOffsetY, l3
 				+ class16.modelOffsetY);
 		for (int l4 = 31; l4 >= 0; l4--) {
