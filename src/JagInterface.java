@@ -372,9 +372,7 @@ public class JagInterface {
 			anInt210 = 391;
 	}
 
-	public static void method200(boolean flag, int i) {
-		if (!flag)
-			aBoolean257 = !aBoolean257;
+	public static void method200(int i) {
 		if (i == -1)
 			return;
 		for (int j = 0; j < interfaces.length; j++)
@@ -395,8 +393,6 @@ public class JagInterface {
 	public static void method202(boolean flag) {
 		interfaces = null;
 		aClass2_214 = null;
-		if (flag)
-			aBoolean257 = !aBoolean257;
 		aClass33_250 = null;
 		aClass50_Sub1_Sub1_Sub2Array223 = null;
 		data = null;

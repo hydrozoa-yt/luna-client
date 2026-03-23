@@ -95,29 +95,29 @@ public class client extends JagApplet {
         if (flag)
             groundItems = null;
         if (anInt1089 != -1) {
-            method44(aBoolean1190, anInt1089);
+            method44(anInt1089);
             anInt1089 = -1;
             aBoolean1181 = true;
             aBoolean1239 = false;
             aBoolean950 = true;
         }
         if (anInt988 != -1) {
-            method44(aBoolean1190, anInt988);
+            method44(anInt988);
             anInt988 = -1;
             aBoolean1240 = true;
             aBoolean1239 = false;
         }
         if (anInt1053 != -1) {
-            method44(aBoolean1190, anInt1053);
+            method44(anInt1053);
             anInt1053 = -1;
             shouldRenderUI = true;
         }
         if (anInt960 != -1) {
-            method44(aBoolean1190, anInt960);
+            method44(anInt960);
             anInt960 = -1;
         }
         if (anInt1169 != -1) {
-            method44(aBoolean1190, anInt1169);
+            method44(anInt1169);
             anInt1169 = -1;
         }
     }
@@ -462,8 +462,7 @@ public class client extends JagApplet {
         }
     }
 
-    public void method22(int i) {
-        i = 61 / i;
+    public void loadPlayer22() {
         try {
             int j = ((Actor) (thisPlayer)).unitX + anInt853;
             int k = ((Actor) (thisPlayer)).unitY + anInt1009;
@@ -880,7 +879,7 @@ public class client extends JagApplet {
         } else if (anInt893 > 0)
             anInt893--;
         if (loadingStage == 2)
-            method22(409);
+            loadPlayer22();
         if (loadingStage == 2 && aBoolean1211)
             method29(aBoolean959);
         for (int k = 0; k < 5; k++)
@@ -1485,26 +1484,26 @@ public class client extends JagApplet {
                 int k2 = buffer.getShort();
                 method112((byte) 36, k2);
                 if (anInt1089 != -1) {
-                    method44(aBoolean1190, anInt1089);
+                    method44(anInt1089);
                     anInt1089 = -1;
                     aBoolean1181 = true;
                     aBoolean950 = true;
                 }
                 if (anInt1053 != -1) {
-                    method44(aBoolean1190, anInt1053);
+                    method44(anInt1053);
                     anInt1053 = -1;
                     shouldRenderUI = true;
                 }
                 if (anInt960 != -1) {
-                    method44(aBoolean1190, anInt960);
+                    method44(anInt960);
                     anInt960 = -1;
                 }
                 if (anInt1169 != -1) {
-                    method44(aBoolean1190, anInt1169);
+                    method44(anInt1169);
                     anInt1169 = -1;
                 }
                 if (anInt988 != k2) {
-                    method44(aBoolean1190, anInt988);
+                    method44(anInt988);
                     anInt988 = k2;
                 }
                 aBoolean1239 = false;
@@ -1540,7 +1539,7 @@ public class client extends JagApplet {
             if (opcode == 158) {
                 int j3 = buffer.method552();
                 if (j3 != anInt1191) {
-                    method44(aBoolean1190, anInt1191);
+                    method44(anInt1191);
                     anInt1191 = j3;
                 }
                 aBoolean1240 = true;
@@ -1668,27 +1667,27 @@ public class client extends JagApplet {
             }
             if (opcode == 29) { // close open interfaces??
                 if (anInt1089 != -1) {
-                    method44(aBoolean1190, anInt1089);
+                    method44(anInt1089);
                     anInt1089 = -1;
                     aBoolean1181 = true;
                     aBoolean950 = true;
                 }
                 if (anInt988 != -1) {
-                    method44(aBoolean1190, anInt988);
+                    method44(anInt988);
                     anInt988 = -1;
                     aBoolean1240 = true;
                 }
                 if (anInt1053 != -1) {
-                    method44(aBoolean1190, anInt1053);
+                    method44(anInt1053);
                     anInt1053 = -1;
                     shouldRenderUI = true;
                 }
                 if (anInt960 != -1) {
-                    method44(aBoolean1190, anInt960);
+                    method44(anInt960);
                     anInt960 = -1;
                 }
                 if (anInt1169 != -1) {
-                    method44(aBoolean1190, anInt1169);
+                    method44(anInt1169);
                     anInt1169 = -1;
                 }
                 if (chatboxInterfaceType != 0) {
@@ -1769,7 +1768,7 @@ public class client extends JagApplet {
                 if (id >= 0)
                     method112((byte) 36, id);
                 if (id != walkableInterfaceId) {
-                    method44(aBoolean1190, walkableInterfaceId);
+                    method44(walkableInterfaceId);
                     walkableInterfaceId = id;
                 }
                 opcode = -1;
@@ -1803,25 +1802,25 @@ public class client extends JagApplet {
                 int l4 = buffer.getShortAdded();
                 int k13 = buffer.getLEShortA();
                 if (anInt988 != -1) {
-                    method44(aBoolean1190, anInt988);
+                    method44(anInt988);
                     anInt988 = -1;
                     aBoolean1240 = true;
                 }
                 if (anInt1053 != -1) {
-                    method44(aBoolean1190, anInt1053);
+                    method44(anInt1053);
                     anInt1053 = -1;
                     shouldRenderUI = true;
                 }
                 if (anInt960 != -1) {
-                    method44(aBoolean1190, anInt960);
+                    method44(anInt960);
                     anInt960 = -1;
                 }
                 if (anInt1169 != l4) {
-                    method44(aBoolean1190, anInt1169);
+                    method44(anInt1169);
                     anInt1169 = l4;
                 }
                 if (anInt1089 != k13) {
-                    method44(aBoolean1190, anInt1089);
+                    method44(anInt1089);
                     anInt1089 = k13;
                 }
                 if (chatboxInterfaceType != 0) {
@@ -2020,27 +2019,27 @@ public class client extends JagApplet {
                 int interfaceId = buffer.getLEShortA();
                 method112((byte) 36, interfaceId);
                 if (anInt1089 != -1) {
-                    method44(aBoolean1190, anInt1089);
+                    method44(anInt1089);
                     anInt1089 = -1;
                     aBoolean1181 = true;
                     aBoolean950 = true;
                 }
                 if (anInt988 != -1) {
-                    method44(aBoolean1190, anInt988);
+                    method44(anInt988);
                     anInt988 = -1;
                     aBoolean1240 = true;
                 }
                 if (anInt1053 != -1) {
-                    method44(aBoolean1190, anInt1053);
+                    method44(anInt1053);
                     anInt1053 = -1;
                     shouldRenderUI = true;
                 }
                 if (anInt960 != -1) {
-                    method44(aBoolean1190, anInt960);
+                    method44(anInt960);
                     anInt960 = -1;
                 }
                 if (anInt1169 != interfaceId) {
-                    method44(aBoolean1190, anInt1169);
+                    method44(anInt1169);
                     anInt1169 = interfaceId;
                 }
                 if (chatboxInterfaceType != 0) {
@@ -2055,25 +2054,25 @@ public class client extends JagApplet {
                 int i7 = buffer.getLEShortA();
                 method112((byte) 36, i7);
                 if (anInt988 != -1) {
-                    method44(aBoolean1190, anInt988);
+                    method44(anInt988);
                     anInt988 = -1;
                     aBoolean1240 = true;
                 }
                 if (anInt1053 != -1) {
-                    method44(aBoolean1190, anInt1053);
+                    method44(anInt1053);
                     anInt1053 = -1;
                     shouldRenderUI = true;
                 }
                 if (anInt960 != -1) {
-                    method44(aBoolean1190, anInt960);
+                    method44(anInt960);
                     anInt960 = -1;
                 }
                 if (anInt1169 != -1) {
-                    method44(aBoolean1190, anInt1169);
+                    method44(anInt1169);
                     anInt1169 = -1;
                 }
                 if (anInt1089 != i7) {
-                    method44(aBoolean1190, anInt1089);
+                    method44(anInt1089);
                     anInt1089 = i7;
                 }
                 if (chatboxInterfaceType != 0) {
@@ -2409,7 +2408,7 @@ public class client extends JagApplet {
                 if (j15 == 65535)
                     j15 = -1;
                 if (anIntArray1081[l8] != j15) {
-                    method44(aBoolean1190, anIntArray1081[l8]);
+                    method44(anIntArray1081[l8]);
                     anIntArray1081[l8] = j15;
                 }
                 aBoolean1181 = true;
@@ -2467,23 +2466,23 @@ public class client extends JagApplet {
                 if (k9 != -1)
                     method112((byte) 36, k9);
                 if (anInt1169 != -1) {
-                    method44(aBoolean1190, anInt1169);
+                    method44(anInt1169);
                     anInt1169 = -1;
                 }
                 if (anInt1089 != -1) {
-                    method44(aBoolean1190, anInt1089);
+                    method44(anInt1089);
                     anInt1089 = -1;
                 }
                 if (anInt988 != -1) {
-                    method44(aBoolean1190, anInt988);
+                    method44(anInt988);
                     anInt988 = -1;
                 }
                 if (anInt1053 != k15) {
-                    method44(aBoolean1190, anInt1053);
+                    method44(anInt1053);
                     anInt1053 = k15;
                 }
                 if (anInt960 != k15) {
-                    method44(aBoolean1190, anInt960);
+                    method44(anInt960);
                     anInt960 = k9;
                 }
                 chatboxInterfaceType = 0;
@@ -3239,13 +3238,9 @@ public class client extends JagApplet {
 
     }
 
-    public void method44(boolean flag, int i) {
-        if (!flag) {
-            return;
-        } else {
-            JagInterface.method200(aBoolean1190, i);
-            return;
-        }
+    public void method44(int i) {
+        JagInterface.method200(i);
+        return;
     }
 
     public void method45(int i, int j, int k, int l, int i1, int j1, byte byte0, int k1) {
@@ -5734,19 +5729,19 @@ public class client extends JagApplet {
                 gameObjectSpawnsRequestList = new LinkedList();
                 anInt860 = 0;
                 friendsCount = 0;
-                method44(aBoolean1190, anInt1191);
+                method44(anInt1191);
                 anInt1191 = -1;
-                method44(aBoolean1190, anInt988);
+                method44(anInt988);
                 anInt988 = -1;
-                method44(aBoolean1190, anInt1169);
+                method44(anInt1169);
                 anInt1169 = -1;
-                method44(aBoolean1190, anInt1053);
+                method44(anInt1053);
                 anInt1053 = -1;
-                method44(aBoolean1190, anInt960);
+                method44(anInt960);
                 anInt960 = -1;
-                method44(aBoolean1190, anInt1089);
+                method44(anInt1089);
                 anInt1089 = -1;
-                method44(aBoolean1190, walkableInterfaceId);
+                method44(walkableInterfaceId);
                 walkableInterfaceId = -1;
                 aBoolean1239 = false;
                 tabId = 3;
@@ -7620,8 +7615,6 @@ public class client extends JagApplet {
         }
 
         j += 8;
-        if (i <= 0)
-            aBoolean1190 = !aBoolean1190;
         int i1 = 15 * anInt1183 + 21;
         if (super.anInt29 > 4 && super.anInt30 > 4 && super.anInt29 < 516 && super.anInt30 < 338) {
             int j1 = super.anInt29 - 4 - j / 2;
@@ -8996,7 +8989,7 @@ public class client extends JagApplet {
             outBuffer.putLEShortAdded(slot + nextTopLeftTileX);
         }
         if (i1 == 55) {
-            method44(aBoolean1190, anInt1191);
+            method44(anInt1191);
             anInt1191 = -1;
             aBoolean1240 = true;
         }
@@ -11649,7 +11642,6 @@ public class client extends JagApplet {
     public IndexedSprite aClass50_Sub1_Sub1_Sub3_1187;
     public JagBuffer buffer;
     public int cost[][];
-    public static boolean aBoolean1190 = true;
     public int anInt1191;
     public RgbSprite rgbSprite_1192;
     public RgbSprite aClass50_Sub1_Sub1_Sub1_1193;
