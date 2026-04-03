@@ -150,7 +150,7 @@ public class signlink implements Runnable {
 	}
 
 	public static String findcachedir() {
-		return "./cacheModded/"; // todo change to modded
+		return "./cache/"; // todo change to modded
 	}
 
 	/*

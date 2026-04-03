@@ -33,10 +33,10 @@ public class RgbSprite extends Drawable {
 		height_1495 = idxBuf.getShort();
 
 
-		if (name.equalsIgnoreCase("logo")) {
+		/*if (name.equalsIgnoreCase("logo")) {
 			System.out.println("width "+width_1494);
 			System.out.println("height "+height_1495);
-		}
+		}*/
 
 		int colorLength = idxBuf.getByte();
 		int[] colors = new int[colorLength];
@@ -45,9 +45,9 @@ public class RgbSprite extends Drawable {
 			if (colors[k + 1] == 0) { // transparency?
                 colors[k + 1] = 1;
             }
-			if (name.equalsIgnoreCase("logo")) {
+			/*if (name.equalsIgnoreCase("logo")) {
 				System.out.println("pixelColor[" + (k + 1) + "] = " + colors[k + 1]);
-			}
+			}*/
 		}
 
 		for (int l = 0; l < page; l++) {
@@ -59,22 +59,22 @@ public class RgbSprite extends Drawable {
 		attrib_492 = idxBuf.getByte();
 		attrib_1493 = idxBuf.getByte();
 
-		if (name.equalsIgnoreCase("logo")) {
+		/*if (name.equalsIgnoreCase("logo")) {
 			System.out.println("attrib1 " + attrib_492 + " attrib2 " + attrib_1493);
-		}
+		}*/
 
 		width_1490 = idxBuf.getShort();
 		height_1491 = idxBuf.getShort();
 
-		if (name.equalsIgnoreCase("logo")) {
+		/*if (name.equalsIgnoreCase("logo")) {
 			System.out.println("width2 " + width_1490 + " height2 " + height_1491);
-		}
+		}*/
 
 		int typeData = idxBuf.getByte();
 
-		if (name.equalsIgnoreCase("logo")) {
+		/*if (name.equalsIgnoreCase("logo")) {
 			System.out.println("typeData " + typeData);
-		}
+		}*/
 
 		int pixelsAmount_j1 = width_1490 * height_1491;
 
@@ -174,20 +174,20 @@ public class RgbSprite extends Drawable {
 		int k1 = width_1490;
 		int l1 = Drawable.width - k1;
 		int i2 = 0;
-		if (y < Drawable.startX) {
-			int j2 = Drawable.startX - y;
+		if (y < Drawable.startY) {
+			int j2 = Drawable.startY - y;
 			j1 -= j2;
-			y = Drawable.startX;
+			y = Drawable.startY;
 			i1 += j2 * k1;
 			l += j2 * Drawable.width;
 		}
 		if (y + j1 > Drawable.endY) {
             j1 -= (y + j1) - Drawable.endY;
         }
-		if (x < Drawable.startY) {
-			int k2 = Drawable.startY - x;
+		if (x < Drawable.startX) {
+			int k2 = Drawable.startX - x;
 			k1 -= k2;
-			x = Drawable.startY;
+			x = Drawable.startX;
 			i1 += k2;
 			l += k2;
 			i2 += k2;
@@ -236,19 +236,19 @@ public class RgbSprite extends Drawable {
 		int k1 = width_1490;
 		int l1 = Drawable.width - k1;
 		int i2 = 0;
-		if (i < Drawable.startX) {
-			int j2 = Drawable.startX - i;
+		if (i < Drawable.startY) {
+			int j2 = Drawable.startY - i;
 			j1 -= j2;
-			i = Drawable.startX;
+			i = Drawable.startY;
 			i1 += j2 * k1;
 			l += j2 * Drawable.width;
 		}
 		if (i + j1 > Drawable.endY)
 			j1 -= (i + j1) - Drawable.endY;
-		if (j < Drawable.startY) {
-			int k2 = Drawable.startY - j;
+		if (j < Drawable.startX) {
+			int k2 = Drawable.startX - j;
 			k1 -= k2;
-			j = Drawable.startY;
+			j = Drawable.startX;
 			i1 += k2;
 			l += k2;
 			i2 += k2;
@@ -320,19 +320,19 @@ public class RgbSprite extends Drawable {
 		int l1 = width_1490;
 		int i2 = Drawable.width - l1;
 		int j2 = 0;
-		if (k < Drawable.startX) {
-			int k2 = Drawable.startX - k;
+		if (k < Drawable.startY) {
+			int k2 = Drawable.startY - k;
 			k1 -= k2;
-			k = Drawable.startX;
+			k = Drawable.startY;
 			j1 += k2 * l1;
 			i1 += k2 * Drawable.width;
 		}
 		if (k + k1 > Drawable.endY)
 			k1 -= (k + k1) - Drawable.endY;
-		if (j < Drawable.startY) {
-			int l2 = Drawable.startY - j;
+		if (j < Drawable.startX) {
+			int l2 = Drawable.startX - j;
 			l1 -= l2;
-			j = Drawable.startY;
+			j = Drawable.startX;
 			j1 += l2;
 			i1 += l2;
 			j2 += l2;
@@ -454,19 +454,19 @@ public class RgbSprite extends Drawable {
 		int k1 = width_1490;
 		int l1 = Drawable.width - k1;
 		int i2 = 0;
-		if (i < Drawable.startX) {
-			int j2 = Drawable.startX - i;
+		if (i < Drawable.startY) {
+			int j2 = Drawable.startY - i;
 			j1 -= j2;
-			i = Drawable.startX;
+			i = Drawable.startY;
 			i1 += j2 * k1;
 			l += j2 * Drawable.width;
 		}
 		if (i + j1 > Drawable.endY)
 			j1 -= (i + j1) - Drawable.endY;
-		if (k < Drawable.startY) {
-			int k2 = Drawable.startY - k;
+		if (k < Drawable.startX) {
+			int k2 = Drawable.startX - k;
 			k1 -= k2;
-			k = Drawable.startY;
+			k = Drawable.startX;
 			i1 += k2;
 			l += k2;
 			i2 += k2;

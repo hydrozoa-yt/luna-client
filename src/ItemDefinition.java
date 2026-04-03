@@ -406,20 +406,20 @@ public class ItemDefinition {
 			if (class50_sub1_sub1_sub1_2 == null)
 				return null;
 		}
-		RgbSprite class50_sub1_sub1_sub1_1 = new RgbSprite(32, 32);
+		RgbSprite rgbSprite_112 = new RgbSprite(32, 32);
 		int j1 = ThreeDimensionalCanvas.anInt1532;
 		int k1 = ThreeDimensionalCanvas.anInt1533;
 		int ai[] = ThreeDimensionalCanvas.anIntArray1538;
 		int ai1[] = Drawable.pixels;
 		int l1 = Drawable.width;
 		int i2 = Drawable.height;
-		int j2 = Drawable.startY;
+		int j2 = Drawable.startX;
 		int k2 = Drawable.endX;
-		int l2 = Drawable.startX;
+		int l2 = Drawable.startY;
 		int i3 = Drawable.endY;
 		ThreeDimensionalCanvas.aBoolean1530 = false;
-		Drawable.putPixels(32, 32, class50_sub1_sub1_sub1_1.pixels_1489);
-		Drawable.drawFullRect2(0, 32, 0, 32, 0);
+		Drawable.putPixels(32, 32, rgbSprite_112.pixels_1489);
+		Drawable.drawFullRect(0, 0, 32, 32, 0);
 		ThreeDimensionalCanvas.method493(568);
 		int j3 = class16.modelScale;
 		if (i == -1)
@@ -432,40 +432,42 @@ public class ItemDefinition {
 				+ ((Entity) (class50_sub1_sub4_sub4)).height / 2 + class16.modelOffsetY, l3
 				+ class16.modelOffsetY);
 		for (int l4 = 31; l4 >= 0; l4--) {
-			for (int i4 = 31; i4 >= 0; i4--)
-				if (class50_sub1_sub1_sub1_1.pixels_1489[l4 + i4 * 32] == 0)
-					if (l4 > 0 && class50_sub1_sub1_sub1_1.pixels_1489[(l4 - 1) + i4 * 32] > 1)
-						class50_sub1_sub1_sub1_1.pixels_1489[l4 + i4 * 32] = 1;
-					else if (i4 > 0 && class50_sub1_sub1_sub1_1.pixels_1489[l4 + (i4 - 1) * 32] > 1)
-						class50_sub1_sub1_sub1_1.pixels_1489[l4 + i4 * 32] = 1;
-					else if (l4 < 31 && class50_sub1_sub1_sub1_1.pixels_1489[l4 + 1 + i4 * 32] > 1)
-						class50_sub1_sub1_sub1_1.pixels_1489[l4 + i4 * 32] = 1;
-					else if (i4 < 31 && class50_sub1_sub1_sub1_1.pixels_1489[l4 + (i4 + 1) * 32] > 1)
-						class50_sub1_sub1_sub1_1.pixels_1489[l4 + i4 * 32] = 1;
+			for (int i4 = 31; i4 >= 0; i4--) {
+                if (rgbSprite_112.pixels_1489[l4 + i4 * 32] == 0) {
+                    if (l4 > 0 && rgbSprite_112.pixels_1489[(l4 - 1) + i4 * 32] > 1)
+                        rgbSprite_112.pixels_1489[l4 + i4 * 32] = 1;
+                    else if (i4 > 0 && rgbSprite_112.pixels_1489[l4 + (i4 - 1) * 32] > 1)
+                        rgbSprite_112.pixels_1489[l4 + i4 * 32] = 1;
+                    else if (l4 < 31 && rgbSprite_112.pixels_1489[l4 + 1 + i4 * 32] > 1)
+                        rgbSprite_112.pixels_1489[l4 + i4 * 32] = 1;
+                    else if (i4 < 31 && rgbSprite_112.pixels_1489[l4 + (i4 + 1) * 32] > 1)
+                        rgbSprite_112.pixels_1489[l4 + i4 * 32] = 1;
+                }
+            }
 
 		}
 
 		if (i > 0) {
 			for (int i5 = 31; i5 >= 0; i5--) {
 				for (int j4 = 31; j4 >= 0; j4--)
-					if (class50_sub1_sub1_sub1_1.pixels_1489[i5 + j4 * 32] == 0)
-						if (i5 > 0 && class50_sub1_sub1_sub1_1.pixels_1489[(i5 - 1) + j4 * 32] == 1)
-							class50_sub1_sub1_sub1_1.pixels_1489[i5 + j4 * 32] = i;
-						else if (j4 > 0 && class50_sub1_sub1_sub1_1.pixels_1489[i5 + (j4 - 1) * 32] == 1)
-							class50_sub1_sub1_sub1_1.pixels_1489[i5 + j4 * 32] = i;
-						else if (i5 < 31 && class50_sub1_sub1_sub1_1.pixels_1489[i5 + 1 + j4 * 32] == 1)
-							class50_sub1_sub1_sub1_1.pixels_1489[i5 + j4 * 32] = i;
-						else if (j4 < 31 && class50_sub1_sub1_sub1_1.pixels_1489[i5 + (j4 + 1) * 32] == 1)
-							class50_sub1_sub1_sub1_1.pixels_1489[i5 + j4 * 32] = i;
+					if (rgbSprite_112.pixels_1489[i5 + j4 * 32] == 0)
+						if (i5 > 0 && rgbSprite_112.pixels_1489[(i5 - 1) + j4 * 32] == 1)
+							rgbSprite_112.pixels_1489[i5 + j4 * 32] = i;
+						else if (j4 > 0 && rgbSprite_112.pixels_1489[i5 + (j4 - 1) * 32] == 1)
+							rgbSprite_112.pixels_1489[i5 + j4 * 32] = i;
+						else if (i5 < 31 && rgbSprite_112.pixels_1489[i5 + 1 + j4 * 32] == 1)
+							rgbSprite_112.pixels_1489[i5 + j4 * 32] = i;
+						else if (j4 < 31 && rgbSprite_112.pixels_1489[i5 + (j4 + 1) * 32] == 1)
+							rgbSprite_112.pixels_1489[i5 + j4 * 32] = i;
 
 			}
 
 		} else if (i == 0) {
 			for (int j5 = 31; j5 >= 0; j5--) {
 				for (int k4 = 31; k4 >= 0; k4--)
-					if (class50_sub1_sub1_sub1_1.pixels_1489[j5 + k4 * 32] == 0 && j5 > 0 && k4 > 0
-							&& class50_sub1_sub1_sub1_1.pixels_1489[(j5 - 1) + (k4 - 1) * 32] > 0)
-						class50_sub1_sub1_sub1_1.pixels_1489[j5 + k4 * 32] = 0x302020;
+					if (rgbSprite_112.pixels_1489[j5 + k4 * 32] == 0 && j5 > 0 && k4 > 0
+							&& rgbSprite_112.pixels_1489[(j5 - 1) + (k4 - 1) * 32] > 0)
+						rgbSprite_112.pixels_1489[j5 + k4 * 32] = 0x302020;
 
 			}
 
@@ -480,7 +482,7 @@ public class ItemDefinition {
 			class50_sub1_sub1_sub1_2.height_1495 = l5;
 		}
 		if (i == 0)
-			spriteCache.put(class50_sub1_sub1_sub1_1, k);
+			spriteCache.put(rgbSprite_112, k);
 		Drawable.putPixels(l1, i2, ai1);
 		Drawable.recalcEdges(l2, j2, i3, k2, true);
 		ThreeDimensionalCanvas.anInt1532 = j1;
@@ -488,14 +490,14 @@ public class ItemDefinition {
 		ThreeDimensionalCanvas.anIntArray1538 = ai;
 		ThreeDimensionalCanvas.aBoolean1530 = true;
 		if (class16.stackable)
-			class50_sub1_sub1_sub1_1.width_1494 = 33;
+			rgbSprite_112.width_1494 = 33;
 		else
-			class50_sub1_sub1_sub1_1.width_1494 = 32;
-		class50_sub1_sub1_sub1_1.height_1495 = j;
+			rgbSprite_112.width_1494 = 32;
+		rgbSprite_112.height_1495 = j;
 		if (byte0 != -33)
 			throw new NullPointerException();
 		else
-			return class50_sub1_sub1_sub1_1;
+			return rgbSprite_112;
 	}
 
 	public static void method222(boolean flag) {

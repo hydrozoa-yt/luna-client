@@ -225,7 +225,7 @@ public class JagFont extends Drawable {
 			}
 
 		if (strikethrough)
-			Drawable.drawLine(0x800000, i1, k + (int) (anInt1506 * 0.69999999999999996D), j - i1);
+			Drawable.drawHorizontalLine(0x800000, i1, k + (int) (anInt1506 * 0.69999999999999996D), j - i1);
 	}
 
 	public void method479(boolean flag, int i, int j, int k, int l, String s, int i1) {
@@ -309,19 +309,19 @@ public class JagFont extends Drawable {
 		int remainingWidth = Drawable.width - width;
 		int characterPixelOffset = 0;
 		int characterPixel = 0;
-		if (y < Drawable.startX) {
-			int offsetY = Drawable.startX - y;
+		if (y < Drawable.startY) {
+			int offsetY = Drawable.startY - y;
 			height -= offsetY;
-			y = Drawable.startX;
+			y = Drawable.startY;
 			characterPixel += offsetY * width;
 			graphicsPixel += offsetY * Drawable.width;
 		}
 		if (y + height >= Drawable.endY)
 			height -= ((y + height) - Drawable.endY) + 1;
-		if (x < Drawable.startY) {
-			int offsetX = Drawable.startY - x;
+		if (x < Drawable.startX) {
+			int offsetX = Drawable.startX - x;
 			width -= offsetX;
-			x = Drawable.startY;
+			x = Drawable.startX;
 			characterPixel += offsetX;
 			graphicsPixel += offsetX;
 			characterPixelOffset += offsetX;
@@ -383,19 +383,19 @@ public class JagFont extends Drawable {
 		int j2 = 0;
 		if (!flag)
 			return;
-		if (k < Drawable.startX) {
-			int k2 = Drawable.startX - k;
+		if (k < Drawable.startY) {
+			int k2 = Drawable.startY - k;
 			l -= k2;
-			k = Drawable.startX;
+			k = Drawable.startY;
 			j2 += k2 * i1;
 			k1 += k2 * Drawable.width;
 		}
 		if (k + l >= Drawable.endY)
 			l -= ((k + l) - Drawable.endY) + 1;
-		if (i < Drawable.startY) {
-			int l2 = Drawable.startY - i;
+		if (i < Drawable.startX) {
+			int l2 = Drawable.startX - i;
 			i1 -= l2;
-			i = Drawable.startY;
+			i = Drawable.startX;
 			j2 += l2;
 			k1 += l2;
 			i2 += l2;

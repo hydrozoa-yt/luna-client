@@ -172,19 +172,19 @@ public class IndexedSprite extends Drawable {
 		int width_l1 = width_1518;
 		int widthDiff = Drawable.width - width_l1;
 		int j2 = 0;
-		if (x < Drawable.startX) {
-			int k2 = Drawable.startX - x;
+		if (x < Drawable.startY) {
+			int k2 = Drawable.startY - x;
 			height_k1 -= k2;
-			x = Drawable.startX;
+			x = Drawable.startY;
 			j1 += k2 * width_l1;
 			i1 += k2 * Drawable.width;
 		}
 		if (x + height_k1 > Drawable.endY)
 			height_k1 -= (x + height_k1) - Drawable.endY;
-		if (y < Drawable.startY) {
-			int l2 = Drawable.startY - y;
+		if (y < Drawable.startX) {
+			int l2 = Drawable.startX - y;
 			width_l1 -= l2;
-			y = Drawable.startY;
+			y = Drawable.startX;
 			j1 += l2;
 			i1 += l2;
 			j2 += l2;
