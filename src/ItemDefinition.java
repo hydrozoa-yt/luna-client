@@ -407,9 +407,9 @@ public class ItemDefinition {
 				return null;
 		}
 		RgbSprite rgbSprite_112 = new RgbSprite(32, 32);
-		int j1 = ThreeDimensionalCanvas.anInt1532;
-		int k1 = ThreeDimensionalCanvas.anInt1533;
-		int ai[] = ThreeDimensionalCanvas.anIntArray1538;
+		int j1 = ThreeDimensionalCanvas.halfParentWidth;
+		int k1 = ThreeDimensionalCanvas.halfParentHeight;
+		int ai[] = ThreeDimensionalCanvas.heightOffsets;
 		int ai1[] = Drawable.pixels;
 		int l1 = Drawable.width;
 		int i2 = Drawable.height;
@@ -417,10 +417,10 @@ public class ItemDefinition {
 		int k2 = Drawable.endX;
 		int l2 = Drawable.startY;
 		int i3 = Drawable.endY;
-		ThreeDimensionalCanvas.aBoolean1530 = false;
+		ThreeDimensionalCanvas.jagged = false;
 		Drawable.putPixels(32, 32, rgbSprite_112.pixels_1489);
 		Drawable.drawFullRect(0, 0, 32, 32, 0);
-		ThreeDimensionalCanvas.method493(568);
+		ThreeDimensionalCanvas.setup493();
 		int j3 = class16.modelScale;
 		if (i == -1)
 			j3 = (int) (j3 * 1.5D);
@@ -485,10 +485,10 @@ public class ItemDefinition {
 			spriteCache.put(rgbSprite_112, k);
 		Drawable.putPixels(l1, i2, ai1);
 		Drawable.recalcEdges(l2, j2, i3, k2, true);
-		ThreeDimensionalCanvas.anInt1532 = j1;
-		ThreeDimensionalCanvas.anInt1533 = k1;
-		ThreeDimensionalCanvas.anIntArray1538 = ai;
-		ThreeDimensionalCanvas.aBoolean1530 = true;
+		ThreeDimensionalCanvas.halfParentWidth = j1;
+		ThreeDimensionalCanvas.halfParentHeight = k1;
+		ThreeDimensionalCanvas.heightOffsets = ai;
+		ThreeDimensionalCanvas.jagged = true;
 		if (class16.stackable)
 			rgbSprite_112.width_1494 = 33;
 		else

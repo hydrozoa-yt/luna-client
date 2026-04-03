@@ -87,7 +87,7 @@ public class Model extends Entity {
 		sinetable = ThreeDimensionalCanvas.sineTable;
 		anIntArray1711 = ThreeDimensionalCanvas.cosineTable;
 		anIntArray1712 = ThreeDimensionalCanvas.anIntArray1548;
-		anIntArray1713 = ThreeDimensionalCanvas.anIntArray1535;
+		anIntArray1713 = ThreeDimensionalCanvas.divTable2;
 	}
 
 	public Model(int i) {
@@ -1366,8 +1366,8 @@ public class Model extends Entity {
 	}
 
 	public void draw598(int i, int j, int k, int l, int i1, int j1, int k1) {
-		int l1 = ThreeDimensionalCanvas.anInt1532;
-		int i2 = ThreeDimensionalCanvas.anInt1533;
+		int l1 = ThreeDimensionalCanvas.halfParentWidth;
+		int i2 = ThreeDimensionalCanvas.halfParentHeight;
 		int j2 = sinetable[i];
 		int k2 = anIntArray1711[i];
 		int l2 = sinetable[j];
@@ -1467,16 +1467,16 @@ public class Model extends Entity {
 				k4 /= i3;
 				i5 /= k5;
 			}
-			int i6 = anInt1706 - ThreeDimensionalCanvas.anInt1532;
-			int k6 = anInt1707 - ThreeDimensionalCanvas.anInt1533;
+			int i6 = anInt1706 - ThreeDimensionalCanvas.halfParentWidth;
+			int k6 = anInt1707 - ThreeDimensionalCanvas.halfParentHeight;
 			if (i6 > k3 && i6 < l3 && k6 > i5 && k6 < k4)
 				if (aBoolean1680)
 					anIntArray1709[anInt1708++] = i2;
 				else
 					flag1 = true;
 		}
-		int l5 = ThreeDimensionalCanvas.anInt1532;
-		int j6 = ThreeDimensionalCanvas.anInt1533;
+		int l5 = ThreeDimensionalCanvas.halfParentWidth;
+		int j6 = ThreeDimensionalCanvas.halfParentHeight;
 		int l6 = 0;
 		int i7 = 0;
 		if (i != 0) {
@@ -1693,7 +1693,7 @@ public class Model extends Entity {
 		int j = anIntArray1653[i];
 		int k = anIntArray1654[i];
 		int l = anIntArray1655[i];
-		ThreeDimensionalCanvas.aBoolean1528 = aBooleanArray1684[i];
+		ThreeDimensionalCanvas.hClip = aBooleanArray1684[i];
 		if (anIntArray1661 == null) {
             ThreeDimensionalCanvas.anInt1531 = 0;
         } else {
@@ -1706,7 +1706,7 @@ public class Model extends Entity {
 			i1 = anIntArray1659[i] & 3;
         if (i1 != 0) {
             if (i1 == 1) {
-                ThreeDimensionalCanvas.method505(anIntArray1687[j], anIntArray1687[k], anIntArray1687[l],
+                ThreeDimensionalCanvas.flatTriangle(anIntArray1687[j], anIntArray1687[k], anIntArray1687[l],
                         anIntArray1686[j], anIntArray1686[k], anIntArray1686[l], anIntArray1712[anIntArray1656[i]]);
                 return;
             }
@@ -1715,7 +1715,7 @@ public class Model extends Entity {
                 int l1 = anIntArray1665[j1];
                 int j2 = anIntArray1666[j1];
                 int l2 = anIntArray1667[j1];
-                ThreeDimensionalCanvas.method507(anIntArray1687[j], anIntArray1687[k], anIntArray1687[l],
+                ThreeDimensionalCanvas.textureTriangle(anIntArray1687[j], anIntArray1687[k], anIntArray1687[l],
                         anIntArray1686[j], anIntArray1686[k], anIntArray1686[l], anIntArray1656[i], anIntArray1657[i],
                         anIntArray1658[i], anIntArray1689[l1], anIntArray1689[j2], anIntArray1689[l2], anIntArray1690[l1],
                         anIntArray1690[j2], anIntArray1690[l2], anIntArray1691[l1], anIntArray1691[j2], anIntArray1691[l2],
@@ -1727,14 +1727,14 @@ public class Model extends Entity {
                 int i2 = anIntArray1665[k1];
                 int k2 = anIntArray1666[k1];
                 int i3 = anIntArray1667[k1];
-                ThreeDimensionalCanvas.method507(anIntArray1687[j], anIntArray1687[k], anIntArray1687[l],
+                ThreeDimensionalCanvas.textureTriangle(anIntArray1687[j], anIntArray1687[k], anIntArray1687[l],
                         anIntArray1686[j], anIntArray1686[k], anIntArray1686[l], anIntArray1656[i], anIntArray1656[i],
                         anIntArray1656[i], anIntArray1689[i2], anIntArray1689[k2], anIntArray1689[i3], anIntArray1690[i2],
                         anIntArray1690[k2], anIntArray1690[i3], anIntArray1691[i2], anIntArray1691[k2], anIntArray1691[i3],
                         colors[i]);
             }
         } else {
-            ThreeDimensionalCanvas.method503(anIntArray1687[j], anIntArray1687[k], anIntArray1687[l],
+            ThreeDimensionalCanvas.gouraudTriangle(anIntArray1687[j], anIntArray1687[k], anIntArray1687[l],
                     anIntArray1686[j], anIntArray1686[k], anIntArray1686[l], anIntArray1656[i], anIntArray1657[i],
                     anIntArray1658[i]);
             return;
@@ -1742,8 +1742,8 @@ public class Model extends Entity {
     }
 
 	public void method601(int i) {
-		int j = ThreeDimensionalCanvas.anInt1532;
-		int k = ThreeDimensionalCanvas.anInt1533;
+		int j = ThreeDimensionalCanvas.halfParentWidth;
+		int k = ThreeDimensionalCanvas.halfParentHeight;
 		int l = 0;
 		int i1 = anIntArray1653[i];
 		int j1 = anIntArray1654[i];
@@ -1821,27 +1821,27 @@ public class Model extends Entity {
 		int j7 = anIntArray1700[1];
 		int k7 = anIntArray1700[2];
 		if ((j3 - j4) * (k7 - j7) - (i7 - j7) * (j5 - j4) > 0) {
-			ThreeDimensionalCanvas.aBoolean1528 = false;
+			ThreeDimensionalCanvas.hClip = false;
 			if (l == 3) {
 				if (j3 < 0 || j4 < 0 || j5 < 0 || j3 > Drawable.lastPixelX || j4 > Drawable.lastPixelX
 						|| j5 > Drawable.lastPixelX)
-					ThreeDimensionalCanvas.aBoolean1528 = true;
+					ThreeDimensionalCanvas.hClip = true;
 				int l7;
 				if (anIntArray1659 == null)
 					l7 = 0;
 				else
 					l7 = anIntArray1659[i] & 3;
 				if (l7 == 0)
-					ThreeDimensionalCanvas.method503(i7, j7, k7, j3, j4, j5, anIntArray1701[0], anIntArray1701[1],
+					ThreeDimensionalCanvas.gouraudTriangle(i7, j7, k7, j3, j4, j5, anIntArray1701[0], anIntArray1701[1],
 							anIntArray1701[2]);
 				else if (l7 == 1)
-					ThreeDimensionalCanvas.method505(i7, j7, k7, j3, j4, j5, anIntArray1712[anIntArray1656[i]]);
+					ThreeDimensionalCanvas.flatTriangle(i7, j7, k7, j3, j4, j5, anIntArray1712[anIntArray1656[i]]);
 				else if (l7 == 2) {
 					int j8 = anIntArray1659[i] >> 2;
 					int k9 = anIntArray1665[j8];
 					int k10 = anIntArray1666[j8];
 					int k11 = anIntArray1667[j8];
-					ThreeDimensionalCanvas.method507(i7, j7, k7, j3, j4, j5, anIntArray1701[0], anIntArray1701[1],
+					ThreeDimensionalCanvas.textureTriangle(i7, j7, k7, j3, j4, j5, anIntArray1701[0], anIntArray1701[1],
 							anIntArray1701[2], anIntArray1689[k9], anIntArray1689[k10], anIntArray1689[k11],
 							anIntArray1690[k9], anIntArray1690[k10], anIntArray1690[k11], anIntArray1691[k9],
 							anIntArray1691[k10], anIntArray1691[k11], colors[i]);
@@ -1850,7 +1850,7 @@ public class Model extends Entity {
 					int l9 = anIntArray1665[k8];
 					int l10 = anIntArray1666[k8];
 					int l11 = anIntArray1667[k8];
-					ThreeDimensionalCanvas.method507(i7, j7, k7, j3, j4, j5, anIntArray1656[i], anIntArray1656[i],
+					ThreeDimensionalCanvas.textureTriangle(i7, j7, k7, j3, j4, j5, anIntArray1656[i], anIntArray1656[i],
 							anIntArray1656[i], anIntArray1689[l9], anIntArray1689[l10], anIntArray1689[l11],
 							anIntArray1690[l9], anIntArray1690[l10], anIntArray1690[l11], anIntArray1691[l9],
 							anIntArray1691[l10], anIntArray1691[l11], colors[i]);
@@ -1860,23 +1860,23 @@ public class Model extends Entity {
 				if (j3 < 0 || j4 < 0 || j5 < 0 || j3 > Drawable.lastPixelX || j4 > Drawable.lastPixelX
 						|| j5 > Drawable.lastPixelX || anIntArray1699[3] < 0
 						|| anIntArray1699[3] > Drawable.lastPixelX)
-					ThreeDimensionalCanvas.aBoolean1528 = true;
+					ThreeDimensionalCanvas.hClip = true;
 				int i8;
 				if (anIntArray1659 == null)
 					i8 = 0;
 				else
 					i8 = anIntArray1659[i] & 3;
 				if (i8 == 0) {
-					ThreeDimensionalCanvas.method503(i7, j7, k7, j3, j4, j5, anIntArray1701[0], anIntArray1701[1],
+					ThreeDimensionalCanvas.gouraudTriangle(i7, j7, k7, j3, j4, j5, anIntArray1701[0], anIntArray1701[1],
 							anIntArray1701[2]);
-					ThreeDimensionalCanvas.method503(i7, k7, anIntArray1700[3], j3, j5, anIntArray1699[3],
+					ThreeDimensionalCanvas.gouraudTriangle(i7, k7, anIntArray1700[3], j3, j5, anIntArray1699[3],
 							anIntArray1701[0], anIntArray1701[2], anIntArray1701[3]);
 					return;
 				}
 				if (i8 == 1) {
 					int l8 = anIntArray1712[anIntArray1656[i]];
-					ThreeDimensionalCanvas.method505(i7, j7, k7, j3, j4, j5, l8);
-					ThreeDimensionalCanvas.method505(i7, k7, anIntArray1700[3], j3, j5, anIntArray1699[3], l8);
+					ThreeDimensionalCanvas.flatTriangle(i7, j7, k7, j3, j4, j5, l8);
+					ThreeDimensionalCanvas.flatTriangle(i7, k7, anIntArray1700[3], j3, j5, anIntArray1699[3], l8);
 					return;
 				}
 				if (i8 == 2) {
@@ -1884,11 +1884,11 @@ public class Model extends Entity {
 					int i10 = anIntArray1665[i9];
 					int i11 = anIntArray1666[i9];
 					int i12 = anIntArray1667[i9];
-					ThreeDimensionalCanvas.method507(i7, j7, k7, j3, j4, j5, anIntArray1701[0], anIntArray1701[1],
+					ThreeDimensionalCanvas.textureTriangle(i7, j7, k7, j3, j4, j5, anIntArray1701[0], anIntArray1701[1],
 							anIntArray1701[2], anIntArray1689[i10], anIntArray1689[i11], anIntArray1689[i12],
 							anIntArray1690[i10], anIntArray1690[i11], anIntArray1690[i12], anIntArray1691[i10],
 							anIntArray1691[i11], anIntArray1691[i12], colors[i]);
-					ThreeDimensionalCanvas.method507(i7, k7, anIntArray1700[3], j3, j5, anIntArray1699[3],
+					ThreeDimensionalCanvas.textureTriangle(i7, k7, anIntArray1700[3], j3, j5, anIntArray1699[3],
 							anIntArray1701[0], anIntArray1701[2], anIntArray1701[3], anIntArray1689[i10],
 							anIntArray1689[i11], anIntArray1689[i12], anIntArray1690[i10], anIntArray1690[i11],
 							anIntArray1690[i12], anIntArray1691[i10], anIntArray1691[i11], anIntArray1691[i12],
@@ -1900,11 +1900,11 @@ public class Model extends Entity {
 					int j10 = anIntArray1665[j9];
 					int j11 = anIntArray1666[j9];
 					int j12 = anIntArray1667[j9];
-					ThreeDimensionalCanvas.method507(i7, j7, k7, j3, j4, j5, anIntArray1656[i], anIntArray1656[i],
+					ThreeDimensionalCanvas.textureTriangle(i7, j7, k7, j3, j4, j5, anIntArray1656[i], anIntArray1656[i],
 							anIntArray1656[i], anIntArray1689[j10], anIntArray1689[j11], anIntArray1689[j12],
 							anIntArray1690[j10], anIntArray1690[j11], anIntArray1690[j12], anIntArray1691[j10],
 							anIntArray1691[j11], anIntArray1691[j12], colors[i]);
-					ThreeDimensionalCanvas.method507(i7, k7, anIntArray1700[3], j3, j5, anIntArray1699[3],
+					ThreeDimensionalCanvas.textureTriangle(i7, k7, anIntArray1700[3], j3, j5, anIntArray1699[3],
 							anIntArray1656[i], anIntArray1656[i], anIntArray1656[i], anIntArray1689[j10],
 							anIntArray1689[j11], anIntArray1689[j12], anIntArray1690[j10], anIntArray1690[j11],
 							anIntArray1690[j12], anIntArray1691[j10], anIntArray1691[j11], anIntArray1691[j12],

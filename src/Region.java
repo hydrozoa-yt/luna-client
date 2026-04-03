@@ -439,7 +439,7 @@ public class Region {
                                     int i_102_;
                                     int i_103_;
                                     if (i_101_ >= 0) {
-                                        i_103_ = ThreeDimensionalCanvas.method498(i_101_, 0);
+                                        i_103_ = ThreeDimensionalCanvas.getTextureAverageColor(i_101_);
                                         i_102_ = -1;
                                     } else if (class15.anInt316 == 16711935) {
                                         i_102_ = -2;
