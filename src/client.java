@@ -651,7 +651,7 @@ public class client extends JagApplet {
             if (!parseIncomingPacket())
                 break;
 
-        if (!aBoolean1137)
+        if (!isLoggedIn1137)
             return;
         synchronized (mouseRecorder.lock) {
             if (accountFlagged) {
@@ -2980,7 +2980,7 @@ public class client extends JagApplet {
         if (moved == 0)
             return;
         int moveType = buffer.getBits(2);
-        aBoolean1137 &= flag;
+        isLoggedIn1137 &= flag;
 
         if (moveType == 0) {
             updatedPlayers[updatedPlayerCount++] = thisPlayerId;
@@ -3378,7 +3378,7 @@ public class client extends JagApplet {
     }
 
     public void updateNpcs(JagBuffer buf, boolean flag, int packetSize) {
-        aBoolean1137 &= flag;
+        isLoggedIn1137 &= flag;
         removePlayerCount = 0;
         updatedPlayerCount = 0;
         handleNpcMovement(packetSize, (byte) -58, buf);
@@ -3776,10 +3776,10 @@ public class client extends JagApplet {
             aBoolean1242 = !aBoolean1242;
         anInt1120 = 0;
         JagSocket class17 = connection;
-        aBoolean1137 = false;
+        isLoggedIn1137 = false;
         anInt850 = 0;
         login(thisPlayerName, thisPlayerPassword, true);
-        if (!aBoolean1137)
+        if (!isLoggedIn1137)
             method124(true);
         try {
             class17.closeConnection();
@@ -4241,7 +4241,7 @@ public class client extends JagApplet {
         }
     }
 
-    public void method64(int i) {
+    public void prepareLoginUI(int i) {
         if (aClass18_1198 != null)
             return;
         super.imageProducer = null;
@@ -5216,12 +5216,12 @@ public class client extends JagApplet {
             class50_sub1_sub4_sub3.animationDelay--;
     }
 
-    public void drawUI(int i) {
+    public void drawUI() {
         if (anInt1053 != -1 && (loadingStage == 2 || super.imageProducer != null)) {
             if (loadingStage == 2) {
-                method88(anInt951, anInt1053, (byte) 5);
+                updateInterfaceAniations(anInt951, anInt1053, (byte) 5);
                 if (anInt960 != -1) {
-                    method88(anInt951, anInt960, (byte) 5);
+                    updateInterfaceAniations(anInt951, anInt960, (byte) 5);
                 }
                 anInt951 = 0;
                 method147(anInt1140);
@@ -5285,7 +5285,7 @@ public class client extends JagApplet {
         if (aBoolean1065 && anInt1304 == 1)
             aBoolean1181 = true;
         if (anInt1089 != -1) {
-            boolean flag = method88(anInt951, anInt1089, (byte) 5);
+            boolean flag = updateInterfaceAniations(anInt951, anInt1089, (byte) 5);
             if (flag)
                 aBoolean1181 = true;
         }
@@ -5327,7 +5327,7 @@ public class client extends JagApplet {
             }
         }
         if (anInt988 != -1) {
-            boolean flag1 = method88(anInt951, anInt988, (byte) 5);
+            boolean flag1 = updateInterfaceAniations(anInt951, anInt988, (byte) 5);
             if (flag1)
                 aBoolean1240 = true;
         }
@@ -5460,9 +5460,6 @@ public class client extends JagApplet {
             ThreeDimensionalCanvas.heightOffsets = gameViewportOffsets;
         }
         anInt951 = 0;
-        if (i != 7) {
-            for (int l = 1; l > 0; l++) ;
-        }
     }
 
     public void method75(int i) {
@@ -5606,7 +5603,7 @@ public class client extends JagApplet {
             if (!reconnecting) {
                 statusLineOne = "";
                 statusLineTwo = "Connecting to server...";
-                method131((byte) -50, true);
+                drawLoginScreen131(true);
             }
             connection = new JagSocket((byte) 2, openSocket(43594 + portOffset), this);
             long base37name = StringUtils.encodeBase37(username);
@@ -5677,7 +5674,7 @@ public class client extends JagApplet {
                 mouseRecorder.pos = 0;
                 super.awtFocus = true;
                 aBoolean1275 = true;
-                aBoolean1137 = true;
+                isLoggedIn1137 = true;
                 outBuffer.position = 0;
                 buffer.position = 0;
                 opcode = -1;
@@ -5835,7 +5832,7 @@ public class client extends JagApplet {
                 return;
             }
             if (returnCode == 15) {
-                aBoolean1137 = true;
+                isLoggedIn1137 = true;
                 outBuffer.position = 0;
                 buffer.position = 0;
                 opcode = -1;
@@ -5875,7 +5872,7 @@ public class client extends JagApplet {
                 for (k1 += 3; k1 >= 0; k1--) {
                     statusLineOne = "You have only just left another world";
                     statusLineTwo = "Your profile will be transferred in: " + k1;
-                    method131((byte) -50, true);
+                    drawLoginScreen131(true);
                     try {
                         Thread.sleep(1200L);
                     } catch (Exception _ex) {
@@ -6547,15 +6544,15 @@ public class client extends JagApplet {
         return super.getCodeBase();
     }
 
-    public boolean method88(int i, int j, byte byte0) {
+    public boolean updateInterfaceAniations(int i, int id, byte byte0) {
         boolean flag = false;
-        JagInterface class13 = JagInterface.forId(j);
+        JagInterface class13 = JagInterface.forId(id);
         for (int k = 0; k < class13.anIntArray258.length; k++) {
             if (class13.anIntArray258[k] == -1)
                 break;
             JagInterface class13_1 = JagInterface.forId(class13.anIntArray258[k]);
             if (class13_1.anInt236 == 0)
-                flag |= method88(i, class13_1.id, (byte) 5);
+                flag |= updateInterfaceAniations(i, class13_1.id, (byte) 5);
             if (class13_1.anInt236 == 6 && (class13_1.anInt286 != -1 || class13_1.anInt287 != -1)) {
                 boolean flag1 = method95(class13_1, -693);
                 int i1;
@@ -6647,7 +6644,7 @@ public class client extends JagApplet {
         pulseCycle++;
         if (byte0 != -111)
             return;
-        if (!aBoolean1137)
+        if (!isLoggedIn1137)
             method149(-724);
         else
             method28((byte) 4);
@@ -7694,11 +7691,11 @@ public class client extends JagApplet {
         if (anInt1023 == 2)
             aClass50_Sub1_Sub1_Sub1Array896[4 + anInt1022 / 100].method461(anInt1021 - 8 - 4, anInt1020 - 8 - 4, -488);
         if (walkableInterfaceId != -1) {
-            method88(anInt951, walkableInterfaceId, (byte) 5);
+            updateInterfaceAniations(anInt951, walkableInterfaceId, (byte) 5);
             renderInterface(0, 0, JagInterface.forId(walkableInterfaceId), 0, 8);
         }
         if (anInt1169 != -1) {
-            method88(anInt951, anInt1169, (byte) 5);
+            updateInterfaceAniations(anInt951, anInt1169, (byte) 5);
             renderInterface(0, 0, JagInterface.forId(anInt1169), 0, 8);
         }
         method107(-7);
@@ -9352,12 +9349,12 @@ public class client extends JagApplet {
         } catch (Exception _ex) {
         }
         connection = null;
-        aBoolean1137 = false;
+        isLoggedIn1137 = false;
         anInt1225 = 0;
         // thisPlayerName = "";
         //  aString1093 = "";
         method49(383);
-        aBoolean1137 &= flag;
+        isLoggedIn1137 &= flag;
         sceneGraph_1164.method241((byte) 7);
         for (int plane = 0; plane < 4; plane++)
             clippingPlanes[plane].clear();
@@ -9440,10 +9437,10 @@ public class client extends JagApplet {
         if (i <= 0) {
             anInt1004 = -382;
         }
-        if (!aBoolean1137) {
-            method131((byte) -50, false);
+        if (!isLoggedIn1137) {
+            drawLoginScreen131(false);
         } else {
-            drawUI(7);
+            drawUI();
         }
         anInt1094 = 0;
     }
@@ -9618,15 +9615,12 @@ public class client extends JagApplet {
         }
     }
 
-    public void method131(byte byte0, boolean flag) {
-        method64(-188);
+    public void drawLoginScreen131(boolean flag) {
+        prepareLoginUI(-188);
         aClass18_1200.putPixels_230();
         titlebox_1292.draw_490(0, 0);
         char c = '\u0168';
         char c1 = '\310';
-        if (byte0 != -50) {
-            for (int i = 1; i > 0; i++) ;
-        }
         if (anInt1225 == 0) {
             int j = c1 / 2 + 80;
             font_p11_full.drawString(fileFetcher.aString1347, c / 2, j, true, anInt1056, 0x75a9a9);
@@ -10108,7 +10102,7 @@ public class client extends JagApplet {
     public void drawLoadingText(int i, String text) {
         anInt1322 = i;
         aString1027 = text;
-        method64(-188);
+        prepareLoginUI(-188);
         if (titleArchive == null) {
             super.drawLoadingText(i, text);
             return;
@@ -10664,7 +10658,7 @@ public class client extends JagApplet {
         class50_sub2.anInt1385 = k;
         class50_sub2.anInt1395 = k1;
         class50_sub2.delayUntilRespawn = l;
-        aBoolean1137 &= flag;
+        isLoggedIn1137 &= flag;
     }
 
     public void method146(byte byte0) {
@@ -10783,7 +10777,7 @@ public class client extends JagApplet {
                         && super.anInt30 >= l1 - 20 && super.anInt30 <= l1 + 20) {
                     anInt850 = 0;
                     login(thisPlayerName, thisPlayerPassword, false);
-                    if (aBoolean1137)
+                    if (isLoggedIn1137)
                         return;
                 }
                 j1 = super.width / 2 + 80;
@@ -11216,7 +11210,7 @@ public class client extends JagApplet {
         anIntArray1134 = new int[16384];
         colorBrown1135 = 0x766654;
         aBoolean1136 = false;
-        aBoolean1137 = false;
+        isLoggedIn1137 = false;
         anInt1140 = -110;
         aClass50_Sub1_Sub1_Sub3Array1142 = new IndexedSprite[2];
         aByte1143 = -80;
@@ -11595,7 +11589,7 @@ public class client extends JagApplet {
     public int anIntArray1134[];
     public int colorBrown1135;
     public boolean aBoolean1136;
-    public boolean aBoolean1137;
+    public boolean isLoggedIn1137;
     public int anInt1138;
     public static int anInt1139;
     public int anInt1140;
