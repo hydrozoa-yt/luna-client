@@ -88,7 +88,7 @@ public class JagFont extends Drawable {
 		method474(2245, j - method473(s, (byte) -53), i, k, s);
 	}
 
-	public void method470(int i, int j, int k, int l, String s) {
+	public void drawHorizontallyCenteredString(int i, int k, int l, String s) {
 		method474(2245, i - method473(s, (byte) -53) / 2, l, k, s);
 	}
 
