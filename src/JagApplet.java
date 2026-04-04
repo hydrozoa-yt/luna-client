@@ -152,7 +152,7 @@ public class JagApplet extends Applet implements Runnable, MouseListener, MouseM
 			i1 &= 0xff;
 			if (delayTime > 0)
 				fps = (1000 * j) / (delayTime * 256);
-			repaintGame(818);
+			repaintGame();
 			if (aBoolean11) {
 				System.out.println("ntime:" + l1);
 				for (int l2 = 0; l2 < 10; l2++) {
@@ -368,9 +368,7 @@ public class JagApplet extends Applet implements Runnable, MouseListener, MouseM
 	public void keyTyped(KeyEvent keyevent) {
 	}
 
-	public int method5(int i) {
-		while (i >= 0)
-			anInt5 = -9;
+	public int method5() {
 		int j = -1;
 		if (anInt35 != anInt34) {
 			j = inputBuffer[anInt34];
@@ -425,9 +423,7 @@ public class JagApplet extends Applet implements Runnable, MouseListener, MouseM
 	public void cleanupShutdown() {
 	}
 
-	public void repaintGame(int i) {
-		if (i > 0)
-			;
+	public void repaintGame() {
 	}
 
 	public void needsUIRedraw() {}
