@@ -409,7 +409,7 @@ public class ItemDefinition {
 		RgbSprite rgbSprite_112 = new RgbSprite(32, 32);
 		int j1 = ThreeDimensionalCanvas.halfParentWidth;
 		int k1 = ThreeDimensionalCanvas.halfParentHeight;
-		int ai[] = ThreeDimensionalCanvas.heightOffsets;
+		int ai[] = ThreeDimensionalCanvas.lineOffsets;
 		int ai1[] = Drawable.pixels;
 		int l1 = Drawable.width;
 		int i2 = Drawable.height;
@@ -487,7 +487,7 @@ public class ItemDefinition {
 		Drawable.recalcEdges(l2, j2, i3, k2, true);
 		ThreeDimensionalCanvas.halfParentWidth = j1;
 		ThreeDimensionalCanvas.halfParentHeight = k1;
-		ThreeDimensionalCanvas.heightOffsets = ai;
+		ThreeDimensionalCanvas.lineOffsets = ai;
 		ThreeDimensionalCanvas.jagged = true;
 		if (class16.stackable)
 			rgbSprite_112.width_1494 = 33;

@@ -32,10 +32,10 @@ public class JagImageProducer implements ImageProducer, ImageObserver {
 		component.prepareImage(image, this);
 		flipBuffer();
 		component.prepareImage(image, this);
-		putPixels_230();
+		pushPixels();
 	}
 
-	public void putPixels_230() {
+	public void pushPixels() {
 		Drawable.putPixels(width, height, pixels);
 	}
 

@@ -277,10 +277,10 @@ public class client extends JagApplet {
         aByteArrayArray1232 = null;
         anIntArray857 = null;
         anIntArray858 = null;
-        aClass18_1203 = null;
-        aClass18_1204 = null;
-        aClass18_1205 = null;
-        aClass18_1206 = null;
+        loginBackground_3 = null;
+        loginBackground_4 = null;
+        loginBackground_5 = null;
+        loginBackground_6 = null;
         anIntArrayArray885 = null;
         cost = null;
         walkingPathX = null;
@@ -308,9 +308,9 @@ public class client extends JagApplet {
         rbgSprite_1122 = null;
         loginFlameLeft = null;
         loginFlameRight = null;
-        aClass18_1198 = null;
-        aClass18_1199 = null;
-        aClass18_1200 = null;
+        loginBackground_1 = null;
+        loginBackground_2 = null;
+        loginboxElement = null;
         rbgSprite_compass_1116 = null;
         aClass50_Sub1_Sub1_Sub1Array1182 = null;
         aClass50_Sub1_Sub1_Sub1Array1288 = null;
@@ -321,10 +321,10 @@ public class client extends JagApplet {
         outBuffer = null;
         tempBuffer = null;
         buffer = null;
-        inventoryPanelBackground = null;
+        inventoryImage = null;
         aClass18_1157 = null;
-        aClass18_1158 = null;
-        aClass18_1159 = null;
+        gameViewportImage_1158 = null;
+        chatboxImage_1159 = null;
         aClass50_Sub1_Sub1_Sub3_1185 = null;
         mapback_1186 = null;
         aClass50_Sub1_Sub1_Sub3_1187 = null;
@@ -355,7 +355,7 @@ public class client extends JagApplet {
         anIntArray980 = null;
         anIntArray981 = null;
         anIntArray982 = null;
-        aStringArray1184 = null;
+        rightClickOptions = null;
         groundItems = null;
         gameObjectSpawnsRequestList = null;
         resetWhenBoolTrue();
@@ -549,16 +549,16 @@ public class client extends JagApplet {
                 j -= 101;
             else
                 j--;
-            aStringArray1184[anInt1183] = "Remove @whi@" + aStringArray849[j];
+            rightClickOptions[anInt1183] = "Remove @whi@" + aStringArray849[j];
             anIntArray981[anInt1183] = 775;
             anInt1183++;
-            aStringArray1184[anInt1183] = "Message @whi@" + aStringArray849[j];
+            rightClickOptions[anInt1183] = "Message @whi@" + aStringArray849[j];
             anIntArray981[anInt1183] = 984;
             anInt1183++;
             return true;
         }
         if (j >= 401 && j <= 500) {
-            aStringArray1184[anInt1183] = "Remove @whi@" + class13.aString230;
+            rightClickOptions[anInt1183] = "Remove @whi@" + class13.aString230;
             anIntArray981[anInt1183] = 859;
             anInt1183++;
             return true;
@@ -2580,7 +2580,7 @@ public class client extends JagApplet {
         else if (anInt1171 == 1 && anInt1183 < 2)
             s = aString1174 + "...";
         else
-            s = aStringArray1184[anInt1183 - 1];
+            s = rightClickOptions[anInt1183 - 1];
         if (anInt1183 > 2)
             s = s + "@whi@ / " + (anInt1183 - 2) + " more options";
         loginScreenFont.method479(true, pulseCycle / 1000, 4, 0xffffff, 15, s, 0);
@@ -2834,32 +2834,36 @@ public class client extends JagApplet {
     }
 
     public String method37(int i) {
-        if (i != -42588)
+        if (i != -42588) {
             opcode = buffer.getByte();
-        if (signlink.mainapp != null)
+        }
+        if (signlink.mainapp != null) {
             return signlink.mainapp.getDocumentBase().getHost().toLowerCase();
-        if (super.frame != null)
+        }
+        if (super.frame != null) {
             return "runescape.com";
-        else
+        } else {
             return super.getDocumentBase().getHost().toLowerCase();
+        }
     }
 
-    public void method38(int i, int j, int k, Player class50_sub1_sub4_sub3_sub2, int l) {
-        if (class50_sub1_sub4_sub3_sub2 == thisPlayer)
+    public void method38(int i, int j, int k, Player player, int l) {
+        if (player == thisPlayer)
             return;
         if (anInt1183 >= 400)
             return;
         if (l != 0)
             aBoolean963 = !aBoolean963;
         String s;
-        if (class50_sub1_sub4_sub3_sub2.anInt1759 == 0)
-            s = class50_sub1_sub4_sub3_sub2.username
-                    + method92(class50_sub1_sub4_sub3_sub2.anInt1753, thisPlayer.anInt1753, 736) + " (level-"
-                    + class50_sub1_sub4_sub3_sub2.anInt1753 + ")";
-        else
-            s = class50_sub1_sub4_sub3_sub2.username + " (skill-" + class50_sub1_sub4_sub3_sub2.anInt1759 + ")";
+        if (player.anInt1759 == 0) {
+            s = player.username
+                    + method92(player.anInt1753, thisPlayer.anInt1753, 736) + " (level-"
+                    + player.anInt1753 + ")";
+        } else {
+            s = player.username + " (skill-" + player.anInt1759 + ")";
+        }
         if (anInt1146 == 1) {
-            aStringArray1184[anInt1183] = "Use " + aString1150 + " with @whi@" + s;
+            rightClickOptions[anInt1183] = "Use " + aString1150 + " with @whi@" + s;
             anIntArray981[anInt1183] = 596;
             anIntArray982[anInt1183] = i;
             anIntArray979[anInt1183] = k;
@@ -2867,7 +2871,7 @@ public class client extends JagApplet {
             anInt1183++;
         } else if (anInt1171 == 1) {
             if ((anInt1173 & 8) == 8) {
-                aStringArray1184[anInt1183] = aString1174 + " @whi@" + s;
+                rightClickOptions[anInt1183] = aString1174 + " @whi@" + s;
                 anIntArray981[anInt1183] = 918;
                 anIntArray982[anInt1183] = i;
                 anIntArray979[anInt1183] = k;
@@ -2877,20 +2881,21 @@ public class client extends JagApplet {
         } else {
             for (int i1 = 4; i1 >= 0; i1--)
                 if (aStringArray1069[i1] != null) {
-                    aStringArray1184[anInt1183] = aStringArray1069[i1] + " @whi@" + s;
+                    rightClickOptions[anInt1183] = aStringArray1069[i1] + " @whi@" + s;
                     char c = '\0';
                     if (aStringArray1069[i1].equalsIgnoreCase("attack")) {
-                        if (class50_sub1_sub4_sub3_sub2.anInt1753 > thisPlayer.anInt1753)
+                        if (player.anInt1753 > thisPlayer.anInt1753)
                             c = '\u07D0';
-                        if (thisPlayer.team != 0 && class50_sub1_sub4_sub3_sub2.team != 0)
-                            if (thisPlayer.team == class50_sub1_sub4_sub3_sub2.team)
+                        if (thisPlayer.team != 0 && player.team != 0)
+                            if (thisPlayer.team == player.team)
                                 c = '\u07D0';
                             else
                                 c = '\0';
                     } else if (aBooleanArray1070[i1])
                         c = '\u07D0';
-                    if (i1 == 0)
+                    if (i1 == 0) {
                         anIntArray981[anInt1183] = 200 + c;
+                    }
                     if (i1 == 1)
                         anIntArray981[anInt1183] = 493 + c;
                     if (i1 == 2)
@@ -2908,7 +2913,7 @@ public class client extends JagApplet {
         }
         for (int j1 = 0; j1 < anInt1183; j1++)
             if (anIntArray981[j1] == 14) {
-                aStringArray1184[j1] = "Walk here @whi@" + s;
+                rightClickOptions[j1] = "Walk here @whi@" + s;
                 return;
             }
 
@@ -3058,7 +3063,7 @@ public class client extends JagApplet {
 
     public void method43(byte byte0) {
         if (anInt1146 == 0 && anInt1171 == 0) {
-            aStringArray1184[anInt1183] = "Walk here";
+            rightClickOptions[anInt1183] = "Walk here";
             anIntArray981[anInt1183] = 14;
             anIntArray979[anInt1183] = super.mouseX;
             anIntArray980[anInt1183] = super.mouseY;
@@ -3083,7 +3088,7 @@ public class client extends JagApplet {
                 if (def == null)
                     continue;
                 if (anInt1146 == 1) {
-                    aStringArray1184[anInt1183] = "Use " + aString1150 + " with @cya@" + def.name;
+                    rightClickOptions[anInt1183] = "Use " + aString1150 + " with @cya@" + def.name;
                     anIntArray981[anInt1183] = 467;
                     anIntArray982[anInt1183] = k;
                     anIntArray979[anInt1183] = x;
@@ -3091,7 +3096,7 @@ public class client extends JagApplet {
                     anInt1183++;
                 } else if (anInt1171 == 1) {
                     if ((anInt1173 & 4) == 4) {
-                        aStringArray1184[anInt1183] = aString1174 + " @cya@" + def.name;
+                        rightClickOptions[anInt1183] = aString1174 + " @cya@" + def.name;
                         anIntArray981[anInt1183] = 376;
                         anIntArray982[anInt1183] = k;
                         anIntArray979[anInt1183] = x;
@@ -3102,7 +3107,7 @@ public class client extends JagApplet {
                     if (def.options != null) {
                         for (int l1 = 4; l1 >= 0; l1--)
                             if (def.options[l1] != null) {
-                                aStringArray1184[anInt1183] = def.options[l1] + " @cya@"
+                                rightClickOptions[anInt1183] = def.options[l1] + " @cya@"
                                         + def.name;
                                 if (l1 == 0)
                                     anIntArray981[anInt1183] = 35;
@@ -3121,7 +3126,7 @@ public class client extends JagApplet {
                             }
 
                     }
-                    aStringArray1184[anInt1183] = Constants.DEBUG ? "Examine @cya@" + def.name + " id(" + def.id + "), pos(" + (x + nextTopLeftTileX) + ", " + (y + nextTopLeftTileY) + ")" : "Examine @cya@" + def.name;
+                    rightClickOptions[anInt1183] = Constants.DEBUG ? "Examine @cya@" + def.name + " id(" + def.id + "), pos(" + (x + nextTopLeftTileX) + ", " + (y + nextTopLeftTileY) + ")" : "Examine @cya@" + def.name;
                     anIntArray981[anInt1183] = 1412;
                     anIntArray982[anInt1183] = def.id << 14;
                     anIntArray979[anInt1183] = x;
@@ -3187,7 +3192,7 @@ public class client extends JagApplet {
                             .previous()) {
                         ItemDefinition def = ItemDefinition.forId(class50_sub1_sub4_sub1.id);
                         if (anInt1146 == 1) {
-                            aStringArray1184[anInt1183] = "Use " + aString1150 + " with @lre@" + def.name;
+                            rightClickOptions[anInt1183] = "Use " + aString1150 + " with @lre@" + def.name;
                             anIntArray981[anInt1183] = 100;
                             anIntArray982[anInt1183] = class50_sub1_sub4_sub1.id;
                             anIntArray979[anInt1183] = x;
@@ -3195,7 +3200,7 @@ public class client extends JagApplet {
                             anInt1183++;
                         } else if (anInt1171 == 1) {
                             if ((anInt1173 & 1) == 1) {
-                                aStringArray1184[anInt1183] = aString1174 + " @lre@" + def.name;
+                                rightClickOptions[anInt1183] = aString1174 + " @lre@" + def.name;
                                 anIntArray981[anInt1183] = 199;
                                 anIntArray982[anInt1183] = class50_sub1_sub4_sub1.id;
                                 anIntArray979[anInt1183] = x;
@@ -3205,7 +3210,7 @@ public class client extends JagApplet {
                         } else {
                             for (int i3 = 4; i3 >= 0; i3--)
                                 if (def.groundActions != null && def.groundActions[i3] != null) {
-                                    aStringArray1184[anInt1183] = def.groundActions[i3] + " @lre@" + def.name;
+                                    rightClickOptions[anInt1183] = def.groundActions[i3] + " @lre@" + def.name;
                                     if (i3 == 0)
                                         anIntArray981[anInt1183] = 68;
                                     if (i3 == 1)
@@ -3221,7 +3226,7 @@ public class client extends JagApplet {
                                     anIntArray980[anInt1183] = y;
                                     anInt1183++;
                                 } else if (i3 == 2) {
-                                    aStringArray1184[anInt1183] = "Take @lre@" + def.name;
+                                    rightClickOptions[anInt1183] = "Take @lre@" + def.name;
                                     anIntArray981[anInt1183] = 684;
                                     anIntArray982[anInt1183] = class50_sub1_sub4_sub1.id;
                                     anIntArray979[anInt1183] = x;
@@ -3229,7 +3234,7 @@ public class client extends JagApplet {
                                     anInt1183++;
                                 }
 
-                            aStringArray1184[anInt1183] = Constants.DEBUG ? "Examine @lre@" + def.name + " id(" + def.id + ")" : "Examine @lre@" + def.name;
+                            rightClickOptions[anInt1183] = Constants.DEBUG ? "Examine @lre@" + def.name + " id(" + def.id + ")" : "Examine @lre@" + def.name;
                             anIntArray981[anInt1183] = 1564;
                             anIntArray982[anInt1183] = class50_sub1_sub4_sub1.id;
                             anIntArray979[anInt1183] = x;
@@ -3492,28 +3497,35 @@ public class client extends JagApplet {
         }
         sprite_1017 = new RgbSprite(128, 265);
         sprite_1018 = new RgbSprite(128, 265);
-        for (int j = 0; j < 33920; j++)
+        for (int j = 0; j < 33920; j++) {
             sprite_1017.pixels_1489[j] = loginFlameLeft.pixels[j];
+        }
 
-        for (int k = 0; k < 33920; k++)
+        for (int k = 0; k < 33920; k++) {
             sprite_1018.pixels_1489[k] = loginFlameRight.pixels[k];
+        }
 
         anIntArray1311 = new int[256];
-        for (int l = 0; l < 64; l++)
+        for (int l = 0; l < 64; l++) {
             anIntArray1311[l] = l * 0x40000;
+        }
 
-        for (int i1 = 0; i1 < 64; i1++)
+        for (int i1 = 0; i1 < 64; i1++) {
             anIntArray1311[i1 + 64] = 0xff0000 + 1024 * i1;
+        }
 
-        for (int j1 = 0; j1 < 64; j1++)
+        for (int j1 = 0; j1 < 64; j1++) {
             anIntArray1311[j1 + 128] = 0xffff00 + 4 * j1;
+        }
 
-        for (int k1 = 0; k1 < 64; k1++)
+        for (int k1 = 0; k1 < 64; k1++) {
             anIntArray1311[k1 + 192] = 0xffffff;
+        }
 
         anIntArray1312 = new int[256];
-        for (int l1 = 0; l1 < 64; l1++)
+        for (int l1 = 0; l1 < 64; l1++) {
             anIntArray1312[l1] = l1 * 1024;
+        }
 
         for (int i2 = 0; i2 < 64; i2++)
             anIntArray1312[i2 + 64] = 65280 + 4 * i2;
@@ -3525,17 +3537,21 @@ public class client extends JagApplet {
             anIntArray1312[k2 + 192] = 0xffffff;
 
         anIntArray1313 = new int[256];
-        for (int l2 = 0; l2 < 64; l2++)
+        for (int l2 = 0; l2 < 64; l2++) {
             anIntArray1313[l2] = l2 * 4;
+        }
 
-        for (int i3 = 0; i3 < 64; i3++)
+        for (int i3 = 0; i3 < 64; i3++) {
             anIntArray1313[i3 + 64] = 255 + 0x40000 * i3;
+        }
 
-        for (int j3 = 0; j3 < 64; j3++)
+        for (int j3 = 0; j3 < 64; j3++) {
             anIntArray1313[j3 + 128] = 0xff00ff + 1024 * j3;
+        }
 
-        for (int k3 = 0; k3 < 64; k3++)
+        for (int k3 = 0; k3 < 64; k3++) {
             anIntArray1313[k3 + 192] = 0xffffff;
+        }
 
         anIntArray1310 = new int[256];
         anIntArray1176 = new int[32768];
@@ -3705,8 +3721,8 @@ public class client extends JagApplet {
     }
 
     public void method56(boolean flag, int i, int j, int k, int l, int i1) {
-        aClass50_Sub1_Sub1_Sub3_1095.draw_490(i1, j);
-        aClass50_Sub1_Sub1_Sub3_1096.draw_490((i1 + k) - 16, j);
+        aClass50_Sub1_Sub1_Sub3_1095.drawSprite(j, i1);
+        aClass50_Sub1_Sub1_Sub3_1096.drawSprite(j, (i1 + k) - 16);
         Drawable.drawFullRect(j, i1 + 16, 16, k - 32, anInt931);
         int j1 = ((k - 32) * k) / l;
         if (j1 < 8)
@@ -4241,37 +4257,37 @@ public class client extends JagApplet {
         }
     }
 
-    public void prepareLoginUI(int i) {
-        if (aClass18_1198 != null)
+    public void prepareLoginUI() {
+        if (loginBackground_1 != null) {
             return;
+        }
         super.imageProducer = null;
-        aClass18_1159 = null;
+        chatboxImage_1159 = null;
         aClass18_1157 = null;
-        inventoryPanelBackground = null;
-        aClass18_1158 = null;
+        inventoryImage = null;
+        gameViewportImage_1158 = null;
         chatboxButtons = null;
         aClass18_1109 = null;
-        for (aClass18_1110 = null; i >= 0; )
-            return;
+        aClass18_1110 = null;
 
         loginFlameLeft = new JagImageProducer(128, 265, getParentComponent());
-        Drawable.clear_447();
+        Drawable.clearScreen();
         loginFlameRight = new JagImageProducer(128, 265, getParentComponent());
-        Drawable.clear_447();
-        aClass18_1198 = new JagImageProducer(509, 171, getParentComponent());
-        Drawable.clear_447();
-        aClass18_1199 = new JagImageProducer(360, 132, getParentComponent());
-        Drawable.clear_447();
-        aClass18_1200 = new JagImageProducer(360, 200, getParentComponent());
-        Drawable.clear_447();
-        aClass18_1203 = new JagImageProducer(202, 238, getParentComponent());
-        Drawable.clear_447();
-        aClass18_1204 = new JagImageProducer(203, 238, getParentComponent());
-        Drawable.clear_447();
-        aClass18_1205 = new JagImageProducer(74, 94, getParentComponent());
-        Drawable.clear_447();
-        aClass18_1206 = new JagImageProducer(75, 94, getParentComponent());
-        Drawable.clear_447();
+        Drawable.clearScreen();
+        loginBackground_1 = new JagImageProducer(509, 171, getParentComponent());
+        Drawable.clearScreen();
+        loginBackground_2 = new JagImageProducer(360, 132, getParentComponent());
+        Drawable.clearScreen();
+        loginboxElement = new JagImageProducer(360, 200, getParentComponent());
+        Drawable.clearScreen();
+        loginBackground_3 = new JagImageProducer(202, 238, getParentComponent());
+        Drawable.clearScreen();
+        loginBackground_4 = new JagImageProducer(203, 238, getParentComponent());
+        Drawable.clearScreen();
+        loginBackground_5 = new JagImageProducer(74, 94, getParentComponent());
+        Drawable.clearScreen();
+        loginBackground_6 = new JagImageProducer(75, 94, getParentComponent());
+        Drawable.clearScreen();
         if (titleArchive != null) {
             loadPixelsLoginScreen_139();
             prepareLoginScreen_52(false);
@@ -4281,8 +4297,9 @@ public class client extends JagApplet {
 
     public void load() {
         drawLoadingText(20, "Starting up");
-        if (signlink.sunjava)
+        if (signlink.sunjava) {
             super.minDelay = 5;
+        }
         if (started) {
             aBoolean1016 = true;
             return;
@@ -4640,13 +4657,13 @@ public class client extends JagApplet {
             }
 
             ThreeDimensionalCanvas.init3D(765, 503);
-            clientEntireOffsets = ThreeDimensionalCanvas.heightOffsets;
+            clientEntireOffsets = ThreeDimensionalCanvas.lineOffsets;
             ThreeDimensionalCanvas.init3D(479, 96);
-            chatBoxOffsets = ThreeDimensionalCanvas.heightOffsets;
+            chatBoxOffsets = ThreeDimensionalCanvas.lineOffsets;
             ThreeDimensionalCanvas.init3D(190, 261);
-            tabsOffsets = ThreeDimensionalCanvas.heightOffsets;
+            tabsOffsets = ThreeDimensionalCanvas.lineOffsets;
             ThreeDimensionalCanvas.init3D(512, 334);
-            gameViewportOffsets = ThreeDimensionalCanvas.heightOffsets;
+            gameViewportOffsets = ThreeDimensionalCanvas.lineOffsets;
             int ai[] = new int[9];
             for (int l8 = 0; l8 < 9; l8++) {
                 int j9 = 128 + l8 * 32 + 15;
@@ -4727,7 +4744,7 @@ public class client extends JagApplet {
                     if (class13_1.anInt242 != 0)
                         flag = method23(class13_1, 8);
                     if (!flag) {
-                        aStringArray1184[anInt1183] = class13_1.tooltip;
+                        rightClickOptions[anInt1183] = class13_1.tooltip;
                         anIntArray981[anInt1183] = 352;
                         anIntArray980[anInt1183] = class13_1.id;
                         anInt1183++;
@@ -4738,14 +4755,14 @@ public class client extends JagApplet {
                     String s = class13_1.aString281;
                     if (s.indexOf(" ") != -1)
                         s = s.substring(0, s.indexOf(" "));
-                    aStringArray1184[anInt1183] = s + " @gre@" + class13_1.aString211;
+                    rightClickOptions[anInt1183] = s + " @gre@" + class13_1.aString211;
                     anIntArray981[anInt1183] = 70;
                     anIntArray980[anInt1183] = class13_1.id;
                     anInt1183++;
                 }
                 if (class13_1.anInt289 == 3 && i1 >= j2 && k1 >= k2 && i1 < j2 + class13_1.anInt241
                         && k1 < k2 + class13_1.anInt238) {
-                    aStringArray1184[anInt1183] = "Close";
+                    rightClickOptions[anInt1183] = "Close";
                     if (j == 3)
                         anIntArray981[anInt1183] = 55;
                     else
@@ -4755,21 +4772,21 @@ public class client extends JagApplet {
                 }
                 if (class13_1.anInt289 == 4 && i1 >= j2 && k1 >= k2 && i1 < j2 + class13_1.anInt241
                         && k1 < k2 + class13_1.anInt238) {
-                    aStringArray1184[anInt1183] = class13_1.tooltip;
+                    rightClickOptions[anInt1183] = class13_1.tooltip;
                     anIntArray981[anInt1183] = 890;
                     anIntArray980[anInt1183] = class13_1.id;
                     anInt1183++;
                 }
                 if (class13_1.anInt289 == 5 && i1 >= j2 && k1 >= k2 && i1 < j2 + class13_1.anInt241
                         && k1 < k2 + class13_1.anInt238) {
-                    aStringArray1184[anInt1183] = class13_1.tooltip;
+                    rightClickOptions[anInt1183] = class13_1.tooltip;
                     anIntArray981[anInt1183] = 518;
                     anIntArray980[anInt1183] = class13_1.id;
                     anInt1183++;
                 }
                 if (class13_1.anInt289 == 6 && !aBoolean1239 && i1 >= j2 && k1 >= k2 && i1 < j2 + class13_1.anInt241
                         && k1 < k2 + class13_1.anInt238) {
-                    aStringArray1184[anInt1183] = class13_1.tooltip;
+                    rightClickOptions[anInt1183] = class13_1.tooltip;
                     anIntArray981[anInt1183] = 575;
                     anIntArray980[anInt1183] = class13_1.id;
                     anInt1183++;
@@ -4791,7 +4808,7 @@ public class client extends JagApplet {
                                     ItemDefinition def = ItemDefinition.forId(class13_1.itemIds[l2] - 1);
                                     if (anInt1146 == 1 && class13_1.aBoolean229) {
                                         if (class13_1.id != itemInterfaceId || l2 != itemIndexId) {
-                                            aStringArray1184[anInt1183] = "Use " + aString1150 + " with @lre@"
+                                            rightClickOptions[anInt1183] = "Use " + aString1150 + " with @lre@"
                                                     + def.name;
                                             anIntArray981[anInt1183] = 903;
                                             anIntArray982[anInt1183] = def.id;
@@ -4801,7 +4818,7 @@ public class client extends JagApplet {
                                         }
                                     } else if (anInt1171 == 1 && class13_1.aBoolean229) {
                                         if ((anInt1173 & 0x10) == 16) {
-                                            aStringArray1184[anInt1183] = aString1174 + " @lre@" + def.name;
+                                            rightClickOptions[anInt1183] = aString1174 + " @lre@" + def.name;
                                             anIntArray981[anInt1183] = 361;
                                             anIntArray982[anInt1183] = def.id;
                                             anIntArray979[anInt1183] = l2;
@@ -4813,7 +4830,7 @@ public class client extends JagApplet {
                                             for (int i4 = 4; i4 >= 3; i4--)
                                                 if (def.inventoryActions != null
                                                         && def.inventoryActions[i4] != null) {
-                                                    aStringArray1184[anInt1183] = def.inventoryActions[i4]
+                                                    rightClickOptions[anInt1183] = def.inventoryActions[i4]
                                                             + " @lre@" + def.name;
                                                     if (i4 == 3)
                                                         anIntArray981[anInt1183] = 227;
@@ -4824,7 +4841,7 @@ public class client extends JagApplet {
                                                     anIntArray980[anInt1183] = class13_1.id;
                                                     anInt1183++;
                                                 } else if (i4 == 4) {
-                                                    aStringArray1184[anInt1183] = "Drop @lre@" + def.name;
+                                                    rightClickOptions[anInt1183] = "Drop @lre@" + def.name;
                                                     anIntArray981[anInt1183] = 891;
                                                     anIntArray982[anInt1183] = def.id;
                                                     anIntArray979[anInt1183] = l2;
@@ -4834,7 +4851,7 @@ public class client extends JagApplet {
 
                                         }
                                         if (class13_1.aBoolean288) {
-                                            aStringArray1184[anInt1183] = "Use @lre@" + def.name;
+                                            rightClickOptions[anInt1183] = "Use @lre@" + def.name;
                                             anIntArray981[anInt1183] = 52;
                                             anIntArray982[anInt1183] = def.id;
                                             anIntArray979[anInt1183] = l2;
@@ -4844,7 +4861,7 @@ public class client extends JagApplet {
                                         if (class13_1.aBoolean229 && def.inventoryActions != null) {
                                             for (int j4 = 2; j4 >= 0; j4--)
                                                 if (def.inventoryActions[j4] != null) {
-                                                    aStringArray1184[anInt1183] = def.inventoryActions[j4]
+                                                    rightClickOptions[anInt1183] = def.inventoryActions[j4]
                                                             + " @lre@" + def.name;
                                                     if (j4 == 0)
                                                         anIntArray981[anInt1183] = 961;
@@ -4862,7 +4879,7 @@ public class client extends JagApplet {
                                         if (class13_1.options != null) {
                                             for (int k4 = 4; k4 >= 0; k4--)
                                                 if (class13_1.options[k4] != null) {
-                                                    aStringArray1184[anInt1183] = class13_1.options[k4]
+                                                    rightClickOptions[anInt1183] = class13_1.options[k4]
                                                             + " @lre@" + def.name;
                                                     if (k4 == 0)
                                                         anIntArray981[anInt1183] = 9;
@@ -4881,7 +4898,7 @@ public class client extends JagApplet {
                                                 }
 
                                         }
-                                        aStringArray1184[anInt1183] = Constants.DEBUG ? "Examine @lre@" + def.name + " id(" + def.id + ")" : "Examine @lre@" + def.name;
+                                        rightClickOptions[anInt1183] = Constants.DEBUG ? "Examine @lre@" + def.name + " id(" + def.id + ")" : "Examine @lre@" + def.name;
                                         anIntArray981[anInt1183] = 1094;
                                         anIntArray982[anInt1183] = def.id;
                                         anIntArray979[anInt1183] = l2;
@@ -5225,9 +5242,9 @@ public class client extends JagApplet {
                 }
                 anInt951 = 0;
                 method147(anInt1140);
-                super.imageProducer.putPixels_230();
-                ThreeDimensionalCanvas.heightOffsets = clientEntireOffsets;
-                Drawable.clear_447();
+                super.imageProducer.pushPixels();
+                ThreeDimensionalCanvas.lineOffsets = clientEntireOffsets;
+                Drawable.clearScreen();
                 shouldRenderUI = true;
                 JagInterface class13 = JagInterface.forId(anInt1053);
                 if (class13.anInt241 == 512 && class13.anInt238 == 334 && class13.anInt236 == 0) {
@@ -5247,14 +5264,14 @@ public class client extends JagApplet {
                     method91(-521);
                     method34((byte) -79);
                 } else {
-                    method128(false);
+                    drawContextMenu();
                 }
             }
             super.imageProducer.drawImage(0, 0, super.graphics);
             return;
         }
         if (shouldRenderUI) {
-            method122(-906);
+            initUI();
             shouldRenderUI = false;
             aClass18_906.drawImage(0, 4, super.graphics);
             uiSideChatboxLeft.drawImage(0, 357, super.graphics);
@@ -5270,7 +5287,7 @@ public class client extends JagApplet {
             aBoolean950 = true;
             aBoolean1212 = true;
             if (loadingStage != 2) {
-                aClass18_1158.drawImage(4, 4, super.graphics);
+                gameViewportImage_1158.drawImage(4, 4, super.graphics);
                 aClass18_1157.drawImage(550, 4, super.graphics);
             }
             anInt1237++;
@@ -5340,7 +5357,7 @@ public class client extends JagApplet {
         if (aBoolean1065 && anInt1304 == 2)
             aBoolean1240 = true;
         if (aBoolean1240) {
-            method84(0);
+            drawChatbox();
             aBoolean1240 = false;
         }
         if (loadingStage == 2) {
@@ -5356,108 +5373,108 @@ public class client extends JagApplet {
                 outBuffer.putByte(tabId);
             }
             aBoolean950 = false;
-            aClass18_1110.putPixels_230();
-            aClass50_Sub1_Sub1_Sub3_967.draw_490(0, 0);
+            aClass18_1110.pushPixels();
+            aClass50_Sub1_Sub1_Sub3_967.drawSprite(0, 0);
             if (anInt1089 == -1) {
                 if (anIntArray1081[tabId] != -1) {
                     if (tabId == 0)
-                        aClass50_Sub1_Sub1_Sub3_880.draw_490(10, 22);
+                        aClass50_Sub1_Sub1_Sub3_880.drawSprite(22, 10);
                     if (tabId == 1)
-                        aClass50_Sub1_Sub1_Sub3_881.draw_490(8, 54);
+                        aClass50_Sub1_Sub1_Sub3_881.drawSprite(54, 8);
                     if (tabId == 2)
-                        aClass50_Sub1_Sub1_Sub3_881.draw_490(8, 82);
+                        aClass50_Sub1_Sub1_Sub3_881.drawSprite(82, 8);
                     if (tabId == 3)
-                        aClass50_Sub1_Sub1_Sub3_882.draw_490(8, 110);
+                        aClass50_Sub1_Sub1_Sub3_882.drawSprite(110, 8);
                     if (tabId == 4)
-                        aClass50_Sub1_Sub1_Sub3_884.draw_490(8, 153);
+                        aClass50_Sub1_Sub1_Sub3_884.drawSprite(153, 8);
                     if (tabId == 5)
-                        aClass50_Sub1_Sub1_Sub3_884.draw_490(8, 181);
+                        aClass50_Sub1_Sub1_Sub3_884.drawSprite(181, 8);
                     if (tabId == 6)
-                        aClass50_Sub1_Sub1_Sub3_883.draw_490(9, 209);
+                        aClass50_Sub1_Sub1_Sub3_883.drawSprite(209, 9);
                 }
                 if (anIntArray1081[0] != -1 && (anInt1213 != 0 || pulseCycle % 20 < 10))
-                    aClass50_Sub1_Sub1_Sub3Array976[0].draw_490(13, 29);
+                    aClass50_Sub1_Sub1_Sub3Array976[0].drawSprite(29, 13);
                 if (anIntArray1081[1] != -1 && (anInt1213 != 1 || pulseCycle % 20 < 10))
-                    aClass50_Sub1_Sub1_Sub3Array976[1].draw_490(11, 53);
+                    aClass50_Sub1_Sub1_Sub3Array976[1].drawSprite(53, 11);
                 if (anIntArray1081[2] != -1 && (anInt1213 != 2 || pulseCycle % 20 < 10))
-                    aClass50_Sub1_Sub1_Sub3Array976[2].draw_490(11, 82);
+                    aClass50_Sub1_Sub1_Sub3Array976[2].drawSprite(82, 11);
                 if (anIntArray1081[3] != -1 && (anInt1213 != 3 || pulseCycle % 20 < 10))
-                    aClass50_Sub1_Sub1_Sub3Array976[3].draw_490(12, 115);
+                    aClass50_Sub1_Sub1_Sub3Array976[3].drawSprite(115, 12);
                 if (anIntArray1081[4] != -1 && (anInt1213 != 4 || pulseCycle % 20 < 10))
-                    aClass50_Sub1_Sub1_Sub3Array976[4].draw_490(13, 153);
+                    aClass50_Sub1_Sub1_Sub3Array976[4].drawSprite(153, 13);
                 if (anIntArray1081[5] != -1 && (anInt1213 != 5 || pulseCycle % 20 < 10))
-                    aClass50_Sub1_Sub1_Sub3Array976[5].draw_490(11, 180);
+                    aClass50_Sub1_Sub1_Sub3Array976[5].drawSprite(180, 11);
                 if (anIntArray1081[6] != -1 && (anInt1213 != 6 || pulseCycle % 20 < 10))
-                    aClass50_Sub1_Sub1_Sub3Array976[6].draw_490(13, 208);
+                    aClass50_Sub1_Sub1_Sub3Array976[6].drawSprite(208, 13);
             }
             aClass18_1110.drawImage(516, 160, super.graphics);
-            aClass18_1109.putPixels_230();
-            aClass50_Sub1_Sub1_Sub3_966.draw_490(0, 0);
+            aClass18_1109.pushPixels();
+            aClass50_Sub1_Sub1_Sub3_966.drawSprite(0, 0);
             if (anInt1089 == -1) {
                 if (anIntArray1081[tabId] != -1) {
                     if (tabId == 7)
-                        aClass50_Sub1_Sub1_Sub3_983.draw_490(0, 42);
+                        aClass50_Sub1_Sub1_Sub3_983.drawSprite(42, 0);
                     if (tabId == 8)
-                        aClass50_Sub1_Sub1_Sub3_984.draw_490(0, 74);
+                        aClass50_Sub1_Sub1_Sub3_984.drawSprite(74, 0);
                     if (tabId == 9)
-                        aClass50_Sub1_Sub1_Sub3_984.draw_490(0, 102);
+                        aClass50_Sub1_Sub1_Sub3_984.drawSprite(102, 0);
                     if (tabId == 10)
-                        aClass50_Sub1_Sub1_Sub3_985.draw_490(1, 130);
+                        aClass50_Sub1_Sub1_Sub3_985.drawSprite(130, 1);
                     if (tabId == 11)
-                        aClass50_Sub1_Sub1_Sub3_987.draw_490(0, 173);
+                        aClass50_Sub1_Sub1_Sub3_987.drawSprite(173, 0);
                     if (tabId == 12)
-                        aClass50_Sub1_Sub1_Sub3_987.draw_490(0, 201);
+                        aClass50_Sub1_Sub1_Sub3_987.drawSprite(201, 0);
                     if (tabId == 13)
-                        aClass50_Sub1_Sub1_Sub3_986.draw_490(0, 229);
+                        aClass50_Sub1_Sub1_Sub3_986.drawSprite(229, 0);
                 }
                 if (anIntArray1081[8] != -1 && (anInt1213 != 8 || pulseCycle % 20 < 10))
-                    aClass50_Sub1_Sub1_Sub3Array976[7].draw_490(2, 74);
+                    aClass50_Sub1_Sub1_Sub3Array976[7].drawSprite(74, 2);
                 if (anIntArray1081[9] != -1 && (anInt1213 != 9 || pulseCycle % 20 < 10))
-                    aClass50_Sub1_Sub1_Sub3Array976[8].draw_490(3, 102);
+                    aClass50_Sub1_Sub1_Sub3Array976[8].drawSprite(102, 3);
                 if (anIntArray1081[10] != -1 && (anInt1213 != 10 || pulseCycle % 20 < 10))
-                    aClass50_Sub1_Sub1_Sub3Array976[9].draw_490(4, 137);
+                    aClass50_Sub1_Sub1_Sub3Array976[9].drawSprite(137, 4);
                 if (anIntArray1081[11] != -1 && (anInt1213 != 11 || pulseCycle % 20 < 10))
-                    aClass50_Sub1_Sub1_Sub3Array976[10].draw_490(2, 174);
+                    aClass50_Sub1_Sub1_Sub3Array976[10].drawSprite(174, 2);
                 if (anIntArray1081[12] != -1 && (anInt1213 != 12 || pulseCycle % 20 < 10))
-                    aClass50_Sub1_Sub1_Sub3Array976[11].draw_490(2, 201);
+                    aClass50_Sub1_Sub1_Sub3Array976[11].drawSprite(201, 2);
                 if (anIntArray1081[13] != -1 && (anInt1213 != 13 || pulseCycle % 20 < 10))
-                    aClass50_Sub1_Sub1_Sub3Array976[12].draw_490(2, 226);
+                    aClass50_Sub1_Sub1_Sub3Array976[12].drawSprite(226, 2);
             }
             aClass18_1109.drawImage(496, 466, super.graphics);
-            aClass18_1158.putPixels_230();
-            ThreeDimensionalCanvas.heightOffsets = gameViewportOffsets;
+            gameViewportImage_1158.pushPixels();
+            ThreeDimensionalCanvas.lineOffsets = gameViewportOffsets;
         }
         if (aBoolean1212) {
             aBoolean1212 = false;
-            chatboxButtons.putPixels_230();
-            aClass50_Sub1_Sub1_Sub3_965.draw_490(0, 0);
-            fontChatboxButtons.drawString("Public chat", 55, 28, true, anInt1056, 0xffffff);
+            chatboxButtons.pushPixels();
+            aClass50_Sub1_Sub1_Sub3_965.drawSprite(0, 0);
+            fontChatboxButtons.drawString("Public chat", 55, 28, true, 0xffffff);
             if (publicChatMode == 0)
-                fontChatboxButtons.drawString("On", 55, 41, true, anInt1056, 65280);
+                fontChatboxButtons.drawString("On", 55, 41, true, 65280);
             if (publicChatMode == 1)
-                fontChatboxButtons.drawString("Friends", 55, 41, true, anInt1056, 0xffff00);
+                fontChatboxButtons.drawString("Friends", 55, 41, true, 0xffff00);
             if (publicChatMode == 2)
-                fontChatboxButtons.drawString("Off", 55, 41, true, anInt1056, 0xff0000);
+                fontChatboxButtons.drawString("Off", 55, 41, true, 0xff0000);
             if (publicChatMode == 3)
-                fontChatboxButtons.drawString("Hide", 55, 41, true, anInt1056, 65535);
-            fontChatboxButtons.drawString("Private chat", 184, 28, true, anInt1056, 0xffffff);
+                fontChatboxButtons.drawString("Hide", 55, 41, true, 65535);
+            fontChatboxButtons.drawString("Private chat", 184, 28, true, 0xffffff);
             if (privateChatMode == 0)
-                fontChatboxButtons.drawString("On", 184, 41, true, anInt1056, 65280);
+                fontChatboxButtons.drawString("On", 184, 41, true, 65280);
             if (privateChatMode == 1)
-                fontChatboxButtons.drawString("Friends", 184, 41, true, anInt1056, 0xffff00);
+                fontChatboxButtons.drawString("Friends", 184, 41, true, 0xffff00);
             if (privateChatMode == 2)
-                fontChatboxButtons.drawString("Off", 184, 41, true, anInt1056, 0xff0000);
-            fontChatboxButtons.drawString("Trade/compete", 324, 28, true, anInt1056, 0xffffff);
+                fontChatboxButtons.drawString("Off", 184, 41, true, 0xff0000);
+            fontChatboxButtons.drawString("Trade/compete", 324, 28, true, 0xffffff);
             if (tradeMode == 0)
-                fontChatboxButtons.drawString("On", 324, 41, true, anInt1056, 65280);
+                fontChatboxButtons.drawString("On", 324, 41, true, 65280);
             if (tradeMode == 1)
-                fontChatboxButtons.drawString("Friends", 324, 41, true, anInt1056, 0xffff00);
+                fontChatboxButtons.drawString("Friends", 324, 41, true, 0xffff00);
             if (tradeMode == 2)
-                fontChatboxButtons.drawString("Off", 324, 41, true, anInt1056, 0xff0000);
-            fontChatboxButtons.drawString("Report abuse", 458, 33, true, anInt1056, 0xffffff);
+                fontChatboxButtons.drawString("Off", 324, 41, true, 0xff0000);
+            fontChatboxButtons.drawString("Report abuse", 458, 33, true, 0xffffff);
             chatboxButtons.drawImage(0, 453, super.graphics);
-            aClass18_1158.putPixels_230();
-            ThreeDimensionalCanvas.heightOffsets = gameViewportOffsets;
+            gameViewportImage_1158.pushPixels();
+            ThreeDimensionalCanvas.lineOffsets = gameViewportOffsets;
         }
         anInt951 = 0;
     }
@@ -5486,33 +5503,33 @@ public class client extends JagApplet {
                 if ((l == 3 || l == 7) && (l == 7 || privateChatMode == 0 || privateChatMode == 1 && method148(13292, s))) {
                     int i1 = 329 - j * 13;
                     int l1 = 4;
-                    class50_sub1_sub1_sub2.method474(2245, l1, 0, i1, "From");
-                    class50_sub1_sub1_sub2.method474(2245, l1, 65535, i1 - 1, "From");
+                    class50_sub1_sub1_sub2.drawString_474("From", 2245, l1, 0, i1);
+                    class50_sub1_sub1_sub2.drawString_474("From", 2245, l1, 65535, i1 - 1);
                     l1 += class50_sub1_sub1_sub2.method472((byte) 35, "From ");
                     if (byte0 == 1) {
-                        aClass50_Sub1_Sub1_Sub3Array1142[0].draw_490(i1 - 12, l1);
+                        aClass50_Sub1_Sub1_Sub3Array1142[0].drawSprite(l1, i1 - 12);
                         l1 += 14;
                     }
                     if (byte0 == 2) {
-                        aClass50_Sub1_Sub1_Sub3Array1142[1].draw_490(i1 - 12, l1);
+                        aClass50_Sub1_Sub1_Sub3Array1142[1].drawSprite(l1, i1 - 12);
                         l1 += 14;
                     }
-                    class50_sub1_sub1_sub2.method474(2245, l1, 0, i1, s + ": " + aStringArray1298[k]);
-                    class50_sub1_sub1_sub2.method474(2245, l1, 65535, i1 - 1, s + ": " + aStringArray1298[k]);
+                    class50_sub1_sub1_sub2.drawString_474(s + ": " + aStringArray1298[k], 2245, l1, 0, i1);
+                    class50_sub1_sub1_sub2.drawString_474(s + ": " + aStringArray1298[k], 2245, l1, 65535, i1 - 1);
                     if (++j >= 5)
                         return;
                 }
                 if (l == 5 && privateChatMode < 2) {
                     int j1 = 329 - j * 13;
-                    class50_sub1_sub1_sub2.method474(2245, 4, 0, j1, aStringArray1298[k]);
-                    class50_sub1_sub1_sub2.method474(2245, 4, 65535, j1 - 1, aStringArray1298[k]);
+                    class50_sub1_sub1_sub2.drawString_474(aStringArray1298[k], 2245, 4, 0, j1);
+                    class50_sub1_sub1_sub2.drawString_474(aStringArray1298[k], 2245, 4, 65535, j1 - 1);
                     if (++j >= 5)
                         return;
                 }
                 if (l == 6 && privateChatMode < 2) {
                     int k1 = 329 - j * 13;
-                    class50_sub1_sub1_sub2.method474(2245, 4, 0, k1, "To " + s + ": " + aStringArray1298[k]);
-                    class50_sub1_sub1_sub2.method474(2245, 4, 65535, k1 - 1, "To " + s + ": " + aStringArray1298[k]);
+                    class50_sub1_sub1_sub2.drawString_474("To " + s + ": " + aStringArray1298[k], 2245, 4, 0, k1);
+                    class50_sub1_sub1_sub2.drawString_474("To " + s + ": " + aStringArray1298[k], 2245, 4, 65535, k1 - 1);
                     if (++j >= 5)
                         return;
                 }
@@ -5603,7 +5620,7 @@ public class client extends JagApplet {
             if (!reconnecting) {
                 statusLineOne = "";
                 statusLineTwo = "Connecting to server...";
-                drawLoginScreen131(true);
+                drawLoginScreen(true);
             }
             connection = new JagSocket((byte) 2, openSocket(43594 + portOffset), this);
             long base37name = StringUtils.encodeBase37(username);
@@ -5773,7 +5790,7 @@ public class client extends JagApplet {
                 anInt1013 = 0;
                 anInt1049 = 0;
                 anInt1162 = 0;
-                method122(-906);
+                initUI();
                 return;
             }
             if (returnCode == 3) {
@@ -5872,7 +5889,7 @@ public class client extends JagApplet {
                 for (k1 += 3; k1 >= 0; k1--) {
                     statusLineOne = "You have only just left another world";
                     statusLineTwo = "Your profile will be transferred in: " + k1;
-                    drawLoginScreen131(true);
+                    drawLoginScreen(true);
                     try {
                         Thread.sleep(1200L);
                     } catch (Exception _ex) {
@@ -6053,7 +6070,7 @@ public class client extends JagApplet {
         if (class37.anInt639 != 0)
             s = s + method92(class37.anInt639, thisPlayer.anInt1753, 736) + " (level-" + class37.anInt639 + ")";
         if (anInt1146 == 1) {
-            aStringArray1184[anInt1183] = "Use " + aString1150 + " with @yel@" + s;
+            rightClickOptions[anInt1183] = "Use " + aString1150 + " with @yel@" + s;
             anIntArray981[anInt1183] = 347;
             anIntArray982[anInt1183] = k;
             anIntArray979[anInt1183] = j;
@@ -6063,7 +6080,7 @@ public class client extends JagApplet {
         }
         if (anInt1171 == 1) {
             if ((anInt1173 & 2) == 2) {
-                aStringArray1184[anInt1183] = aString1174 + " @yel@" + s;
+                rightClickOptions[anInt1183] = aString1174 + " @yel@" + s;
                 anIntArray981[anInt1183] = 67;
                 anIntArray982[anInt1183] = k;
                 anIntArray979[anInt1183] = j;
@@ -6075,7 +6092,7 @@ public class client extends JagApplet {
             if (class37.aStringArray646 != null) {
                 for (int l = 4; l >= 0; l--)
                     if (class37.aStringArray646[l] != null && !class37.aStringArray646[l].equalsIgnoreCase("attack")) {
-                        aStringArray1184[anInt1183] = class37.aStringArray646[l] + " @yel@" + s;
+                        rightClickOptions[anInt1183] = class37.aStringArray646[l] + " @yel@" + s;
                         if (l == 0)
                             anIntArray981[anInt1183] = 318;
                         if (l == 1)
@@ -6099,7 +6116,7 @@ public class client extends JagApplet {
                         char c = '\0';
                         if (class37.anInt639 > thisPlayer.anInt1753)
                             c = '\u07D0';
-                        aStringArray1184[anInt1183] = class37.aStringArray646[i1] + " @yel@" + s;
+                        rightClickOptions[anInt1183] = class37.aStringArray646[i1] + " @yel@" + s;
                         if (i1 == 0)
                             anIntArray981[anInt1183] = 318 + c;
                         if (i1 == 1)
@@ -6117,7 +6134,7 @@ public class client extends JagApplet {
                     }
 
             }
-            aStringArray1184[anInt1183] = "Examine @yel@" + s;
+            rightClickOptions[anInt1183] = "Examine @yel@" + s;
             anIntArray981[anInt1183] = 1668;
             anIntArray982[anInt1183] = k;
             anIntArray979[anInt1183] = j;
@@ -6156,8 +6173,8 @@ public class client extends JagApplet {
             for (int j2 = 0; j2 < class50_sub1_sub1_sub3.height_1519; j2++) {
                 for (int l2 = 0; l2 < class50_sub1_sub1_sub3.width_1518; l2++)
                     if (class50_sub1_sub1_sub3.pixels_1516[l1++] != 0) {
-                        int i3 = l2 + 16 + class50_sub1_sub1_sub3.attrib_1520;
-                        int j3 = j2 + 16 + class50_sub1_sub1_sub3.attrib_1521;
+                        int i3 = l2 + 16 + class50_sub1_sub1_sub3.offsetX_1520;
+                        int j3 = j2 + 16 + class50_sub1_sub1_sub3.offsetY_1521;
                         int k3 = i3 + (j3 << 7);
                         anIntArray1176[k3] = 0;
                     }
@@ -6167,10 +6184,10 @@ public class client extends JagApplet {
         }
     }
 
-    public void method84(int i) {
-        aClass18_1159.putPixels_230();
-        ThreeDimensionalCanvas.heightOffsets = chatBoxOffsets;
-        aClass50_Sub1_Sub1_Sub3_1187.draw_490(0, 0);
+    public void drawChatbox() {
+        chatboxImage_1159.pushPixels();
+        ThreeDimensionalCanvas.lineOffsets = chatBoxOffsets;
+        aClass50_Sub1_Sub1_Sub3_1187.drawSprite(0, 0);
         if (aBoolean866) {
             loginScreenFont.drawHorizontallyCenteredString(239, 40, 0, aString937);
             loginScreenFont.drawHorizontallyCenteredString(239, 60, 128, userInputString + "*");
@@ -6194,13 +6211,15 @@ public class client extends JagApplet {
             }
 
             Drawable.recalcSize();
-            if (anInt862 > 5)
+            if (anInt862 > 5) {
                 method56(true, anInt865, 463, 77, anInt862 * 14 + 7, 0);
-            if (chatboxInput.length() == 0)
+            }
+            if (chatboxInput.length() == 0) {
                 loginScreenFont.drawHorizontallyCenteredString(239, 40, 255, "Enter object name");
-            else if (anInt862 == 0)
+            } else if (anInt862 == 0) {
                 loginScreenFont.drawHorizontallyCenteredString(239, 40, 0,
                         "No matching objects found, please shorten search");
+            }
             class50_sub1_sub1_sub2.drawHorizontallyCenteredString(239, 90, 0, chatboxInput + "*");
             Drawable.drawHorizontalLine(0, 0, 77, 479);
         } else if (aString1058 != null) {
@@ -6230,23 +6249,23 @@ public class client extends JagApplet {
                     }
                     if (j1 == 0) {
                         if (k1 > 0 && k1 < 110)
-                            class50_sub1_sub1_sub2_1.method474(2245, 4, 0, k1, aStringArray1298[i1]);
+                            class50_sub1_sub1_sub2_1.drawString_474(aStringArray1298[i1], 2245, 4, 0, k1);
                         k++;
                     }
                     if ((j1 == 1 || j1 == 2) && (j1 == 1 || publicChatMode == 0 || publicChatMode == 1 && method148(13292, s1))) {
                         if (k1 > 0 && k1 < 110) {
                             int l1 = 4;
                             if (byte0 == 1) {
-                                aClass50_Sub1_Sub1_Sub3Array1142[0].draw_490(k1 - 12, l1);
+                                aClass50_Sub1_Sub1_Sub3Array1142[0].drawSprite(l1, k1 - 12);
                                 l1 += 14;
                             }
                             if (byte0 == 2) {
-                                aClass50_Sub1_Sub1_Sub3Array1142[1].draw_490(k1 - 12, l1);
+                                aClass50_Sub1_Sub1_Sub3Array1142[1].drawSprite(l1, k1 - 12);
                                 l1 += 14;
                             }
-                            class50_sub1_sub1_sub2_1.method474(2245, l1, 0, k1, s1 + ":");
+                            class50_sub1_sub1_sub2_1.drawString_474(s1 + ":", 2245, l1, 0, k1);
                             l1 += class50_sub1_sub1_sub2_1.method472((byte) 35, s1) + 8;
-                            class50_sub1_sub1_sub2_1.method474(2245, l1, 255, k1, aStringArray1298[i1]);
+                            class50_sub1_sub1_sub2_1.drawString_474(aStringArray1298[i1], 2245, l1, 255, k1);
                         }
                         k++;
                     }
@@ -6254,43 +6273,43 @@ public class client extends JagApplet {
                             && (j1 == 7 || privateChatMode == 0 || privateChatMode == 1 && method148(13292, s1))) {
                         if (k1 > 0 && k1 < 110) {
                             int i2 = 4;
-                            class50_sub1_sub1_sub2_1.method474(2245, i2, 0, k1, "From");
+                            class50_sub1_sub1_sub2_1.drawString_474("From", 2245, i2, 0, k1);
                             i2 += class50_sub1_sub1_sub2_1.method472((byte) 35, "From ");
                             if (byte0 == 1) {
-                                aClass50_Sub1_Sub1_Sub3Array1142[0].draw_490(k1 - 12, i2);
+                                aClass50_Sub1_Sub1_Sub3Array1142[0].drawSprite(i2, k1 - 12);
                                 i2 += 14;
                             }
                             if (byte0 == 2) {
-                                aClass50_Sub1_Sub1_Sub3Array1142[1].draw_490(k1 - 12, i2);
+                                aClass50_Sub1_Sub1_Sub3Array1142[1].drawSprite(i2, k1 - 12);
                                 i2 += 14;
                             }
-                            class50_sub1_sub1_sub2_1.method474(2245, i2, 0, k1, s1 + ":");
+                            class50_sub1_sub1_sub2_1.drawString_474(s1 + ":", 2245, i2, 0, k1);
                             i2 += class50_sub1_sub1_sub2_1.method472((byte) 35, s1) + 8;
-                            class50_sub1_sub1_sub2_1.method474(2245, i2, 0x800000, k1, aStringArray1298[i1]);
+                            class50_sub1_sub1_sub2_1.drawString_474(aStringArray1298[i1], 2245, i2, 0x800000, k1);
                         }
                         k++;
                     }
                     if (j1 == 4 && (tradeMode == 0 || tradeMode == 1 && method148(13292, s1))) {
                         if (k1 > 0 && k1 < 110)
-                            class50_sub1_sub1_sub2_1.method474(2245, 4, 0x800080, k1, s1 + " " + aStringArray1298[i1]);
+                            class50_sub1_sub1_sub2_1.drawString_474(s1 + " " + aStringArray1298[i1], 2245, 4, 0x800080, k1);
                         k++;
                     }
                     if (j1 == 5 && anInt1223 == 0 && privateChatMode < 2) {
                         if (k1 > 0 && k1 < 110)
-                            class50_sub1_sub1_sub2_1.method474(2245, 4, 0x800000, k1, aStringArray1298[i1]);
+                            class50_sub1_sub1_sub2_1.drawString_474(aStringArray1298[i1], 2245, 4, 0x800000, k1);
                         k++;
                     }
                     if (j1 == 6 && anInt1223 == 0 && privateChatMode < 2) {
                         if (k1 > 0 && k1 < 110) {
-                            class50_sub1_sub1_sub2_1.method474(2245, 4, 0, k1, "To " + s1 + ":");
-                            class50_sub1_sub1_sub2_1.method474(2245, 12 + class50_sub1_sub1_sub2_1.method472((byte) 35,
-                                    "To " + s1), 0x800000, k1, aStringArray1298[i1]);
+                            class50_sub1_sub1_sub2_1.drawString_474("To " + s1 + ":", 2245, 4, 0, k1);
+                            class50_sub1_sub1_sub2_1.drawString_474(aStringArray1298[i1], 2245, 12 + class50_sub1_sub1_sub2_1.method472((byte) 35,
+                                    "To " + s1), 0x800000, k1);
                         }
                         k++;
                     }
                     if (j1 == 8 && (tradeMode == 0 || tradeMode == 1 && method148(13292, s1))) {
                         if (k1 > 0 && k1 < 110)
-                            class50_sub1_sub1_sub2_1.method474(2245, 4, 0x7e3200, k1, s1 + " " + aStringArray1298[i1]);
+                            class50_sub1_sub1_sub2_1.drawString_474(s1 + " " + aStringArray1298[i1], 2245, 4, 0x7e3200, k1);
                         k++;
                     }
                 }
@@ -6305,18 +6324,17 @@ public class client extends JagApplet {
                 s = thisPlayer.username;
             else
                 s = StringUtils.formatPlayerName(thisPlayerName);
-            class50_sub1_sub1_sub2_1.method474(2245, 4, 0, 90, s + ":");
-            class50_sub1_sub1_sub2_1.method474(2245, 6 + class50_sub1_sub1_sub2_1.method472((byte) 35, s + ": "), 255,
-                    90, chatInput + "*");
+            class50_sub1_sub1_sub2_1.drawString_474(s + ":", 2245, 4, 0, 90);
+            class50_sub1_sub1_sub2_1.drawString_474(chatInput + "*", 2245, 6 + class50_sub1_sub1_sub2_1.method472((byte) 35, s + ": "), 255,
+                    90);
             Drawable.drawHorizontalLine(0, 0, 77, 479);
         }
-        if (aBoolean1065 && anInt1304 == 2)
-            method128(false);
-        aClass18_1159.drawImage(17, 357, super.graphics);
-        aClass18_1158.putPixels_230();
-        ThreeDimensionalCanvas.heightOffsets = gameViewportOffsets;
-        if (i != 0)
-            groundItems = null;
+        if (aBoolean1065 && anInt1304 == 2) {
+            drawContextMenu();
+        }
+        chatboxImage_1159.drawImage(17, 357, super.graphics);
+        gameViewportImage_1158.pushPixels();
+        ThreeDimensionalCanvas.lineOffsets = gameViewportOffsets;
     }
 
     public void method85(int i) {
@@ -6410,7 +6428,7 @@ public class client extends JagApplet {
     }
 
     public void method87(int i) {
-        aClass18_1157.putPixels_230();
+        aClass18_1157.pushPixels();
         if (minimapState == 2) {
             byte abyte0[] = mapback_1186.pixels_1516;
             int ai[] = Drawable.pixels;
@@ -6421,8 +6439,8 @@ public class client extends JagApplet {
 
             rbgSprite_compass_1116.method465(0, 567, 33, 25, 33, anIntArray1286, 0, anInt1252, 256,
                     anIntArray1180, 25);
-            aClass18_1158.putPixels_230();
-            ThreeDimensionalCanvas.heightOffsets = gameViewportOffsets;
+            gameViewportImage_1158.pushPixels();
+            ThreeDimensionalCanvas.lineOffsets = gameViewportOffsets;
             return;
         }
         int j = anInt1252 + anInt916 & 0x7ff;
@@ -6529,8 +6547,8 @@ public class client extends JagApplet {
             method130(i5, true, aClass50_Sub1_Sub1_Sub1_1036, k2);
         }
         Drawable.drawFullRect(97, 78, 3, 3, 0xffffff);
-        aClass18_1158.putPixels_230();
-        ThreeDimensionalCanvas.heightOffsets = gameViewportOffsets;
+        gameViewportImage_1158.pushPixels();
+        ThreeDimensionalCanvas.lineOffsets = gameViewportOffsets;
     }
 
     public URL getCodeBase() {
@@ -6654,7 +6672,7 @@ public class client extends JagApplet {
     public void method91(int i) {
         if (anInt1113 != 0)
             return;
-        aStringArray1184[0] = "Cancel";
+        rightClickOptions[0] = "Cancel";
         anIntArray981[0] = 1016;
         anInt1183 = 1;
         if (i >= 0)
@@ -6718,9 +6736,9 @@ public class client extends JagApplet {
             flag = true;
             for (int j = 0; j < anInt1183 - 1; j++)
                 if (anIntArray981[j] < 1000 && anIntArray981[j + 1] > 1000) {
-                    String s = aStringArray1184[j];
-                    aStringArray1184[j] = aStringArray1184[j + 1];
-                    aStringArray1184[j + 1] = s;
+                    String s = rightClickOptions[j];
+                    rightClickOptions[j] = rightClickOptions[j + 1];
+                    rightClickOptions[j + 1] = s;
                     int k = anIntArray981[j];
                     anIntArray981[j] = anIntArray981[j + 1];
                     anIntArray981[j + 1] = k;
@@ -6886,9 +6904,9 @@ public class client extends JagApplet {
             }
             outBuffer.putOpcode(40);
             region.method167(clippingPlanes, anInt1318, sceneGraph_1164);
-            if (aClass18_1158 != null) {
-                aClass18_1158.putPixels_230();
-                ThreeDimensionalCanvas.heightOffsets = gameViewportOffsets;
+            if (gameViewportImage_1158 != null) {
+                gameViewportImage_1158.pushPixels();
+                ThreeDimensionalCanvas.lineOffsets = gameViewportOffsets;
             }
             outBuffer.putOpcode(40);
             int l3 = Region.anInt150;
@@ -7619,7 +7637,7 @@ public class client extends JagApplet {
     public void method108(int i) {
         int j = loginScreenFont.method472((byte) 35, "Choose Option");
         for (int k = 0; k < anInt1183; k++) {
-            int l = loginScreenFont.method472((byte) 35, aStringArray1184[k]);
+            int l = loginScreenFont.method472((byte) 35, rightClickOptions[k]);
             if (l > j)
                 j = l;
         }
@@ -7703,7 +7721,7 @@ public class client extends JagApplet {
             method91(-521);
             method34((byte) -79);
         } else if (anInt1304 == 0)
-            method128(false);
+            drawContextMenu();
         if (anInt1319 == 1)
             aClass50_Sub1_Sub1_Sub1_1086.method461(296, 472, -488);
         if (fps) {
@@ -7731,9 +7749,9 @@ public class client extends JagApplet {
             int l = j / 60;
             j %= 60;
             if (j < 10)
-                fontChatboxButtons.method474(2245, 4, 0xffff00, 329, "System update in: " + l + ":0" + j);
+                fontChatboxButtons.drawString_474("System update in: " + l + ":0" + j, 2245, 4, 0xffff00, 329);
             else
-                fontChatboxButtons.method474(2245, 4, 0xffff00, 329, "System update in: " + l + ":" + j);
+                fontChatboxButtons.drawString_474("System update in: " + l + ":" + j, 2245, 4, 0xffff00, 329);
             anInt895++;
             if (anInt895 > 112) {
                 anInt895 = 0;
@@ -7790,14 +7808,14 @@ public class client extends JagApplet {
                             j1 = 450;
                         if (super.mouseX < 4 + j1) {
                             if (playerRights >= 1) {
-                                aStringArray1184[anInt1183] = "Report abuse @whi@" + s;
+                                rightClickOptions[anInt1183] = "Report abuse @whi@" + s;
                                 anIntArray981[anInt1183] = 2507;
                                 anInt1183++;
                             }
-                            aStringArray1184[anInt1183] = "Add ignore @whi@" + s;
+                            rightClickOptions[anInt1183] = "Add ignore @whi@" + s;
                             anIntArray981[anInt1183] = 2574;
                             anInt1183++;
-                            aStringArray1184[anInt1183] = "Add friend @whi@" + s;
+                            rightClickOptions[anInt1183] = "Add friend @whi@" + s;
                             anIntArray981[anInt1183] = 2762;
                             anInt1183++;
                         }
@@ -7849,14 +7867,14 @@ public class client extends JagApplet {
             if ((j1 == 1 || j1 == 2) && (j1 == 1 || publicChatMode == 0 || publicChatMode == 1 && method148(13292, s))) {
                 if (k > k1 - 14 && k <= k1 && !s.equals(thisPlayer.username)) {
                     if (playerRights >= 1) {
-                        aStringArray1184[anInt1183] = "Report abuse @whi@" + s;
+                        rightClickOptions[anInt1183] = "Report abuse @whi@" + s;
                         anIntArray981[anInt1183] = 507;
                         anInt1183++;
                     }
-                    aStringArray1184[anInt1183] = "Add ignore @whi@" + s;
+                    rightClickOptions[anInt1183] = "Add ignore @whi@" + s;
                     anIntArray981[anInt1183] = 574;
                     anInt1183++;
-                    aStringArray1184[anInt1183] = "Add friend @whi@" + s;
+                    rightClickOptions[anInt1183] = "Add friend @whi@" + s;
                     anIntArray981[anInt1183] = 762;
                     anInt1183++;
                 }
@@ -7866,14 +7884,14 @@ public class client extends JagApplet {
                     && (j1 == 7 || privateChatMode == 0 || privateChatMode == 1 && method148(13292, s))) {
                 if (k > k1 - 14 && k <= k1) {
                     if (playerRights >= 1) {
-                        aStringArray1184[anInt1183] = "Report abuse @whi@" + s;
+                        rightClickOptions[anInt1183] = "Report abuse @whi@" + s;
                         anIntArray981[anInt1183] = 507;
                         anInt1183++;
                     }
-                    aStringArray1184[anInt1183] = "Add ignore @whi@" + s;
+                    rightClickOptions[anInt1183] = "Add ignore @whi@" + s;
                     anIntArray981[anInt1183] = 574;
                     anInt1183++;
-                    aStringArray1184[anInt1183] = "Add friend @whi@" + s;
+                    rightClickOptions[anInt1183] = "Add friend @whi@" + s;
                     anIntArray981[anInt1183] = 762;
                     anInt1183++;
                 }
@@ -7881,7 +7899,7 @@ public class client extends JagApplet {
             }
             if (j1 == 4 && (tradeMode == 0 || tradeMode == 1 && method148(13292, s))) {
                 if (k > k1 - 14 && k <= k1) {
-                    aStringArray1184[anInt1183] = "Accept trade @whi@" + s;
+                    rightClickOptions[anInt1183] = "Accept trade @whi@" + s;
                     anIntArray981[anInt1183] = 544;
                     anInt1183++;
                 }
@@ -7891,7 +7909,7 @@ public class client extends JagApplet {
                 l++;
             if (j1 == 8 && (tradeMode == 0 || tradeMode == 1 && method148(13292, s))) {
                 if (k > k1 - 14 && k <= k1) {
-                    aStringArray1184[anInt1183] = "Accept challenge @whi@" + s;
+                    rightClickOptions[anInt1183] = "Accept challenge @whi@" + s;
                     anIntArray981[anInt1183] = 695;
                     anInt1183++;
                 }
@@ -7985,9 +8003,9 @@ public class client extends JagApplet {
 
         }
 
-        if (aClass18_1158 != null) {
-            aClass18_1158.putPixels_230();
-            ThreeDimensionalCanvas.heightOffsets = gameViewportOffsets;
+        if (gameViewportImage_1158 != null) {
+            gameViewportImage_1158.pushPixels();
+            ThreeDimensionalCanvas.lineOffsets = gameViewportOffsets;
         }
         anInt1082++;
         if (anInt1082 > 177) {
@@ -8372,7 +8390,7 @@ public class client extends JagApplet {
             }
         }
         if (i1 == 762 || i1 == 574 || i1 == 775 || i1 == 859) {
-            String s = aStringArray1184[i];
+            String s = rightClickOptions[i];
             int l1 = s.indexOf("@whi@");
             if (l1 != -1) {
                 long l3 = StringUtils.encodeBase37(s.substring(l1 + 5).trim());
@@ -8611,7 +8629,7 @@ public class client extends JagApplet {
             outBuffer.putShortAdded(interfaceId + nextTopLeftTileY);
         }
         if (i1 == 544 || i1 == 695) {
-            String s1 = aStringArray1184[i];
+            String s1 = rightClickOptions[i];
             int j2 = s1.indexOf("@whi@");
             if (j2 != -1) {
                 s1 = s1.substring(j2 + 5).trim();
@@ -8887,7 +8905,7 @@ public class client extends JagApplet {
                 anInt1332 = 3;
         }
         if (i1 == 507) {
-            String s2 = aStringArray1184[i];
+            String s2 = rightClickOptions[i];
             int k2 = s2.indexOf("@whi@");
             if (k2 != -1)
                 if (anInt1169 == -1) {
@@ -8921,7 +8939,7 @@ public class client extends JagApplet {
                 anInt1332 = 3;
         }
         if (i1 == 984) {
-            String s3 = aStringArray1184[i];
+            String s3 = rightClickOptions[i];
             int l2 = s3.indexOf("@whi@");
             if (l2 != -1) {
                 long l4 = StringUtils.encodeBase37(s3.substring(l2 + 5).trim());
@@ -9227,8 +9245,8 @@ public class client extends JagApplet {
                     int k3 = loginScreenFont.method473(s, (byte) -53);
                     int i4 = ((150 - anIntArray947[j]) * (k3 + 100)) / 150;
                     Drawable.recalcEdges(0, anInt932 - 50, 334, anInt932 + 50, true);
-                    loginScreenFont.method474(2245, (anInt932 + 50) - i4, 0, anInt933 + 1, s);
-                    loginScreenFont.method474(2245, (anInt932 + 50) - i4, k2, anInt933, s);
+                    loginScreenFont.drawString_474(s, 2245, (anInt932 + 50) - i4, 0, anInt933 + 1);
+                    loginScreenFont.drawString_474(s, 2245, (anInt932 + 50) - i4, k2, anInt933);
                     Drawable.recalcSize();
                 }
                 if (anIntArray946[j] == 5) {
@@ -9254,36 +9272,34 @@ public class client extends JagApplet {
             opcode = -1;
     }
 
-    public void method122(int i) {
-        while (i >= 0)
-            aBoolean1242 = !aBoolean1242;
-        if (aClass18_1159 != null) {
+    public void initUI() {
+        if (chatboxImage_1159 != null) {
             return;
         } else {
             resetWhenBoolTrue();
             super.imageProducer = null;
-            aClass18_1198 = null;
-            aClass18_1199 = null;
-            aClass18_1200 = null;
+            loginBackground_1 = null;
+            loginBackground_2 = null;
+            loginboxElement = null;
             loginFlameLeft = null;
             loginFlameRight = null;
-            aClass18_1203 = null;
-            aClass18_1204 = null;
-            aClass18_1205 = null;
-            aClass18_1206 = null;
-            aClass18_1159 = new JagImageProducer(479, 96, getParentComponent());
+            loginBackground_3 = null;
+            loginBackground_4 = null;
+            loginBackground_5 = null;
+            loginBackground_6 = null;
+            chatboxImage_1159 = new JagImageProducer(479, 96, getParentComponent());
             aClass18_1157 = new JagImageProducer(172, 156, getParentComponent());
-            Drawable.clear_447();
-            mapback_1186.draw_490(0, 0);
-            inventoryPanelBackground = new JagImageProducer(190, 261, getParentComponent());
-            aClass18_1158 = new JagImageProducer(512, 334, getParentComponent());
-            Drawable.clear_447();
+            Drawable.clearScreen();
+            mapback_1186.drawSprite(0, 0);
+            inventoryImage = new JagImageProducer(190, 261, getParentComponent());
+            gameViewportImage_1158 = new JagImageProducer(512, 334, getParentComponent());
+            Drawable.clearScreen();
             chatboxButtons = new JagImageProducer(496, 50, getParentComponent());
             aClass18_1109 = new JagImageProducer(269, 37, getParentComponent());
             aClass18_1110 = new JagImageProducer(249, 45, getParentComponent());
             shouldRenderUI = true;
-            aClass18_1158.putPixels_230();
-            ThreeDimensionalCanvas.heightOffsets = gameViewportOffsets;
+            gameViewportImage_1158.pushPixels();
+            ThreeDimensionalCanvas.lineOffsets = gameViewportOffsets;
             return;
         }
     }
@@ -9350,7 +9366,7 @@ public class client extends JagApplet {
         }
         connection = null;
         isLoggedIn1137 = false;
-        anInt1225 = 0;
+        loginScreenState = 0;
         // thisPlayerName = "";
         //  aString1093 = "";
         method49(383);
@@ -9369,9 +9385,9 @@ public class client extends JagApplet {
     public void method125(int i, String s, String s1) {
         while (i >= 0)
             return;
-        if (aClass18_1158 != null) {
-            aClass18_1158.putPixels_230();
-            ThreeDimensionalCanvas.heightOffsets = gameViewportOffsets;
+        if (gameViewportImage_1158 != null) {
+            gameViewportImage_1158.pushPixels();
+            ThreeDimensionalCanvas.lineOffsets = gameViewportOffsets;
             int j = 151;
             if (s != null)
                 j -= 7;
@@ -9382,12 +9398,12 @@ public class client extends JagApplet {
                 fontChatboxButtons.drawHorizontallyCenteredString(257, j, 0, s);
                 fontChatboxButtons.drawHorizontallyCenteredString(256, j - 1, 0xffffff, s);
             }
-            aClass18_1158.drawImage(4, 4, super.graphics);
+            gameViewportImage_1158.drawImage(4, 4, super.graphics);
             return;
         }
         if (super.imageProducer != null) {
-            super.imageProducer.putPixels_230();
-            ThreeDimensionalCanvas.heightOffsets = clientEntireOffsets;
+            super.imageProducer.pushPixels();
+            ThreeDimensionalCanvas.lineOffsets = clientEntireOffsets;
             int k = 251;
             char c = '\u012C';
             byte byte0 = 50;
@@ -9438,25 +9454,23 @@ public class client extends JagApplet {
             anInt1004 = -382;
         }
         if (!isLoggedIn1137) {
-            drawLoginScreen131(false);
+            drawLoginScreen(false);
         } else {
             drawUI();
         }
         anInt1094 = 0;
     }
 
-    public void method128(boolean flag) {
-        if (flag)
-            outBuffer.putByte(23);
-        int i = anInt1305;
-        int j = anInt1306;
+    public void drawContextMenu() {
+        int beginX = anInt1305;
+        int beginY = anInt1306;
         int k = anInt1307;
         int l = anInt1308;
         int i1 = 0x5d5447;
-        Drawable.drawFullRect(i, j, k, l, i1);
-        Drawable.drawFullRect(i + 1, j + 1, k - 2, 16, 0);
-        Drawable.drawRect(i + 1, j + 18, k - 2, l - 19, 0);
-        loginScreenFont.method474(2245, i + 3, i1, j + 14, "Choose Option");
+        Drawable.drawFullRect(beginX, beginY, k, l, i1);
+        Drawable.drawFullRect(beginX + 1, beginY + 1, k - 2, 16, 0);
+        Drawable.drawRect(beginX + 1, beginY + 18, k - 2, l - 19, 0);
+        loginScreenFont.drawString_474("Choose Option", 2245, beginX + 3, i1, beginY + 14);
         int j1 = super.mouseX;
         int k1 = super.mouseY;
         if (anInt1304 == 0) {
@@ -9471,14 +9485,13 @@ public class client extends JagApplet {
             j1 -= 17;
             k1 -= 357;
         }
-        for (int l1 = 0; l1 < anInt1183; l1++) {
-            int i2 = j + 31 + (anInt1183 - 1 - l1) * 15;
+        for (int optionCounter = 0; optionCounter < anInt1183; optionCounter++) {
+            int i2 = beginY + 31 + (anInt1183 - 1 - optionCounter) * 15;
             int j2 = 0xffffff;
-            if (j1 > i && j1 < i + k && k1 > i2 - 13 && k1 < i2 + 3)
+            if (j1 > beginX && j1 < beginX + k && k1 > i2 - 13 && k1 < i2 + 3)
                 j2 = 0xffff00;
-            loginScreenFont.drawString(aStringArray1184[l1], j2, i + 3, i2, true);
+            loginScreenFont.drawString(rightClickOptions[optionCounter], j2, beginX + 3, i2, true);
         }
-
     }
 
     public int method129(int i, int j, JagInterface class13) {
@@ -9615,34 +9628,36 @@ public class client extends JagApplet {
         }
     }
 
-    public void drawLoginScreen131(boolean flag) {
-        prepareLoginUI(-188);
-        aClass18_1200.putPixels_230();
-        titlebox_1292.draw_490(0, 0);
-        char c = '\u0168';
-        char c1 = '\310';
-        if (anInt1225 == 0) {
+    public void drawLoginScreen(boolean flag) {
+        prepareLoginUI();
+        loginboxElement.pushPixels();
+        titlebox_1292.drawSprite(0, 0);
+        //char c = '\u0168';
+        //char c1 = '\310';
+        int c = 360;
+        int c1 = 200;
+        if (loginScreenState == 0) {
             int j = c1 / 2 + 80;
-            font_p11_full.drawString(fileFetcher.aString1347, c / 2, j, true, anInt1056, 0x75a9a9);
+            font_p11_full.drawString(fileFetcher.aString1347, c / 2, j, true, 0x75a9a9);
             j = c1 / 2 - 20;
-            loginScreenFont.drawString("Welcome to RuneScape", c / 2, j, true, anInt1056, 0xffff00);
+            loginScreenFont.drawString("Welcome to RuneScape", c / 2, j, true, 0xffff00);
             j += 30;
             int i1 = c / 2 - 80;
             int l1 = c1 / 2 + 20;
-            titlebutton_1293.draw_490(l1 - 20, i1 - 73);
-            loginScreenFont.drawString("New User", i1, l1 + 5, true, anInt1056, 0xffffff);
+            titlebutton_1293.drawSprite(i1 - 73, l1 - 20);
+            loginScreenFont.drawString("New User", i1, l1 + 5, true, 0xffffff);
             i1 = c / 2 + 80;
-            titlebutton_1293.draw_490(l1 - 20, i1 - 73);
-            loginScreenFont.drawString("Existing User", i1, l1 + 5, true, anInt1056, 0xffffff);
+            titlebutton_1293.drawSprite(i1 - 73, l1 - 20);
+            loginScreenFont.drawString("Existing User", i1, l1 + 5, true, 0xffffff);
         }
-        if (anInt1225 == 2) {
+        if (loginScreenState == 2) {
             int k = c1 / 2 - 40;
             if (statusLineOne.length() > 0) {
-                loginScreenFont.drawString(statusLineOne, c / 2, k - 15, true, anInt1056, 0xffff00);
-                loginScreenFont.drawString(statusLineTwo, c / 2, k, true, anInt1056, 0xffff00);
+                loginScreenFont.drawString(statusLineOne, c / 2, k - 15, true, 0xffff00);
+                loginScreenFont.drawString(statusLineTwo, c / 2, k, true, 0xffff00);
                 k += 30;
             } else {
-                loginScreenFont.drawString(statusLineTwo, c / 2, k - 7, true, anInt1056, 0xffff00);
+                loginScreenFont.drawString(statusLineTwo, c / 2, k - 7, true, 0xffff00);
                 k += 30;
             }
             loginScreenFont.drawString("Username: " + thisPlayerName
@@ -9654,43 +9669,38 @@ public class client extends JagApplet {
             if (!flag) {
                 int j1 = c / 2 - 80;
                 int i2 = c1 / 2 + 50;
-                titlebutton_1293.draw_490(i2 - 20, j1 - 73);
-                loginScreenFont.drawString("Login", j1, i2 + 5, true, anInt1056, 0xffffff);
+                titlebutton_1293.drawSprite(j1 - 73, i2 - 20);
+                loginScreenFont.drawString("Login", j1, i2 + 5, true, 0xffffff);
                 j1 = c / 2 + 80;
-                titlebutton_1293.draw_490(i2 - 20, j1 - 73);
-                loginScreenFont.drawString("Cancel", j1, i2 + 5, true, anInt1056, 0xffffff);
+                titlebutton_1293.drawSprite(j1 - 73, i2 - 20);
+                loginScreenFont.drawString("Cancel", j1, i2 + 5, true, 0xffffff);
             }
         }
-        if (anInt1225 == 3) {
-            loginScreenFont.drawString("Create a free account", c / 2, c1 / 2 - 60, true, anInt1056, 0xffff00
-            );
+        if (loginScreenState == 3) {
+            loginScreenFont.drawString("Create a free account", c / 2, c1 / 2 - 60, true, 0xffff00);
             int l = c1 / 2 - 35;
-            loginScreenFont.drawString("To create a new account you need to", c / 2, l, true, anInt1056, 0xffffff
-            );
+            loginScreenFont.drawString("To create a new account you need to", c / 2, l, true, 0xffffff);
             l += 15;
-            loginScreenFont.drawString("go back to the main RuneScape webpage", c / 2, l, true, anInt1056, 0xffffff
-            );
+            loginScreenFont.drawString("go back to the main RuneScape webpage", c / 2, l, true, 0xffffff);
             l += 15;
-            loginScreenFont.drawString("and choose the 'create account'", c / 2, l, true, anInt1056, 0xffffff
-            );
+            loginScreenFont.drawString("and choose the 'create account'", c / 2, l, true, 0xffffff);
             l += 15;
-            loginScreenFont.drawString("button near the top of that page.", c / 2, l, true, anInt1056, 0xffffff
-            );
+            loginScreenFont.drawString("button near the top of that page.", c / 2, l, true, 0xffffff);
             l += 15;
             int k1 = c / 2;
             int j2 = c1 / 2 + 50;
-            titlebutton_1293.draw_490(j2 - 20, k1 - 73);
-            loginScreenFont.drawString("Cancel", k1, j2 + 5, true, anInt1056, 0xffffff);
+            titlebutton_1293.drawSprite(k1 - 73, j2 - 20);
+            loginScreenFont.drawString("Cancel", k1, j2 + 5, true, 0xffffff);
         }
-        aClass18_1200.drawImage(202, 171, super.graphics);
+        loginboxElement.drawImage(202, 171, super.graphics);
         if (shouldRenderUI) {
             shouldRenderUI = false;
-            aClass18_1198.drawImage(128, 0, super.graphics);
-            aClass18_1199.drawImage(202, 371, super.graphics);
-            aClass18_1203.drawImage(0, 265, super.graphics);
-            aClass18_1204.drawImage(562, 265, super.graphics);
-            aClass18_1205.drawImage(128, 171, super.graphics);
-            aClass18_1206.drawImage(562, 171, super.graphics);
+            loginBackground_1.drawImage(128, 0, super.graphics);
+            loginBackground_2.drawImage(202, 371, super.graphics);
+            loginBackground_3.drawImage(0, 265, super.graphics);
+            loginBackground_4.drawImage(562, 265, super.graphics);
+            loginBackground_5.drawImage(128, 171, super.graphics);
+            loginBackground_6.drawImage(562, 171, super.graphics);
         }
     }
 
@@ -10007,18 +10017,18 @@ public class client extends JagApplet {
     }
 
     public void method134(byte byte0) {
-        inventoryPanelBackground.putPixels_230();
-        ThreeDimensionalCanvas.heightOffsets = tabsOffsets;
-        aClass50_Sub1_Sub1_Sub3_1185.draw_490(0, 0);
+        inventoryImage.pushPixels();
+        ThreeDimensionalCanvas.lineOffsets = tabsOffsets;
+        aClass50_Sub1_Sub1_Sub3_1185.drawSprite(0, 0);
         if (anInt1089 != -1)
             renderInterface(0, 0, JagInterface.forId(anInt1089), 0, 8);
         else if (anIntArray1081[tabId] != -1)
             renderInterface(0, 0, JagInterface.forId(anIntArray1081[tabId]), 0, 8);
         if (aBoolean1065 && anInt1304 == 1)
-            method128(false);
-        inventoryPanelBackground.drawImage(553, 205, super.graphics);
-        aClass18_1158.putPixels_230();
-        ThreeDimensionalCanvas.heightOffsets = gameViewportOffsets;
+            drawContextMenu();
+        inventoryImage.drawImage(553, 205, super.graphics);
+        gameViewportImage_1158.pushPixels();
+        ThreeDimensionalCanvas.lineOffsets = gameViewportOffsets;
         if (byte0 == 7)
             ;
     }
@@ -10102,12 +10112,12 @@ public class client extends JagApplet {
     public void drawLoadingText(int i, String text) {
         anInt1322 = i;
         aString1027 = text;
-        prepareLoginUI(-188);
+        prepareLoginUI();
         if (titleArchive == null) {
             super.drawLoadingText(i, text);
             return;
         }
-        aClass18_1200.putPixels_230();
+        loginboxElement.pushPixels();
         char c = '\u0168';
         char c1 = '\310';
         byte byte0 = 20;
@@ -10119,42 +10129,42 @@ public class client extends JagApplet {
         Drawable.drawFullRect(c / 2 - 150, j + 2, i * 3, 30, 0x8c1111);
         Drawable.drawFullRect((c / 2 - 150) + i * 3, j + 2, 300 - i * 3, 30, 0);
         loginScreenFont.drawHorizontallyCenteredString(c / 2, (c1 / 2 + 5) - byte0, 0xffffff, text);
-        aClass18_1200.drawImage(202, 171, super.graphics);
+        loginboxElement.drawImage(202, 171, super.graphics);
         if (shouldRenderUI) {
             shouldRenderUI = false;
             if (!isThreadStarted) {
                 loginFlameLeft.drawImage(0, 0, super.graphics);
                 loginFlameRight.drawImage(637, 0, super.graphics);
             }
-            aClass18_1198.drawImage(128, 0, super.graphics);
-            aClass18_1199.drawImage(202, 371, super.graphics);
-            aClass18_1203.drawImage(0, 265, super.graphics);
-            aClass18_1204.drawImage(562, 265, super.graphics);
-            aClass18_1205.drawImage(128, 171, super.graphics);
-            aClass18_1206.drawImage(562, 171, super.graphics);
+            loginBackground_1.drawImage(128, 0, super.graphics);
+            loginBackground_2.drawImage(202, 371, super.graphics);
+            loginBackground_3.drawImage(0, 265, super.graphics);
+            loginBackground_4.drawImage(562, 265, super.graphics);
+            loginBackground_5.drawImage(128, 171, super.graphics);
+            loginBackground_6.drawImage(562, 171, super.graphics);
         }
     }
 
     public void loadPixelsLoginScreen_139() {
         byte[] titleBytes = titleArchive.get("title.dat");
         RgbSprite tmpSprite = new RgbSprite(titleBytes, this);
-        loginFlameLeft.putPixels_230();
+        loginFlameLeft.pushPixels();
         tmpSprite.method459(0, 0);
-        loginFlameRight.putPixels_230();
+        loginFlameRight.pushPixels();
         tmpSprite.method459(0, -637);
-        aClass18_1198.putPixels_230();
+        loginBackground_1.pushPixels();
         tmpSprite.method459(0, -128);
-        aClass18_1199.putPixels_230();
+        loginBackground_2.pushPixels();
         tmpSprite.method459(-371, -202);
-        aClass18_1200.putPixels_230();
+        loginboxElement.pushPixels();
         tmpSprite.method459(-171, -202);
-        aClass18_1203.putPixels_230();
+        loginBackground_3.pushPixels();
         tmpSprite.method459(-265, 0);
-        aClass18_1204.putPixels_230();
+        loginBackground_4.pushPixels();
         tmpSprite.method459(-265, -562);
-        aClass18_1205.putPixels_230();
+        loginBackground_5.pushPixels();
         tmpSprite.method459(-171, -128);
-        aClass18_1206.putPixels_230();
+        loginBackground_6.pushPixels();
         tmpSprite.method459(-171, -562);
         int[] ai = new int[tmpSprite.width_1490];
         for (int i = 0; i < tmpSprite.height_1491; i++) {
@@ -10168,26 +10178,26 @@ public class client extends JagApplet {
             }
         }
 
-        loginFlameLeft.putPixels_230();
+        loginFlameLeft.pushPixels();
         tmpSprite.method459(0, 382);
-        loginFlameRight.putPixels_230();
+        loginFlameRight.pushPixels();
         tmpSprite.method459(0, -255);
-        aClass18_1198.putPixels_230();
+        loginBackground_1.pushPixels();
         tmpSprite.method459(0, 254);
-        aClass18_1199.putPixels_230();
+        loginBackground_2.pushPixels();
         tmpSprite.method459(-371, 180);
-        aClass18_1200.putPixels_230();
+        loginboxElement.pushPixels();
         tmpSprite.method459(-171, 180);
-        aClass18_1203.putPixels_230();
+        loginBackground_3.pushPixels();
         tmpSprite.method459(-265, 382);
-        aClass18_1204.putPixels_230();
+        loginBackground_4.pushPixels();
         tmpSprite.method459(-265, -180);
-        aClass18_1205.putPixels_230();
+        loginBackground_5.pushPixels();
         tmpSprite.method459(-171, 254);
-        aClass18_1206.putPixels_230();
+        loginBackground_6.pushPixels();
         tmpSprite.method459(-171, -180);
         tmpSprite = new RgbSprite(titleArchive, "logo", 0);
-        aClass18_1198.putPixels_230();
+        loginBackground_1.pushPixels();
         // draw the logo on the login screen
         tmpSprite.method461(18, 382 - tmpSprite.width_1490 / 2 - 128, -488);
         tmpSprite = null;
@@ -10339,10 +10349,10 @@ public class client extends JagApplet {
                                             class50_sub1_sub1_sub1_2.method461(l6, i6, -488);
                                         if (class50_sub1_sub1_sub1_2.width_1494 == 33 || class13_1.itemAmounts[i3] != 1) {
                                             int k12 = class13_1.itemAmounts[i3];
-                                            font_p11_full.method474(2245, i6 + 1 + i7, 0, l6 + 10 + j8,
-                                                    addMoneySuffix(k12, -243));
-                                            font_p11_full.method474(2245, i6 + i7, 0xffff00,
-                                                    l6 + 9 + j8, addMoneySuffix(k12, -243));
+                                            font_p11_full.drawString_474(addMoneySuffix(k12, -243), 2245, i6 + 1 + i7, 0, l6 + 10 + j8
+                                            );
+                                            font_p11_full.drawString_474(addMoneySuffix(k12, -243), 2245, i6 + i7, 0xffff00,
+                                                    l6 + 9 + j8);
                                         }
                                     }
                                 }
@@ -10456,7 +10466,7 @@ public class client extends JagApplet {
                         }
                         if (class13_1.aBoolean272)
                             class50_sub1_sub1_sub2.drawString(s3, k2
-                                    + class13_1.anInt241 / 2, j7, class13_1.aBoolean247, anInt1056, j4);
+                                    + class13_1.anInt241 / 2, j7, class13_1.aBoolean247, j4);
                         else
                             class50_sub1_sub1_sub2.drawString(s3, j4, k2, j7, class13_1.aBoolean247);
                     }
@@ -10508,7 +10518,7 @@ public class client extends JagApplet {
                                     int i10 = k2 + k6 * (115 + class13_1.anInt263);
                                     int i11 = l2 + l5 * (12 + class13_1.anInt244);
                                     if (class13_1.aBoolean272)
-                                        class50_sub1_sub1_sub2_1.drawString(s6, i10 + class13_1.anInt241 / 2, i11, class13_1.aBoolean247, anInt1056,
+                                        class50_sub1_sub1_sub2_1.drawString(s6, i10 + class13_1.anInt241 / 2, i11, class13_1.aBoolean247,
                                                 class13_1.anInt240);
                                     else
                                         class50_sub1_sub1_sub2_1.drawString(s6, class13_1.anInt240, i10, i11,
@@ -10704,21 +10714,21 @@ public class client extends JagApplet {
         if (super.imageProducer != null)
             return;
         resetWhenBoolTrue();
-        aClass18_1198 = null;
-        aClass18_1199 = null;
-        aClass18_1200 = null;
+        loginBackground_1 = null;
+        loginBackground_2 = null;
+        loginboxElement = null;
         if (i >= 0)
             anInt1004 = -4;
         loginFlameLeft = null;
         loginFlameRight = null;
-        aClass18_1203 = null;
-        aClass18_1204 = null;
-        aClass18_1205 = null;
-        aClass18_1206 = null;
-        aClass18_1159 = null;
+        loginBackground_3 = null;
+        loginBackground_4 = null;
+        loginBackground_5 = null;
+        loginBackground_6 = null;
+        chatboxImage_1159 = null;
         aClass18_1157 = null;
-        inventoryPanelBackground = null;
-        aClass18_1158 = null;
+        inventoryImage = null;
+        gameViewportImage_1158 = null;
         chatboxButtons = null;
         aClass18_1109 = null;
         aClass18_1110 = null;
@@ -10741,13 +10751,13 @@ public class client extends JagApplet {
     public void method149(int i) {
         while (i >= 0)
             opcode = buffer.getByte();
-        if (anInt1225 == 0) {
+        if (loginScreenState == 0) {
             int j = super.width / 2 - 80;
             int i1 = super.height / 2 + 20;
             i1 += 20;
             if (super.anInt28 == 1 && super.anInt29 >= j - 75 && super.anInt29 <= j + 75 && super.anInt30 >= i1 - 20
                     && super.anInt30 <= i1 + 20) {
-                anInt1225 = 3;
+                loginScreenState = 3;
                 anInt977 = 0;
             }
             j = super.width / 2 + 80;
@@ -10755,12 +10765,12 @@ public class client extends JagApplet {
                     && super.anInt30 <= i1 + 20) {
                 statusLineOne = "";
                 statusLineTwo = "Enter your username & password.";
-                anInt1225 = 2;
+                loginScreenState = 2;
                 anInt977 = 0;
                 return;
             }
         } else {
-            if (anInt1225 == 2) {
+            if (loginScreenState == 2) {
                 int k = super.height / 2 - 40;
                 k += 30;
                 k += 25;
@@ -10783,7 +10793,7 @@ public class client extends JagApplet {
                 j1 = super.width / 2 + 80;
                 if (super.anInt28 == 1 && super.anInt29 >= j1 - 75 && super.anInt29 <= j1 + 75
                         && super.anInt30 >= l1 - 20 && super.anInt30 <= l1 + 20) {
-                    anInt1225 = 0;
+                    loginScreenState = 0;
                     //thisPlayerName = "";
                     //aString1093 = "";
                 }
@@ -10821,13 +10831,13 @@ public class client extends JagApplet {
                 } while (true);
                 return;
             }
-            if (anInt1225 == 3) {
+            if (loginScreenState == 3) {
                 int l = super.width / 2;
                 int k1 = super.height / 2 + 50;
                 k1 += 20;
                 if (super.anInt28 == 1 && super.anInt29 >= l - 75 && super.anInt29 <= l + 75
                         && super.anInt30 >= k1 - 20 && super.anInt30 <= k1 + 20)
-                    anInt1225 = 0;
+                    loginScreenState = 0;
             }
         }
     }
@@ -10851,7 +10861,7 @@ public class client extends JagApplet {
                 if (class50_sub1_sub1_sub3_2 != null) {
                     int i6 = (class47_2.anInt801 * 4 - class50_sub1_sub1_sub3_2.width_1518) / 2;
                     int j6 = (class47_2.anInt775 * 4 - class50_sub1_sub1_sub3_2.height_1519) / 2;
-                    class50_sub1_sub1_sub3_2.draw_490(48 + (104 - i - class47_2.anInt775) * 4 + j6, 48 + k * 4 + i6
+                    class50_sub1_sub1_sub3_2.drawSprite(48 + k * 4 + i6, 48 + (104 - i - class47_2.anInt775) * 4 + j6
                     );
                 }
             } else {
@@ -10922,7 +10932,7 @@ public class client extends JagApplet {
                 if (class50_sub1_sub1_sub3_1 != null) {
                     int j5 = (class47_1.anInt801 * 4 - class50_sub1_sub1_sub3_1.width_1518) / 2;
                     int k5 = (class47_1.anInt775 * 4 - class50_sub1_sub1_sub3_1.height_1519) / 2;
-                    class50_sub1_sub1_sub3_1.draw_490(48 + (104 - i - class47_1.anInt775) * 4 + k5, 48 + k * 4 + j5
+                    class50_sub1_sub1_sub3_1.drawSprite(48 + k * 4 + j5, 48 + (104 - i - class47_1.anInt775) * 4 + k5
                     );
                 }
             } else if (j3 == 9) {
@@ -10953,7 +10963,7 @@ public class client extends JagApplet {
                 if (class50_sub1_sub1_sub3 != null) {
                     int i4 = (class47.anInt801 * 4 - class50_sub1_sub1_sub3.width_1518) / 2;
                     int j4 = (class47.anInt775 * 4 - class50_sub1_sub1_sub3.height_1519) / 2;
-                    class50_sub1_sub1_sub3.draw_490(48 + (104 - i - class47.anInt775) * 4 + j4, 48 + k * 4 + i4);
+                    class50_sub1_sub1_sub3.drawSprite(48 + k * 4 + i4, 48 + (104 - i - class47.anInt775) * 4 + j4);
                 }
             }
         }
@@ -11016,14 +11026,14 @@ public class client extends JagApplet {
         Model.anInt1708 = 0;
         Model.anInt1706 = super.mouseX - 4;
         Model.anInt1707 = super.mouseY - 4;
-        Drawable.clear_447();
+        Drawable.clearScreen();
         sceneGraph_1164.method280(anInt1216, k, 0, anInt1217, anInt1218, anInt1220, anInt1219);
         sceneGraph_1164.method255(anInt897);
         method121(false);
         method127(true);
         animateTexture_65(l2);
         method109(30729);
-        aClass18_1158.drawImage(4, 4, super.graphics);
+        gameViewportImage_1158.drawImage(4, 4, super.graphics);
         anInt1216 = i1;
         anInt1217 = j1;
         anInt1218 = k1;
@@ -11228,7 +11238,7 @@ public class client extends JagApplet {
         anIntArray1180 = new int[33];
         aBoolean1181 = false;
         aClass50_Sub1_Sub1_Sub1Array1182 = new RgbSprite[20];
-        aStringArray1184 = new String[500];
+        rightClickOptions = new String[500];
         buffer = JagBuffer.allocate(1);
         cost = new int[104][104];
         anInt1191 = -1;
@@ -11560,9 +11570,6 @@ public class client extends JagApplet {
     public int cameraJitter[];
     public int anInt1106;
     public int anInt1107;
-    public JagImageProducer chatboxButtons;
-    public JagImageProducer aClass18_1109;
-    public JagImageProducer aClass18_1110;
     public int anInt1111;
     public int anInt1112;
     public int anInt1113;
@@ -11608,10 +11615,15 @@ public class client extends JagApplet {
     public IndexedSprite aClass50_Sub1_Sub1_Sub3Array1153[];
     public int anInt1154;
     public boolean aBoolean1155;
-    public JagImageProducer inventoryPanelBackground;
+
+    public JagImageProducer gameViewportImage_1158;
+    public JagImageProducer inventoryImage;
     public JagImageProducer aClass18_1157;
-    public JagImageProducer aClass18_1158;
-    public JagImageProducer aClass18_1159;
+    public JagImageProducer chatboxImage_1159;
+    public JagImageProducer chatboxButtons;
+    public JagImageProducer aClass18_1109;
+    public JagImageProducer aClass18_1110;
+
     public static int anInt1160;
     public byte aByte1161;
     public static int anInt1162;
@@ -11636,7 +11648,7 @@ public class client extends JagApplet {
     public boolean aBoolean1181;
     public RgbSprite aClass50_Sub1_Sub1_Sub1Array1182[];
     public int anInt1183;
-    public String aStringArray1184[];
+    public String rightClickOptions[];
     public IndexedSprite aClass50_Sub1_Sub1_Sub3_1185;
     public IndexedSprite mapback_1186;
     public IndexedSprite aClass50_Sub1_Sub1_Sub3_1187;
@@ -11649,15 +11661,15 @@ public class client extends JagApplet {
     public RgbSprite aClass50_Sub1_Sub1_Sub1_1195;
     public RgbSprite aClass50_Sub1_Sub1_Sub1_1196;
     public int anInt1197;
-    public JagImageProducer aClass18_1198;
-    public JagImageProducer aClass18_1199;
-    public JagImageProducer aClass18_1200;
+    public JagImageProducer loginBackground_1;
+    public JagImageProducer loginBackground_2;
+    public JagImageProducer loginboxElement;
     public JagImageProducer loginFlameLeft;
     public JagImageProducer loginFlameRight;
-    public JagImageProducer aClass18_1203;
-    public JagImageProducer aClass18_1204;
-    public JagImageProducer aClass18_1205;
-    public JagImageProducer aClass18_1206;
+    public JagImageProducer loginBackground_3;
+    public JagImageProducer loginBackground_4;
+    public JagImageProducer loginBackground_5;
+    public JagImageProducer loginBackground_6;
     public static boolean aBoolean1207;
     public boolean mapLoading;
     public LinkedList aClass6_1210;
@@ -11675,7 +11687,7 @@ public class client extends JagApplet {
     public int anInt1222;
     public int anInt1223;
     public Socket aSocket1224;
-    public int anInt1225;
+    public int loginScreenState;
     public int anInt1226;
     public int tradeMode;
     public FileStore stores[];

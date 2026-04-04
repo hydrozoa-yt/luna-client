@@ -15,7 +15,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 	public static int divTable2[];
 	public static int sineTable[];
 	public static int cosineTable[];
-	public static int heightOffsets[];
+	public static int lineOffsets[];
 	public static int loadedTextures;
 	public static IndexedSprite textures[] = new IndexedSprite[50];
 	public static boolean aBooleanArray1541[] = new boolean[50];
@@ -52,7 +52,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 		divTable = null;
 		sineTable = null;
 		cosineTable = null;
-		heightOffsets = null;
+		lineOffsets = null;
 		textures = null;
 		aBooleanArray1541 = null;
 		anIntArray1542 = null;
@@ -64,9 +64,9 @@ public class ThreeDimensionalCanvas extends Drawable {
 	}
 
 	public static void setup493() {
-		heightOffsets = new int[Drawable.height];
+		lineOffsets = new int[Drawable.height];
 		for (int j = 0; j < Drawable.height; j++) {
-            heightOffsets[j] = Drawable.width * j;
+            lineOffsets[j] = Drawable.width * j;
         }
 
 		halfParentWidth = Drawable.width / 2;
@@ -74,9 +74,9 @@ public class ThreeDimensionalCanvas extends Drawable {
 	}
 
 	public static void init3D(int width, int height) {
-		heightOffsets = new int[height];
+		lineOffsets = new int[height];
 		for (int l = 0; l < height; l++) {
-            heightOffsets[l] = width * l;
+            lineOffsets[l] = width * l;
         }
 		halfParentWidth = width / 2;
 		halfParentHeight = height / 2;
@@ -351,7 +351,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 				if (i != j && j3 < j2 || i == j && j3 > l2) {
 					k -= j;
 					j -= i;
-					for (i = heightOffsets[i]; --j >= 0; i += Drawable.width) {
+					for (i = lineOffsets[i]; --j >= 0; i += Drawable.width) {
 						gouraudRaster(Drawable.pixels, i, 0, 0, j1 >> 16, l >> 16, i2 >> 7, k1 >> 7);
 						j1 += j3;
 						l += j2;
@@ -371,7 +371,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 				}
 				k -= j;
 				j -= i;
-				for (i = heightOffsets[i]; --j >= 0; i += Drawable.width) {
+				for (i = lineOffsets[i]; --j >= 0; i += Drawable.width) {
 					gouraudRaster(Drawable.pixels, i, 0, 0, l >> 16, j1 >> 16, k1 >> 7, i2 >> 7);
 					j1 += j3;
 					l += j2;
@@ -408,7 +408,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 			if (i != k && j3 < j2 || i == k && l2 > j2) {
 				j -= k;
 				k -= i;
-				for (i = heightOffsets[i]; --k >= 0; i += Drawable.width) {
+				for (i = lineOffsets[i]; --k >= 0; i += Drawable.width) {
 					gouraudRaster(Drawable.pixels, i, 0, 0, i1 >> 16, l >> 16, l1 >> 7, k1 >> 7);
 					i1 += j3;
 					l += j2;
@@ -428,7 +428,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 			}
 			j -= k;
 			k -= i;
-			for (i = heightOffsets[i]; --k >= 0; i += Drawable.width) {
+			for (i = lineOffsets[i]; --k >= 0; i += Drawable.width) {
 				gouraudRaster(Drawable.pixels, i, 0, 0, l >> 16, i1 >> 16, k1 >> 7, l1 >> 7);
 				i1 += j3;
 				l += j2;
@@ -473,7 +473,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 				if (j != k && j2 < l2 || j == k && j2 > j3) {
 					i -= k;
 					k -= j;
-					for (j = heightOffsets[j]; --k >= 0; j += Drawable.width) {
+					for (j = lineOffsets[j]; --k >= 0; j += Drawable.width) {
 						gouraudRaster(Drawable.pixels, j, 0, 0, l >> 16, i1 >> 16, k1 >> 7, l1 >> 7);
 						l += j2;
 						i1 += l2;
@@ -493,7 +493,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 				}
 				i -= k;
 				k -= j;
-				for (j = heightOffsets[j]; --k >= 0; j += Drawable.width) {
+				for (j = lineOffsets[j]; --k >= 0; j += Drawable.width) {
 					gouraudRaster(Drawable.pixels, j, 0, 0, i1 >> 16, l >> 16, l1 >> 7, k1 >> 7);
 					l += j2;
 					i1 += l2;
@@ -530,7 +530,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 			if (j2 < l2) {
 				k -= i;
 				i -= j;
-				for (j = heightOffsets[j]; --i >= 0; j += Drawable.width) {
+				for (j = lineOffsets[j]; --i >= 0; j += Drawable.width) {
 					gouraudRaster(Drawable.pixels, j, 0, 0, j1 >> 16, i1 >> 16, i2 >> 7, l1 >> 7);
 					j1 += j2;
 					i1 += l2;
@@ -550,7 +550,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 			}
 			k -= i;
 			i -= j;
-			for (j = heightOffsets[j]; --i >= 0; j += Drawable.width) {
+			for (j = lineOffsets[j]; --i >= 0; j += Drawable.width) {
 				gouraudRaster(Drawable.pixels, j, 0, 0, i1 >> 16, j1 >> 16, l1 >> 7, i2 >> 7);
 				j1 += j2;
 				i1 += l2;
@@ -594,7 +594,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 			if (l2 < j3) {
 				j -= i;
 				i -= k;
-				for (k = heightOffsets[k]; --i >= 0; k += Drawable.width) {
+				for (k = lineOffsets[k]; --i >= 0; k += Drawable.width) {
 					gouraudRaster(Drawable.pixels, k, 0, 0, i1 >> 16, j1 >> 16, l1 >> 7, i2 >> 7);
 					i1 += l2;
 					j1 += j3;
@@ -614,7 +614,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 			}
 			j -= i;
 			i -= k;
-			for (k = heightOffsets[k]; --i >= 0; k += Drawable.width) {
+			for (k = lineOffsets[k]; --i >= 0; k += Drawable.width) {
 				gouraudRaster(Drawable.pixels, k, 0, 0, j1 >> 16, i1 >> 16, i2 >> 7, l1 >> 7);
 				i1 += l2;
 				j1 += j3;
@@ -651,7 +651,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 		if (l2 < j3) {
 			i -= j;
 			j -= k;
-			for (k = heightOffsets[k]; --j >= 0; k += Drawable.width) {
+			for (k = lineOffsets[k]; --j >= 0; k += Drawable.width) {
 				gouraudRaster(Drawable.pixels, k, 0, 0, l >> 16, j1 >> 16, k1 >> 7, i2 >> 7);
 				l += l2;
 				j1 += j3;
@@ -671,7 +671,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 		}
 		i -= j;
 		j -= k;
-		for (k = heightOffsets[k]; --j >= 0; k += Drawable.width) {
+		for (k = lineOffsets[k]; --j >= 0; k += Drawable.width) {
 			gouraudRaster(Drawable.pixels, k, 0, 0, j1 >> 16, l >> 16, i2 >> 7, k1 >> 7);
 			l += l2;
 			j1 += j3;
@@ -823,7 +823,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 				if (i != j && j2 < l1 || i == j && j2 > i2) {
 					k -= j;
 					j -= i;
-					for (i = heightOffsets[i]; --j >= 0; i += Drawable.width) {
+					for (i = lineOffsets[i]; --j >= 0; i += Drawable.width) {
 						flatRaster(Drawable.pixels, i, k1, 0, j1 >> 16, l >> 16);
 						j1 += j2;
 						l += l1;
@@ -839,7 +839,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 				}
 				k -= j;
 				j -= i;
-				for (i = heightOffsets[i]; --j >= 0; i += Drawable.width) {
+				for (i = lineOffsets[i]; --j >= 0; i += Drawable.width) {
 					flatRaster(Drawable.pixels, i, k1, 0, l >> 16, j1 >> 16);
 					j1 += j2;
 					l += l1;
@@ -867,7 +867,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 			if (i != k && j2 < l1 || i == k && i2 > l1) {
 				j -= k;
 				k -= i;
-				for (i = heightOffsets[i]; --k >= 0; i += Drawable.width) {
+				for (i = lineOffsets[i]; --k >= 0; i += Drawable.width) {
 					flatRaster(Drawable.pixels, i, k1, 0, i1 >> 16, l >> 16);
 					i1 += j2;
 					l += l1;
@@ -883,7 +883,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 			}
 			j -= k;
 			k -= i;
-			for (i = heightOffsets[i]; --k >= 0; i += Drawable.width) {
+			for (i = lineOffsets[i]; --k >= 0; i += Drawable.width) {
 				flatRaster(Drawable.pixels, i, k1, 0, l >> 16, i1 >> 16);
 				i1 += j2;
 				l += l1;
@@ -919,7 +919,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 				if (j != k && l1 < i2 || j == k && l1 > j2) {
 					i -= k;
 					k -= j;
-					for (j = heightOffsets[j]; --k >= 0; j += Drawable.width) {
+					for (j = lineOffsets[j]; --k >= 0; j += Drawable.width) {
 						flatRaster(Drawable.pixels, j, k1, 0, l >> 16, i1 >> 16);
 						l += l1;
 						i1 += i2;
@@ -935,7 +935,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 				}
 				i -= k;
 				k -= j;
-				for (j = heightOffsets[j]; --k >= 0; j += Drawable.width) {
+				for (j = lineOffsets[j]; --k >= 0; j += Drawable.width) {
 					flatRaster(Drawable.pixels, j, k1, 0, i1 >> 16, l >> 16);
 					l += l1;
 					i1 += i2;
@@ -963,7 +963,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 			if (l1 < i2) {
 				k -= i;
 				i -= j;
-				for (j = heightOffsets[j]; --i >= 0; j += Drawable.width) {
+				for (j = lineOffsets[j]; --i >= 0; j += Drawable.width) {
 					flatRaster(Drawable.pixels, j, k1, 0, j1 >> 16, i1 >> 16);
 					j1 += l1;
 					i1 += i2;
@@ -979,7 +979,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 			}
 			k -= i;
 			i -= j;
-			for (j = heightOffsets[j]; --i >= 0; j += Drawable.width) {
+			for (j = lineOffsets[j]; --i >= 0; j += Drawable.width) {
 				flatRaster(Drawable.pixels, j, k1, 0, i1 >> 16, j1 >> 16);
 				j1 += l1;
 				i1 += i2;
@@ -1014,7 +1014,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 			if (i2 < j2) {
 				j -= i;
 				i -= k;
-				for (k = heightOffsets[k]; --i >= 0; k += Drawable.width) {
+				for (k = lineOffsets[k]; --i >= 0; k += Drawable.width) {
 					flatRaster(Drawable.pixels, k, k1, 0, i1 >> 16, j1 >> 16);
 					i1 += i2;
 					j1 += j2;
@@ -1030,7 +1030,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 			}
 			j -= i;
 			i -= k;
-			for (k = heightOffsets[k]; --i >= 0; k += Drawable.width) {
+			for (k = lineOffsets[k]; --i >= 0; k += Drawable.width) {
 				flatRaster(Drawable.pixels, k, k1, 0, j1 >> 16, i1 >> 16);
 				i1 += i2;
 				j1 += j2;
@@ -1058,7 +1058,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 		if (i2 < j2) {
 			i -= j;
 			j -= k;
-			for (k = heightOffsets[k]; --j >= 0; k += Drawable.width) {
+			for (k = lineOffsets[k]; --j >= 0; k += Drawable.width) {
 				flatRaster(Drawable.pixels, k, k1, 0, l >> 16, j1 >> 16);
 				l += i2;
 				j1 += j2;
@@ -1074,7 +1074,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 		}
 		i -= j;
 		j -= k;
-		for (k = heightOffsets[k]; --j >= 0; k += Drawable.width) {
+		for (k = lineOffsets[k]; --j >= 0; k += Drawable.width) {
 			flatRaster(Drawable.pixels, k, k1, 0, j1 >> 16, l >> 16);
 			l += i2;
 			j1 += j2;
@@ -1193,7 +1193,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 				if (i != j && i8 < i7 || i == j && i8 > k7) {
 					k -= j;
 					j -= i;
-					i = heightOffsets[i];
+					i = lineOffsets[i];
 					while (--j >= 0) {
 						textureRaster(Drawable.pixels, ai, 0, 0, i, j1 >> 16, l >> 16, i2 >> 8, k1 >> 8,
 								l4, k5, j6, i5, l5, k6);
@@ -1222,7 +1222,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 				}
 				k -= j;
 				j -= i;
-				i = heightOffsets[i];
+				i = lineOffsets[i];
 				while (--j >= 0) {
 					textureRaster(Drawable.pixels, ai, 0, 0, i, l >> 16, j1 >> 16, k1 >> 8, i2 >> 8, l4,
 							k5, j6, i5, l5, k6);
@@ -1272,7 +1272,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 			if (i != k && i8 < i7 || i == k && k7 > i7) {
 				j -= k;
 				k -= i;
-				i = heightOffsets[i];
+				i = lineOffsets[i];
 				while (--k >= 0) {
 					textureRaster(Drawable.pixels, ai, 0, 0, i, i1 >> 16, l >> 16, l1 >> 8, k1 >> 8, l4,
 							k5, j6, i5, l5, k6);
@@ -1301,7 +1301,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 			}
 			j -= k;
 			k -= i;
-			i = heightOffsets[i];
+			i = lineOffsets[i];
 			while (--k >= 0) {
 				textureRaster(Drawable.pixels, ai, 0, 0, i, l >> 16, i1 >> 16, k1 >> 8, l1 >> 8, l4, k5,
 						j6, i5, l5, k6);
@@ -1359,7 +1359,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 				if (j != k && i7 < k7 || j == k && i7 > i8) {
 					i -= k;
 					k -= j;
-					j = heightOffsets[j];
+					j = lineOffsets[j];
 					while (--k >= 0) {
 						textureRaster(Drawable.pixels, ai, 0, 0, j, l >> 16, i1 >> 16, k1 >> 8, l1 >> 8,
 								l4, k5, j6, i5, l5, k6);
@@ -1388,7 +1388,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 				}
 				i -= k;
 				k -= j;
-				j = heightOffsets[j];
+				j = lineOffsets[j];
 				while (--k >= 0) {
 					textureRaster(Drawable.pixels, ai, 0, 0, j, i1 >> 16, l >> 16, l1 >> 8, k1 >> 8, l4,
 							k5, j6, i5, l5, k6);
@@ -1438,7 +1438,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 			if (i7 < k7) {
 				k -= i;
 				i -= j;
-				j = heightOffsets[j];
+				j = lineOffsets[j];
 				while (--i >= 0) {
 					textureRaster(Drawable.pixels, ai, 0, 0, j, j1 >> 16, i1 >> 16, i2 >> 8, l1 >> 8, l4,
 							k5, j6, i5, l5, k6);
@@ -1467,7 +1467,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 			}
 			k -= i;
 			i -= j;
-			j = heightOffsets[j];
+			j = lineOffsets[j];
 			while (--i >= 0) {
 				textureRaster(Drawable.pixels, ai, 0, 0, j, i1 >> 16, j1 >> 16, l1 >> 8, i2 >> 8, l4, k5,
 						j6, i5, l5, k6);
@@ -1524,7 +1524,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 			if (k7 < i8) {
 				j -= i;
 				i -= k;
-				k = heightOffsets[k];
+				k = lineOffsets[k];
 				while (--i >= 0) {
 					textureRaster(Drawable.pixels, ai, 0, 0, k, i1 >> 16, j1 >> 16, l1 >> 8, i2 >> 8, l4,
 							k5, j6, i5, l5, k6);
@@ -1553,7 +1553,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 			}
 			j -= i;
 			i -= k;
-			k = heightOffsets[k];
+			k = lineOffsets[k];
 			while (--i >= 0) {
 				textureRaster(Drawable.pixels, ai, 0, 0, k, j1 >> 16, i1 >> 16, i2 >> 8, l1 >> 8, l4, k5,
 						j6, i5, l5, k6);
@@ -1603,7 +1603,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 		if (k7 < i8) {
 			i -= j;
 			j -= k;
-			k = heightOffsets[k];
+			k = lineOffsets[k];
 			while (--j >= 0) {
 				textureRaster(Drawable.pixels, ai, 0, 0, k, l >> 16, j1 >> 16, k1 >> 8, i2 >> 8, l4, k5,
 						j6, i5, l5, k6);
@@ -1632,7 +1632,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 		}
 		i -= j;
 		j -= k;
-		k = heightOffsets[k];
+		k = lineOffsets[k];
 		while (--j >= 0) {
 			textureRaster(Drawable.pixels, ai, 0, 0, k, j1 >> 16, l >> 16, i2 >> 8, k1 >> 8, l4, k5, j6,
 					i5, l5, k6);

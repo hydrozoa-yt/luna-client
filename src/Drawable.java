@@ -57,7 +57,7 @@ public class Drawable extends QueueNode {
         }
     }
 
-	public static void clear_447() {
+	public static void clearScreen() {
 		int pixelsTotal = width * height;
 		for (int k = 0; k < pixelsTotal; k++) {
             pixels[k] = 0;

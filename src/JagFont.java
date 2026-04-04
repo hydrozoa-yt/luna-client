@@ -85,17 +85,15 @@ public class JagFont extends Drawable {
 	}
 
 	public void method469(boolean flag, String s, int i, int j, int k) {
-		method474(2245, j - method473(s, (byte) -53), i, k, s);
+		drawString_474(s, 2245, j - method473(s, (byte) -53), i, k);
 	}
 
 	public void drawHorizontallyCenteredString(int i, int k, int l, String s) {
-		method474(2245, i - method473(s, (byte) -53) / 2, l, k, s);
+		drawString_474(s, 2245, i - method473(s, (byte) -53) / 2, l, k);
 	}
 
-	public void drawString(String text, int x, int y, boolean flag, int i, int j) {
-        if (i >= anInt1498 && i <= anInt1498) {
-            this.drawString(text, j, x - method472((byte) 35, text) / 2, y, flag);
-        }
+	public void drawString(String text, int x, int y, boolean flag, int j) {
+		this.drawString(text, j, x - method472((byte) 35, text) / 2, y, flag);
     }
 
 	public int method472(byte byte0, String input) {
@@ -126,15 +124,15 @@ public class JagFont extends Drawable {
 		return i;
 	}
 
-	public void method474(int i, int j, int k, int l, String input) {
+	public void drawString_474(String input, int i, int j, int k, int l) {
 		if (input == null) {
             return;
         }
 		l -= anInt1506;
-		for (int j1 = 0; j1 < input.length(); j1++) {
-			char c = input.charAt(j1);
+		for (int inputIterator = 0; inputIterator < input.length(); inputIterator++) {
+			char c = input.charAt(inputIterator);
 			if (c != ' ') {
-                method481(glyphData[c], j + glyphAttribute1_1503[c], l + glyphAttribute2_1504[c], glyphWidth[c],
+                drawGlyph_481(glyphData[c], j + glyphAttribute1_1503[c], l + glyphAttribute2_1504[c], glyphWidth[c],
                         glyphHeight[c], k);
             }
 			j += anIntArray1505[c];
@@ -150,7 +148,7 @@ public class JagFont extends Drawable {
 		for (int i1 = 0; i1 < string.length(); i1++) {
 			char c = string.charAt(i1);
 			if (c != ' ') {
-                method481(glyphData[c], k + glyphAttribute1_1503[c], i + glyphAttribute2_1504[c]
+                drawGlyph_481(glyphData[c], k + glyphAttribute1_1503[c], i + glyphAttribute2_1504[c]
                         + (int) (Math.sin(i1 / 2D + j / 5D) * 5D), glyphWidth[c], glyphHeight[c], l);
             }
 			k += anIntArray1505[c];
@@ -170,7 +168,7 @@ public class JagFont extends Drawable {
 		for (int j1 = 0; j1 < input.length(); j1++) {
 			char c = input.charAt(j1);
 			if (c != ' ') {
-                method481(glyphData[c], k + glyphAttribute1_1503[c] + (int) (Math.sin(j1 / 5D + l / 5D) * 5D), i
+                drawGlyph_481(glyphData[c], k + glyphAttribute1_1503[c] + (int) (Math.sin(j1 / 5D + l / 5D) * 5D), i
                         + glyphAttribute2_1504[c] + (int) (Math.sin(j1 / 3D + l / 5D) * 5D), glyphWidth[c],
                         glyphHeight[c], j);
             }
@@ -193,7 +191,7 @@ public class JagFont extends Drawable {
 		for (int l1 = 0; l1 < s.length(); l1++) {
 			char c = s.charAt(l1);
 			if (c != ' ')
-				method481(glyphData[c], k + glyphAttribute1_1503[c], l + glyphAttribute2_1504[c]
+				drawGlyph_481(glyphData[c], k + glyphAttribute1_1503[c], l + glyphAttribute2_1504[c]
 						+ (int) (Math.sin(l1 / 1.5D + j1) * d), glyphWidth[c], glyphHeight[c], j);
 			k += anIntArray1505[c];
 		}
@@ -216,9 +214,9 @@ public class JagFont extends Drawable {
 				char c = text.charAt(j1);
 				if (c != ' ') {
 					if (flag)
-						method481(glyphData[c], j + glyphAttribute1_1503[c] + 1, k + glyphAttribute2_1504[c] + 1,
+						drawGlyph_481(glyphData[c], j + glyphAttribute1_1503[c] + 1, k + glyphAttribute2_1504[c] + 1,
 								glyphWidth[c], glyphHeight[c], 0);
-					method481(glyphData[c], j + glyphAttribute1_1503[c], k + glyphAttribute2_1504[c], glyphWidth[c],
+					drawGlyph_481(glyphData[c], j + glyphAttribute1_1503[c], k + glyphAttribute2_1504[c], glyphWidth[c],
 							glyphHeight[c], i);
 				}
 				j += anIntArray1505[c];
@@ -304,7 +302,7 @@ public class JagFont extends Drawable {
 		return -1;
 	}
 
-	public void method481(byte abyte0[], int x, int y, int width, int height, int i1) {
+	public void drawGlyph_481(byte[] abyte0, int x, int y, int width, int height, int i1) {
 		int graphicsPixel = x + y * Drawable.width;
 		int remainingWidth = Drawable.width - width;
 		int characterPixelOffset = 0;
@@ -410,23 +408,23 @@ public class JagFont extends Drawable {
 		if (i1 <= 0 || l <= 0) {
 			return;
 		} else {
-			method484(j2, l1, i2, k1, j1, Drawable.pixels, j, 2, l, i1, abyte0);
+			applyOpacityOnGlyph(j2, l1, i2, k1, j1, Drawable.pixels, j, 2, l, i1, abyte0);
 			return;
 		}
 	}
 
-	public void method484(int i, int j, int k, int l, int i1, int ai[], int j1, int k1, int l1, int i2, byte abyte0[]) {
-		j1 = ((j1 & 0xff00ff) * i1 & 0xff00ff00) + ((j1 & 0xff00) * i1 & 0xff0000) >> 8;
-		i1 = 256 - i1;
+	public void applyOpacityOnGlyph(int i, int j, int k, int l, int opacity, int dest[], int color, int k1, int l1, int i2, byte abyte0[]) {
+		color = ((color & 0xff00ff) * opacity & 0xff00ff00) + ((color & 0xff00) * opacity & 0xff0000) >> 8;
+		opacity = 256 - opacity;
 		for (int j2 = -l1; j2 < 0; j2++) {
-			for (int k2 = -i2; k2 < 0; k2++)
-				if (abyte0[i++] != 0) {
-					int l2 = ai[l];
-					ai[l++] = (((l2 & 0xff00ff) * i1 & 0xff00ff00) + ((l2 & 0xff00) * i1 & 0xff0000) >> 8) + j1;
-				} else {
-					l++;
-				}
-
+			for (int k2 = -i2; k2 < 0; k2++) {
+                if (abyte0[i++] != 0) {
+                    int l2 = dest[l];
+                    dest[l++] = (((l2 & 0xff00ff) * opacity & 0xff00ff00) + ((l2 & 0xff00) * opacity & 0xff0000) >> 8) + color;
+                } else {
+                    l++;
+                }
+            }
 			l += j;
 			i += k;
 		}

@@ -8,8 +8,8 @@ public class IndexedSprite extends Drawable {
 	public int pixelColours_1517[];
 	public int width_1518;
 	public int height_1519;
-	public int attrib_1520;
-	public int attrib_1521;
+	public int offsetX_1520;
+	public int offsetY_1521;
 	public int width_1522;
 	public int height_1523;
 
@@ -20,7 +20,6 @@ public class IndexedSprite extends Drawable {
 	 * @param page		array index of the sprite, somehow
 	 */
 	public IndexedSprite(Archive archive, String name, int page) {
-		//System.out.println("Loading "+name);
 		JagBuffer dataBuf = new JagBuffer(archive.get(name + ".dat"));
 		JagBuffer idxBuf = new JagBuffer(archive.get("index.dat"));
 		idxBuf.position = dataBuf.getShort();
@@ -30,7 +29,6 @@ public class IndexedSprite extends Drawable {
 		pixelColours_1517 = new int[colorLength];
 		for (int colorIndex = 0; colorIndex < colorLength - 1; colorIndex++) {
 			pixelColours_1517[colorIndex + 1] = idxBuf.getTriByte();
-			//System.out.println(name+": pixelColor["+(colorIndex+1)+"] = "+pixelColours_1517[colorIndex + 1]);
 		}
 
 		for (int l = 0; l < page; l++) {
@@ -39,16 +37,11 @@ public class IndexedSprite extends Drawable {
 			idxBuf.position++;
 		}
 
-		attrib_1520 = idxBuf.getByte();
-		//System.out.println(name+": unknownByte1="+ attrib_1520);
-		attrib_1521 = idxBuf.getByte();
-		//System.out.println(name+": unknownByte2="+ attrib_1521);
+		offsetX_1520 = idxBuf.getByte();
+		offsetY_1521 = idxBuf.getByte();
 		width_1518 = idxBuf.getShort();
-		//System.out.println(name+": width_1518="+width_1518);
 		height_1519 = idxBuf.getShort();
-		//System.out.println(name+": height_1519="+height_1519);
 		int typeByte_i1 = idxBuf.getByte();
-		//System.out.println(name+": typeByte_i1="+typeByte_i1);
 		int pixelsLength = width_1518 * height_1519;
 		pixels_1516 = new byte[pixelsLength];
 		if (typeByte_i1 == 0) {
@@ -75,15 +68,15 @@ public class IndexedSprite extends Drawable {
 			return;
 		for (int k = 0; k < height_1519; k++) {
 			for (int l = 0; l < width_1518; l++) {
-				abyte0[(l + attrib_1520 >> 1) + (k + attrib_1521 >> 1) * width_1522] = pixels_1516[j++];
+				abyte0[(l + offsetX_1520 >> 1) + (k + offsetY_1521 >> 1) * width_1522] = pixels_1516[j++];
 			}
 		}
 
 		pixels_1516 = abyte0;
 		width_1518 = width_1522;
 		height_1519 = height_1523;
-		attrib_1520 = 0;
-		attrib_1521 = 0;
+		offsetX_1520 = 0;
+		offsetY_1521 = 0;
 	}
 
 	public void method486(boolean flag) {
@@ -93,7 +86,7 @@ public class IndexedSprite extends Drawable {
 		int i = 0;
 		for (int j = 0; j < height_1519; j++) {
 			for (int k = 0; k < width_1518; k++)
-				abyte0[k + attrib_1520 + (j + attrib_1521) * width_1522] = pixels_1516[i++];
+				abyte0[k + offsetX_1520 + (j + offsetY_1521) * width_1522] = pixels_1516[i++];
 
 		}
 
@@ -103,8 +96,8 @@ public class IndexedSprite extends Drawable {
 			return;
 		} else {
 			height_1519 = height_1523;
-			attrib_1520 = 0;
-			attrib_1521 = 0;
+			offsetX_1520 = 0;
+			offsetY_1521 = 0;
 			return;
 		}
 	}
@@ -122,7 +115,7 @@ public class IndexedSprite extends Drawable {
 		if (i != 0) {
 			return;
 		} else {
-			attrib_1520 = width_1522 - width_1518 - attrib_1520;
+			offsetX_1520 = width_1522 - width_1518 - offsetX_1520;
 			return;
 		}
 	}
@@ -136,7 +129,7 @@ public class IndexedSprite extends Drawable {
             }
 		}
 		pixels_1516 = abyte0;
-		attrib_1521 = height_1523 - height_1519 - attrib_1521;
+		offsetY_1521 = height_1523 - height_1519 - offsetY_1521;
 	}
 
 	public void rgbAdjust_489(int blueAdjust_i, int greenAdjust_j, int redAdjust_k, int unused_l) {
@@ -163,45 +156,45 @@ public class IndexedSprite extends Drawable {
 		}
 	}
 
-	public void draw_490(int x, int y) {
-		y += attrib_1520;
-		x += attrib_1521;
-		int i1 = y + x * Drawable.width;
+	public void drawSprite(int x, int y) {
+		x += offsetX_1520;
+		y += offsetY_1521;
+		int i1 = x + y * Drawable.width;
 		int j1 = 0;
 		int height_k1 = height_1519;
 		int width_l1 = width_1518;
 		int widthDiff = Drawable.width - width_l1;
 		int j2 = 0;
-		if (x < Drawable.startY) {
-			int k2 = Drawable.startY - x;
+		if (y < Drawable.startY) {
+			int k2 = Drawable.startY - y;
 			height_k1 -= k2;
-			x = Drawable.startY;
+			y = Drawable.startY;
 			j1 += k2 * width_l1;
 			i1 += k2 * Drawable.width;
 		}
-		if (x + height_k1 > Drawable.endY)
-			height_k1 -= (x + height_k1) - Drawable.endY;
-		if (y < Drawable.startX) {
-			int l2 = Drawable.startX - y;
+		if (y + height_k1 > Drawable.endY)
+			height_k1 -= (y + height_k1) - Drawable.endY;
+		if (x < Drawable.startX) {
+			int l2 = Drawable.startX - x;
 			width_l1 -= l2;
-			y = Drawable.startX;
+			x = Drawable.startX;
 			j1 += l2;
 			i1 += l2;
 			j2 += l2;
 			widthDiff += l2;
 		}
-		if (y + width_l1 > Drawable.endX) {
-			int i3 = (y + width_l1) - Drawable.endX;
+		if (x + width_l1 > Drawable.endX) {
+			int i3 = (x + width_l1) - Drawable.endX;
 			width_l1 -= i3;
 			j2 += i3;
 			widthDiff += i3;
 		}
         if (width_l1 > 0 && height_k1 > 0) {
-            drawRelated_491(pixelColours_1517, Drawable.pixels, j1, pixels_1516, j2, height_k1, width_l1, i1, widthDiff);
+            pushPixelsToBuffer(pixelColours_1517, Drawable.pixels, j1, pixels_1516, j2, height_k1, width_l1, i1, widthDiff);
         }
     }
 
-	public void drawRelated_491(int[] palette, int[] dest, int i, byte[] content, int j, int k, int l, int i1, int j1) {
+	public void pushPixelsToBuffer(int[] palette, int[] dest, int i, byte[] content, int j, int k, int l, int i1, int j1) {
 		int k1 = -(l >> 2);
 		l = -(l & 3);
 		for (int l1 = -k; l1 < 0; l1++) {
@@ -243,6 +236,5 @@ public class IndexedSprite extends Drawable {
 			i1 += j1;
 			i += j;
 		}
-
 	}
 }
