@@ -21,11 +21,11 @@ public class JagImageProducer implements ImageProducer, ImageObserver {
 	public Image image;
 
 	public JagImageProducer(int _width, int _height, Component component) {
-		width = _width;
-		height = _height;
-		pixels = new int[_width * _height];
-		colorModel = new DirectColorModel(32, 0xff0000, 65280, 255);
-		image = component.createImage(this);
+		this.width = _width;
+		this.height = _height;
+		this.pixels = new int[_width * _height];
+		this.colorModel = new DirectColorModel(32, 0xff0000, 65280, 255);
+		this.image = component.createImage(this);
 		flipBuffer();
 		component.prepareImage(image, this);
 		flipBuffer();
@@ -57,8 +57,9 @@ public class JagImageProducer implements ImageProducer, ImageObserver {
 	}
 
 	public synchronized void removeConsumer(ImageConsumer imageconsumer) {
-		if (consumer == imageconsumer)
-			consumer = null;
+		if (consumer == imageconsumer) {
+            consumer = null;
+        }
 	}
 
 	public void startProduction(ImageConsumer imageconsumer) {

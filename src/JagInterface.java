@@ -4,12 +4,12 @@
 
 public class JagInterface {
 
+	public int id;
 	public static int anInt210;
 	public String aString211;
 	public RgbSprite aClass50_Sub1_Sub1_Sub1_212;
 	public int anIntArray213[];
 	public static Archive aClass2_214;
-	public int id;
 	public static JagInterface interfaces[];
 	public boolean aBoolean217;
 	public int anInt218;
@@ -30,12 +30,12 @@ public class JagInterface {
 	public boolean aBoolean233;
 	public int anIntArrayArray234[][];
 	public int anInt235;
-	public int anInt236;
+	public int type;
 	public JagFont aClass50_Sub1_Sub1_Sub2_237;
-	public int anInt238;
+	public int height;
+	public int width;
 	public boolean visible;
 	public int anInt240;
-	public int anInt241;
 	public int anInt242;
 	public static int anInt243;
 	public int anInt244;
@@ -150,11 +150,11 @@ public class JagInterface {
 		JagInterface inter = new JagInterface();
 		inter.id = id;
 		inter.anInt248 = i;
-		inter.anInt236 = buf.getByte();
+		inter.type = buf.getByte();
 		inter.anInt289 = buf.getByte();
 		inter.anInt242 = buf.getShort();
-		inter.anInt241 = buf.getShort();
-		inter.anInt238 = buf.getShort();
+		inter.width = buf.getShort();
+		inter.height = buf.getShort();
 		inter.aByte220 = (byte) buf.getByte();
 		inter.anInt254 = buf.getByte();
 		if (inter.anInt254 != 0)
@@ -189,7 +189,7 @@ public class JagInterface {
 			}
 
 		}
-		if (inter.anInt236 == 0) {
+		if (inter.type == 0) {
 			inter.anInt285 = buf.getShort();
 			inter.aBoolean219 = buf.getByte() == 1;
 			int l1 = buf.getShort();
@@ -203,13 +203,13 @@ public class JagInterface {
 			}
 
 		}
-		if (inter.anInt236 == 1) {
+		if (inter.type == 1) {
 			inter.anInt225 = buf.getShort();
 			inter.aBoolean233 = buf.getByte() == 1;
 		}
-		if (inter.anInt236 == 2) {
-			inter.itemIds = new int[inter.anInt241 * inter.anInt238];
-			inter.itemAmounts = new int[inter.anInt241 * inter.anInt238];
+		if (inter.type == 2) {
+			inter.itemIds = new int[inter.width * inter.height];
+			inter.itemAmounts = new int[inter.width * inter.height];
 			inter.aBoolean274 = buf.getByte() == 1;
 			inter.aBoolean229 = buf.getByte() == 1;
 			inter.aBoolean288 = buf.getByte() == 1;
@@ -241,27 +241,27 @@ public class JagInterface {
 			}
 
 		}
-		if (inter.anInt236 == 3)
+		if (inter.type == 3)
 			inter.visible = buf.getByte() == 1;
-		if (inter.anInt236 == 4 || inter.anInt236 == 1) {
+		if (inter.type == 4 || inter.type == 1) {
 			inter.aBoolean272 = buf.getByte() == 1;
 			int j2 = buf.getByte();
 			if (aClass50_Sub1_Sub1_Sub2Array223 != null)
 				inter.aClass50_Sub1_Sub1_Sub2_237 = aClass50_Sub1_Sub1_Sub2Array223[j2];
 			inter.aBoolean247 = buf.getByte() == 1;
 		}
-		if (inter.anInt236 == 4) {
+		if (inter.type == 4) {
 			inter.aString230 = buf.getString();
 			inter.aString249 = buf.getString();
 		}
-		if (inter.anInt236 == 1 || inter.anInt236 == 3 || inter.anInt236 == 4)
+		if (inter.type == 1 || inter.type == 3 || inter.type == 4)
 			inter.anInt240 = buf.getInt();
-		if (inter.anInt236 == 3 || inter.anInt236 == 4) {
+		if (inter.type == 3 || inter.type == 4) {
 			inter.anInt260 = buf.getInt();
 			inter.anInt261 = buf.getInt();
 			inter.anInt226 = buf.getInt();
 		}
-		if (inter.anInt236 == 5) {
+		if (inter.type == 5) {
 			String s = buf.getString();
 			if (s.length() > 0) {
 				int l3 = s.lastIndexOf(",");
@@ -275,7 +275,7 @@ public class JagInterface {
 						i4), 373);
 			}
 		}
-		if (inter.anInt236 == 6) {
+		if (inter.type == 6) {
 			id = buf.getByte();
 			if (id != 0) {
 				inter.anInt283 = 1;
@@ -300,9 +300,9 @@ public class JagInterface {
 			inter.anInt252 = buf.getShort();
 			inter.anInt253 = buf.getShort();
 		}
-		if (inter.anInt236 == 7) {
-			inter.itemIds = new int[inter.anInt241 * inter.anInt238];
-			inter.itemAmounts = new int[inter.anInt241 * inter.anInt238];
+		if (inter.type == 7) {
+			inter.itemIds = new int[inter.width * inter.height];
+			inter.itemAmounts = new int[inter.width * inter.height];
 			inter.aBoolean272 = buf.getByte() == 1;
 			int k2 = buf.getByte();
 			if (aClass50_Sub1_Sub1_Sub2Array223 != null)
@@ -320,9 +320,9 @@ public class JagInterface {
 			}
 
 		}
-		if (inter.anInt236 == 8)
+		if (inter.type == 8)
 			inter.aString230 = buf.getString();
-		if (inter.anInt289 == 2 || inter.anInt236 == 2) {
+		if (inter.anInt289 == 2 || inter.type == 2) {
 			inter.aString281 = buf.getString();
 			inter.aString211 = buf.getString();
 			inter.anInt222 = buf.getShort();
@@ -376,7 +376,7 @@ public class JagInterface {
 		if (i == -1)
 			return;
 		for (int j = 0; j < interfaces.length; j++)
-			if (interfaces[j] != null && interfaces[j].anInt248 == i && interfaces[j].anInt236 != 2)
+			if (interfaces[j] != null && interfaces[j].anInt248 == i && interfaces[j].type != 2)
 				interfaces[j] = null;
 
 	}
