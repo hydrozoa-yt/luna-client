@@ -572,7 +572,7 @@ public class client extends JagApplet {
     }
 
     /**
-     * Probably essential for resizable.
+     * Added for resizable.
      */
     public void rebuildFrame(int size, int width, int height) {
         try {
@@ -621,7 +621,7 @@ public class client extends JagApplet {
     }
 
     /**
-     * Probably essential for resizable.
+     * Added for resizable.
      */
     public void toggleSize(int size) {
         if (clientSize != size) {
@@ -641,6 +641,24 @@ public class client extends JagApplet {
             }
             rebuildFrame(size, width, height);
             updateGameArea();
+        }
+    }
+
+    /**
+     * Added for resizable.
+     */
+    public void checkSize() {
+        if (clientSize == 1) {
+            if (clientWidth != getParentComponent().getWidth()) {
+                clientWidth = getParentComponent().getWidth();
+                gameAreaWidth = clientWidth;
+                updateGameArea();
+            }
+            if (clientHeight != getParentComponent().getHeight()) {
+                clientHeight = getParentComponent().getHeight();
+                gameAreaHeight = clientHeight;
+                updateGameArea();
+            }
         }
     }
 
@@ -1235,7 +1253,8 @@ public class client extends JagApplet {
         ObjectDefinition.lowMemory = false;
     }
 
-    public void method28(byte byte0) {
+    public void updateGame28(byte byte0) {
+        checkSize();
         if (anInt1057 > 1)
             anInt1057--;
         if (anInt873 > 0)
@@ -7260,7 +7279,7 @@ public class client extends JagApplet {
         if (!isLoggedIn)
             method149(-724);
         else
-            method28((byte) 4);
+            updateGame28((byte) 4);
         method77(false);
     }
 

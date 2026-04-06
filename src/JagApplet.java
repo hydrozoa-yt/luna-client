@@ -9,15 +9,7 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import java.awt.event.*;
 
 @SuppressWarnings("serial")
 public class JagApplet extends Applet implements Runnable, MouseListener, MouseMotionListener, KeyListener,
@@ -85,7 +77,8 @@ public class JagApplet extends Applet implements Runnable, MouseListener, MouseM
         } else {
             frame.setResizable(false);
         }
-		graphics = frame.getGraphics();
+		//graphics = frame.getGraphics();
+		graphics = getParentComponent().getGraphics();
 		getParentComponent().addMouseListener(this);
 		getParentComponent().addMouseMotionListener(this);
 		getParentComponent().addKeyListener(this);
