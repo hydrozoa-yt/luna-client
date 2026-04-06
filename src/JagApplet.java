@@ -62,14 +62,35 @@ public class JagApplet extends Applet implements Runnable, MouseListener, MouseM
 	public JagApplet() {
 		aBoolean2 = false;
 		aBoolean3 = false;
+		aBoolean11 = false;
 		delayTime = 20;
 		minDelay = 1;
 		otims = new long[10];
-		aBoolean11 = false;
 		clearBackground = true;
 		awtFocus = true;
 		keyStatus = new int[128];
 		inputBuffer = new int[128];
+	}
+
+	public void rebuildFrame(int width, int height, boolean resizable) {
+		this.width = width;
+		this.height = height;
+		if(frame != null) {
+			frame.dispose();
+		}
+		frame = new JagFrame(width, height, this);
+		frame.addWindowListener(this);
+		if (resizable) {
+            frame.setResizable(true);
+        } else {
+            frame.setResizable(false);
+        }
+		graphics = frame.getGraphics();
+		getParentComponent().addMouseListener(this);
+		getParentComponent().addMouseMotionListener(this);
+		getParentComponent().addKeyListener(this);
+		getParentComponent().addFocusListener(this);
+
 	}
 
 	public void start(int _width, int _height) {
@@ -368,7 +389,7 @@ public class JagApplet extends Applet implements Runnable, MouseListener, MouseM
 	public void keyTyped(KeyEvent keyevent) {
 	}
 
-	public int method5() {
+	public int readCharFromChatbox() {
 		int j = -1;
 		if (anInt35 != anInt34) {
 			j = inputBuffer[anInt34];

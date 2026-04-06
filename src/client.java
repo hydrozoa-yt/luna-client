@@ -101,15 +101,6 @@ public class client extends JagApplet {
     public int anInt903;
     public int lastOpcode;
     public int anInt905;
-    public JagImageProducer aClass18_906;
-    public JagImageProducer uiSideChatboxLeft;
-    public JagImageProducer uiSideMinimapRight;
-    public JagImageProducer uiSideRockRight1;
-    public JagImageProducer aClass18_910;
-    public JagImageProducer uiSideMinimapLeft;
-    public JagImageProducer uiSideRockLeft1;
-    public JagImageProducer uiSideChatboxRight;
-    public JagImageProducer uiSideChatboxTop;
     public int anInt915;
     public int anInt916;
     public int anInt917;
@@ -157,9 +148,6 @@ public class client extends JagApplet {
     public static boolean accountFlagged;
     public static boolean aBoolean963 = true;
     public JagBuffer outBuffer;
-    public IndexedSprite aClass50_Sub1_Sub1_Sub3_965;
-    public IndexedSprite aClass50_Sub1_Sub1_Sub3_966;
-    public IndexedSprite aClass50_Sub1_Sub1_Sub3_967;
     public int anInt968;
     public int thisPlayerId;
     public Player players[];
@@ -168,7 +156,6 @@ public class client extends JagApplet {
     public int updatedPlayerCount;
     public int updatedPlayers[];
     public JagBuffer cachedAppearances[];
-    public IndexedSprite aClass50_Sub1_Sub1_Sub3Array976[];
     public int anInt977;
     public static int anInt978;
     public int anIntArray979[];
@@ -180,6 +167,10 @@ public class client extends JagApplet {
     public IndexedSprite aClass50_Sub1_Sub1_Sub3_985;
     public IndexedSprite aClass50_Sub1_Sub1_Sub3_986;
     public IndexedSprite aClass50_Sub1_Sub1_Sub3_987;
+    public IndexedSprite aClass50_Sub1_Sub1_Sub3_965;
+    public IndexedSprite aClass50_Sub1_Sub1_Sub3_966;
+    public IndexedSprite aClass50_Sub1_Sub1_Sub3_967;
+    public IndexedSprite[] aClass50_Sub1_Sub1_Sub3Array976;
     public int anInt988;
     public int placementX;
     public int placementY;
@@ -327,7 +318,7 @@ public class client extends JagApplet {
     public int anIntArray1134[];
     public int colorBrown1135;
     public boolean aBoolean1136;
-    public boolean isLoggedIn1137;
+    public boolean isLoggedIn;
     public int tickCounter1138;
     public static int anInt1139;
     public int anInt1140;
@@ -347,7 +338,7 @@ public class client extends JagApplet {
     public int anInt1154;
     public boolean aBoolean1155;
 
-    public JagImageProducer gameViewportImage_1158;
+    public JagImageProducer gameViewportImage;
     public JagImageProducer inventoryImage;
     public JagImageProducer aClass18_1157;
     public JagImageProducer chatboxImage_1159;
@@ -364,6 +355,16 @@ public class client extends JagApplet {
     public JagImageProducer loginBackground_4;
     public JagImageProducer loginBackground_5;
     public JagImageProducer loginBackground_6;
+
+    public JagImageProducer aClass18_906;
+    public JagImageProducer uiSideChatboxLeft;
+    public JagImageProducer uiSideMinimapRight;
+    public JagImageProducer uiSideRockRight1;
+    public JagImageProducer aClass18_910;
+    public JagImageProducer uiSideMinimapLeft;
+    public JagImageProducer uiSideRockLeft1;
+    public JagImageProducer uiSideChatboxRight;
+    public JagImageProducer uiSideChatboxTop;
 
     public static int anInt1160;
     public byte aByte1161;
@@ -530,6 +531,29 @@ public class client extends JagApplet {
     public int anInt1331;
     public int anInt1332;
 
+    // the below variables were added for resizable
+
+    /**
+     * Represents different modes for the client, 0 is fixed mode and 1 is resizable
+     */
+    public int clientSize = 0;
+
+    /**
+     * Current size of the entire client
+     */
+    public static int clientWidth = 765, clientHeight = 503;
+
+    /**
+     * Current size of the game area
+     */
+    private int gameAreaWidth = 512;
+    private int gameAreaHeight = 334;
+
+    /**
+     * Standard size for the entire client
+     */
+    public static final int REGULAR_WIDTH = 765, REGULAR_HEIGHT = 503;
+
     public static void main(String args[]) {
         try {
             System.out.println("RS2 user client - release #" + 377);
@@ -544,6 +568,79 @@ public class client extends JagApplet {
             cl.start(765, 503);
         } catch (Exception exception) {
             return;
+        }
+    }
+
+    /**
+     * Probably essential for resizable.
+     */
+    public void rebuildFrame(int size, int width, int height) {
+        try {
+            gameAreaWidth = (size == 0) ? 512 : width;
+            gameAreaHeight = (size == 0) ? 334 : height;
+            clientWidth = width;
+            clientHeight = height;
+            rebuildFrame(width, height, clientSize == 1);
+            updateGameArea();
+            super.mouseX = super.mouseY = -1;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Added for resizable.
+     */
+    private void updateGameArea() {
+        ThreeDimensionalCanvas.init3D(clientSize == 0 ? REGULAR_WIDTH : clientWidth, clientSize == 0 ? REGULAR_HEIGHT : clientHeight);
+        clientEntireOffsets = ThreeDimensionalCanvas.lineOffsets;
+        ThreeDimensionalCanvas.init3D(clientSize == 0 ? 516 : clientWidth, clientSize == 0 ? 165 : clientHeight);
+        chatBoxOffsets = ThreeDimensionalCanvas.lineOffsets;
+        ThreeDimensionalCanvas.init3D(clientSize == 0 ? (inventoryImage != null ? inventoryImage.width : 250) : clientWidth,clientSize == 0 ? (inventoryImage != null ? inventoryImage.height : 335) : clientHeight);
+        tabsOffsets = ThreeDimensionalCanvas.lineOffsets;
+        ThreeDimensionalCanvas.init3D(clientSize == 0 ? 512 : clientWidth, clientSize == 0 ? 334 : clientHeight);
+        gameViewportOffsets = ThreeDimensionalCanvas.lineOffsets;
+
+        int ai[] = new int[9];
+        for (int l8 = 0; l8 < 9; l8++) {
+            int j9 = 128 + l8 * 32 + 15;
+            int k9 = 600 + j9 * 3;
+            int l9 = ThreeDimensionalCanvas.sineTable[j9];
+            ai[l8] = k9 * l9 >> 16;
+        }
+
+        SceneGraph.preCalcFrustrumTable(ai, clientSize == 0 ? 512 : clientWidth, clientSize == 0 ? 334 : clientHeight, 500, 800);
+
+        gameViewportImage = new JagImageProducer(clientSize == 0 ? 512 : clientWidth, clientSize == 0 ? 334 : clientHeight, getParentComponent());
+        Drawable.clearScreen();
+        initUI();
+
+        if (!isLoggedIn) {
+            resetAllImageProducers();
+        }
+    }
+
+    /**
+     * Probably essential for resizable.
+     */
+    public void toggleSize(int size) {
+        if (clientSize != size) {
+            clientSize = size;
+            int width = 765;
+            int height = 503;
+            if (size == 0) {
+                //log_view_dist = 9;
+                width = REGULAR_WIDTH;
+                height = REGULAR_HEIGHT;
+                //showChat = true;
+                //showTab = true;
+            } else if (size == 1) {
+                //log_view_dist = 10;
+                width = 900;
+                height = 600;
+            }
+            rebuildFrame(size, width, height);
+            updateGameArea();
         }
     }
 
@@ -819,7 +916,7 @@ public class client extends JagApplet {
         buffer = null;
         inventoryImage = null;
         aClass18_1157 = null;
-        gameViewportImage_1158 = null;
+        gameViewportImage = null;
         chatboxImage_1159 = null;
         aClass50_Sub1_Sub1_Sub3_1185 = null;
         mapback_1186 = null;
@@ -1147,7 +1244,7 @@ public class client extends JagApplet {
             if (!parseIncomingPacket())
                 break;
 
-        if (!isLoggedIn1137)
+        if (!isLoggedIn)
             return;
         synchronized (mouseRecorder.lock) {
             if (accountFlagged) {
@@ -1387,7 +1484,7 @@ public class client extends JagApplet {
         for (int k = 0; k < 5; k++)
             unknownCameraVariable[k]++;
 
-        updateChatbox((byte) 2);
+        updateChatbox();
         super.anInt20++;
         if (super.anInt20 > 4500) {
             anInt873 = 250;
@@ -1536,13 +1633,9 @@ public class client extends JagApplet {
             anInt1220 = j2;
     }
 
-    public void updateChatbox(byte byte0) {
-        if (byte0 == 2)
-            byte0 = 0;
-        else
-            return;
+    public void updateChatbox() {
         do {
-            int key = method5();
+            int key = readCharFromChatbox();
             if (key == -1)
                 break;
             if (anInt1169 != -1 && anInt1169 == anInt1231) {
@@ -1659,10 +1752,18 @@ public class client extends JagApplet {
                 }
                 if ((key == 13 || key == 10) && chatInput.length() > 0) {
                     if (playerRights == 2) {
-                        if (chatInput.equals("::clientdrop"))
+                        if (chatInput.equals("::clientdrop")) {
                             method59(1);
-                        if (chatInput.equals("::lag"))
+                        }
+                        if (chatInput.equals("::lag")) {
                             printLagInfo(false);
+                        }
+                        if (chatInput.equals("::regular")) {
+                            toggleSize(0);
+                        }
+                        if (chatInput.equals("::resize")) {
+                            toggleSize(1);
+                        }
                         if (chatInput.equals("::dumpobjdefs")) {
                             StringBuilder sb = new StringBuilder();
                             for (int i = 0; i < ObjectDefinition.count; i++) {
@@ -3481,7 +3582,7 @@ public class client extends JagApplet {
         if (moved == 0)
             return;
         int moveType = buffer.getBits(2);
-        isLoggedIn1137 &= flag;
+        isLoggedIn &= flag;
 
         if (moveType == 0) {
             updatedPlayers[updatedPlayerCount++] = thisPlayerId;
@@ -3879,7 +3980,7 @@ public class client extends JagApplet {
     }
 
     public void updateNpcs(JagBuffer buf, boolean flag, int packetSize) {
-        isLoggedIn1137 &= flag;
+        isLoggedIn &= flag;
         removePlayerCount = 0;
         updatedPlayerCount = 0;
         handleNpcMovement(packetSize, (byte) -58, buf);
@@ -4293,10 +4394,10 @@ public class client extends JagApplet {
             aBoolean1242 = !aBoolean1242;
         anInt1120 = 0;
         JagSocket class17 = connection;
-        isLoggedIn1137 = false;
+        isLoggedIn = false;
         anInt850 = 0;
         login(thisPlayerName, thisPlayerPassword, true);
-        if (!isLoggedIn1137)
+        if (!isLoggedIn)
             method124(true);
         try {
             class17.closeConnection();
@@ -4766,7 +4867,7 @@ public class client extends JagApplet {
         chatboxImage_1159 = null;
         aClass18_1157 = null;
         inventoryImage = null;
-        gameViewportImage_1158 = null;
+        gameViewportImage = null;
         chatboxButtons = null;
         aClass18_1109 = null;
         aClass18_1110 = null;
@@ -5173,7 +5274,7 @@ public class client extends JagApplet {
                 ai[l8] = k9 * l9 >> 16;
             }
 
-            SceneGraph.method277(334, 22845, ai, 800, 500, 512);
+            SceneGraph.preCalcFrustrumTable(ai, 512, 334, 500, 800);
             ChatFilter.unpack(chatArchive);
             mouseRecorder = new MouseRecorder(this);
             startThread(mouseRecorder, 10);
@@ -5741,7 +5842,7 @@ public class client extends JagApplet {
                     updateInterfaceAnimations(anInt951, openInterfaceID);
                 }
                 anInt951 = 0;
-                initGameViewport(anInt1140);
+                resetAllImageProducers();
                 super.imageProducer.pushPixels();
                 ThreeDimensionalCanvas.lineOffsets = clientEntireOffsets;
                 Drawable.clearScreen();
@@ -5787,7 +5888,7 @@ public class client extends JagApplet {
             aBoolean950 = true;
             aBoolean1212 = true;
             if (loadingStage != 2) {
-                gameViewportImage_1158.drawImage(4, 4, super.graphics);
+                gameViewportImage.drawImage(4, 4, super.graphics);
                 aClass18_1157.drawImage(550, 4, super.graphics);
             }
             anInt1237++;
@@ -5942,7 +6043,7 @@ public class client extends JagApplet {
                     aClass50_Sub1_Sub1_Sub3Array976[12].drawSprite(226, 2);
             }
             aClass18_1109.drawImage(496, 466, super.graphics);
-            gameViewportImage_1158.pushPixels();
+            gameViewportImage.pushPixels();
             ThreeDimensionalCanvas.lineOffsets = gameViewportOffsets;
         }
         if (aBoolean1212) {
@@ -5974,7 +6075,7 @@ public class client extends JagApplet {
                 fontChatboxButtons.drawString("Off", 324, 41, true, 0xff0000);
             fontChatboxButtons.drawString("Report abuse", 458, 33, true, 0xffffff);
             chatboxButtons.drawImage(0, 453, super.graphics);
-            gameViewportImage_1158.pushPixels();
+            gameViewportImage.pushPixels();
             ThreeDimensionalCanvas.lineOffsets = gameViewportOffsets;
         }
         anInt951 = 0;
@@ -6190,7 +6291,7 @@ public class client extends JagApplet {
                 mouseRecorder.pos = 0;
                 super.awtFocus = true;
                 aBoolean1275 = true;
-                isLoggedIn1137 = true;
+                isLoggedIn = true;
                 outBuffer.position = 0;
                 buffer.position = 0;
                 opcode = -1;
@@ -6348,7 +6449,7 @@ public class client extends JagApplet {
                 return;
             }
             if (returnCode == 15) {
-                isLoggedIn1137 = true;
+                isLoggedIn = true;
                 outBuffer.position = 0;
                 buffer.position = 0;
                 opcode = -1;
@@ -6832,7 +6933,7 @@ public class client extends JagApplet {
             drawContextMenu();
         }
         chatboxImage_1159.drawImage(17, 357, super.graphics);
-        gameViewportImage_1158.pushPixels();
+        gameViewportImage.pushPixels();
         ThreeDimensionalCanvas.lineOffsets = gameViewportOffsets;
     }
 
@@ -6938,7 +7039,7 @@ public class client extends JagApplet {
 
             rbgSprite_compass_1116.method465(0, 567, 33, 25, 33, anIntArray1286, 0, anInt1252, 256,
                     anIntArray1180, 25);
-            gameViewportImage_1158.pushPixels();
+            gameViewportImage.pushPixels();
             ThreeDimensionalCanvas.lineOffsets = gameViewportOffsets;
             return;
         }
@@ -7046,7 +7147,7 @@ public class client extends JagApplet {
             method130(i5, true, aClass50_Sub1_Sub1_Sub1_1036, k2);
         }
         Drawable.drawFullRect(97, 78, 3, 3, 0xffffff);
-        gameViewportImage_1158.pushPixels();
+        gameViewportImage.pushPixels();
         ThreeDimensionalCanvas.lineOffsets = gameViewportOffsets;
     }
 
@@ -7156,7 +7257,7 @@ public class client extends JagApplet {
         pulseCycle++;
         if (byte0 != -111)
             return;
-        if (!isLoggedIn1137)
+        if (!isLoggedIn)
             method149(-724);
         else
             method28((byte) 4);
@@ -7405,8 +7506,8 @@ public class client extends JagApplet {
             }
             outBuffer.putOpcode(40);
             region.method167(clippingPlanes, anInt1318, sceneGraph);
-            if (gameViewportImage_1158 != null) {
-                gameViewportImage_1158.pushPixels();
+            if (gameViewportImage != null) {
+                gameViewportImage.pushPixels();
                 ThreeDimensionalCanvas.lineOffsets = gameViewportOffsets;
             }
             outBuffer.putOpcode(40);
@@ -8502,8 +8603,8 @@ public class client extends JagApplet {
 
         }
 
-        if (gameViewportImage_1158 != null) {
-            gameViewportImage_1158.pushPixels();
+        if (gameViewportImage != null) {
+            gameViewportImage.pushPixels();
             ThreeDimensionalCanvas.lineOffsets = gameViewportOffsets;
         }
         anInt1082++;
@@ -9788,15 +9889,16 @@ public class client extends JagApplet {
         Drawable.clearScreen();
         mapback_1186.drawSprite(0, 0);
         inventoryImage = new JagImageProducer(190, 261, getParentComponent());
-        gameViewportImage_1158 = new JagImageProducer(512, 334, getParentComponent());
+        gameViewportImage = new JagImageProducer(512, 334, getParentComponent());
         Drawable.clearScreen();
         chatboxButtons = new JagImageProducer(496, 50, getParentComponent());
         aClass18_1109 = new JagImageProducer(269, 37, getParentComponent());
         aClass18_1110 = new JagImageProducer(249, 45, getParentComponent());
         shouldRenderUI = true;
-        gameViewportImage_1158.pushPixels();
+
+        // todo figure out if these should be commented out? not present in resizable client
+        gameViewportImage.pushPixels();
         ThreeDimensionalCanvas.lineOffsets = gameViewportOffsets;
-        return;
     }
 
     public void drawErrorScreen() {
@@ -9859,12 +9961,12 @@ public class client extends JagApplet {
         } catch (Exception _ex) {
         }
         connection = null;
-        isLoggedIn1137 = false;
+        isLoggedIn = false;
         loginScreenState = 0;
         // thisPlayerName = "";
         //  aString1093 = "";
         method49(383);
-        isLoggedIn1137 &= flag;
+        isLoggedIn &= flag;
         sceneGraph.method241((byte) 7);
         for (int plane = 0; plane < 4; plane++) {
             clippingPlanes[plane].clear();
@@ -9877,8 +9979,8 @@ public class client extends JagApplet {
     }
 
     public void method125(String s, String s1) {
-        if (gameViewportImage_1158 != null) {
-            gameViewportImage_1158.pushPixels();
+        if (gameViewportImage != null) {
+            gameViewportImage.pushPixels();
             ThreeDimensionalCanvas.lineOffsets = gameViewportOffsets;
             int j = 151;
             if (s != null)
@@ -9890,7 +9992,7 @@ public class client extends JagApplet {
                 fontChatboxButtons.drawHorizontallyCenteredString(257, j, 0, s);
                 fontChatboxButtons.drawHorizontallyCenteredString(256, j - 1, 0xffffff, s);
             }
-            gameViewportImage_1158.drawImage(4, 4, super.graphics);
+            gameViewportImage.drawImage(4, 4, super.graphics);
             return;
         }
         if (super.imageProducer != null) {
@@ -9942,7 +10044,7 @@ public class client extends JagApplet {
             return;
         }
         paintCounter1309++;
-        if (!isLoggedIn1137) {
+        if (!isLoggedIn) {
             drawLoginScreen(false);
         } else {
             drawGame();
@@ -10516,7 +10618,7 @@ public class client extends JagApplet {
         if (isContextMenuActive && anInt1304 == 1)
             drawContextMenu();
         inventoryImage.drawImage(553, 205, super.graphics);
-        gameViewportImage_1158.pushPixels();
+        gameViewportImage.pushPixels();
         ThreeDimensionalCanvas.lineOffsets = gameViewportOffsets;
         if (byte0 == 7)
             ;
@@ -11155,7 +11257,7 @@ public class client extends JagApplet {
         class50_sub2.anInt1385 = k;
         class50_sub2.anInt1395 = k1;
         class50_sub2.delayUntilRespawn = l;
-        isLoggedIn1137 &= flag;
+        isLoggedIn &= flag;
     }
 
     public void updateMinimapClick() {
@@ -11196,7 +11298,7 @@ public class client extends JagApplet {
         }
     }
 
-    public void initGameViewport(int i) {
+    public void resetAllImageProducers() {
         if (super.imageProducer != null) {
             return;
         }
@@ -11204,9 +11306,6 @@ public class client extends JagApplet {
         loginBackground_1 = null;
         loginBackground_2 = null;
         loginboxElement = null;
-        if (i >= 0) {
-            anInt1004 = -4;
-        }
         loginFlameLeft = null;
         loginFlameRight = null;
         loginBackground_3 = null;
@@ -11216,11 +11315,11 @@ public class client extends JagApplet {
         chatboxImage_1159 = null;
         aClass18_1157 = null;
         inventoryImage = null;
-        gameViewportImage_1158 = null;
+        gameViewportImage = null;
         chatboxButtons = null;
         aClass18_1109 = null;
         aClass18_1110 = null;
-        super.imageProducer = new JagImageProducer(765, 503, getParentComponent());
+        super.imageProducer = new JagImageProducer(clientWidth, clientHeight, getParentComponent());
         shouldRenderUI = true;
     }
 
@@ -11276,7 +11375,7 @@ public class client extends JagApplet {
                         && super.anInt30 >= l1 - 20 && super.anInt30 <= l1 + 20) {
                     anInt850 = 0;
                     login(thisPlayerName, thisPlayerPassword, false);
-                    if (isLoggedIn1137)
+                    if (isLoggedIn)
                         return;
                 }
                 j1 = super.width / 2 + 80;
@@ -11287,7 +11386,7 @@ public class client extends JagApplet {
                     //aString1093 = "";
                 }
                 do {
-                    int i2 = method5();
+                    int i2 = readCharFromChatbox();
                     if (i2 == -1)
                         break;
                     boolean flag = false;
@@ -11525,7 +11624,7 @@ public class client extends JagApplet {
         method127(true);
         animateTexture_65(l2);
         draw3dScreen();
-        gameViewportImage_1158.drawImage(4, 4, super.graphics);
+        gameViewportImage.drawImage(4, 4, super.graphics);
         anInt1216 = i1;
         anInt1217 = j1;
         anInt1218 = k1;
@@ -11712,7 +11811,7 @@ public class client extends JagApplet {
         anIntArray1134 = new int[16384];
         colorBrown1135 = 0x766654;
         aBoolean1136 = false;
-        isLoggedIn1137 = false;
+        isLoggedIn = false;
         anInt1140 = -110;
         aClass50_Sub1_Sub1_Sub3Array1142 = new IndexedSprite[2];
         aByte1143 = -80;

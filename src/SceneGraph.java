@@ -930,13 +930,13 @@ public class SceneGraph {
 
 	}
 
-	public static void method277(int i, int j, int ai[], int k, int l, int i1) {
+	public static void preCalcFrustrumTable(int[] ai, int intArg0, int intArg1, int i, int j) {
 		anInt510 = 0;
 		anInt511 = 0;
-		anInt512 = i1;
-		anInt513 = i;
-		anInt508 = i1 / 2;
-		anInt509 = i / 2;
+		anInt512 = intArg0;
+		anInt513 = intArg1;
+		anInt508 = intArg0 / 2;
+		anInt509 = intArg1 / 2;
 		boolean aflag[][][][] = new boolean[9][32][53][53];
 		for (int j1 = 128; j1 <= 384; j1 += 32) {
 			for (int k1 = 0; k1 < 2048; k1 += 64) {
@@ -951,7 +951,7 @@ public class SceneGraph {
 						int l3 = i3 * 128;
 						int j4 = k3 * 128;
 						boolean flag1 = false;
-						for (int l4 = -l; l4 <= k; l4 += 128) {
+						for (int l4 = -i; l4 <= j; l4 += 128) {
 							if (!method278(j4, l3, anInt444, ai[i2] + l4))
 								continue;
 							flag1 = true;
@@ -998,9 +998,6 @@ public class SceneGraph {
 			}
 
 		}
-
-		if (j == 22845)
-			;
 	}
 
 	public static boolean method278(int i, int j, int k, int l) {
