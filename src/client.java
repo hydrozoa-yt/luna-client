@@ -388,7 +388,7 @@ public class client extends JagApplet {
     public int anInt1179;
     public int anIntArray1180[];
     public boolean aBoolean1181;
-    public RgbSprite aClass50_Sub1_Sub1_Sub1Array1182[];
+    public RgbSprite[] spriteArray1182;
     public int anInt1183;
     public String rightClickOptions[];
     public IndexedSprite aClass50_Sub1_Sub1_Sub3_1185;
@@ -923,7 +923,7 @@ public class client extends JagApplet {
         loginBackground_2 = null;
         loginboxElement = null;
         rbgSprite_compass_1116 = null;
-        aClass50_Sub1_Sub1_Sub1Array1182 = null;
+        spriteArray1182 = null;
         aClass50_Sub1_Sub1_Sub1Array1288 = null;
         aClass50_Sub1_Sub1_Sub1Array1079 = null;
         aClass50_Sub1_Sub1_Sub1Array954 = null;
@@ -5128,7 +5128,7 @@ public class client extends JagApplet {
                 aClass50_Sub1_Sub1_Sub1Array1031[i4] = new RgbSprite(mediaArchive, "mapfunction", i4);
 
             for (int j4 = 0; j4 < 5; j4++)
-                aClass50_Sub1_Sub1_Sub1Array1182[j4] = new RgbSprite(mediaArchive, "hitmarks", j4);
+                spriteArray1182[j4] = new RgbSprite(mediaArchive, "hitmarks", j4);
 
             for (int k4 = 0; k4 < 6; k4++)
                 aClass50_Sub1_Sub1_Sub1Array1288[k4] = new RgbSprite(mediaArchive, "headicons_pk", k4);
@@ -9770,8 +9770,9 @@ public class client extends JagApplet {
                             anInt932 += 15;
                             anInt933 -= 10;
                         }
-                        aClass50_Sub1_Sub1_Sub1Array1182[((Actor) (obj)).anIntArray1631[i1]].method461(
-                                anInt933 - 12, anInt932 - 12, -488);
+                        int index = ((Actor) (obj)).anIntArray1631[i1];
+                        System.out.println(index);
+                        spriteArray1182[((Actor) (obj)).anIntArray1631[i1]].method461(anInt933 - 12, anInt932 - 12, -488);
                         font_p11_full.drawHorizontallyCenteredString(anInt932, anInt933 + 4, 0, String
                                 .valueOf(((Actor) (obj)).anIntArray1630[i1]));
                         font_p11_full.drawHorizontallyCenteredString(anInt932 - 1, anInt933 + 3, 0xffffff, String
@@ -11847,7 +11848,7 @@ public class client extends JagApplet {
         anInt1178 = 300;
         anIntArray1180 = new int[33];
         aBoolean1181 = false;
-        aClass50_Sub1_Sub1_Sub1Array1182 = new RgbSprite[20];
+        spriteArray1182 = new RgbSprite[20];
         rightClickOptions = new String[500];
         buffer = JagBuffer.allocate(1);
         cost = new int[104][104];

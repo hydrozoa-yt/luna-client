@@ -72,11 +72,7 @@ public class JagApplet extends Applet implements Runnable, MouseListener, MouseM
 		}
 		frame = new JagFrame(width, height, this);
 		frame.addWindowListener(this);
-		if (resizable) {
-            frame.setResizable(true);
-        } else {
-            frame.setResizable(false);
-        }
+        frame.setResizable(resizable);
 		//graphics = frame.getGraphics();
 		graphics = getParentComponent().getGraphics();
 		getParentComponent().addMouseListener(this);
