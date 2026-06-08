@@ -334,16 +334,16 @@ public class JagInterface {
 		if (i == -1 && j == -1 && model.colors == null)
 			return model;
 		Model class50_sub1_sub4_sub4_1 = new Model(false, false, true,
-				model, Class21.method239(i) & Class21.method239(j));
+				model, AnimationFrame.isFrameTransparent(i) & AnimationFrame.isFrameTransparent(j));
 		if (k != 0)
 			aBoolean271 = !aBoolean271;
 		if (i != -1 || j != -1)
-			class50_sub1_sub4_sub4_1.method584(7);
+			class50_sub1_sub4_sub4_1.groupIndicesByTransform();
 		if (i != -1)
-			class50_sub1_sub4_sub4_1.method585(i, (byte) 6);
+			class50_sub1_sub4_sub4_1.applyAnimation(i, (byte) 6);
 		if (j != -1)
-			class50_sub1_sub4_sub4_1.method585(j, (byte) 6);
-		class50_sub1_sub4_sub4_1.method594(anInt280, anInt243, -50, -10, -50, true);
+			class50_sub1_sub4_sub4_1.applyAnimation(j, (byte) 6);
+		class50_sub1_sub4_sub4_1.initLighting(anInt280, anInt243, -50, -10, -50, true);
 		return class50_sub1_sub4_sub4_1;
 	}
 

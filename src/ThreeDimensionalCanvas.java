@@ -4,13 +4,57 @@
 
 public class ThreeDimensionalCanvas extends Drawable {
 
+	public static int anInt1524 = -20714;
+	public static int anInt1525;
+	public static boolean aBoolean1526;
+	public static boolean lowMemory = true;
+	public static boolean requiresBoundsCheck;
+	public static boolean aBoolean1529;
+	public static boolean aBoolean1530 = true;
+	public static int currentFaceAlpha;
+	public static int centerX;
+	public static int centerY;
+	public static int[] anIntArray1534;
+	public static int[] reciprocalTable;
+	public static int[] sineTable;
+	public static int[] cosineTable;
+	public static int[] anIntArray1538;
+	public static int anInt1539;
+	public static IndexedSprite[] indexedSprites = new IndexedSprite[50];
+	public static boolean[] aBooleanArray1541 = new boolean[50];
+	public static int[] anIntArray1542 = new int[50];
+	public static int anInt1543;
+	public static int[][] anIntArrayArray1544;
+	public static int[][] anIntArrayArray1545 = new int[50][];
+	public static int[] anIntArray1546 = new int[50];
+	public static int anInt1547;
+	public static int[] hslToRgbTable = new int[0x10000];
+	public static int[][] anIntArrayArray1549 = new int[50][];
+
+	static {
+		anIntArray1534 = new int[512];
+		reciprocalTable = new int[2048];
+		sineTable = new int[2048];
+		cosineTable = new int[2048];
+		for (int i = 1; i < 512; i++)
+			anIntArray1534[i] = 32768 / i;
+
+		for (int j = 1; j < 2048; j++)
+			reciprocalTable[j] = 0x10000 / j;
+
+		for (int k = 0; k < 2048; k++) {
+			sineTable[k] = (int) (65536D * Math.sin(k * 0.0030679614999999999D));
+			cosineTable[k] = (int) (65536D * Math.cos(k * 0.0030679614999999999D));
+		}
+
+	}
+
 	public static void method492(boolean flag) {
-		anIntArray1534 = null;
 		anIntArray1534 = null;
 		sineTable = null;
 		cosineTable = null;
 		anIntArray1538 = null;
-		aClass50_Sub1_Sub1_Sub3Array1540 = null;
+		indexedSprites = null;
 		aBooleanArray1541 = null;
 		anIntArray1542 = null;
 		anIntArrayArray1544 = null;
@@ -19,7 +63,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 		}
 		anIntArrayArray1545 = null;
 		anIntArray1546 = null;
-		anIntArray1548 = null;
+		hslToRgbTable = null;
 		anIntArrayArray1549 = null;
 	}
 
@@ -29,8 +73,8 @@ public class ThreeDimensionalCanvas extends Drawable {
 		for (int j = 0; j < Drawable.height; j++)
 			anIntArray1538[j] = Drawable.width * j;
 
-		anInt1532 = Drawable.width / 2;
-		anInt1533 = Drawable.height / 2;
+		centerX = Drawable.width / 2;
+		centerY = Drawable.height / 2;
 	}
 
 	public static void method494(int i, int j, int k) {
@@ -40,8 +84,8 @@ public class ThreeDimensionalCanvas extends Drawable {
 		for (int l = 0; l < i; l++)
 			anIntArray1538[l] = k * l;
 
-		anInt1532 = k / 2;
-		anInt1533 = i / 2;
+		centerX = k / 2;
+		centerY = i / 2;
 	}
 
 	public static void method495(byte byte0) {
@@ -76,11 +120,11 @@ public class ThreeDimensionalCanvas extends Drawable {
 		anInt1539 = 0;
 		for (int k = 0; k < 50; k++)
 			try {
-				aClass50_Sub1_Sub1_Sub3Array1540[k] = new IndexedSprite(class2, String.valueOf(k), 0);
-				if (lowMemory && aClass50_Sub1_Sub1_Sub3Array1540[k].anInt1522 == 128)
-					aClass50_Sub1_Sub1_Sub3Array1540[k].method485(0);
+				indexedSprites[k] = new IndexedSprite(class2, String.valueOf(k), 0);
+				if (lowMemory && indexedSprites[k].anInt1522 == 128)
+					indexedSprites[k].method485(0);
 				else
-					aClass50_Sub1_Sub1_Sub3Array1540[k].method486(true);
+					indexedSprites[k].method486(true);
 				anInt1539++;
 			} catch (Exception _ex) {
 			}
@@ -143,7 +187,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 			anIntArrayArray1545[k] = null;
 		}
 		anIntArrayArray1545[i] = ai;
-		IndexedSprite class50_sub1_sub1_sub3 = aClass50_Sub1_Sub1_Sub3Array1540[i];
+		IndexedSprite class50_sub1_sub1_sub3 = indexedSprites[i];
 		int ai1[] = anIntArrayArray1549[i];
 		if (lowMemory) {
 			aBooleanArray1541[i] = false;
@@ -241,14 +285,14 @@ public class ThreeDimensionalCanvas extends Drawable {
 				j2 = method502(j2, d);
 				if (j2 == 0)
 					j2 = 1;
-				anIntArray1548[i++] = j2;
+				hslToRgbTable[i++] = j2;
 			}
 
 		}
 
 		for (int k = 0; k < 50; k++)
-			if (aClass50_Sub1_Sub1_Sub3Array1540[k] != null) {
-				int ai[] = aClass50_Sub1_Sub1_Sub3Array1540[k].anIntArray1517;
+			if (indexedSprites[k] != null) {
+				int ai[] = indexedSprites[k].anIntArray1517;
 				anIntArrayArray1549[k] = new int[ai.length];
 				for (int i1 = 0; i1 < ai.length; i1++) {
 					anIntArrayArray1549[k][i1] = method502(ai[i1], d);
@@ -280,7 +324,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 		return (j << 16) + (k << 8) + l;
 	}
 
-	public static void method503(int i, int j, int k, int l, int i1, int j1, int k1, int l1, int i2) {
+	public static void drawGouraudTriangle(int i, int j, int k, int l, int i1, int j1, int k1, int l1, int i2) {
 		int j2 = 0;
 		int k2 = 0;
 		if (j != i) {
@@ -667,13 +711,13 @@ public class ThreeDimensionalCanvas extends Drawable {
 	public static void method504(int ai[], int i, int j, int k, int l, int i1, int j1, int k1) {
 		if (aBoolean1530) {
 			int l1;
-			if (aBoolean1528) {
+			if (requiresBoundsCheck) {
 				if (i1 - l > 3)
 					l1 = (k1 - j1) / (i1 - l);
 				else
 					l1 = 0;
-				if (i1 > Drawable.anInt1431)
-					i1 = Drawable.anInt1431;
+				if (i1 > Drawable.viewportRightBoundary)
+					i1 = Drawable.viewportRightBoundary;
 				if (l < 0) {
 					j1 -= l * l1;
 					l = 0;
@@ -693,9 +737,9 @@ public class ThreeDimensionalCanvas extends Drawable {
 				else
 					l1 = 0;
 			}
-			if (anInt1531 == 0) {
+			if (currentFaceAlpha == 0) {
 				while (--k >= 0) {
-					j = anIntArray1548[j1 >> 8];
+					j = hslToRgbTable[j1 >> 8];
 					j1 += l1;
 					ai[i++] = j;
 					ai[i++] = j;
@@ -704,17 +748,17 @@ public class ThreeDimensionalCanvas extends Drawable {
 				}
 				k = i1 - l & 3;
 				if (k > 0) {
-					j = anIntArray1548[j1 >> 8];
+					j = hslToRgbTable[j1 >> 8];
 					do
 						ai[i++] = j;
 					while (--k > 0);
 					return;
 				}
 			} else {
-				int j2 = anInt1531;
-				int l2 = 256 - anInt1531;
+				int j2 = currentFaceAlpha;
+				int l2 = 256 - currentFaceAlpha;
 				while (--k >= 0) {
-					j = anIntArray1548[j1 >> 8];
+					j = hslToRgbTable[j1 >> 8];
 					j1 += l1;
 					j = ((j & 0xff00ff) * l2 >> 8 & 0xff00ff) + ((j & 0xff00) * l2 >> 8 & 0xff00);
 					ai[i++] = j + ((ai[i] & 0xff00ff) * j2 >> 8 & 0xff00ff) + ((ai[i] & 0xff00) * j2 >> 8 & 0xff00);
@@ -724,7 +768,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 				}
 				k = i1 - l & 3;
 				if (k > 0) {
-					j = anIntArray1548[j1 >> 8];
+					j = hslToRgbTable[j1 >> 8];
 					j = ((j & 0xff00ff) * l2 >> 8 & 0xff00ff) + ((j & 0xff00) * l2 >> 8 & 0xff00);
 					do
 						ai[i++] = j + ((ai[i] & 0xff00ff) * j2 >> 8 & 0xff00ff) + ((ai[i] & 0xff00) * j2 >> 8 & 0xff00);
@@ -736,9 +780,9 @@ public class ThreeDimensionalCanvas extends Drawable {
 		if (l >= i1)
 			return;
 		int i2 = (k1 - j1) / (i1 - l);
-		if (aBoolean1528) {
-			if (i1 > Drawable.anInt1431)
-				i1 = Drawable.anInt1431;
+		if (requiresBoundsCheck) {
+			if (i1 > Drawable.viewportRightBoundary)
+				i1 = Drawable.viewportRightBoundary;
 			if (l < 0) {
 				j1 -= l * i2;
 				l = 0;
@@ -748,24 +792,24 @@ public class ThreeDimensionalCanvas extends Drawable {
 		}
 		i += l;
 		k = i1 - l;
-		if (anInt1531 == 0) {
+		if (currentFaceAlpha == 0) {
 			do {
-				ai[i++] = anIntArray1548[j1 >> 8];
+				ai[i++] = hslToRgbTable[j1 >> 8];
 				j1 += i2;
 			} while (--k > 0);
 			return;
 		}
-		int k2 = anInt1531;
-		int i3 = 256 - anInt1531;
+		int k2 = currentFaceAlpha;
+		int i3 = 256 - currentFaceAlpha;
 		do {
-			j = anIntArray1548[j1 >> 8];
+			j = hslToRgbTable[j1 >> 8];
 			j1 += i2;
 			j = ((j & 0xff00ff) * i3 >> 8 & 0xff00ff) + ((j & 0xff00) * i3 >> 8 & 0xff00);
 			ai[i++] = j + ((ai[i] & 0xff00ff) * k2 >> 8 & 0xff00ff) + ((ai[i] & 0xff00) * k2 >> 8 & 0xff00);
 		} while (--k > 0);
 	}
 
-	public static void method505(int i, int j, int k, int l, int i1, int j1, int k1) {
+	public static void drawFlatTriangle(int i, int j, int k, int l, int i1, int j1, int k1) {
 		int l1 = 0;
 		if (j != i)
 			l1 = (i1 - l << 16) / (j - i);
@@ -1063,9 +1107,9 @@ public class ThreeDimensionalCanvas extends Drawable {
 	}
 
 	public static void method506(int ai[], int i, int j, int k, int l, int i1) {
-		if (aBoolean1528) {
-			if (i1 > Drawable.anInt1431)
-				i1 = Drawable.anInt1431;
+		if (requiresBoundsCheck) {
+			if (i1 > Drawable.viewportRightBoundary)
+				i1 = Drawable.viewportRightBoundary;
 			if (l < 0)
 				l = 0;
 		}
@@ -1073,7 +1117,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 			return;
 		i += l;
 		k = i1 - l >> 2;
-		if (anInt1531 == 0) {
+		if (currentFaceAlpha == 0) {
 			while (--k >= 0) {
 				ai[i++] = j;
 				ai[i++] = j;
@@ -1085,8 +1129,8 @@ public class ThreeDimensionalCanvas extends Drawable {
 
 			return;
 		}
-		int j1 = anInt1531;
-		int k1 = 256 - anInt1531;
+		int j1 = currentFaceAlpha;
+		int k1 = 256 - currentFaceAlpha;
 		j = ((j & 0xff00ff) * k1 >> 8 & 0xff00ff) + ((j & 0xff00) * k1 >> 8 & 0xff00);
 		while (--k >= 0) {
 			ai[i++] = j + ((ai[i] & 0xff00ff) * j1 >> 8 & 0xff00ff) + ((ai[i] & 0xff00) * j1 >> 8 & 0xff00);
@@ -1099,8 +1143,8 @@ public class ThreeDimensionalCanvas extends Drawable {
 
 	}
 
-	public static void method507(int i, int j, int k, int l, int i1, int j1, int k1, int l1, int i2, int j2, int k2,
-			int l2, int i3, int j3, int k3, int l3, int i4, int j4, int k4) {
+	public static void drawTexturedTriangle(int i, int j, int k, int l, int i1, int j1, int k1, int l1, int i2, int j2, int k2,
+											int l2, int i3, int j3, int k3, int l3, int i4, int j4, int k4) {
 		int ai[] = method500(k4);
 		aBoolean1529 = !aBooleanArray1541[k4];
 		k2 = j2 - k2;
@@ -1160,7 +1204,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 					l1 -= l7 * j;
 					j = 0;
 				}
-				int k8 = i - anInt1533;
+				int k8 = i - centerY;
 				l4 += j5 * k8;
 				k5 += i6 * k8;
 				j6 += l6 * k8;
@@ -1239,7 +1283,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 				i2 -= l7 * k;
 				k = 0;
 			}
-			int l8 = i - anInt1533;
+			int l8 = i - centerY;
 			l4 += j5 * l8;
 			k5 += i6 * l8;
 			j6 += l6 * l8;
@@ -1326,7 +1370,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 					i2 -= j8 * k;
 					k = 0;
 				}
-				int i9 = j - anInt1533;
+				int i9 = j - centerY;
 				l4 += j5 * i9;
 				k5 += i6 * i9;
 				j6 += l6 * i9;
@@ -1405,7 +1449,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 				k1 -= j8 * i;
 				i = 0;
 			}
-			int j9 = j - anInt1533;
+			int j9 = j - centerY;
 			l4 += j5 * j9;
 			k5 += i6 * j9;
 			j6 += l6 * j9;
@@ -1491,7 +1535,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 				k1 -= j7 * i;
 				i = 0;
 			}
-			int k9 = k - anInt1533;
+			int k9 = k - centerY;
 			l4 += j5 * k9;
 			k5 += i6 * k9;
 			j6 += l6 * k9;
@@ -1570,7 +1614,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 			l1 -= j7 * j;
 			j = 0;
 		}
-		int l9 = k - anInt1533;
+		int l9 = k - centerY;
 		l4 += j5 * l9;
 		k5 += i6 * l9;
 		j6 += l6 * l9;
@@ -1639,10 +1683,10 @@ public class ThreeDimensionalCanvas extends Drawable {
 			return;
 		int j3;
 		int k3;
-		if (aBoolean1528) {
+		if (requiresBoundsCheck) {
 			j3 = (k1 - j1) / (i1 - l);
-			if (i1 > Drawable.anInt1431)
-				i1 = Drawable.anInt1431;
+			if (i1 > Drawable.viewportRightBoundary)
+				i1 = Drawable.viewportRightBoundary;
 			if (l < 0) {
 				j1 -= l * j3;
 				l = 0;
@@ -1666,7 +1710,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 		if (lowMemory) {
 			int i4 = 0;
 			int k4 = 0;
-			int k6 = l - anInt1532;
+			int k6 = l - centerX;
 			l1 += (k2 >> 3) * k6;
 			i2 += (l2 >> 3) * k6;
 			j2 += (i3 >> 3) * k6;
@@ -1820,7 +1864,7 @@ public class ThreeDimensionalCanvas extends Drawable {
 		}
 		int j4 = 0;
 		int l4 = 0;
-		int l6 = l - anInt1532;
+		int l6 = l - centerX;
 		l1 += (k2 >> 3) * l6;
 		i2 += (l2 >> 3) * l6;
 		j2 += (i3 >> 3) * l6;
@@ -1968,51 +2012,6 @@ public class ThreeDimensionalCanvas extends Drawable {
 			k++;
 			i += j7;
 			j += l7;
-		}
-
-	}
-
-	public static int anInt1524 = -20714;
-	public static int anInt1525;
-	public static boolean aBoolean1526;
-	public static boolean lowMemory = true;
-	public static boolean aBoolean1528;
-	public static boolean aBoolean1529;
-	public static boolean aBoolean1530 = true;
-	public static int anInt1531;
-	public static int anInt1532;
-	public static int anInt1533;
-	public static int anIntArray1534[];
-	public static int anIntArray1535[];
-	public static int sineTable[];
-	public static int cosineTable[];
-	public static int anIntArray1538[];
-	public static int anInt1539;
-	public static IndexedSprite aClass50_Sub1_Sub1_Sub3Array1540[] = new IndexedSprite[50];
-	public static boolean aBooleanArray1541[] = new boolean[50];
-	public static int anIntArray1542[] = new int[50];
-	public static int anInt1543;
-	public static int anIntArrayArray1544[][];
-	public static int anIntArrayArray1545[][] = new int[50][];
-	public static int anIntArray1546[] = new int[50];
-	public static int anInt1547;
-	public static int anIntArray1548[] = new int[0x10000];
-	public static int anIntArrayArray1549[][] = new int[50][];
-
-	static {
-		anIntArray1534 = new int[512];
-		anIntArray1535 = new int[2048];
-		sineTable = new int[2048];
-		cosineTable = new int[2048];
-		for (int i = 1; i < 512; i++)
-			anIntArray1534[i] = 32768 / i;
-
-		for (int j = 1; j < 2048; j++)
-			anIntArray1535[j] = 0x10000 / j;
-
-		for (int k = 0; k < 2048; k++) {
-			sineTable[k] = (int) (65536D * Math.sin(k * 0.0030679614999999999D));
-			cosineTable[k] = (int) (65536D * Math.cos(k * 0.0030679614999999999D));
 		}
 
 	}

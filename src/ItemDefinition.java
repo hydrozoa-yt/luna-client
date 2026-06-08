@@ -71,9 +71,9 @@ public class ItemDefinition {
 				class50_sub1_sub4_sub4 = new Model(2, aclass50_sub1_sub4_sub4);
 			}
 		if (i == 0 && aByte378 != 0)
-			class50_sub1_sub4_sub4.method590(0, 0, false, aByte378);
+			class50_sub1_sub4_sub4.translate(0, aByte378, 0);
 		if (i == 1 && aByte330 != 0)
-			class50_sub1_sub4_sub4.method590(0, 0, false, aByte330);
+			class50_sub1_sub4_sub4.translate(0, aByte330, 0);
 		if (srcColors != null) {
 			for (int color = 0; color < srcColors.length; color++)
 				class50_sub1_sub4_sub4.replaceColor(srcColors[color], destColors[color]);
@@ -308,14 +308,14 @@ public class ItemDefinition {
 		if (model == null)
 			return null;
 		if (anInt366 != 128 || anInt357 != 128 || anInt368 != 128)
-			model.method593(anInt357, anInt368, 9, anInt366);
+			model.resizeModel(anInt366, anInt357, anInt368);
 		if (srcColors != null) {
 			for (int l = 0; l < srcColors.length; l++)
 				model.replaceColor(srcColors[l], destColors[l]);
 
 		}
-		model.method594(64 + anInt354, 768 + anInt358, -50, -10, -50, true);
-		model.aBoolean1680 = true;
+		model.initLighting(64 + anInt354, 768 + anInt358, -50, -10, -50, true);
+		model.isPriorityPicking = true;
 		aClass33_337.put(model, id);
 		return model;
 	}
@@ -353,8 +353,8 @@ public class ItemDefinition {
 				return null;
 		}
 		RgbSprite class50_sub1_sub1_sub1_1 = new RgbSprite(32, 32);
-		int j1 = ThreeDimensionalCanvas.anInt1532;
-		int k1 = ThreeDimensionalCanvas.anInt1533;
+		int j1 = ThreeDimensionalCanvas.centerX;
+		int k1 = ThreeDimensionalCanvas.centerY;
 		int ai[] = ThreeDimensionalCanvas.anIntArray1538;
 		int ai1[] = Drawable.anIntArray1424;
 		int l1 = Drawable.width;
@@ -374,7 +374,7 @@ public class ItemDefinition {
 			j3 = (int) (j3 * 1.04D);
 		int k3 = ThreeDimensionalCanvas.sineTable[class16.modelRotationX] * j3 >> 16;
 		int l3 = ThreeDimensionalCanvas.cosineTable[class16.modelRotationX] * j3 >> 16;
-		class50_sub1_sub4_sub4.method598(0, class16.modelRotationY, class16.anInt339, class16.modelRotationX, class16.modelOffsetX, k3
+		class50_sub1_sub4_sub4.viewportTransform(0, class16.modelRotationY, class16.anInt339, class16.modelRotationX, class16.modelOffsetX, k3
 				+ ((Entity) (class50_sub1_sub4_sub4)).height / 2 + class16.modelOffsetY, l3
 				+ class16.modelOffsetY);
 		for (int l4 = 31; l4 >= 0; l4--) {
@@ -429,8 +429,8 @@ public class ItemDefinition {
 			spriteCache.put(class50_sub1_sub1_sub1_1, k);
 		Drawable.method444(l1, i2, ai1);
 		Drawable.method446(l2, j2, i3, k2, true);
-		ThreeDimensionalCanvas.anInt1532 = j1;
-		ThreeDimensionalCanvas.anInt1533 = k1;
+		ThreeDimensionalCanvas.centerX = j1;
+		ThreeDimensionalCanvas.centerY = k1;
 		ThreeDimensionalCanvas.anIntArray1538 = ai;
 		ThreeDimensionalCanvas.aBoolean1530 = true;
 		if (class16.stackable)

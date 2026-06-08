@@ -1,996 +1,1860 @@
-// Decompiled by Jad v1.5.8f. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-
+/**
+ * Represents a 3D mesh in the software rendering engine.
+ *
+ * <p>The Model class is the core of the 3D pipeline, responsible for storing vertex and face data,
+ * performing spatial transformations (rotation, scaling, translation), and calculating lighting.
+ * It utilizes a software-based rasterization approach, employing a "Painter's Algorithm"
+ * with Z-sorting bins and priority layers to handle depth without a hardware Z-buffer.</p>
+ *
+ * <p>To maximize performance on legacy hardware, this class uses several optimizations:
+ * <ul>
+ *   <li>Static buffer pooling for projection and clipping to minimize Garbage Collection overhead.</li>
+ *   <li>16-bit fixed-point arithmetic for trigonometric calculations and 3D projection.</li>
+ *   <li>Parallel arrays for vertex and face attributes to improve cache locality.</li>
+ * </ul></p>
+ */
 public class Model extends Entity {
 
-	public static void method573(boolean flag) {
-		aClass26Array1682 = null;
-		aBooleanArray1684 = null;
-		aBooleanArray1685 = null;
-		anIntArray1686 = null;
-		anIntArray1687 = null;
-		anIntArray1688 = null;
-		anIntArray1689 = null;
-		anIntArray1690 = null;
-		anIntArray1691 = null;
-		anIntArray1692 = null;
-		anIntArrayArray1693 = null;
-		anIntArray1694 = null;
-		anIntArrayArray1695 = null;
-		anIntArray1696 = null;
-		anIntArray1697 = null;
-		anIntArray1698 = null;
-		anIntArray1710 = null;
-		anIntArray1711 = null;
-		anIntArray1712 = null;
-		if (flag) {
-			return;
-		} else {
-			anIntArray1713 = null;
-			return;
-		}
+	/**
+	 * Constructs a "blank" or placeholder Model instance with default state flags.
+	 *
+	 * <p>This constructor does not load geometry data from the cache. It is primarily
+	 * used for internal engine markers or as a base for models that will have their
+	 * data assigned manually (e.g., procedurally generated meshes or scratchpad models).</p>
+	 *
+	 * <p>If the provided ID is invalid (<= 0), the {@code dummyMagicNumber} is shifted
+	 * to a specific sentinel value (-110) to identify this as a system-level or
+	 * null-model object.</p>
+	 *
+	 * @param id The unique identifier for this model instance.
+	 */
+	public Model(int id) {
+		dummyVar = 932;
+		dummVar2 = 426;
+		isClickable = false;
+		shadingEnabled = true;
+		dummyMagicNumber = -252;
+		isModified = false;
+		isPriorityPicking = false;
+		if (id <= 0)
+			dummyMagicNumber = -110;
 	}
 
-	public static void method574(int i, ModelProvider class32) {
-		aClass26Array1682 = new Class26[i];
-		aClass32_1683 = class32;
-	}
+	/**
+	 * Constructs a new Model by deserializing raw data from the cache based on a header.
+	 *
+	 * <p>This constructor acts as the primary loader for model assets. it performs several
+	 * complex decompression tasks to reconstruct the mesh:
+	 * <ul>
+	 *   <li><b>Delta Decoding:</b> Vertex coordinates are stored as relative offsets from
+	 *       the previous vertex to save space. This constructor accumulates those offsets
+	 *       into absolute 3D coordinates.</li>
+	 *   <li><b>Topology Reconstruction:</b> Face indices are parsed using specific opcodes
+	 *       (1-4) to determine if a face is an independent triangle, a triangle strip,
+	 *        or a triangle fan.</li>
+	 *   <li><b>Buffer Recycling:</b> To minimize memory overhead, it repositions existing
+	 *       {@link JagBuffer} instances to point at different data segments (colors,
+	 *       render types, priorities) within the same raw byte array.</li>
+	 * </ul></p>
+	 *
+	 * @param modelId    The index of the model to load from the global {@link #modelHeaders} cache.
+	 * @param dummyInt   A validation or toggle integer. If this value is greater than or
+	 *                   equal to 0, the {@link #isModified} flag is toggled, signaling
+	 *                   the engine that this model's geometry differs from the base cache version.
+	 */
+	public Model(int modelId, int dummyInt) {
+		dummyVar = 932;
+		dummVar2 = 426;
 
-	public static void method575(byte abyte0[], int i, byte byte0) {
-		if (byte0 != 7)
-			return;
-		if (abyte0 == null) {
-			Class26 class26 = aClass26Array1682[i] = new Class26();
-			class26.anInt534 = 0;
-			class26.anInt535 = 0;
-			class26.anInt536 = 0;
-			return;
-		}
-		JagBuffer class50_sub1_sub2 = new JagBuffer(abyte0);
-		class50_sub1_sub2.position = abyte0.length - 18;
-		Class26 class26_1 = aClass26Array1682[i] = new Class26();
-		class26_1.aByteArray533 = abyte0;
-		class26_1.anInt534 = class50_sub1_sub2.getShort();
-		class26_1.anInt535 = class50_sub1_sub2.getShort();
-		class26_1.anInt536 = class50_sub1_sub2.getByte();
-		int j = class50_sub1_sub2.getByte();
-		int k = class50_sub1_sub2.getByte();
-		int l = class50_sub1_sub2.getByte();
-		int i1 = class50_sub1_sub2.getByte();
-		int j1 = class50_sub1_sub2.getByte();
-		int k1 = class50_sub1_sub2.getShort();
-		int l1 = class50_sub1_sub2.getShort();
-		int i2 = class50_sub1_sub2.getShort();
-		int j2 = class50_sub1_sub2.getShort();
-		int k2 = 0;
-		class26_1.anInt537 = k2;
-		k2 += class26_1.anInt534;
-		class26_1.anInt543 = k2;
-		k2 += class26_1.anInt535;
-		class26_1.anInt546 = k2;
-		if (k == 255)
-			k2 += class26_1.anInt535;
-		else
-			class26_1.anInt546 = -k - 1;
-		class26_1.anInt548 = k2;
-		if (i1 == 1)
-			k2 += class26_1.anInt535;
-		else
-			class26_1.anInt548 = -1;
-		class26_1.anInt545 = k2;
-		if (j == 1)
-			k2 += class26_1.anInt535;
-		else
-			class26_1.anInt545 = -1;
-		class26_1.anInt541 = k2;
-		if (j1 == 1)
-			k2 += class26_1.anInt534;
-		else
-			class26_1.anInt541 = -1;
-		class26_1.anInt547 = k2;
-		if (l == 1)
-			k2 += class26_1.anInt535;
-		else
-			class26_1.anInt547 = -1;
-		class26_1.anInt542 = k2;
-		k2 += j2;
-		class26_1.anInt544 = k2;
-		k2 += class26_1.anInt535 * 2;
-		class26_1.anInt549 = k2;
-		k2 += class26_1.anInt536 * 6;
-		class26_1.anInt538 = k2;
-		k2 += k1;
-		class26_1.anInt539 = k2;
-		k2 += l1;
-		class26_1.anInt540 = k2;
-		k2 += i2;
-	}
+		isClickable = false;
+		shadingEnabled = true;
+		dummyMagicNumber = -252;
+		isModified = false;
+		isPriorityPicking = false;
+		instanceCount++;
 
-	public static void method576(int i, int j) {
-		if (j != 1) {
-			return;
-		} else {
-			aClass26Array1682[i] = null;
-			return;
-		}
-	}
+		ModelHeader modelHeader = Model.modelHeaders[modelId];
+		verticesCount = modelHeader.vertexCount;
+		faceCount = modelHeader.faceCount;
+		textureVertexCount = modelHeader.textureVertexCount;
 
-	public static Model forId(int i) {
-		if (aClass26Array1682 == null)
-			return null;
-		Class26 class26 = aClass26Array1682[i];
-		if (class26 == null) {
-			aClass32_1683.requestModel(i);
-			return null;
-		} else {
-			return new Model(i, -478);
-		}
-	}
+		// Allocate coordinate arrays
+		verticesX = new int[verticesCount];
+		verticesY = new int[verticesCount];
+		verticesZ = new int[verticesCount];
 
-	public static boolean isDownloaded(int id) {
-		if (aClass26Array1682 == null)
-			return false;
-		Class26 class26 = aClass26Array1682[id];
-		if (class26 == null) {
-			aClass32_1683.requestModel(id);
-			return false;
-		} else {
-			return true;
-		}
-	}
+		// Allocate face indexing arrays
+		faceIndicesX = new int[faceCount];
+		faceIndicesY = new int[faceCount];
+		faceIndicesZ = new int[faceCount];
 
-	public Model(int i) {
-		anInt1636 = 932;
-		anInt1637 = 426;
-		aBoolean1638 = false;
-		aBoolean1639 = true;
-		anInt1640 = -252;
-		aBoolean1641 = false;
-		aBoolean1680 = false;
-		if (i <= 0)
-			anInt1640 = -110;
-	}
+		// Allocate texture mapping arrays
+		textureVertexIndicesA = new int[textureVertexCount];
+		textureVertexIndicesB = new int[textureVertexCount];
+		textureVertexIndicesC = new int[textureVertexCount];
 
-	public Model(int i, int j) {
-		anInt1636 = 932;
-		anInt1637 = 426;
-		aBoolean1638 = false;
-		aBoolean1639 = true;
-		anInt1640 = -252;
-		aBoolean1641 = false;
-		aBoolean1680 = false;
-		anInt1642++;
-		Class26 class26 = aClass26Array1682[i];
-		anInt1648 = class26.anInt534;
-		anInt1652 = class26.anInt535;
-		anInt1664 = class26.anInt536;
-		anIntArray1649 = new int[anInt1648];
-		anIntArray1650 = new int[anInt1648];
-		anIntArray1651 = new int[anInt1648];
-		anIntArray1653 = new int[anInt1652];
-		anIntArray1654 = new int[anInt1652];
-		anIntArray1655 = new int[anInt1652];
-		anIntArray1665 = new int[anInt1664];
-		anIntArray1666 = new int[anInt1664];
-		anIntArray1667 = new int[anInt1664];
-		if (class26.anInt541 >= 0)
-			anIntArray1676 = new int[anInt1648];
-		if (class26.anInt545 >= 0)
-			anIntArray1659 = new int[anInt1652];
-		if (class26.anInt546 >= 0)
-			anIntArray1660 = new int[anInt1652];
-		else
-			anInt1663 = -class26.anInt546 - 1;
-		if (class26.anInt547 >= 0)
-			anIntArray1661 = new int[anInt1652];
-		if (class26.anInt548 >= 0)
-			anIntArray1677 = new int[anInt1652];
-		colors = new int[anInt1652];
-		JagBuffer class50_sub1_sub2 = new JagBuffer(class26.aByteArray533);
-		class50_sub1_sub2.position = class26.anInt537;
-		JagBuffer class50_sub1_sub2_1 = new JagBuffer(class26.aByteArray533);
-		class50_sub1_sub2_1.position = class26.anInt538;
-		JagBuffer class50_sub1_sub2_2 = new JagBuffer(class26.aByteArray533);
-		class50_sub1_sub2_2.position = class26.anInt539;
-		if (j >= 0)
-			aBoolean1641 = !aBoolean1641;
-		JagBuffer class50_sub1_sub2_3 = new JagBuffer(class26.aByteArray533);
-		class50_sub1_sub2_3.position = class26.anInt540;
-		JagBuffer class50_sub1_sub2_4 = new JagBuffer(class26.aByteArray533);
-		class50_sub1_sub2_4.position = class26.anInt541;
-		int k = 0;
-		int l = 0;
-		int i1 = 0;
-		for (int j1 = 0; j1 < anInt1648; j1++) {
-			int k1 = class50_sub1_sub2.getByte();
-			int i2 = 0;
-			if ((k1 & 1) != 0)
-				i2 = class50_sub1_sub2_1.getSignedSmart();
-			int k2 = 0;
-			if ((k1 & 2) != 0)
-				k2 = class50_sub1_sub2_2.getSignedSmart();
-			int i3 = 0;
-			if ((k1 & 4) != 0)
-				i3 = class50_sub1_sub2_3.getSignedSmart();
-			anIntArray1649[j1] = k + i2;
-			anIntArray1650[j1] = l + k2;
-			anIntArray1651[j1] = i1 + i3;
-			k = anIntArray1649[j1];
-			l = anIntArray1650[j1];
-			i1 = anIntArray1651[j1];
-			if (anIntArray1676 != null)
-				anIntArray1676[j1] = class50_sub1_sub2_4.getByte();
+		// Optional attribute allocation based on header offsets
+		if (modelHeader.vertexBoneOffset >= 0) vertexBoneIds = new int[verticesCount];
+		if (modelHeader.faceRenderTypeOffset >= 0) faceRenderTypes = new int[faceCount];
+		if (modelHeader.facePriorityOffset >= 0) facePriorities = new int[faceCount];
+		else {
+			defaultPriority = -modelHeader.facePriorityOffset - 1;
 		}
 
-		class50_sub1_sub2.position = class26.anInt544;
-		class50_sub1_sub2_1.position = class26.anInt545;
-		class50_sub1_sub2_2.position = class26.anInt546;
-		class50_sub1_sub2_3.position = class26.anInt547;
-		class50_sub1_sub2_4.position = class26.anInt548;
-		for (int l1 = 0; l1 < anInt1652; l1++) {
-			colors[l1] = class50_sub1_sub2.getShort();
-			if (anIntArray1659 != null)
-				anIntArray1659[l1] = class50_sub1_sub2_1.getByte();
-			if (anIntArray1660 != null)
-				anIntArray1660[l1] = class50_sub1_sub2_2.getByte();
-			if (anIntArray1661 != null)
-				anIntArray1661[l1] = class50_sub1_sub2_3.getByte();
-			if (anIntArray1677 != null)
-				anIntArray1677[l1] = class50_sub1_sub2_4.getByte();
-		}
+		if (modelHeader.faceTransparencyOffset >= 0) faceTransparency = new int[faceCount];
+		if (modelHeader.faceBoneOffset >= 0) faceBoneIds = new int[faceCount];
 
-		class50_sub1_sub2.position = class26.anInt542;
-		class50_sub1_sub2_1.position = class26.anInt543;
-		int j2 = 0;
-		int l2 = 0;
-		int j3 = 0;
-		int k3 = 0;
-		for (int l3 = 0; l3 < anInt1652; l3++) {
-			int i4 = class50_sub1_sub2_1.getByte();
-			if (i4 == 1) {
-				j2 = class50_sub1_sub2.getSignedSmart() + k3;
-				k3 = j2;
-				l2 = class50_sub1_sub2.getSignedSmart() + k3;
-				k3 = l2;
-				j3 = class50_sub1_sub2.getSignedSmart() + k3;
-				k3 = j3;
-				anIntArray1653[l3] = j2;
-				anIntArray1654[l3] = l2;
-				anIntArray1655[l3] = j3;
+		colors = new int[faceCount];
+
+		// Initialize buffers for vertex data
+		JagBuffer vertexFlagsBuffer = new JagBuffer(modelHeader.rawModelData);
+		vertexFlagsBuffer.position = modelHeader.vertexFlagsOffset;
+
+		JagBuffer vertexXBuffer = new JagBuffer(modelHeader.rawModelData);
+		vertexXBuffer.position = modelHeader.vertexXOffset;
+
+		JagBuffer vertexYBuffer = new JagBuffer(modelHeader.rawModelData);
+		vertexYBuffer.position = modelHeader.vertexYOffset;
+
+
+		if (dummyInt >= 0) //TODO REMOVE DUMMY, ITS USELESS
+			isModified = !isModified;
+
+		JagBuffer vertexZBuffer = new JagBuffer(modelHeader.rawModelData);
+		vertexZBuffer.position = modelHeader.vertexZOffset;
+
+		JagBuffer vertexBoneBuffer = new JagBuffer(modelHeader.rawModelData);
+		vertexBoneBuffer.position = modelHeader.vertexBoneOffset;
+
+		// --- Vertex Decoding (Delta Encoding) ---
+		int lastX = 0;
+		int lastY = 0;
+		int lastZ = 0;
+
+		for (int V = 0; V < verticesCount; V++) {
+
+			int flag = vertexFlagsBuffer.getByte();
+
+			int deltaX = 0;
+			if ((flag & 1) != 0) {
+				deltaX = vertexXBuffer.getSignedSmart();
 			}
-			if (i4 == 2) {
-				l2 = j3;
-				j3 = class50_sub1_sub2.getSignedSmart() + k3;
-				k3 = j3;
-				anIntArray1653[l3] = j2;
-				anIntArray1654[l3] = l2;
-				anIntArray1655[l3] = j3;
-			}
-			if (i4 == 3) {
-				j2 = j3;
-				j3 = class50_sub1_sub2.getSignedSmart() + k3;
-				k3 = j3;
-				anIntArray1653[l3] = j2;
-				anIntArray1654[l3] = l2;
-				anIntArray1655[l3] = j3;
-			}
-			if (i4 == 4) {
-				int k4 = j2;
-				j2 = l2;
-				l2 = k4;
-				j3 = class50_sub1_sub2.getSignedSmart() + k3;
-				k3 = j3;
-				anIntArray1653[l3] = j2;
-				anIntArray1654[l3] = l2;
-				anIntArray1655[l3] = j3;
-			}
-		}
 
-		class50_sub1_sub2.position = class26.anInt549;
-		for (int j4 = 0; j4 < anInt1664; j4++) {
-			anIntArray1665[j4] = class50_sub1_sub2.getShort();
-			anIntArray1666[j4] = class50_sub1_sub2.getShort();
-			anIntArray1667[j4] = class50_sub1_sub2.getShort();
-		}
+			int deltaY = 0;
+			if ((flag & 2) != 0) {
+				deltaY = vertexYBuffer.getSignedSmart();
+			}
 
-	}
+			int deltaZ = 0;
+			if ((flag & 4) != 0) {
+				deltaZ = vertexZBuffer.getSignedSmart();
+			}
 
-	public Model(int i, Model subModels[]) {
-		anInt1636 = 932;
-		anInt1637 = 426;
-		aBoolean1638 = false;
-		aBoolean1639 = true;
-		anInt1640 = -252;
-		aBoolean1641 = false;
-		aBoolean1680 = false;
-		anInt1642++;
-		boolean flag = false;
-		boolean flag1 = false;
-		boolean flag2 = false;
-		boolean flag3 = false;
-		anInt1648 = 0;
-		anInt1652 = 0;
-		anInt1664 = 0;
-		anInt1663 = -1;
-		for (int j = 0; j < i; j++) {
-			Model class50_sub1_sub4_sub4 = subModels[j];
-			if (class50_sub1_sub4_sub4 != null) {
-				anInt1648 += class50_sub1_sub4_sub4.anInt1648;
-				anInt1652 += class50_sub1_sub4_sub4.anInt1652;
-				anInt1664 += class50_sub1_sub4_sub4.anInt1664;
-				flag |= class50_sub1_sub4_sub4.anIntArray1659 != null;
-				if (class50_sub1_sub4_sub4.anIntArray1660 != null) {
-					flag1 = true;
-				} else {
-					if (anInt1663 == -1)
-						anInt1663 = class50_sub1_sub4_sub4.anInt1663;
-					if (anInt1663 != class50_sub1_sub4_sub4.anInt1663)
-						flag1 = true;
+			verticesX[V] = lastX + deltaX;
+			verticesY[V] = lastY + deltaY;
+			verticesZ[V] = lastZ + deltaZ;
+
+			lastX = verticesX[V];
+			lastY = verticesY[V];
+			lastZ = verticesZ[V];
+
+			if (vertexBoneIds != null) {
+				vertexBoneIds[V] = vertexBoneBuffer.getByte();
 				}
-				flag2 |= class50_sub1_sub4_sub4.anIntArray1661 != null;
-				flag3 |= class50_sub1_sub4_sub4.anIntArray1677 != null;
+		}
+
+		// These buffers were used for vertices, now they are being pointed to face data blocks
+		vertexFlagsBuffer.position = modelHeader.faceColorOffset;
+		vertexXBuffer.position = modelHeader.faceRenderTypeOffset;
+		vertexYBuffer.position = modelHeader.facePriorityOffset;
+		vertexZBuffer.position = modelHeader.faceTransparencyOffset;
+		vertexBoneBuffer.position = modelHeader.faceBoneOffset;
+
+		for (int f = 0; f < faceCount; f++) {
+			// vertexFlagsBuffer is now acting as the faceColorBuffer
+			colors[f] = vertexFlagsBuffer.getShort();
+
+			if (faceRenderTypes != null) faceRenderTypes[f] = vertexXBuffer.getByte();
+			if (facePriorities != null) facePriorities[f] = vertexYBuffer.getByte();
+			if (faceTransparency != null) faceTransparency[f] = vertexZBuffer.getByte();
+			if (faceBoneIds != null) faceBoneIds[f] = vertexBoneBuffer.getByte();
+
+		}
+
+		vertexFlagsBuffer.position = modelHeader.faceIndicesOffset;
+		vertexXBuffer.position = modelHeader.faceTypeOffset;
+
+		int indexA = 0;
+		int indexB = 0;
+		int indexC = 0;
+		int lastIndex = 0;
+
+		for (int f = 0; f < faceCount; f++) {
+			int topologyType = vertexXBuffer.getByte();
+			if (topologyType == 1) { // New triangle
+				indexA = vertexFlagsBuffer.getSignedSmart() + lastIndex;
+				lastIndex = indexA;
+				indexB = vertexFlagsBuffer.getSignedSmart() + lastIndex;
+				lastIndex = indexB;
+				indexC = vertexFlagsBuffer.getSignedSmart() + lastIndex;
+				lastIndex = indexC;
+
+				faceIndicesX[f] = indexA;
+				faceIndicesY[f] = indexB;
+				faceIndicesZ[f] = indexC;
+			}
+			if (topologyType == 2) { // Triangle Strip
+				indexB = indexC;
+				indexC = vertexFlagsBuffer.getSignedSmart() + lastIndex;
+				lastIndex = indexC;
+				faceIndicesX[f] = indexA;
+				faceIndicesY[f] = indexB;
+				faceIndicesZ[f] = indexC;
+			}
+			if (topologyType == 3) { // Triangle Fan
+				indexA = indexC;
+				indexC = vertexFlagsBuffer.getSignedSmart() + lastIndex;
+				lastIndex = indexC;
+				faceIndicesX[f] = indexA;
+				faceIndicesY[f] = indexB;
+				faceIndicesZ[f] = indexC;
+			}
+			if (topologyType == 4) { // Swapped/Mirrored Triangle
+				int k4 = indexA;
+				indexA = indexB;
+				indexB = k4;
+				indexC = vertexFlagsBuffer.getSignedSmart() + lastIndex;
+				lastIndex = indexC;
+				faceIndicesX[f] = indexA;
+				faceIndicesY[f] = indexB;
+				faceIndicesZ[f] = indexC;
 			}
 		}
 
-		anIntArray1649 = new int[anInt1648];
-		anIntArray1650 = new int[anInt1648];
-		anIntArray1651 = new int[anInt1648];
-		anIntArray1676 = new int[anInt1648];
-		anIntArray1653 = new int[anInt1652];
-		anIntArray1654 = new int[anInt1652];
-		anIntArray1655 = new int[anInt1652];
-		anIntArray1665 = new int[anInt1664];
-		anIntArray1666 = new int[anInt1664];
-		anIntArray1667 = new int[anInt1664];
-		if (flag)
-			anIntArray1659 = new int[anInt1652];
-		if (flag1)
-			anIntArray1660 = new int[anInt1652];
-		if (flag2)
-			anIntArray1661 = new int[anInt1652];
-		if (flag3)
-			anIntArray1677 = new int[anInt1652];
-		colors = new int[anInt1652];
-		anInt1648 = 0;
-		anInt1652 = 0;
-		anInt1664 = 0;
-		int k = 0;
-		for (int l = 0; l < i; l++) {
-			Model class50_sub1_sub4_sub4_1 = subModels[l];
-			if (class50_sub1_sub4_sub4_1 != null) {
-				for (int i1 = 0; i1 < class50_sub1_sub4_sub4_1.anInt1652; i1++) {
-					if (flag)
-						if (class50_sub1_sub4_sub4_1.anIntArray1659 == null) {
-							anIntArray1659[anInt1652] = 0;
+		// --- Texture Mapping Decoding ---
+		vertexFlagsBuffer.position = modelHeader.textureMappingOffset;
+		for (int t = 0; t < textureVertexCount; t++) {
+			textureVertexIndicesA[t] = vertexFlagsBuffer.getShort();
+			textureVertexIndicesB[t] = vertexFlagsBuffer.getShort();
+			textureVertexIndicesC[t] = vertexFlagsBuffer.getShort();
+		}
+
+	}
+
+	/**
+	 * Assembles multiple models into one, merging identical vertices to optimize the mesh.
+	 *
+	 * @param modelCount   The number of models to process from the table.
+	 * @param sourceModels The array of models to be merged.
+	 */
+	public Model(int modelCount, Model[] sourceModels) {
+		dummyVar = 932;
+		dummVar2 = 426;
+		isClickable = false;
+		shadingEnabled = true;
+		dummyMagicNumber = -252;
+		isModified = false;
+		isPriorityPicking = false;
+		instanceCount++;
+
+		boolean hasRenderTypes = false;
+		boolean hasFacePriorities = false;
+		boolean hasTransparency = false;
+		boolean hasBoneIds = false;
+
+		verticesCount = 0;
+		faceCount = 0;
+		textureVertexCount = 0;
+		defaultPriority = -1;
+
+		// --- Pass 1: Analysis ---
+		// Determine the required capacity and which attribute arrays need to be allocated.
+		for (int m = 0; m < modelCount; m++) {
+			Model source = sourceModels[m];
+			if (source != null) {
+				verticesCount += source.verticesCount;
+				faceCount += source.faceCount;
+				textureVertexCount += source.textureVertexCount;
+
+				hasRenderTypes |= source.faceRenderTypes != null;
+
+				if (source.facePriorities != null) {
+					hasFacePriorities = true;
+				} else {
+					// If sub-models have different default priorities,
+					// we must use a full facePriorities array.
+					if (defaultPriority == -1) {
+						defaultPriority = source.defaultPriority;
+					}
+					if (defaultPriority != source.defaultPriority) {
+						hasFacePriorities = true;
+					}
+				}
+				hasTransparency |= source.faceTransparency != null;
+				hasBoneIds |= source.faceBoneIds != null;
+			}
+		}
+
+		// Allocate the combined arrays
+		verticesX = new int[verticesCount];
+		verticesY = new int[verticesCount];
+		verticesZ = new int[verticesCount];
+		vertexBoneIds = new int[verticesCount];
+		faceIndicesX = new int[faceCount];
+		faceIndicesY = new int[faceCount];
+		faceIndicesZ = new int[faceCount];
+		textureVertexIndicesA = new int[textureVertexCount];
+		textureVertexIndicesB = new int[textureVertexCount];
+		textureVertexIndicesC = new int[textureVertexCount];
+
+		if (hasRenderTypes) faceRenderTypes = new int[faceCount];
+		if (hasFacePriorities) facePriorities = new int[faceCount];
+		if (hasTransparency) faceTransparency = new int[faceCount];
+		if (hasBoneIds) faceBoneIds = new int[faceCount];
+
+		colors = new int[faceCount];
+
+		// Reset counters for the copy/merge pass
+		verticesCount = 0;
+		faceCount = 0;
+		textureVertexCount = 0;
+
+		int textureIndexOffset = 0;
+
+		for (int m = 0; m < modelCount; m++) {
+			Model source = sourceModels[m];
+
+			if (source != null) {
+
+				// Copy Faces and map their vertices
+				for (int f = 0; f < source.faceCount; f++) {
+					if (hasRenderTypes)
+						if (source.faceRenderTypes == null) {
+							faceRenderTypes[faceCount] = 0;
 						} else {
-							int j1 = class50_sub1_sub4_sub4_1.anIntArray1659[i1];
-							if ((j1 & 2) == 2)
-								j1 += k << 2;
-							anIntArray1659[anInt1652] = j1;
+							int renderType = source.faceRenderTypes[f];
+							// Shift texture indices stored in the renderType bits
+							if ((renderType & 2) == 2) {
+								renderType += textureIndexOffset << 2;
+							}
+							faceRenderTypes[faceCount] = renderType;
 						}
-					if (flag1)
-						if (class50_sub1_sub4_sub4_1.anIntArray1660 == null)
-							anIntArray1660[anInt1652] = class50_sub1_sub4_sub4_1.anInt1663;
-						else
-							anIntArray1660[anInt1652] = class50_sub1_sub4_sub4_1.anIntArray1660[i1];
-					if (flag2)
-						if (class50_sub1_sub4_sub4_1.anIntArray1661 == null)
-							anIntArray1661[anInt1652] = 0;
-						else
-							anIntArray1661[anInt1652] = class50_sub1_sub4_sub4_1.anIntArray1661[i1];
-					if (flag3 && class50_sub1_sub4_sub4_1.anIntArray1677 != null)
-						anIntArray1677[anInt1652] = class50_sub1_sub4_sub4_1.anIntArray1677[i1];
-					colors[anInt1652] = class50_sub1_sub4_sub4_1.colors[i1];
-					anIntArray1653[anInt1652] = method580(class50_sub1_sub4_sub4_1,
-							class50_sub1_sub4_sub4_1.anIntArray1653[i1]);
-					anIntArray1654[anInt1652] = method580(class50_sub1_sub4_sub4_1,
-							class50_sub1_sub4_sub4_1.anIntArray1654[i1]);
-					anIntArray1655[anInt1652] = method580(class50_sub1_sub4_sub4_1,
-							class50_sub1_sub4_sub4_1.anIntArray1655[i1]);
-					anInt1652++;
+
+					if (hasFacePriorities) {
+						if (source.facePriorities == null) {
+							facePriorities[faceCount] = source.defaultPriority;
+						} else {
+							facePriorities[faceCount] = source.facePriorities[f];
+						}
+					}
+
+					if (hasTransparency) {
+						if (source.faceTransparency == null) {
+							faceTransparency[faceCount] = 0;
+						}
+						else {
+							faceTransparency[faceCount] = source.faceTransparency[f];
+						}
+					}
+
+					if (hasBoneIds && source.faceBoneIds != null) {
+						faceBoneIds[faceCount] = source.faceBoneIds[f];
+					}
+
+					colors[faceCount] = source.colors[f];
+
+					// getOrMergeVertex handles the actual vertex data copying and deduplication
+					faceIndicesX[faceCount] = getOrMergeVertex(source, source.faceIndicesX[f]);
+					faceIndicesY[faceCount] = getOrMergeVertex(source, source.faceIndicesY[f]);
+					faceIndicesZ[faceCount] = getOrMergeVertex(source, source.faceIndicesZ[f]);
+					faceCount++;
 				}
 
-				for (int k1 = 0; k1 < class50_sub1_sub4_sub4_1.anInt1664; k1++) {
-					anIntArray1665[anInt1664] = method580(class50_sub1_sub4_sub4_1,
-							class50_sub1_sub4_sub4_1.anIntArray1665[k1]);
-					anIntArray1666[anInt1664] = method580(class50_sub1_sub4_sub4_1,
-							class50_sub1_sub4_sub4_1.anIntArray1666[k1]);
-					anIntArray1667[anInt1664] = method580(class50_sub1_sub4_sub4_1,
-							class50_sub1_sub4_sub4_1.anIntArray1667[k1]);
-					anInt1664++;
+				// Copy Texture Indices and map their vertices
+				for (int t = 0; t < source.textureVertexCount; t++) {
+					textureVertexIndicesA[textureVertexCount] = getOrMergeVertex(source, source.textureVertexIndicesA[t]);
+					textureVertexIndicesB[textureVertexCount] = getOrMergeVertex(source, source.textureVertexIndicesB[t]);
+					textureVertexIndicesC[textureVertexCount] = getOrMergeVertex(source, source.textureVertexIndicesC[t]);
+					textureVertexCount++;
 				}
 
-				k += class50_sub1_sub4_sub4_1.anInt1664;
+				textureIndexOffset += source.textureVertexCount;
 			}
 		}
 
 	}
 
-	public Model(int i, boolean flag, int j, Model aclass50_sub1_sub4_sub4[]) {
-		anInt1636 = 932;
-		anInt1637 = 426;
-		aBoolean1638 = false;
-		aBoolean1639 = true;
-		anInt1640 = -252;
-		aBoolean1641 = false;
-		aBoolean1680 = false;
-		anInt1642++;
-		boolean flag1 = false;
-		boolean flag2 = false;
-		boolean flag3 = false;
-		boolean flag4 = false;
-		anInt1648 = 0;
-		anInt1652 = 0;
-		anInt1664 = 0;
-		anInt1663 = -1;
-		for (int k = 0; k < i; k++) {
-			Model class50_sub1_sub4_sub4 = aclass50_sub1_sub4_sub4[k];
-			if (class50_sub1_sub4_sub4 != null) {
-				anInt1648 += class50_sub1_sub4_sub4.anInt1648;
-				anInt1652 += class50_sub1_sub4_sub4.anInt1652;
-				anInt1664 += class50_sub1_sub4_sub4.anInt1664;
-				flag1 |= class50_sub1_sub4_sub4.anIntArray1659 != null;
-				if (class50_sub1_sub4_sub4.anIntArray1660 != null) {
-					flag2 = true;
+	/**
+	 * Assembles multiple models into a single combined model.
+	 *
+	 * @param modelCount    The number of models from the table to merge.
+	 * @param dummyFlag     A dummy boolean (unused in this implementation). //TODO REMOVE DUMMY
+	 * @param dummyInt A validation integer (expected to be 0). //TODO REMOVE DUMMY
+	 * @param sourceModels  An array of models to be merged into this instance.
+	 */
+	public Model(int modelCount, boolean dummyFlag, int dummyInt, Model[] sourceModels) {
+		dummyVar = 932;
+		dummVar2 = 426;
+		isClickable = false;
+		shadingEnabled = true;
+		dummyMagicNumber = -252;
+		isModified = false;
+		isPriorityPicking = false;
+		instanceCount++;
+
+		boolean anyHasRenderTypes = false;
+		boolean anyHasFacePriorities = false;
+		boolean anyHasTransparency = false;
+		boolean anyHasColors = false;
+
+		verticesCount = 0;
+		faceCount = 0;
+		textureVertexCount = 0;
+		defaultPriority = -1;
+
+		// --- Pass 1: Analysis ---
+		// Calculate total size and detect which attribute arrays need allocation.
+		for (int m = 0; m < modelCount; m++) {
+			Model model = sourceModels[m];
+			if (model != null) {
+				verticesCount += model.verticesCount;
+				faceCount += model.faceCount;
+				textureVertexCount += model.textureVertexCount;
+
+				anyHasRenderTypes |= model.faceRenderTypes != null;
+
+				if (model.facePriorities != null) {
+					anyHasFacePriorities = true;
 				} else {
-					if (anInt1663 == -1)
-						anInt1663 = class50_sub1_sub4_sub4.anInt1663;
-					if (anInt1663 != class50_sub1_sub4_sub4.anInt1663)
-						flag2 = true;
+					if (defaultPriority == -1) {
+						defaultPriority = model.defaultPriority;
+					}
+					if (defaultPriority != model.defaultPriority) {
+						anyHasFacePriorities = true;
+					}
 				}
-				flag3 |= class50_sub1_sub4_sub4.anIntArray1661 != null;
-				flag4 |= class50_sub1_sub4_sub4.colors != null;
+
+				anyHasTransparency |= model.faceTransparency != null;
+				anyHasColors |= model.colors != null;
 			}
 		}
 
-		anIntArray1649 = new int[anInt1648];
-		anIntArray1650 = new int[anInt1648];
-		anIntArray1651 = new int[anInt1648];
-		anIntArray1653 = new int[anInt1652];
-		anIntArray1654 = new int[anInt1652];
-		anIntArray1655 = new int[anInt1652];
-		anIntArray1656 = new int[anInt1652];
-		anIntArray1657 = new int[anInt1652];
-		anIntArray1658 = new int[anInt1652];
-		anIntArray1665 = new int[anInt1664];
-		anIntArray1666 = new int[anInt1664];
-		anIntArray1667 = new int[anInt1664];
-		if (flag1)
-			anIntArray1659 = new int[anInt1652];
-		if (flag2)
-			anIntArray1660 = new int[anInt1652];
-		if (flag3)
-			anIntArray1661 = new int[anInt1652];
-		if (flag4)
-			colors = new int[anInt1652];
-		anInt1648 = 0;
-		if (j != 0)
+		// Allocate merged arrays
+		verticesX = new int[verticesCount];
+		verticesY = new int[verticesCount];
+		verticesZ = new int[verticesCount];
+		faceIndicesX = new int[faceCount];
+		faceIndicesY = new int[faceCount];
+		faceIndicesZ = new int[faceCount];
+		faceColorsA = new int[faceCount];
+		faceColorsB = new int[faceCount];
+		faceColorsC = new int[faceCount];
+		textureVertexIndicesA = new int[textureVertexCount];
+		textureVertexIndicesB = new int[textureVertexCount];
+		textureVertexIndicesC = new int[textureVertexCount];
+
+		if (anyHasRenderTypes) faceRenderTypes = new int[faceCount];
+		if (anyHasFacePriorities) facePriorities = new int[faceCount];
+		if (anyHasTransparency) faceTransparency = new int[faceCount];
+		if (anyHasColors) colors = new int[faceCount];
+
+		// Reset counters for the copy pass
+		verticesCount = 0;
+		faceCount = 0;
+		textureVertexCount = 0;
+
+		//TODO REMOVE
+		if (dummyInt != 0)
 			throw new NullPointerException();
-		anInt1652 = 0;
-		anInt1664 = 0;
-		int l = 0;
-		for (int i1 = 0; i1 < i; i1++) {
-			Model class50_sub1_sub4_sub4_1 = aclass50_sub1_sub4_sub4[i1];
-			if (class50_sub1_sub4_sub4_1 != null) {
-				int j1 = anInt1648;
-				for (int k1 = 0; k1 < class50_sub1_sub4_sub4_1.anInt1648; k1++) {
-					anIntArray1649[anInt1648] = class50_sub1_sub4_sub4_1.anIntArray1649[k1];
-					anIntArray1650[anInt1648] = class50_sub1_sub4_sub4_1.anIntArray1650[k1];
-					anIntArray1651[anInt1648] = class50_sub1_sub4_sub4_1.anIntArray1651[k1];
-					anInt1648++;
+
+		int textureOffset = 0;
+
+		// --- Pass 2: Merging ---
+		for (int m = 0; m < modelCount; m++) {
+			Model source = sourceModels[m];
+			if (source != null) {
+				int baseVertexIndex = verticesCount;
+				for (int v = 0; v < source.verticesCount; v++) {
+					verticesX[verticesCount] = source.verticesX[v];
+					verticesY[verticesCount] = source.verticesY[v];
+					verticesZ[verticesCount] = source.verticesZ[v];
+					verticesCount++;
 				}
 
-				for (int l1 = 0; l1 < class50_sub1_sub4_sub4_1.anInt1652; l1++) {
-					anIntArray1653[anInt1652] = class50_sub1_sub4_sub4_1.anIntArray1653[l1] + j1;
-					anIntArray1654[anInt1652] = class50_sub1_sub4_sub4_1.anIntArray1654[l1] + j1;
-					anIntArray1655[anInt1652] = class50_sub1_sub4_sub4_1.anIntArray1655[l1] + j1;
-					anIntArray1656[anInt1652] = class50_sub1_sub4_sub4_1.anIntArray1656[l1];
-					anIntArray1657[anInt1652] = class50_sub1_sub4_sub4_1.anIntArray1657[l1];
-					anIntArray1658[anInt1652] = class50_sub1_sub4_sub4_1.anIntArray1658[l1];
-					if (flag1)
-						if (class50_sub1_sub4_sub4_1.anIntArray1659 == null) {
-							anIntArray1659[anInt1652] = 0;
+				// Copy Faces
+				for (int f = 0; f < source.faceCount; f++) {
+					// Offset the face indices so they point to the new vertex positions
+					faceIndicesX[faceCount] = source.faceIndicesX[f] + baseVertexIndex;
+					faceIndicesY[faceCount] = source.faceIndicesY[f] + baseVertexIndex;
+					faceIndicesZ[faceCount] = source.faceIndicesZ[f] + baseVertexIndex;
+
+					faceColorsA[faceCount] = source.faceColorsA[f];
+					faceColorsB[faceCount] = source.faceColorsB[f];
+					faceColorsC[faceCount] = source.faceColorsC[f];
+
+					if (anyHasRenderTypes) {
+						if (source.faceRenderTypes == null) {
+							faceRenderTypes[faceCount] = 0;
 						} else {
-							int i2 = class50_sub1_sub4_sub4_1.anIntArray1659[l1];
-							if ((i2 & 2) == 2)
-								i2 += l << 2;
-							anIntArray1659[anInt1652] = i2;
+							int renderType = source.faceRenderTypes[f];
+							// Shift texture indices stored in the renderType bits
+							if ((renderType & 2) == 2) {
+								renderType += textureOffset << 2;
+							}
+							faceRenderTypes[faceCount] = renderType;
 						}
-					if (flag2)
-						if (class50_sub1_sub4_sub4_1.anIntArray1660 == null)
-							anIntArray1660[anInt1652] = class50_sub1_sub4_sub4_1.anInt1663;
-						else
-							anIntArray1660[anInt1652] = class50_sub1_sub4_sub4_1.anIntArray1660[l1];
-					if (flag3)
-						if (class50_sub1_sub4_sub4_1.anIntArray1661 == null)
-							anIntArray1661[anInt1652] = 0;
-						else
-							anIntArray1661[anInt1652] = class50_sub1_sub4_sub4_1.anIntArray1661[l1];
-					if (flag4 && class50_sub1_sub4_sub4_1.colors != null)
-						colors[anInt1652] = class50_sub1_sub4_sub4_1.colors[l1];
-					anInt1652++;
+					}
+
+					if (anyHasFacePriorities) {
+						if (source.facePriorities == null) {
+							facePriorities[faceCount] = source.defaultPriority;
+						}
+						else {
+							facePriorities[faceCount] = source.facePriorities[f];
+						}
+					}
+
+					if (anyHasTransparency) {
+						if (source.faceTransparency == null) {
+							faceTransparency[faceCount] = 0;
+						}
+						else {
+							faceTransparency[faceCount] = source.faceTransparency[f];
+							}
+					}
+
+					if (anyHasColors && source.colors != null) {
+						colors[faceCount] = source.colors[f];
+					}
+
+					faceCount++;
 				}
 
-				for (int j2 = 0; j2 < class50_sub1_sub4_sub4_1.anInt1664; j2++) {
-					anIntArray1665[anInt1664] = class50_sub1_sub4_sub4_1.anIntArray1665[j2] + j1;
-					anIntArray1666[anInt1664] = class50_sub1_sub4_sub4_1.anIntArray1666[j2] + j1;
-					anIntArray1667[anInt1664] = class50_sub1_sub4_sub4_1.anIntArray1667[j2] + j1;
-					anInt1664++;
+				// Copy Textures
+				for (int t = 0; t < source.textureVertexCount; t++) {
+					textureVertexIndicesA[textureVertexCount] = source.textureVertexIndicesA[t] + baseVertexIndex;
+					textureVertexIndicesB[textureVertexCount] = source.textureVertexIndicesB[t] + baseVertexIndex;
+					textureVertexIndicesC[textureVertexCount] = source.textureVertexIndicesC[t] + baseVertexIndex;
+					textureVertexCount++;
 				}
 
-				l += class50_sub1_sub4_sub4_1.anInt1664;
+				textureOffset += source.textureVertexCount;
 			}
 		}
 
-		method581(anInt1636);
+		calculateRadius();
 	}
 
-	public Model(boolean flag, boolean flag1, boolean flag2,
-			Model class50_sub1_sub4_sub4, boolean flag3) {
-		anInt1636 = 932;
-		anInt1637 = 426;
-		aBoolean1638 = false;
-		aBoolean1639 = true;
-		anInt1640 = -252;
-		aBoolean1641 = false;
-		aBoolean1680 = false;
-		anInt1642++;
-		anInt1648 = class50_sub1_sub4_sub4.anInt1648;
-		anInt1652 = class50_sub1_sub4_sub4.anInt1652;
-		anInt1664 = class50_sub1_sub4_sub4.anInt1664;
-		if (flag1)
-			anInt1640 = 498;
-		if (flag) {
-			anIntArray1649 = class50_sub1_sub4_sub4.anIntArray1649;
-			anIntArray1650 = class50_sub1_sub4_sub4.anIntArray1650;
-			anIntArray1651 = class50_sub1_sub4_sub4.anIntArray1651;
+	/**
+	 * Creates a new model derived from a source model, allowing for specific
+	 * data arrays to be either shared by reference or deep-copied.
+	 *
+	 * @param shareVertices     If true, vertex coordinates are shared; if false, they are deep-copied.
+	 * @param isStatic          If true, sets a specific sentinel value (498) often used for non-animated objects. MIGHT BE A DUMMY
+	 * @param shareColors       If true, face colors are shared; if false, they are deep-copied.
+	 * @param source            The template model to derive data from.
+	 * @param shareTransparency If true, transparency values are shared; if false, they are deep-copied.
+	 */
+	public Model(boolean shareVertices, boolean isStatic, boolean shareColors,
+				 Model source, boolean shareTransparency) {
+		dummyVar = 932; //TODO REMOVE DUMMY
+		dummVar2 = 426; //TODO REMOVE DUMMY
+		isClickable = false;
+		shadingEnabled = true;
+		dummyMagicNumber = -252; //TODO REMOVE DUMMY
+		isModified = false;
+		isPriorityPicking = false;
+		instanceCount++;
+
+		verticesCount = source.verticesCount;
+		faceCount = source.faceCount;
+		textureVertexCount = source.textureVertexCount;
+
+
+		if (isStatic) {
+			dummyMagicNumber = 498;
+		}
+
+		// --- Vertex Handling ---
+		if (shareVertices) {
+			verticesX = source.verticesX;
+			verticesY = source.verticesY;
+			verticesZ = source.verticesZ;
 		} else {
-			anIntArray1649 = new int[anInt1648];
-			anIntArray1650 = new int[anInt1648];
-			anIntArray1651 = new int[anInt1648];
-			for (int i = 0; i < anInt1648; i++) {
-				anIntArray1649[i] = class50_sub1_sub4_sub4.anIntArray1649[i];
-				anIntArray1650[i] = class50_sub1_sub4_sub4.anIntArray1650[i];
-				anIntArray1651[i] = class50_sub1_sub4_sub4.anIntArray1651[i];
+			verticesX = new int[verticesCount];
+			verticesY = new int[verticesCount];
+			verticesZ = new int[verticesCount];
+			for (int v = 0; v < verticesCount; v++) {
+				verticesX[v] = source.verticesX[v];
+				verticesY[v] = source.verticesY[v];
+				verticesZ[v] = source.verticesZ[v];
 			}
-
 		}
-		if (flag2) {
-			colors = class50_sub1_sub4_sub4.colors;
-		} else {
-			colors = new int[anInt1652];
-			for (int j = 0; j < anInt1652; j++)
-				colors[j] = class50_sub1_sub4_sub4.colors[j];
 
-		}
-		if (flag3) {
-			anIntArray1661 = class50_sub1_sub4_sub4.anIntArray1661;
+		// --- Color Handling ---
+		if (shareColors) {
+			colors = source.colors;
 		} else {
-			anIntArray1661 = new int[anInt1652];
-			if (class50_sub1_sub4_sub4.anIntArray1661 == null) {
-				for (int k = 0; k < anInt1652; k++)
-					anIntArray1661[k] = 0;
+			colors = new int[faceCount];
+			for (int f = 0; f < faceCount; f++) {
+				colors[f] = source.colors[f];
+			}
+		}
+
+		// --- Transparency Handling ---
+		if (shareTransparency) {
+			faceTransparency = source.faceTransparency;
+		} else {
+			faceTransparency = new int[faceCount];
+			if (source.faceTransparency == null) {
+				for (int f = 0; f < faceCount; f++) {
+					faceTransparency[f] = 0;
+					}
 
 			} else {
-				for (int l = 0; l < anInt1652; l++)
-					anIntArray1661[l] = class50_sub1_sub4_sub4.anIntArray1661[l];
-
+				for (int f = 0; f < faceCount; f++) {
+					faceTransparency[f] = source.faceTransparency[f];
+				}
 			}
 		}
-		anIntArray1676 = class50_sub1_sub4_sub4.anIntArray1676;
-		anIntArray1677 = class50_sub1_sub4_sub4.anIntArray1677;
-		anIntArray1659 = class50_sub1_sub4_sub4.anIntArray1659;
-		anIntArray1653 = class50_sub1_sub4_sub4.anIntArray1653;
-		anIntArray1654 = class50_sub1_sub4_sub4.anIntArray1654;
-		anIntArray1655 = class50_sub1_sub4_sub4.anIntArray1655;
-		anIntArray1660 = class50_sub1_sub4_sub4.anIntArray1660;
-		anInt1663 = class50_sub1_sub4_sub4.anInt1663;
-		anIntArray1665 = class50_sub1_sub4_sub4.anIntArray1665;
-		anIntArray1666 = class50_sub1_sub4_sub4.anIntArray1666;
-		anIntArray1667 = class50_sub1_sub4_sub4.anIntArray1667;
+
+		// --- Constant/Shared Attributes ---
+		// These are typically indices or bone definitions that aren't
+		// modified at runtime, so they are safe to share by reference.
+		vertexBoneIds = source.vertexBoneIds;
+		faceBoneIds = source.faceBoneIds;
+		faceRenderTypes = source.faceRenderTypes;
+		faceIndicesX = source.faceIndicesX;
+		faceIndicesY = source.faceIndicesY;
+		faceIndicesZ = source.faceIndicesZ;
+		facePriorities = source.facePriorities;
+		defaultPriority = source.defaultPriority;
+		textureVertexIndicesA = source.textureVertexIndicesA;
+		textureVertexIndicesB = source.textureVertexIndicesB;
+		textureVertexIndicesC = source.textureVertexIndicesC;
 	}
 
-	public Model(boolean flag, boolean flag1, int i, Model class50_sub1_sub4_sub4) {
-		anInt1636 = 932;
-		anInt1637 = 426;
-		aBoolean1638 = false;
-		aBoolean1639 = true;
-		anInt1640 = -252;
-		aBoolean1641 = false;
-		aBoolean1680 = false;
-		anInt1642++;
-		anInt1648 = class50_sub1_sub4_sub4.anInt1648;
-		anInt1652 = class50_sub1_sub4_sub4.anInt1652;
-		anInt1664 = class50_sub1_sub4_sub4.anInt1664;
+	public Model(boolean flag, boolean flag1, int i, Model model) {
+		dummyVar = 932;
+		dummVar2 = 426;
+		isClickable = false;
+		shadingEnabled = true;
+		dummyMagicNumber = -252;
+		isModified = false;
+		isPriorityPicking = false;
+		instanceCount++;
+		verticesCount = model.verticesCount;
+		faceCount = model.faceCount;
+		textureVertexCount = model.textureVertexCount;
 		if (flag) {
-			anIntArray1650 = new int[anInt1648];
-			for (int j = 0; j < anInt1648; j++)
-				anIntArray1650[j] = class50_sub1_sub4_sub4.anIntArray1650[j];
+			verticesY = new int[verticesCount];
+			for (int j = 0; j < verticesCount; j++)
+				verticesY[j] = model.verticesY[j];
 
 		} else {
-			anIntArray1650 = class50_sub1_sub4_sub4.anIntArray1650;
+			verticesY = model.verticesY;
 		}
 		if (flag1) {
-			anIntArray1656 = new int[anInt1652];
-			anIntArray1657 = new int[anInt1652];
-			anIntArray1658 = new int[anInt1652];
-			for (int k = 0; k < anInt1652; k++) {
-				anIntArray1656[k] = class50_sub1_sub4_sub4.anIntArray1656[k];
-				anIntArray1657[k] = class50_sub1_sub4_sub4.anIntArray1657[k];
-				anIntArray1658[k] = class50_sub1_sub4_sub4.anIntArray1658[k];
+			faceColorsA = new int[faceCount];
+			faceColorsB = new int[faceCount];
+			faceColorsC = new int[faceCount];
+			for (int k = 0; k < faceCount; k++) {
+				faceColorsA[k] = model.faceColorsA[k];
+				faceColorsB[k] = model.faceColorsB[k];
+				faceColorsC[k] = model.faceColorsC[k];
 			}
 
-			anIntArray1659 = new int[anInt1652];
-			if (class50_sub1_sub4_sub4.anIntArray1659 == null) {
-				for (int l = 0; l < anInt1652; l++)
-					anIntArray1659[l] = 0;
+			faceRenderTypes = new int[faceCount];
+			if (model.faceRenderTypes == null) {
+				for (int l = 0; l < faceCount; l++)
+					faceRenderTypes[l] = 0;
 
 			} else {
-				for (int i1 = 0; i1 < anInt1652; i1++)
-					anIntArray1659[i1] = class50_sub1_sub4_sub4.anIntArray1659[i1];
+				for (int i1 = 0; i1 < faceCount; i1++)
+					faceRenderTypes[i1] = model.faceRenderTypes[i1];
 
 			}
-			super.normals = new VertexNormal[anInt1648];
-			for (int j1 = 0; j1 < anInt1648; j1++) {
+			super.normals = new VertexNormal[verticesCount];
+			for (int j1 = 0; j1 < verticesCount; j1++) {
 				VertexNormal class40 = super.normals[j1] = new VertexNormal();
-				VertexNormal class40_1 = ((Entity) (class50_sub1_sub4_sub4)).normals[j1];
+				VertexNormal class40_1 = ((Entity) (model)).normals[j1];
 				class40.x = class40_1.x;
 				class40.y = class40_1.y;
 				class40.z = class40_1.z;
 				class40.magnitude = class40_1.magnitude;
 			}
 
-			aClass40Array1681 = class50_sub1_sub4_sub4.aClass40Array1681;
+			vertexNormalsTable = model.vertexNormalsTable;
 		} else {
-			anIntArray1656 = class50_sub1_sub4_sub4.anIntArray1656;
-			anIntArray1657 = class50_sub1_sub4_sub4.anIntArray1657;
-			anIntArray1658 = class50_sub1_sub4_sub4.anIntArray1658;
-			anIntArray1659 = class50_sub1_sub4_sub4.anIntArray1659;
+			faceColorsA = model.faceColorsA;
+			faceColorsB = model.faceColorsB;
+			faceColorsC = model.faceColorsC;
+			faceRenderTypes = model.faceRenderTypes;
 		}
-		anIntArray1649 = class50_sub1_sub4_sub4.anIntArray1649;
-		anIntArray1651 = class50_sub1_sub4_sub4.anIntArray1651;
+		verticesX = model.verticesX;
+		verticesZ = model.verticesZ;
 		if (i != 0)
-			aBoolean1638 = !aBoolean1638;
-		colors = class50_sub1_sub4_sub4.colors;
-		anIntArray1661 = class50_sub1_sub4_sub4.anIntArray1661;
-		anIntArray1660 = class50_sub1_sub4_sub4.anIntArray1660;
-		anInt1663 = class50_sub1_sub4_sub4.anInt1663;
-		anIntArray1653 = class50_sub1_sub4_sub4.anIntArray1653;
-		anIntArray1654 = class50_sub1_sub4_sub4.anIntArray1654;
-		anIntArray1655 = class50_sub1_sub4_sub4.anIntArray1655;
-		anIntArray1665 = class50_sub1_sub4_sub4.anIntArray1665;
-		anIntArray1666 = class50_sub1_sub4_sub4.anIntArray1666;
-		anIntArray1667 = class50_sub1_sub4_sub4.anIntArray1667;
-		super.height = ((Entity) (class50_sub1_sub4_sub4)).height;
-		anInt1672 = class50_sub1_sub4_sub4.anInt1672;
-		anInt1671 = class50_sub1_sub4_sub4.anInt1671;
-		anInt1674 = class50_sub1_sub4_sub4.anInt1674;
-		anInt1673 = class50_sub1_sub4_sub4.anInt1673;
-		anInt1669 = class50_sub1_sub4_sub4.anInt1669;
-		anInt1670 = class50_sub1_sub4_sub4.anInt1670;
-		anInt1668 = class50_sub1_sub4_sub4.anInt1668;
+			isClickable = !isClickable;
+		colors = model.colors;
+		faceTransparency = model.faceTransparency;
+		facePriorities = model.facePriorities;
+		defaultPriority = model.defaultPriority;
+		faceIndicesX = model.faceIndicesX;
+		faceIndicesY = model.faceIndicesY;
+		faceIndicesZ = model.faceIndicesZ;
+		textureVertexIndicesA = model.textureVertexIndicesA;
+		textureVertexIndicesB = model.textureVertexIndicesB;
+		textureVertexIndicesC = model.textureVertexIndicesC;
+		super.height = ((Entity) (model)).height;
+		maxBottomExtent = model.maxBottomExtent;
+		modelRadius = model.modelRadius;
+		modelBoundingSphere = model.modelBoundingSphere;
+		totalDepthSortingRange = model.totalDepthSortingRange;
+		packedXBounds = model.packedXBounds;
+		packedZBounds = model.packedZBounds;
+		lightingParameters = model.lightingParameters;
 	}
 
-	public void method579(boolean flag, Model class50_sub1_sub4_sub4, int i) {
-		anInt1648 = class50_sub1_sub4_sub4.anInt1648;
-		anInt1652 = class50_sub1_sub4_sub4.anInt1652;
-		anInt1664 = class50_sub1_sub4_sub4.anInt1664;
-		if (anIntArray1644.length < anInt1648) {
-			anIntArray1644 = new int[anInt1648 + 100];
-			anIntArray1645 = new int[anInt1648 + 100];
-			anIntArray1646 = new int[anInt1648 + 100];
-		}
-		anIntArray1649 = anIntArray1644;
-		anIntArray1650 = anIntArray1645;
-		if (i != 1244)
-			return;
-		anIntArray1651 = anIntArray1646;
-		for (int j = 0; j < anInt1648; j++) {
-			anIntArray1649[j] = class50_sub1_sub4_sub4.anIntArray1649[j];
-			anIntArray1650[j] = class50_sub1_sub4_sub4.anIntArray1650[j];
-			anIntArray1651[j] = class50_sub1_sub4_sub4.anIntArray1651[j];
+	/**
+	 * The maximum value a vector component can have before its square
+	 * risks overflowing a 32-bit integer during normalization.
+	 * 8192^2 * 3 is approx 201M, well under the 2.1B integer limit.
+	 */
+	private static final int MAX_NORMAL_COMPONENT = 8192;
+	/**
+	 * Maximum number of transformation/bone groups that can be defined in a model.
+	 */
+	private static final int MAX_TRANSFORMATION_GROUPS = 256;
+
+	/**
+	 * The standard unit length for normalized vectors in this engine.
+	 */
+	private static final int NORMAL_SCALING_FACTOR = 256;
+	/**
+	 * Render type flag indicating flat shading (Bit 0 check).
+	 */
+	private static final int RENDER_TYPE_FLAT_SHADING = 0x1;
+
+	/**
+	 * Placeholder/dummy integer variable. Used in model initialization.
+	 */
+	public int dummyVar;
+	/**
+	 * Placeholder/dummy integer variable. Used in model initialization.
+	 */
+	public int dummVar2;
+	/**
+	 * Indicates whether this model is clickable for mouse interaction.
+	 */
+	public boolean isClickable;
+	/**
+	 * Flag to enable or disable shading calculations for this model.
+	 */
+	public boolean shadingEnabled;
+	/**
+	 * Placeholder/dummy magic number used for internal model state management.
+	 */
+	public int dummyMagicNumber;
+	/**
+	 * Flag indicating whether the model geometry has been modified since loading from cache.
+	 */
+	public boolean isModified;
+	/**
+	 * Global counter tracking the total number of Model instances created.
+	 */
+	public static int instanceCount;
+	/**
+	 * A reusable/scratch model instance for temporary operations to reduce memory allocation.
+	 */
+	public static Model SCRATCH_MODEL = new Model(852);
+	/**
+	 * Static vertex X-coordinate buffer for pooled model transformation.
+	 * Reused across multiple models to minimize garbage collection.
+	 */
+	public static int[] staticVertexX = new int[2000];
+	/**
+	 * Static vertex Z-coordinate buffer for pooled model transformation.
+	 * Reused across multiple models to minimize garbage collection.
+	 */
+	public static int[] staticVertexZ = new int[2000];
+	/**
+	 * Static vertex Y-coordinate buffer for pooled model transformation.
+	 * Reused across multiple models to minimize garbage collection.
+	 */
+	public static int[] staticVertexY = new int[2000];
+	/**
+	 * Static face transparency buffer for pooled model transformation.
+	 * Reused across multiple models to minimize garbage collection.
+	 */
+	public static int[] staticTransparency = new int[2000];
+	/**
+	 * The total number of vertices in this model.
+	 */
+	public int verticesCount;
+
+	/**
+	 * Vertex X-coordinates in local model space.
+	 */
+	public int[] verticesX;
+	/**
+	 * Vertex Y-coordinates in local model space.
+	 */
+	public int[] verticesY;
+	/**
+	 * Vertex Z-coordinates in local model space.
+	 */
+	public int[] verticesZ;
+
+	/**
+	 * Face vertex index A (first vertex of the triangle).
+	 */
+	public int[] faceIndicesX;
+	/**
+	 * Face vertex index B (second vertex of the triangle).
+	 */
+	public int[] faceIndicesY;
+	/**
+	 * Face vertex index C (third vertex of the triangle).
+	 */
+	public int[] faceIndicesZ;
+
+	/**
+	 * The total number of faces (triangles) in this model.
+	 */
+	public int faceCount;
+
+	/**
+	 * Face color for vertex A (first vertex). Used for Gouraud shading.
+	 */
+	public int[] faceColorsA;
+	/**
+	 * Face color for vertex B (second vertex). Used for Gouraud shading.
+	 */
+	public int[] faceColorsB;
+	/**
+	 * Face color for vertex C (third vertex). Used for Gouraud shading.
+	 */
+	public int[] faceColorsC;
+	/**
+	 * Face render types controlling shading and material properties.
+	 * Bit 0 & 1 (& 3): Determines the Shading Type.
+	 * 0: Gouraud (Smooth) Shading.
+	 * 1: Flat Shading.
+	 * 2 or 3: Textured/Mapping mode.
+	 * Bit 2 (& 4): Often determines Color Behavior.
+	 */
+	public int[] faceRenderTypes;
+	/**
+	 * Priority level for each face, controlling z-ordering in the Painter's Algorithm.
+	 * Valid range is typically 0-11 for multi-layer rendering.
+	 */
+	public int[] facePriorities;
+	/**
+	 * Transparency/alpha value for each face (0 = opaque, 255 = fully transparent).
+	 */
+	public int[] faceTransparency;
+	/**
+	 * Packed HSL color for each face. Used as fallback when per-vertex colors are unavailable.
+	 */
+	public int[] colors;
+	/**
+	 * Default priority level for all faces when facePriorities array is null.
+	 */
+	public int defaultPriority;
+	/**
+	 * The total number of texture vertices in this model.
+	 */
+	public int textureVertexCount;
+	/**
+	 * Texture vertex index A (first texture coordinate vertex).
+	 */
+	public int[] textureVertexIndicesA;
+	/**
+	 * Texture vertex index B (second texture coordinate vertex).
+	 */
+	public int[] textureVertexIndicesB;
+	/**
+	 * Texture vertex index C (third texture coordinate vertex).
+	 */
+	public int[] textureVertexIndicesC;
+	/**
+	 * Packed lighting parameters: High 16 bits are ambient, low 16 bits are light magnitude.
+	 */
+	public int lightingParameters;
+	/**
+	 * Packed X-axis bounds for AABB culling. High 16 bits = minX, low 16 bits = maxX.
+	 */
+	public int packedXBounds;
+	/**
+	 * Packed Z-axis bounds for AABB culling. High 16 bits = maxZ, low 16 bits = minZ.
+	 */
+	public int packedZBounds;
+	/**
+	 * Squared horizontal radius from origin (X^2 + Z^2) used for culling.
+	 */
+	public int modelRadius;
+	/**
+	 * Maximum extent below the model origin (positive Y direction).
+	 */
+	public int maxBottomExtent;
+	/**
+	 * Total depth range for z-sorting bin allocation in the Painter's Algorithm.
+	 */
+	public int totalDepthSortingRange;
+	/**
+	 * Radius of the bounding sphere encompassing the entire model.
+	 */
+	public int modelBoundingSphere;
+	/**
+	 * Height of the model (maximum extent in negative Y direction).
+	 */
+	public int modelHeight;
+	/**
+	 * Bone/transformation group IDs for each vertex. Used for skeletal animation.
+	 */
+	public int[] vertexBoneIds;
+	/**
+	 * Bone/transformation group IDs for each face. Used for skeletal animation.
+	 */
+	public int[] faceBoneIds;
+	/**
+	 * 2D array mapping bone/group IDs to arrays of vertex indices within that group.
+	 * Allows efficient transformation of grouped vertices.
+	 */
+	public int[][] vertexIndicesByBone;
+	/**
+	 * 2D array mapping bone/group IDs to arrays of face indices within that group.
+	 * Allows efficient transformation of grouped faces.
+	 */
+	public int[][] faceIndicesByBone;
+	/**
+	 * Flag indicating whether priority-based mouse picking is enabled for this model.
+	 */
+	public boolean isPriorityPicking;
+	/**
+	 * Array of vertex normals used for Gouraud/smooth shading calculations.
+	 * Stored separately after lighting is baked for deferred shading.
+	 */
+	public VertexNormal[] vertexNormalsTable;
+	/**
+	 * Global array of model headers containing metadata about all loaded models.
+	 */
+	public static ModelHeader[] modelHeaders;
+	/**
+	 * Global provider instance responsible for asynchronously loading model data.
+	 */
+	public static ModelProvider modelProvider;
+	/**
+	 * Flags indicating which faces are completely off-screen (outside viewport).
+	 */
+	public static boolean[] faceIsOffScreen = new boolean[4096];
+	/**
+	 * Flags indicating which faces need near-plane clipping (cross the near-plane boundary).
+	 */
+	public static boolean[] faceNeedsClipping = new boolean[4096];
+	/**
+	 * Projected screen X-coordinates for all vertices after viewport transformation.
+	 */
+	public static int[] projectedX = new int[4096];
+	/**
+	 * Projected screen Y-coordinates for all vertices after viewport transformation.
+	 */
+	public static int[] projectedY = new int[4096];
+	/**
+	 * Projected screen Z-coordinates (depth) for all vertices after viewport transformation.
+	 */
+	public static int[] projectedZ = new int[4096];
+	/**
+	 * Camera-space X-coordinates for all vertices. Used for texture mapping and clipping.
+	 */
+	public static int[] cameraX = new int[4096];
+	/**
+	 * Camera-space Y-coordinates for all vertices. Used for texture mapping and clipping.
+	 */
+	public static int[] cameraY = new int[4096];
+	/**
+	 * Camera-space Z-coordinates (depth) for all vertices. Used for texture mapping and clipping.
+	 */
+	public static int[] cameraZ = new int[4096];
+	/**
+	 * Counter tracking the number of faces at each depth level in the Painter's Algorithm.
+	 */
+	public static int[] faceDepthCounts = new int[1500];
+	/**
+	 * 2D array storing face indices binned by their depth for the Painter's Algorithm.
+	 * Each depth level can contain up to 512 faces.
+	 */
+	public static int[][] faceDepthBins = new int[1500][512];
+	/**
+	 * Counter tracking the number of faces at each priority level (0-11).
+	 */
+	public static int[] priorityCounts = new int[12];
+	/**
+	 * 2D array storing face indices binned by their priority level (0-11).
+	 * Each priority level can contain up to 2000 faces.
+	 */
+	public static int[][] priorityBins = new int[12][2000];
+	/**
+	 * Depth values for high-priority faces (priority level 10) used in interleaved rendering.
+	 */
+	public static int[] priorityDepthX = new int[2000];
+	/**
+	 * Depth values for highest-priority faces (priority level 11) used in interleaved rendering.
+	 */
+	public static int[] priorityDepthY = new int[2000];
+	/**
+	 * Accumulated depth values for priority levels 0-9 to calculate average depth thresholds.
+	 */
+	public static int[] priorityAverages = new int[12];
+	/**
+	 * Clipped projected X-coordinates for near-plane clipped polygons (up to 4 vertices per face).
+	 */
+	public static int[] clippedProjectedX = new int[10];
+	/**
+	 * Clipped projected Y-coordinates for near-plane clipped polygons (up to 4 vertices per face).
+	 */
+	public static int[] clippedProjectedY = new int[10];
+	/**
+	 * Vertex colors for clipped polygon vertices after near-plane intersection calculations.
+	 */
+	public static int[] clippedVertexColors = new int[10];
+	/**
+	 * X-coordinate of the current transformation pivot point (used for rotation/scaling centers).
+	 */
+	public static int transformationPivotX;
+	/**
+	 * Y-coordinate of the current transformation pivot point (used for rotation/scaling centers).
+	 */
+	public static int transformationPivotY;
+	/**
+	 * Z-coordinate of the current transformation pivot point (used for rotation/scaling centers).
+	 */
+	public static int transformationPivotZ;
+	/**
+	 * Global flag enabling/disabling mouse-based model picking functionality.
+	 */
+	public static boolean isPickingEnabled;
+	/**
+	 * Current mouse X-coordinate on screen (used for picking detection).
+	 */
+	public static int mouseX;
+	/**
+	 * Current mouse Y-coordinate on screen (used for picking detection).
+	 */
+	public static int mouseY;
+	/**
+	 * Number of models currently under the mouse cursor (hovered count).
+	 */
+	public static int hoveredCount;
+	/**
+	 * Array storing the IDs of all models currently hovered by the mouse.
+	 */
+	public static int[] hoveredModels = new int[1000];
+	/**
+	 * Pre-calculated sine values table indexed by angle (0-2047).
+	 * Shared across all engine components for performance.
+	 */
+	public static int[] sineTable;
+	/**
+	 * Pre-calculated cosine values table indexed by angle (0-2047).
+	 * Shared across all engine components for performance.
+	 */
+	public static int[] cosineTable;
+	/**
+	 * Lookup table converting packed HSL colors to RGB values.
+	 * Shared across all engine components for color conversion.
+	 */
+	public static int[] colorLookupTable;
+	/**
+	 * Pre-calculated reciprocal (1/x) values table for fast division in fixed-point arithmetic.
+	 * Used in clipping calculations and perspective division.
+	 */
+	public static int[] reciprocalTable;
+
+	static {
+		sineTable = ThreeDimensionalCanvas.sineTable;
+		cosineTable = ThreeDimensionalCanvas.cosineTable;
+		colorLookupTable = ThreeDimensionalCanvas.hslToRgbTable;
+		reciprocalTable = ThreeDimensionalCanvas.reciprocalTable;
+	}
+
+	/**
+	 * Nullifies all global static buffers to assist the Garbage Collector in reclaiming memory.
+	 *
+	 * @param preserveMathTables If true, shared mathematical tables (sine, cosine, reciprocal)
+	 *                           remain in memory for other engine components to use.
+	 */
+	public static void dispose(boolean preserveMathTables) {
+		// Only clear the shared reciprocal table if explicitly requested
+		if (!preserveMathTables) {
+			reciprocalTable = null;;
 		}
 
-		if (flag) {
-			anIntArray1661 = class50_sub1_sub4_sub4.anIntArray1661;
+		modelHeaders = null;
+		faceIsOffScreen = null;
+		faceNeedsClipping = null;
+		projectedX = null;
+		projectedY = null;
+		projectedZ = null;
+		cameraX = null;
+		cameraY = null;
+		cameraZ = null;
+		//Clear depth sorting (Z-buffer) bins
+		faceDepthCounts = null;
+		faceDepthBins = null;
+		//Clear priority-based rendering pools
+		priorityCounts = null;
+		priorityBins = null;
+		priorityDepthX = null;
+		priorityDepthY = null;
+		priorityAverages = null;
+
+		//Clear global lookup tables
+		sineTable = null;
+		cosineTable = null;
+		colorLookupTable = null;
+	}
+
+	/**
+	 * Initializes the global model system.
+	 *
+	 * @param modelCount The total number of models present in the cache.
+	 * @param provider   The provider responsible for loading/requesting model data.
+	 */
+	public static void init(int modelCount, ModelProvider provider) {
+		modelHeaders = new ModelHeader[modelCount];
+		modelProvider = provider;
+	}
+
+	/**
+	 * Unpacks raw byte data into a {@link ModelHeader} object.
+	 *
+	 * <p>This method reads metadata and data block offsets from the provided byte array
+	 * and populates a {@code ModelHeader} instance, which then describes the structure
+	 * of the model's raw data. This header is crucial for the {@link Model} constructor
+	 * to correctly interpret and load the model's vertices, faces, and other attributes.</p>
+	 *
+	 * @param modelDataBytes The raw byte array containing the model's header and data.
+	 * @param modelId        The unique identifier for the model being unpacked.
+	 * @param dummyByte a dummy Byte (expected to be 7) to ensure proper method invocation.
+	 */
+	public static void unpackModelHeader(byte[] modelDataBytes, int modelId, byte dummyByte) {
+		// Validate the invocation byte
+		if (dummyByte != 7)
+			return;
+
+		// If no data is provided, create an empty model header
+		if (modelDataBytes == null) {
+			ModelHeader modelHeader = Model.modelHeaders[modelId] = new ModelHeader();
+			modelHeader.vertexCount = 0;
+			modelHeader.faceCount = 0;
+			modelHeader.textureVertexCount = 0;
+			return;
+		}
+
+		// Create a buffer to read from the model data bytes
+		JagBuffer dataBuffer = new JagBuffer(modelDataBytes);
+		// Position the buffer to read the header information, which is typically at the end
+		dataBuffer.position = modelDataBytes.length - 18;
+
+		// Create and store the new ModelHeader in the global cache
+		ModelHeader modelHeader = modelHeaders[modelId] = new ModelHeader();
+		modelHeader.rawModelData = modelDataBytes;
+
+		// Read fundamental counts
+		modelHeader.vertexCount = dataBuffer.getShort();
+		modelHeader.faceCount = dataBuffer.getShort();
+		modelHeader.textureVertexCount = dataBuffer.getByte();
+
+		// Read flags indicating the presence of optional data blocks
+		int hasFaceRenderTypesFlag = dataBuffer.getByte();
+		int facePriorityFlag = dataBuffer.getByte();
+		int hasFaceTransparencyFlag = dataBuffer.getByte();
+		int hasFaceBoneIdsFlag = dataBuffer.getByte();
+		int hasVertexBoneIdsFlag = dataBuffer.getByte();
+
+		// Read lengths of various data blocks
+		int vertexXDataLength = dataBuffer.getShort();
+		int vertexYDataLength = dataBuffer.getShort();
+		int vertexZDataLength = dataBuffer.getShort();
+		int faceIndicesDataLength = dataBuffer.getShort();
+
+		// Calculate and assign offsets for each data block
+		int currentOffset = 0;
+		modelHeader.vertexFlagsOffset = currentOffset;
+		currentOffset += modelHeader.vertexCount;
+
+		modelHeader.faceTypeOffset = currentOffset;
+		currentOffset += modelHeader.faceCount;
+
+		modelHeader.facePriorityOffset = currentOffset;
+		// If 255, it means there's a dedicated priority block
+		if (facePriorityFlag == 255) {
+			currentOffset += modelHeader.faceCount;
+		}
+		// Otherwise, the flag itself indicates a default priority
+		else {
+			modelHeader.facePriorityOffset = -facePriorityFlag - 1;
+		}
+
+		modelHeader.faceBoneOffset = currentOffset;
+		if (hasFaceBoneIdsFlag == 1) {
+			currentOffset += modelHeader.faceCount;
+		}
+		else {
+			modelHeader.faceBoneOffset = -1;
+		}
+
+		modelHeader.faceRenderTypeOffset = currentOffset;
+		if (hasFaceRenderTypesFlag == 1) {
+			currentOffset += modelHeader.faceCount;
+		}
+		else {
+			modelHeader.faceRenderTypeOffset = -1;
+		}
+
+		modelHeader.vertexBoneOffset = currentOffset;
+		if (hasVertexBoneIdsFlag == 1) {
+			currentOffset += modelHeader.vertexCount;
+		}
+		else {
+			modelHeader.vertexBoneOffset = -1;
+		}
+
+		modelHeader.faceTransparencyOffset = currentOffset;
+		if (hasFaceTransparencyFlag == 1) {
+			currentOffset += modelHeader.faceCount;
+		}
+		else {
+			modelHeader.faceTransparencyOffset = -1;
+		}
+
+		modelHeader.faceIndicesOffset = currentOffset;
+		currentOffset += faceIndicesDataLength;
+
+		modelHeader.faceColorOffset = currentOffset;
+		currentOffset += modelHeader.faceCount * 2; // 2 bytes per color (short)
+
+		modelHeader.textureMappingOffset = currentOffset;
+		currentOffset += modelHeader.textureVertexCount * 6; // 6 bytes per texture vertex (3 shorts)
+
+		modelHeader.vertexXOffset = currentOffset;
+		currentOffset += vertexXDataLength;
+
+		modelHeader.vertexYOffset = currentOffset;
+		currentOffset += vertexYDataLength;
+
+		modelHeader.vertexZOffset = currentOffset;
+		currentOffset += vertexZDataLength; // Final offset, no need to increment further
+	}
+
+	/**
+	 * Unloads a model header from the global cache.
+	 *
+	 * <p>This removes the metadata associated with the model ID, allowing the
+	 * memory to be reclaimed. If the model is needed again, it will be
+	 * re-requested through the {@code ModelProvider}.</p>
+	 *
+	 * @param modelId The unique identifier of the model to unload.
+	 */
+	public static void unloadModelHeader(int modelId) {
+			modelHeaders[modelId] = null;
+	}
+
+	/**
+	 * Retrieves a model instance by its ID.
+	 *
+	 * <p>If the model's metadata is not yet loaded, this method will trigger
+	 * an asynchronous request via the {@code modelProvider} and return null.</p>
+	 *
+	 * @param id The unique identifier of the model to load.
+	 * @return A new {@code Model} instance if the header is available; otherwise null.
+	 */
+	public static Model forId(int id) {
+		if (modelHeaders == null) {
+			return null;
+		}
+
+		ModelHeader modelHeader = Model.modelHeaders[id];
+
+		// Check if the model metadata (header) is present in the cache
+		if (modelHeader == null) {
+			modelProvider.requestModel(id);
+			return null;
+		}
+
+		return new Model(id, -478);
+
+	}
+
+	public static boolean isDownloaded(int id) {
+		if (modelHeaders == null)
+			return false;
+		ModelHeader modelHeader = Model.modelHeaders[id];
+		if (modelHeader == null) {
+			modelProvider.requestModel(id);
+			return false;
 		} else {
-			if (anIntArray1647.length < anInt1652)
-				anIntArray1647 = new int[anInt1652 + 100];
-			anIntArray1661 = anIntArray1647;
-			if (class50_sub1_sub4_sub4.anIntArray1661 == null) {
-				for (int k = 0; k < anInt1652; k++)
-					anIntArray1661[k] = 0;
+			return true;
+		}
+	}
+
+	/**
+	 * Copies the geometry and metadata from a source model into this instance.
+	 *
+	 * <p>To optimize performance and minimize Garbage Collection, this method utilizes
+	 * static buffer pooling for vertex coordinates and transparency. While vertex
+	 * positions are deep-copied into these buffers, many other attributes (indices,
+	 * colors, bones) are shallow-copied by reference.</p>
+	 *
+	 * @param shareTransparency If true, the transparency array is shared by reference;
+	 *                          if false, it is copied into a static buffer.
+	 * @param source            The source model to copy data from.
+	 */
+	public void copyFrom(boolean shareTransparency, Model source) {
+		verticesCount = source.verticesCount;
+		faceCount = source.faceCount;
+		textureVertexCount = source.textureVertexCount;
+
+		// --- Vertex Buffer Pooling ---
+		// Ensure the static global buffers are large enough to hold the incoming data
+		if (staticVertexX.length < verticesCount) {
+			staticVertexX = new int[verticesCount + 100];
+			staticVertexY = new int[verticesCount + 100];
+			staticVertexZ = new int[verticesCount + 100];
+		}
+
+		// Assign this model's vertex pointers to the global static pool
+		verticesX = staticVertexX;
+		verticesY = staticVertexY;
+		verticesZ = staticVertexZ;
+
+		// Deep copy vertex coordinates so this model can be animated
+		// independently of the source model.
+		for (int j = 0; j < verticesCount; j++) {
+			verticesX[j] = source.verticesX[j];
+			verticesY[j] = source.verticesY[j];
+			verticesZ[j] = source.verticesZ[j];
+		}
+
+		// --- Transparency Management ---
+		if (shareTransparency) {
+			faceTransparency = source.faceTransparency;
+		} else {
+			if (staticTransparency.length < faceCount)
+				staticTransparency = new int[faceCount + 100];
+			faceTransparency = staticTransparency;
+			if (source.faceTransparency == null) {
+				for (int f = 0; f < faceCount; f++)
+					faceTransparency[f] = 0;
 
 			} else {
-				for (int l = 0; l < anInt1652; l++)
-					anIntArray1661[l] = class50_sub1_sub4_sub4.anIntArray1661[l];
+				for(int f = 0; f < faceCount; f++)
+					faceTransparency[f] = source.faceTransparency[f];
 
 			}
 		}
-		anIntArray1659 = class50_sub1_sub4_sub4.anIntArray1659;
-		colors = class50_sub1_sub4_sub4.colors;
-		anIntArray1660 = class50_sub1_sub4_sub4.anIntArray1660;
-		anInt1663 = class50_sub1_sub4_sub4.anInt1663;
-		anIntArrayArray1679 = class50_sub1_sub4_sub4.anIntArrayArray1679;
-		anIntArrayArray1678 = class50_sub1_sub4_sub4.anIntArrayArray1678;
-		anIntArray1653 = class50_sub1_sub4_sub4.anIntArray1653;
-		anIntArray1654 = class50_sub1_sub4_sub4.anIntArray1654;
-		anIntArray1655 = class50_sub1_sub4_sub4.anIntArray1655;
-		anIntArray1656 = class50_sub1_sub4_sub4.anIntArray1656;
-		anIntArray1657 = class50_sub1_sub4_sub4.anIntArray1657;
-		anIntArray1658 = class50_sub1_sub4_sub4.anIntArray1658;
-		anIntArray1665 = class50_sub1_sub4_sub4.anIntArray1665;
-		anIntArray1666 = class50_sub1_sub4_sub4.anIntArray1666;
-		anIntArray1667 = class50_sub1_sub4_sub4.anIntArray1667;
+
+		// --- Shallow Copy (Shared References) ---
+		// These values are generally not modified during animation,
+		// so it is safe to share the reference.
+		faceRenderTypes = source.faceRenderTypes;
+		colors = source.colors;
+		facePriorities = source.facePriorities;
+		defaultPriority = source.defaultPriority;
+		faceIndicesByBone = source.faceIndicesByBone;
+		vertexIndicesByBone = source.vertexIndicesByBone;
+		faceIndicesX = source.faceIndicesX;
+		faceIndicesY = source.faceIndicesY;
+		faceIndicesZ = source.faceIndicesZ;
+		faceColorsA = source.faceColorsA;
+		faceColorsB = source.faceColorsB;
+		faceColorsC = source.faceColorsC;
+		textureVertexIndicesA = source.textureVertexIndicesA;
+		textureVertexIndicesB = source.textureVertexIndicesB;
+		textureVertexIndicesC = source.textureVertexIndicesC;
 	}
 
-	public int method580(Model class50_sub1_sub4_sub4, int i) {
-		int j = -1;
-		int k = class50_sub1_sub4_sub4.anIntArray1649[i];
-		int l = class50_sub1_sub4_sub4.anIntArray1650[i];
-		int i1 = class50_sub1_sub4_sub4.anIntArray1651[i];
-		for (int j1 = 0; j1 < anInt1648; j1++) {
-			if (k != anIntArray1649[j1] || l != anIntArray1650[j1] || i1 != anIntArray1651[j1])
+	/**
+	 * Merges a vertex from a source model into the current model, preventing duplicates.
+	 *
+	 * <p>This method performs a linear search to see if a vertex with identical coordinates
+	 * already exists in the current vertex pool. If found, it returns the existing index.
+	 * Otherwise, it appends the vertex to the pool and returns the new index.</p>
+	 *
+	 * @param sourceModel       The model containing the vertex to be copied.
+	 * @param sourceVertexIndex The index of the vertex in the source model.
+	 * @return The index of the vertex within the current model.
+	 */
+	public int getOrMergeVertex(Model sourceModel, int sourceVertexIndex) {
+		int existingIndex = -1;
+
+		// Extract coordinates from the source model
+		int sourceX = sourceModel.verticesX[sourceVertexIndex];
+		int sourceY = sourceModel.verticesY[sourceVertexIndex];
+		int sourceZ = sourceModel.verticesZ[sourceVertexIndex];
+
+		// Search for an identical vertex in the current model
+		for (int v = 0; v < verticesCount; v++) {
+			if (sourceX != verticesX[v] || sourceY != verticesY[v] || sourceZ != verticesZ[v])
 				continue;
-			j = j1;
+			existingIndex = v;
 			break;
 		}
 
-		if (j == -1) {
-			anIntArray1649[anInt1648] = k;
-			anIntArray1650[anInt1648] = l;
-			anIntArray1651[anInt1648] = i1;
-			if (class50_sub1_sub4_sub4.anIntArray1676 != null)
-				anIntArray1676[anInt1648] = class50_sub1_sub4_sub4.anIntArray1676[i];
-			j = anInt1648++;
+		// If the vertex was not found, append it to the current model's buffers
+		if (existingIndex == -1) {
+			verticesX[verticesCount] = sourceX;
+			verticesY[verticesCount] = sourceY;
+			verticesZ[verticesCount] = sourceZ;
+			if (sourceModel.vertexBoneIds != null)
+				vertexBoneIds[verticesCount] = sourceModel.vertexBoneIds[sourceVertexIndex];
+			existingIndex = verticesCount++;
 		}
-		return j;
+		return existingIndex;
 	}
 
-	public void method581(int i) {
+	public void calculateRadius() {
 		super.height = 0;
-		anInt1671 = 0;
-		anInt1672 = 0;
-		for (int j = 0; j < anInt1648; j++) {
-			int k = anIntArray1649[j];
-			int l = anIntArray1650[j];
-			int i1 = anIntArray1651[j];
+		modelRadius = 0;
+		maxBottomExtent = 0;
+		for (int j = 0; j < verticesCount; j++) {
+			int k = verticesX[j];
+			int l = verticesY[j];
+			int i1 = verticesZ[j];
 			if (-l > super.height)
 				super.height = -l;
-			if (l > anInt1672)
-				anInt1672 = l;
+			if (l > maxBottomExtent)
+				maxBottomExtent = l;
 			int j1 = k * k + i1 * i1;
-			if (j1 > anInt1671)
-				anInt1671 = j1;
+			if (j1 > modelRadius)
+				modelRadius = j1;
 		}
 
-		anInt1671 = (int) (Math.sqrt(anInt1671) + 0.98999999999999999D);
-		anInt1674 = (int) (Math.sqrt(anInt1671 * anInt1671 + super.height * super.height) + 0.98999999999999999D);
-		i = 64 / i;
-		anInt1673 = anInt1674 + (int) (Math.sqrt(anInt1671 * anInt1671 + anInt1672 * anInt1672) + 0.98999999999999999D);
+		modelRadius = (int) (Math.sqrt(modelRadius) + 0.98999999999999999D);
+		modelBoundingSphere = (int) (Math.sqrt(modelRadius * modelRadius + super.height * super.height) + 0.98999999999999999D);
+		totalDepthSortingRange = modelBoundingSphere + (int) (Math.sqrt(modelRadius * modelRadius + maxBottomExtent * maxBottomExtent) + 0.98999999999999999D);
 	}
 
-	public void method582(int i) {
-		super.height = 0;
-		if (i != 6)
-			return;
-		anInt1672 = 0;
-		for (int j = 0; j < anInt1648; j++) {
-			int k = anIntArray1650[j];
-			if (-k > super.height)
-				super.height = -k;
-			if (k > anInt1672)
-				anInt1672 = k;
+	public void updateVerticalBounds() {
+		// Reset vertical extents
+		super.height = 0; // Max distance above origin (negative Y)
+		maxBottomExtent = 0; // Max distance below origin (positive Y)
+
+		// Scan only the Y-axis
+		for (int v = 0; v < verticesCount; v++) {
+			int y = verticesY[v];
+			if (-y > super.height)
+				super.height = -y;
+			if (y > maxBottomExtent)
+				maxBottomExtent = y;
 		}
 
-		anInt1674 = (int) (Math.sqrt(anInt1671 * anInt1671 + super.height * super.height) + 0.98999999999999999D);
-		anInt1673 = anInt1674 + (int) (Math.sqrt(anInt1671 * anInt1671 + anInt1672 * anInt1672) + 0.98999999999999999D);
+		// Recalculate the 3D Bounding Sphere Radius
+		// Using 0.99D before casting to (int) is a legacy "ceiling" trick to ensure the sphere
+		// always fully encompasses the model vertices.
+		modelBoundingSphere = (int) (Math.sqrt(modelRadius * modelRadius + super.height * super.height) + 0.99D);
+
+		// Recalculate the total depth range for Z-sorting bins
+		// This is (Distance to top-most point) + (Distance to bottom-most point)
+		totalDepthSortingRange = modelBoundingSphere + (int) (Math.sqrt(modelRadius * modelRadius + maxBottomExtent * maxBottomExtent) + 0.99D);
 	}
 
-	public void method583(int i) {
-		super.height = 0;
-		anInt1671 = 0;
-		anInt1672 = 0;
-		int j = 32767;
-		int k = -32767;
-		int l = -32767;
-		int i1 = 32767;
-		for (int j1 = 0; j1 < anInt1648; j1++) {
-			int k1 = anIntArray1649[j1];
-			int l1 = anIntArray1650[j1];
-			int i2 = anIntArray1651[j1];
-			if (k1 < j)
-				j = k1;
-			if (k1 > k)
-				k = k1;
-			if (i2 < i1)
-				i1 = i2;
-			if (i2 > l)
-				l = i2;
-			if (-l1 > super.height)
-				super.height = -l1;
-			if (l1 > anInt1672)
-				anInt1672 = l1;
-			int j2 = k1 * k1 + i2 * i2;
-			if (j2 > anInt1671)
-				anInt1671 = j2;
+	/**
+	 * Calculates the Axis-Aligned Bounding Box (AABB) and the bounding sphere radii for the model.
+	 *
+	 * <p>This method iterates through all vertices to find the minimum and maximum extents
+	 * on all three axes. It also calculates the maximum horizontal distance from the origin
+	 * to determine the model's circular and spherical bounds.</p>
+	 */
+	public void calculateAABB() {
+		// Reset vertical extents
+		super.height = 0; // Represents the maximum extent above the origin (negative Y)
+		maxBottomExtent = 0; // Represents the maximum extent below the origin (positive Y)
+		modelRadius = 0; // Square of the horizontal radius (X^2 + Z^2)
+
+
+		int minX = Short.MAX_VALUE;
+		int maxX = Short.MIN_VALUE;
+
+		int minZ = Short.MAX_VALUE;
+		int maxZ = Short.MIN_VALUE;
+
+		for (int v = 0; v < verticesCount; v++) {
+			int x = verticesX[v];
+			int y = verticesY[v];
+			int z = verticesZ[v];
+
+			// Update Horizontal Bound Extremes
+			if (x < minX) minX = x;
+			if (x > maxX) maxX = x;
+			if (z < minZ) minZ = z;
+			if (z > maxZ) maxZ = z;
+
+			// Update Vertical Extents
+			// In this engine's coordinate system, negative Y is "up"
+			if (-y > super.height) {
+				super.height = -y;
+			}
+			if (y > maxBottomExtent) {
+				maxBottomExtent = y;
+			}
+
+			// Track the squared horizontal distance from the origin
+			int horizontalDistanceSq = x * x + z * z;
+			if (horizontalDistanceSq > modelRadius) {
+				modelRadius = horizontalDistanceSq;
+			}
 		}
 
-		anInt1671 = (int) Math.sqrt(anInt1671);
-		anInt1674 = (int) Math.sqrt(anInt1671 * anInt1671 + super.height * super.height);
-		anInt1673 = anInt1674 + (int) Math.sqrt(anInt1671 * anInt1671 + anInt1672 * anInt1672);
-		anInt1669 = (j << 16) + (k & 0xffff);
-		if (i <= 0)
-			anInt1637 = 50;
-		anInt1670 = (l << 16) + (i1 & 0xffff);
+		// Convert squared horizontal distance to actual radius
+		modelRadius = (int) Math.sqrt(modelRadius);
+
+		// anInt1674: The 3D radius from origin to the furthest top vertex
+		modelBoundingSphere = (int) Math.sqrt(modelRadius * modelRadius + super.height * super.height);
+
+		// The total depth range used for Z-buffer/Bin allocation
+		// Calculated as the distance to the furthest top point + distance to furthest bottom point
+		totalDepthSortingRange = modelBoundingSphere + (int) Math.sqrt(modelRadius * modelRadius + maxBottomExtent * maxBottomExtent);
+
+		// Pack the AABB boundaries into 32-bit integers for high-performance culling checks
+		// packedXBounds stores X-axis bounds (min in high bits, max in low bits)
+		packedXBounds = (minX << 16) + (maxX & 0xffff);
+
+		// packedZBounds stores Z-axis bounds (max in high bits, min in low bits)
+		packedZBounds = (maxZ << 16) + (minZ & 0xffff);
 	}
 
-	public void method584(int i) {
-		if (i != 7)
-			return;
-		if (anIntArray1676 != null) {
-			int ai[] = new int[256];
-			int j = 0;
-			for (int l = 0; l < anInt1648; l++) {
-				int j1 = anIntArray1676[l];
-				ai[j1]++;
-				if (j1 > j)
-					j = j1;
+	/**
+	 * Groups vertex and face indices by their respective transformation/bone IDs.
+	 *
+	 * <p>This method converts flat mapping arrays (vertexGroups and faceGroups) into
+	 * structured 2D arrays (groupedVertexIndices and groupedFaceIndices). This
+	 * allows the animation system to transform groups of geometry efficiently
+	 * without scanning the entire model.</p>
+	 */
+	public void groupIndicesByTransform() {
+
+		// Group Vertex Indices by Bone/Transformation ID
+		if (vertexBoneIds != null) {
+			int[] groupCounts = new int[MAX_TRANSFORMATION_GROUPS];
+			int maxGroupId = 0;
+
+			// Count occurrences of each group ID to determine sub-array sizes
+			for (int v = 0; v < verticesCount; v++) {
+				int groupId = vertexBoneIds[v];
+				groupCounts[groupId]++;
+				if (groupId > maxGroupId)
+					maxGroupId = groupId;
 			}
 
-			anIntArrayArray1678 = new int[j + 1][];
-			for (int k1 = 0; k1 <= j; k1++) {
-				anIntArrayArray1678[k1] = new int[ai[k1]];
-				ai[k1] = 0;
+			// Allocate the outer 2D array based on the highest Group ID found
+			vertexIndicesByBone = new int[maxGroupId + 1][];
+			for (int g = 0; g <= maxGroupId; g++) {
+				vertexIndicesByBone[g] = new int[groupCounts[g]];
+				groupCounts[g] = 0;
 			}
 
-			for (int j2 = 0; j2 < anInt1648; j2++) {
-				int l2 = anIntArray1676[j2];
-				anIntArrayArray1678[l2][ai[l2]++] = j2;
+			for (int v = 0; v < verticesCount; v++) {
+				int groupId = vertexBoneIds[v];
+				vertexIndicesByBone[groupId][groupCounts[groupId]++] = v;
 			}
 
-			anIntArray1676 = null;
+			vertexBoneIds = null;
 		}
-		if (anIntArray1677 != null) {
-			int ai1[] = new int[256];
-			int k = 0;
-			for (int i1 = 0; i1 < anInt1652; i1++) {
-				int l1 = anIntArray1677[i1];
-				ai1[l1]++;
-				if (l1 > k)
-					k = l1;
+
+		// Group Face Indices by Bone/Transformation ID
+		if (faceBoneIds != null) {
+			int[] groupCounts = new int[MAX_TRANSFORMATION_GROUPS];
+			int maxGroupId = 0;
+
+			// Count occurrences for faces
+			for (int f = 0; f < faceCount; f++) {
+				int groupId = faceBoneIds[f];
+				groupCounts[groupId]++;
+				if (groupId > maxGroupId)
+					maxGroupId = groupId;
 			}
 
-			anIntArrayArray1679 = new int[k + 1][];
-			for (int i2 = 0; i2 <= k; i2++) {
-				anIntArrayArray1679[i2] = new int[ai1[i2]];
-				ai1[i2] = 0;
+			// Allocate grouped face index table
+			faceIndicesByBone = new int[maxGroupId + 1][];
+			for (int g = 0; g <= maxGroupId; g++) {
+				faceIndicesByBone[g] = new int[groupCounts[g]];
+				groupCounts[g] = 0;
 			}
 
-			for (int k2 = 0; k2 < anInt1652; k2++) {
-				int i3 = anIntArray1677[k2];
-				anIntArrayArray1679[i3][ai1[i3]++] = k2;
+			// Populate face indices
+			for (int f = 0; f < faceCount; f++) {
+				int groupId = faceBoneIds[f];
+				faceIndicesByBone[groupId][groupCounts[groupId]++] = f;
 			}
 
-			anIntArray1677 = null;
+			// Nullify the flat array to reclaim memory
+			faceBoneIds = null;
 		}
 	}
 
-	public void method585(int i, byte byte0) {
-		if (anIntArrayArray1678 == null)
+	/**
+	 * Applies a single animation frame to the model.
+	 *
+	 * <p>This method iterates through all transformation instructions stored in the
+	 * specified frame and applies them to the corresponding vertex/bone groups.</p>
+	 *
+	 * @param frameId        The ID of the {@link AnimationFrame} to apply.
+	 * @param dummyByte A dummy byte (expected to be 6) used to ensure
+	 *                       internal calling consistency.
+	 */
+	public void applyAnimation(int frameId, byte dummyByte) {
+		// Cannot animate if the model hasn't been grouped by bones
+		if (vertexIndicesByBone == null) {
 			return;
-		if (i == -1)
-			return;
-		Class21 class21 = Class21.method238(i);
-		if (class21 == null)
-			return;
-		Class41 class41 = class21.aClass41_432;
-		if (byte0 == 6)
-			byte0 = 0;
-		else
-			return;
-		anInt1702 = 0;
-		anInt1703 = 0;
-		anInt1704 = 0;
-		for (int j = 0; j < class21.anInt433; j++) {
-			int k = class21.anIntArray434[j];
-			method587(class41.anIntArray698[k], class41.anIntArrayArray699[k], class21.anIntArray435[j],
-					class21.anIntArray436[j], class21.anIntArray437[j]);
 		}
 
-	}
-
-	public void method586(int i, int j, int k, int ai[]) {
-		if (k == -1)
+		if (frameId == -1) {
 			return;
-		if (ai == null || i == -1) {
-			method585(k, (byte) 6);
-			return;
-		}
-		Class21 class21 = Class21.method238(k);
-		if (class21 == null)
-			return;
-		Class21 class21_1 = Class21.method238(i);
-		if (class21_1 == null) {
-			method585(k, (byte) 6);
-			return;
-		}
-		Class41 class41 = class21.aClass41_432;
-		anInt1702 = 0;
-		if (j != 0)
-			aBoolean1641 = !aBoolean1641;
-		anInt1703 = 0;
-		anInt1704 = 0;
-		int l = 0;
-		int i1 = ai[l++];
-		for (int j1 = 0; j1 < class21.anInt433; j1++) {
-			int k1;
-			for (k1 = class21.anIntArray434[j1]; k1 > i1; i1 = ai[l++]);
-			if (k1 != i1 || class41.anIntArray698[k1] == 0)
-				method587(class41.anIntArray698[k1], class41.anIntArrayArray699[k1], class21.anIntArray435[j1],
-						class21.anIntArray436[j1], class21.anIntArray437[j1]);
 		}
 
-		anInt1702 = 0;
-		anInt1703 = 0;
-		anInt1704 = 0;
-		l = 0;
-		i1 = ai[l++];
-		for (int l1 = 0; l1 < class21_1.anInt433; l1++) {
-			int i2;
-			for (i2 = class21_1.anIntArray434[l1]; i2 > i1; i1 = ai[l++]);
-			if (i2 == i1 || class41.anIntArray698[i2] == 0)
-				method587(class41.anIntArray698[i2], class41.anIntArrayArray699[i2], class21_1.anIntArray435[l1],
-						class21_1.anIntArray436[l1], class21_1.anIntArray437[l1]);
+		AnimationFrame frame = AnimationFrame.forId(frameId);
+		if (frame == null) {
+			return;
+		}
+
+		Skeleton skeleton = frame.skeleton;
+
+		// Standard engine-specific validation check
+		if (dummyByte == 6) {
+			dummyByte = 0;
+		}
+		else {
+			return;
+		}
+
+		// Reset pivots before starting a new frame application
+		transformationPivotX = 0;
+		transformationPivotY = 0;
+		transformationPivotZ = 0;
+
+		for (int i = 0; i < frame.instructionCount; i++) {
+			int instructionIdx = frame.instructionIndices[i];
+			applyTransformation(skeleton.opcodes[instructionIdx], skeleton.boneGroups[instructionIdx], frame.transformationX[i],
+					frame.transformationY[i], frame.transformationZ[i]);
 		}
 
 	}
 
-	public void method587(int i, int ai[], int j, int k, int l) {
-		int i1 = ai.length;
-		if (i == 0) {
-			int j1 = 0;
-			anInt1702 = 0;
-			anInt1703 = 0;
-			anInt1704 = 0;
-			for (int k2 = 0; k2 < i1; k2++) {
-				int l3 = ai[k2];
-				if (l3 < anIntArrayArray1678.length) {
-					int ai5[] = anIntArrayArray1678[l3];
-					for (int i5 = 0; i5 < ai5.length; i5++) {
-						int j6 = ai5[i5];
-						anInt1702 += anIntArray1649[j6];
-						anInt1703 += anIntArray1650[j6];
-						anInt1704 += anIntArray1651[j6];
-						j1++;
+	/**
+	 * Applies a blend of two animation frames based on a mask.
+	 *
+	 * @param secondaryFrameId The ID of the frame to apply to masked bones.
+	 * @param dummy            A dummy value used to toggle internal state.
+	 * @param primaryFrameId   The ID of the frame to apply to unmasked bones.
+	 * @param mask             An array of instruction indices that should use the secondary frame.
+	 */
+	public void applyBlendedAnimation(int secondaryFrameId, int dummy, int primaryFrameId, int[] mask) {
+		if (primaryFrameId == -1)
+			return;
+
+		// If no mask is provided or no secondary frame exists, default to standard animation
+		if (mask == null || secondaryFrameId == -1) {
+			applyAnimation(primaryFrameId, (byte) 6);
+			return;
+		}
+
+		AnimationFrame primaryFrame = AnimationFrame.forId(primaryFrameId);
+		if (primaryFrame == null) {
+			return;
+		}
+
+		AnimationFrame secondaryFrame = AnimationFrame.forId(secondaryFrameId);
+		if (secondaryFrame == null) {
+			applyAnimation(primaryFrameId, (byte) 6);
+			return;
+		}
+
+		Skeleton skeleton = primaryFrame.skeleton;
+		transformationPivotX = 0;
+
+		if (dummy != 0)
+			isModified = !isModified;
+
+		transformationPivotY = 0;
+		transformationPivotZ = 0;
+
+		int maskPtr = 0;
+		int maskValue = mask[maskPtr++];
+
+		// --- Part 1: Apply Primary Frame to UNMASKED bones ---
+		for (int i = 0; i < primaryFrame.instructionCount; i++) {
+			int instructionIdx;
+			// Advance the mask pointer until it reaches or exceeds the current instruction
+			for (instructionIdx = primaryFrame.instructionIndices[i]; instructionIdx > maskValue; maskValue = mask[maskPtr++]);
+
+			// If this instruction is NOT in the mask, or it is a pivot opcode (0), apply it
+			if (instructionIdx != maskValue || skeleton.opcodes[instructionIdx] == 0) {
+				applyTransformation(skeleton.opcodes[instructionIdx], skeleton.boneGroups[instructionIdx], primaryFrame.transformationX[i],
+						primaryFrame.transformationY[i], primaryFrame.transformationZ[i]);
+			}
+		}
+
+		// Reset pivot for the second pass
+		transformationPivotX = 0;
+		transformationPivotY = 0;
+		transformationPivotZ = 0;
+		maskPtr = 0;
+		maskValue = mask[maskPtr++];
+
+		// --- Part 2: Apply Secondary Frame to MASKED bones ---
+		for (int i = 0; i < secondaryFrame.instructionCount; i++) {
+			int instructionIdx;
+			// Advance the mask pointer until it reaches or exceeds the current instruction
+			for (instructionIdx = secondaryFrame.instructionIndices[i]; instructionIdx > maskValue; maskValue = mask[maskPtr++]);
+
+			// If this instruction IS in the mask, or it is a pivot opcode (0), apply it
+			if (instructionIdx == maskValue || skeleton.opcodes[instructionIdx] == 0)
+				applyTransformation(skeleton.opcodes[instructionIdx], skeleton.boneGroups[instructionIdx], secondaryFrame.transformationX[i],
+						secondaryFrame.transformationY[i], secondaryFrame.transformationZ[i]);
+		}
+
+	}
+
+
+
+	/**
+	 * Applies a specific transformation to grouped vertices or faces based on a provided opcode.
+	 *
+	 * <p>This method is the core of the skeletal animation system. It manipulates the model's
+	 * geometry or attributes by targeting specific "bone groups" (sets of indices). It handles
+	 * pivot calculation, translation, rotation, scaling, and transparency modifications using
+	 * fixed-point arithmetic.</p>
+	 *
+	 * <p>The behavior depends on the {@code opcode}:</p>
+	 * <ul>
+	 *   <li><b>Opcode 0 (Pivot Calculation):</b> Calculates the centroid (average position) of
+	 *       all vertices in the specified bone groups and stores it in the global
+	 *       {@code transformationPivot} variables. This pivot is used for subsequent rotations and scales.</li>
+	 *   <li><b>Opcode 1 (Translation):</b> Offsets the X, Y, and Z coordinates of the targeted vertices.</li>
+	 *   <li><b>Opcode 2 (Rotation):</b> Rotates targeted vertices around the current
+	 *       {@code transformationPivot}. Angles are provided as 8-bit values (0-255) and
+	 *       internalized using fixed-point sine/cosine tables.</li>
+	 *   <li><b>Opcode 3 (Scaling):</b> Resizes targeted vertices relative to the
+	 *       {@code transformationPivot}. The transformation values represent a percentage
+	 *       multiplier where 128 is 100% scale.</li>
+	 *   <li><b>Opcode 5 (Transparency):</b> Modifies the alpha transparency of faces assigned
+	 *       to the specified bone groups.</li>
+	 * </ul>
+	 *
+	 * @param opcode         The transformation type to perform (0, 1, 2, 3, or 5).
+	 * @param boneGroupIds   An array of bone/group identifiers defining which part of the
+	 *                       mesh is affected.
+	 * @param transformX     The X-axis transformation value (translation delta, rotation angle,
+	 *                       scale factor, or transparency delta).
+	 * @param transformY     The Y-axis transformation value.
+	 * @param transformZ     The Z-axis transformation value.
+	 */
+	public void applyTransformation(int opcode, int[] boneGroupIds, int transformX, int transformY, int transformZ) {
+		int groupCount = boneGroupIds.length;
+
+		//TODO COULD BE A SWITCH OF OPCODES INSTEAD OF IF-ELSES;
+
+		// OPCODE 0: Calculate Transformation Pivot (Centroid of specified bones)
+		if (opcode == 0) {
+			int totalVertices = 0;
+			transformationPivotX = 0;
+			transformationPivotY = 0;
+			transformationPivotZ = 0;
+			for (int i = 0; i < groupCount; i++) {
+				int boneId = boneGroupIds[i];
+				if (boneId < vertexIndicesByBone.length) {
+					int[] vertexIndices = vertexIndicesByBone[boneId];
+					for (int v = 0; v < vertexIndices.length; v++) {
+						int vertexId = vertexIndices[v];
+						transformationPivotX += verticesX[vertexId];
+						transformationPivotY += verticesY[vertexId];
+						transformationPivotZ += verticesZ[vertexId];
+						totalVertices++;
 					}
-
 				}
 			}
 
-			if (j1 > 0) {
-				anInt1702 = anInt1702 / j1 + j;
-				anInt1703 = anInt1703 / j1 + k;
-				anInt1704 = anInt1704 / j1 + l;
+			if (totalVertices > 0) {
+				transformationPivotX = transformationPivotX / totalVertices + transformX;
+				transformationPivotY = transformationPivotY / totalVertices + transformY;
+				transformationPivotZ = transformationPivotZ / totalVertices + transformZ;
 				return;
 			} else {
-				anInt1702 = j;
-				anInt1703 = k;
-				anInt1704 = l;
+				transformationPivotX = transformX;
+				transformationPivotY = transformY;
+				transformationPivotZ = transformZ;
 				return;
 			}
 		}
-		if (i == 1) {
-			for (int k1 = 0; k1 < i1; k1++) {
-				int l2 = ai[k1];
-				if (l2 < anIntArrayArray1678.length) {
-					int ai1[] = anIntArrayArray1678[l2];
-					for (int i4 = 0; i4 < ai1.length; i4++) {
-						int j5 = ai1[i4];
-						anIntArray1649[j5] += j;
-						anIntArray1650[j5] += k;
-						anIntArray1651[j5] += l;
+
+		// OPCODE 1: Translation (Movement)
+		if (opcode == 1) {
+			for (int i = 0; i < groupCount; i++) {
+				int boneId = boneGroupIds[i];
+				if (boneId < vertexIndicesByBone.length) {
+					int[] vertexIndices = vertexIndicesByBone[boneId];
+					for (int v = 0; v < vertexIndices.length; v++) {
+						int vertexId = vertexIndices[v];
+						verticesX[vertexId] += transformX;
+						verticesY[vertexId] += transformY;
+						verticesZ[vertexId] += transformZ;
+					}
+				}
+			}
+			return;
+		}
+
+		// OPCODE 2: Rotation (Relative to pivot)
+		if (opcode == 2) {
+			for (int i = 0; i < groupCount; i++) {
+				int boneId = boneGroupIds[i];
+				if (boneId < vertexIndicesByBone.length) {
+					int[] vertexIndices = vertexIndicesByBone[boneId];
+					for (int v = 0; v < vertexIndices.length; v++) {
+						int vertexId = vertexIndices[v];
+
+						// Move to local pivot space
+						verticesX[vertexId] -= transformationPivotX;
+						verticesY[vertexId] -= transformationPivotY;
+						verticesZ[vertexId] -= transformationPivotZ;
+
+						int angleX = (transformX & 0xff) * 8;
+						int angleY = (transformY & 0xff) * 8;
+						int angleZ = (transformZ & 0xff) * 8;
+
+						// Rotate around Z axis
+						if (angleZ != 0) {
+							int sin = sineTable[angleZ];
+							int cos = cosineTable[angleZ];
+							int rotatedX = verticesY[vertexId] * sin + verticesX[vertexId] * cos >> 16;
+							verticesY[vertexId] = verticesY[vertexId] * cos - verticesX[vertexId] * sin >> 16;
+							verticesX[vertexId] = rotatedX;
+						}
+
+						// Rotate around X axis
+						if (angleX != 0) {
+							int sine = sineTable[angleX];
+							int cos = cosineTable[angleX];
+							int rotatedY = verticesY[vertexId] * cos - verticesZ[vertexId] * sine >> 16;
+							verticesZ[vertexId] = verticesY[vertexId] * sine + verticesZ[vertexId] * cos >> 16;
+							verticesY[vertexId] = rotatedY;
+						}
+
+						// Rotate around Y axis
+						if (angleY != 0) {
+							int sine = sineTable[angleY];
+							int cos = cosineTable[angleY];
+							int rotatedX = verticesZ[vertexId] * sine + verticesX[vertexId] * cos >> 16;
+							verticesZ[vertexId] = verticesZ[vertexId] * cos - verticesX[vertexId] * sine >> 16;
+							verticesX[vertexId] = rotatedX;
+						}
+
+						// Return to world space
+						verticesX[vertexId] += transformationPivotX;
+						verticesY[vertexId] += transformationPivotY;
+						verticesZ[vertexId] += transformationPivotZ;
 					}
 
 				}
@@ -998,43 +1862,24 @@ public class Model extends Entity {
 
 			return;
 		}
-		if (i == 2) {
-			for (int l1 = 0; l1 < i1; l1++) {
-				int i3 = ai[l1];
-				if (i3 < anIntArrayArray1678.length) {
-					int ai2[] = anIntArrayArray1678[i3];
-					for (int j4 = 0; j4 < ai2.length; j4++) {
-						int k5 = ai2[j4];
-						anIntArray1649[k5] -= anInt1702;
-						anIntArray1650[k5] -= anInt1703;
-						anIntArray1651[k5] -= anInt1704;
-						int k6 = (j & 0xff) * 8;
-						int l6 = (k & 0xff) * 8;
-						int i7 = (l & 0xff) * 8;
-						if (i7 != 0) {
-							int j7 = anIntArray1710[i7];
-							int i8 = anIntArray1711[i7];
-							int l8 = anIntArray1650[k5] * j7 + anIntArray1649[k5] * i8 >> 16;
-							anIntArray1650[k5] = anIntArray1650[k5] * i8 - anIntArray1649[k5] * j7 >> 16;
-							anIntArray1649[k5] = l8;
-						}
-						if (k6 != 0) {
-							int k7 = anIntArray1710[k6];
-							int j8 = anIntArray1711[k6];
-							int i9 = anIntArray1650[k5] * j8 - anIntArray1651[k5] * k7 >> 16;
-							anIntArray1651[k5] = anIntArray1650[k5] * k7 + anIntArray1651[k5] * j8 >> 16;
-							anIntArray1650[k5] = i9;
-						}
-						if (l6 != 0) {
-							int l7 = anIntArray1710[l6];
-							int k8 = anIntArray1711[l6];
-							int j9 = anIntArray1651[k5] * l7 + anIntArray1649[k5] * k8 >> 16;
-							anIntArray1651[k5] = anIntArray1651[k5] * k8 - anIntArray1649[k5] * l7 >> 16;
-							anIntArray1649[k5] = j9;
-						}
-						anIntArray1649[k5] += anInt1702;
-						anIntArray1650[k5] += anInt1703;
-						anIntArray1651[k5] += anInt1704;
+
+		// OPCODE 3: Scaling (Relative to pivot)
+		if (opcode == 3) {
+			for (int i = 0; i < groupCount; i++) {
+				int boneId = boneGroupIds[i];
+				if (boneId < vertexIndicesByBone.length) {
+					int[] vertexIndices = vertexIndicesByBone[boneId];
+					for (int v = 0; v < vertexIndices.length; v++) {
+						int vertexId = vertexIndices[v];
+						verticesX[vertexId] -= transformationPivotX;
+						verticesY[vertexId] -= transformationPivotY;
+						verticesZ[vertexId] -= transformationPivotZ;
+						verticesX[vertexId] = (verticesX[vertexId] * transformX) / 128;
+						verticesY[vertexId] = (verticesY[vertexId] * transformY) / 128;
+						verticesZ[vertexId] = (verticesZ[vertexId] * transformZ) / 128;
+						verticesX[vertexId] += transformationPivotX;
+						verticesY[vertexId] += transformationPivotY;
+						verticesZ[vertexId] += transformationPivotZ;
 					}
 
 				}
@@ -1042,914 +1887,1032 @@ public class Model extends Entity {
 
 			return;
 		}
-		if (i == 3) {
-			for (int i2 = 0; i2 < i1; i2++) {
-				int j3 = ai[i2];
-				if (j3 < anIntArrayArray1678.length) {
-					int ai3[] = anIntArrayArray1678[j3];
-					for (int k4 = 0; k4 < ai3.length; k4++) {
-						int l5 = ai3[k4];
-						anIntArray1649[l5] -= anInt1702;
-						anIntArray1650[l5] -= anInt1703;
-						anIntArray1651[l5] -= anInt1704;
-						anIntArray1649[l5] = (anIntArray1649[l5] * j) / 128;
-						anIntArray1650[l5] = (anIntArray1650[l5] * k) / 128;
-						anIntArray1651[l5] = (anIntArray1651[l5] * l) / 128;
-						anIntArray1649[l5] += anInt1702;
-						anIntArray1650[l5] += anInt1703;
-						anIntArray1651[l5] += anInt1704;
-					}
 
+		// OPCODE 5: Alpha/Transparency modification
+		if (opcode == 5 && faceIndicesByBone != null && faceTransparency != null) {
+			for (int i = 0; i < groupCount; i++) {
+				int boneId = boneGroupIds[i];
+				if (boneId < faceIndicesByBone.length) {
+					int[] vertexIndices = faceIndicesByBone[boneId];
+					for (int v = 0; v < vertexIndices.length; v++) {
+						int vertexId = vertexIndices[v];
+						faceTransparency[vertexId] += transformX * 8;
+						if (faceTransparency[vertexId] < 0)
+							faceTransparency[vertexId] = 0;
+						if (faceTransparency[vertexId] > 255)
+							faceTransparency[vertexId] = 255;
+					}
 				}
 			}
-
-			return;
-		}
-		if (i == 5 && anIntArrayArray1679 != null && anIntArray1661 != null) {
-			for (int j2 = 0; j2 < i1; j2++) {
-				int k3 = ai[j2];
-				if (k3 < anIntArrayArray1679.length) {
-					int ai4[] = anIntArrayArray1679[k3];
-					for (int l4 = 0; l4 < ai4.length; l4++) {
-						int i6 = ai4[l4];
-						anIntArray1661[i6] += j * 8;
-						if (anIntArray1661[i6] < 0)
-							anIntArray1661[i6] = 0;
-						if (anIntArray1661[i6] > 255)
-							anIntArray1661[i6] = 255;
-					}
-
-				}
-			}
-
 		}
 	}
 
-	public void method588(boolean flag) {
-		if (!flag)
-			return;
-		for (int i = 0; i < anInt1648; i++) {
-			int j = anIntArray1649[i];
-			anIntArray1649[i] = anIntArray1651[i];
-			anIntArray1651[i] = -j;
+	/**
+	 * Rotates the model 90 degrees around the Y-axis.
+	 */
+	public void rotate90Y() {
+		for (int i = 0; i < verticesCount; i++) {
+			int j = verticesX[i];
+			verticesX[i] = verticesZ[i];
+			verticesZ[i] = -j;
 		}
+	} //TODO MIGHT NEED A RotateY method
 
+	/**
+	 * Rotates the model around the X-axis.
+	 *
+	 * @param angle The angle to rotate, indexed into the sine/cosine tables.
+	 */
+	public void rotateX(int angle) {
+		int sin = sineTable[angle];
+		int cos = cosineTable[angle];
+
+		for (int i = 0; i < verticesCount; i++) {
+			int y = verticesY[i] * cos - verticesZ[i] * sin >> 16;
+			verticesZ[i] = verticesY[i] * sin + verticesZ[i] * cos >> 16;
+			verticesY[i] = y;
+		}
 	}
 
-	public void method589(int i, int j) {
-		int k = anIntArray1710[i];
-		int l = anIntArray1711[i];
-		for (int i1 = 0; i1 < anInt1648; i1++) {
-			int j1 = anIntArray1650[i1] * l - anIntArray1651[i1] * k >> 16;
-			anIntArray1651[i1] = anIntArray1650[i1] * k + anIntArray1651[i1] * l >> 16;
-			anIntArray1650[i1] = j1;
+	public void translate(int x, int y, int z) {
+		for (int i = 0; i < verticesCount; i++) {
+			verticesX[i] += x;
+			verticesY[i] += y;
+			verticesZ[i] += z;
 		}
-
-		j = 61 / j;
-	}
-
-	public void method590(int i, int j, boolean flag, int k) {
-		if (flag)
-			anInt1636 = -310;
-		for (int l = 0; l < anInt1648; l++) {
-			anIntArray1649[l] += i;
-			anIntArray1650[l] += k;
-			anIntArray1651[l] += j;
-		}
-
 	}
 
 	public void replaceColor(int oldColor, int newColor) {
-		for (int i = 0; i < anInt1652; i++)
+		for (int i = 0; i < faceCount; i++)
 			if (colors[i] == oldColor)
 				colors[i] = newColor;
-
 	}
 
-	public void method592(int i) {
-		if (i != 0) {
-			for (int j = 1; j > 0; j++);
-		}
-		for (int k = 0; k < anInt1648; k++)
-			anIntArray1651[k] = -anIntArray1651[k];
+	/**
+	 * Mirrors the model along the Z-axis (across the XY plane).
+	 * This operation negates the Z-coordinates and reverses the face winding
+	 * order to ensure normals remain pointing outward.
+	 */
+	public void mirrorZ() {
+		// Negate the Z coordinate for all vertices
+		for (int i = 0; i < verticesCount; i++)
+			verticesZ[i] = -verticesZ[i];
 
-		for (int l = 0; l < anInt1652; l++) {
-			int i1 = anIntArray1653[l];
-			anIntArray1653[l] = anIntArray1655[l];
-			anIntArray1655[l] = i1;
+		// Reverse the triangle winding order to prevent the model from appearing inside-out
+		for (int i = 0; i < faceCount; i++) {
+			int tempIndex = faceIndicesX[i];
+			faceIndicesX[i] = faceIndicesZ[i];
+			faceIndicesZ[i] = tempIndex;
 		}
-
 	}
 
-	public void method593(int i, int j, int k, int l) {
-		for (int i1 = 0; i1 < anInt1648; i1++) {
-			anIntArray1649[i1] = (anIntArray1649[i1] * l) / 128;
-			anIntArray1650[i1] = (anIntArray1650[i1] * i) / 128;
-			anIntArray1651[i1] = (anIntArray1651[i1] * j) / 128;
+	/**
+	 * Scales the model along the X, Y, and Z axes.
+	 *
+	 * @param scaleX The scale factor for the X-axis (128 = 100%).
+	 * @param scaleY The scale factor for the Y-axis (128 = 100%).
+	 * @param scaleZ The scale factor for the Z-axis (128 = 100%).
+	 */
+	public void resizeModel(int scaleX, int scaleY, int scaleZ) {
+		for (int i = 0; i < verticesCount; i++) {
+			verticesX[i] = (verticesX[i] * scaleX) / 128;
+			verticesY[i] = (verticesY[i] * scaleY) / 128;
+			verticesZ[i] = (verticesZ[i] * scaleZ) / 128;
 		}
-
-		if (k != 9)
-			anInt1636 = 322;
 	}
 
-	public void method594(int i, int j, int k, int l, int i1, boolean flag) {
-		int j1 = (int) Math.sqrt(k * k + l * l + i1 * i1);
-		int k1 = j * j1 >> 8;
-		if (anIntArray1656 == null) {
-			anIntArray1656 = new int[anInt1652];
-			anIntArray1657 = new int[anInt1652];
-			anIntArray1658 = new int[anInt1652];
+	/**
+	 * Initializes the lighting and normals for the model.
+	 *
+	 * @param ambient          The base ambient light level.
+	 * @param lightIntensity   The intensity of the light source.
+	 * @param lightX           X-direction of the light.
+	 * @param lightY           Y-direction of the light.
+	 * @param lightZ           Z-direction of the light.
+	 * @param immediateShading If true, Gouraud shading is applied immediately.
+	 */
+	public void initLighting(int ambient, int lightIntensity, int lightX, int lightY, int lightZ, boolean immediateShading) {
+		int lightMagnitude = (int) Math.sqrt(lightX * lightX + lightY * lightY + lightZ * lightZ);
+		int scaledIntensity = lightIntensity * lightMagnitude >> 8;
+
+		// Initialize shading arrays if they don't exist
+		if (faceColorsA == null) {
+			faceColorsA = new int[faceCount];
+			faceColorsB = new int[faceCount];
+			faceColorsC = new int[faceCount];
 		}
+
+		// Initialize vertex normals if they don't exist
 		if (super.normals == null) {
-			super.normals = new VertexNormal[anInt1648];
-			for (int l1 = 0; l1 < anInt1648; l1++)
-				super.normals[l1] = new VertexNormal();
-
+			super.normals = new VertexNormal[verticesCount];
+			for (int i = 0; i < verticesCount; i++) {
+				super.normals[i] = new VertexNormal();
+			}
 		}
-		for (int i2 = 0; i2 < anInt1652; i2++) {
-			int j2 = anIntArray1653[i2];
-			int l2 = anIntArray1654[i2];
-			int i3 = anIntArray1655[i2];
-			int j3 = anIntArray1649[l2] - anIntArray1649[j2];
-			int k3 = anIntArray1650[l2] - anIntArray1650[j2];
-			int l3 = anIntArray1651[l2] - anIntArray1651[j2];
-			int i4 = anIntArray1649[i3] - anIntArray1649[j2];
-			int j4 = anIntArray1650[i3] - anIntArray1650[j2];
-			int k4 = anIntArray1651[i3] - anIntArray1651[j2];
-			int l4 = k3 * k4 - j4 * l3;
-			int i5 = l3 * i4 - k4 * j3;
-			int j5;
-			for (j5 = j3 * j4 - i4 * k3; l4 > 8192 || i5 > 8192 || j5 > 8192 || l4 < -8192 || i5 < -8192 || j5 < -8192; j5 >>= 1) {
-				l4 >>= 1;
-				i5 >>= 1;
+
+		for (int i = 0; i < faceCount; i++) {
+
+			int vA = faceIndicesX[i];
+			int vB = faceIndicesY[i];
+			int vC = faceIndicesZ[i];
+
+			//Edges Vectors
+			int edgeX1 = verticesX[vB] - verticesX[vA];
+			int edgeY1 = verticesY[vB] - verticesY[vA];
+			int edgeZ1 = verticesZ[vB] - verticesZ[vA];
+
+			int edgeX2 = verticesX[vC] - verticesX[vA];
+			int edgeY2 = verticesY[vC] - verticesY[vA];
+			int edgeZ2 = verticesZ[vC] - verticesZ[vA];
+
+			int normalX = edgeY1 * edgeZ2 - edgeY2 * edgeZ1;
+			int normalY = edgeZ1 * edgeX2 - edgeZ2 * edgeX1;
+			int normalZ = edgeX1 * edgeY2 - edgeX2 * edgeY1;
+
+			//Scale down to prevent overflow (The Scaling Guard)
+			while(normalX > MAX_NORMAL_COMPONENT || normalY > MAX_NORMAL_COMPONENT || normalZ > MAX_NORMAL_COMPONENT ||
+				  normalX < -MAX_NORMAL_COMPONENT || normalY < -MAX_NORMAL_COMPONENT || normalZ < -MAX_NORMAL_COMPONENT) {
+				normalX >>= 1;
+				normalY >>= 1;
+				normalZ >>= 1;
 			}
 
-			int k5 = (int) Math.sqrt(l4 * l4 + i5 * i5 + j5 * j5);
-			if (k5 <= 0)
-				k5 = 1;
-			l4 = (l4 * 256) / k5;
-			i5 = (i5 * 256) / k5;
-			j5 = (j5 * 256) / k5;
-			if (anIntArray1659 == null || (anIntArray1659[i2] & 1) == 0) {
-				VertexNormal class40_2 = super.normals[j2];
-				class40_2.x += l4;
-				class40_2.y += i5;
-				class40_2.z += j5;
-				class40_2.magnitude++;
-				class40_2 = super.normals[l2];
-				class40_2.x += l4;
-				class40_2.y += i5;
-				class40_2.z += j5;
-				class40_2.magnitude++;
-				class40_2 = super.normals[i3];
-				class40_2.x += l4;
-				class40_2.y += i5;
-				class40_2.z += j5;
-				class40_2.magnitude++;
+			int magnitude = (int) Math.sqrt(normalX * normalX + normalY * normalY + normalZ * normalZ); //TODO add + 0.5
+
+			if (magnitude <= 0) {
+				magnitude = 1;
+			}
+
+			// Normalize the vector components to the engine's standard scale (256)
+			normalX = (normalX * 256) / magnitude;
+			normalY = (normalY * 256) / magnitude;
+			normalZ = (normalZ * 256) / magnitude;
+
+			boolean isSmoothShaded = (faceRenderTypes == null) || (faceRenderTypes[i] & RENDER_TYPE_FLAT_SHADING) == 0;
+
+			if(isSmoothShaded) {
+				accumulateVertexNormal(vA, normalX, normalY, normalZ);
+				accumulateVertexNormal(vB, normalX, normalY, normalZ);
+				accumulateVertexNormal(vC, normalX, normalY, normalZ);
 			} else {
-				int l5 = i + (k * l4 + l * i5 + i1 * j5) / (k1 + k1 / 2);
-				anIntArray1656[i2] = method597(colors[i2], l5, anIntArray1659[i2]);
+				int lightDotProduct = (lightX * normalX + lightY * normalY + lightZ * normalZ);
+				int faceIntensity = ambient + lightDotProduct / (scaledIntensity + scaledIntensity / 2);
+				faceColorsA[i] = applyLightToColor(colors[i], faceIntensity, faceRenderTypes[i]);
 			}
 		}
 
-		if (flag) {
-			method596(i, k1, k, l, i1);
+		if (immediateShading) {
+			calculateShading(ambient, scaledIntensity, lightX, lightY, lightZ);
+			calculateRadius();
 		} else {
-			aClass40Array1681 = new VertexNormal[anInt1648];
-			for (int k2 = 0; k2 < anInt1648; k2++) {
-				VertexNormal class40 = super.normals[k2];
-				VertexNormal class40_1 = aClass40Array1681[k2] = new VertexNormal();
-				class40_1.x = class40.x;
-				class40_1.y = class40.y;
-				class40_1.z = class40.z;
-				class40_1.magnitude = class40.magnitude;
+			vertexNormalsTable = new VertexNormal[verticesCount];
+			for (int i = 0; i < verticesCount; i++) {
+				VertexNormal source = super.normals[i];
+				VertexNormal destination = vertexNormalsTable[i] = new VertexNormal();
+				destination.x = source.x;
+				destination.y = source.y;
+				destination.z = source.z;
+				destination.magnitude = source.magnitude;
 			}
 
-			anInt1668 = (i << 16) + (k1 & 0xffff);
-		}
-		if (flag) {
-			method581(anInt1636);
-			return;
-		} else {
-			method583(426);
-			return;
+			lightingParameters = (ambient << 16) | (scaledIntensity & 0xffff);
+
+			// Calculate the full Axis-Aligned Bounding Box (AABB)
+			calculateAABB();
 		}
 	}
 
-	public void method595(int i, int j, int k, int l) {
-		int i1 = anInt1668 >> 16;
-		int j1 = (anInt1668 << 16) >> 16;
-		if (k != 0) {
-			for (int k1 = 1; k1 > 0; k1++);
-		}
-		method596(i1, j1, l, i, j);
+	/**
+	 * Adds a face normal to a vertex's accumulated normal.
+	 * This is used to calculate the average normal for Gouraud (smooth) shading.
+	 */
+	private void accumulateVertexNormal(int vertexIndex, int nx, int ny, int nz) {
+		VertexNormal vNorm = super.normals[vertexIndex];
+		vNorm.x += nx;
+		vNorm.y += ny;
+		vNorm.z += nz;
+		vNorm.magnitude++; // Tracks how many faces contribute to this vertex
 	}
 
-	public void method596(int i, int j, int k, int l, int i1) {
-		for (int j1 = 0; j1 < anInt1652; j1++) {
-			int k1 = anIntArray1653[j1];
-			int i2 = anIntArray1654[j1];
-			int j2 = anIntArray1655[j1];
-			if (anIntArray1659 == null) {
-				int i3 = colors[j1];
-				VertexNormal class40 = super.normals[k1];
-				int k2 = i + (k * class40.x + l * class40.y + i1 * class40.z)
-						/ (j * class40.magnitude);
-				anIntArray1656[j1] = method597(i3, k2, 0);
-				class40 = super.normals[i2];
-				k2 = i + (k * class40.x + l * class40.y + i1 * class40.z) / (j * class40.magnitude);
-				anIntArray1657[j1] = method597(i3, k2, 0);
-				class40 = super.normals[j2];
-				k2 = i + (k * class40.x + l * class40.y + i1 * class40.z) / (j * class40.magnitude);
-				anIntArray1658[j1] = method597(i3, k2, 0);
-			} else if ((anIntArray1659[j1] & 1) == 0) {
-				int j3 = colors[j1];
-				int k3 = anIntArray1659[j1];
-				VertexNormal class40_1 = super.normals[k1];
-				int l2 = i + (k * class40_1.x + l * class40_1.y + i1 * class40_1.z)
-						/ (j * class40_1.magnitude);
-				anIntArray1656[j1] = method597(j3, l2, k3);
-				class40_1 = super.normals[i2];
-				l2 = i + (k * class40_1.x + l * class40_1.y + i1 * class40_1.z)
-						/ (j * class40_1.magnitude);
-				anIntArray1657[j1] = method597(j3, l2, k3);
-				class40_1 = super.normals[j2];
-				l2 = i + (k * class40_1.x + l * class40_1.y + i1 * class40_1.z)
-						/ (j * class40_1.magnitude);
-				anIntArray1658[j1] = method597(j3, l2, k3);
-			}
+	/**
+	 * Re-calculates the shading of the model using stored ambient and intensity values
+	 * combined with a new light source direction.
+	 *
+	 * @param lightX The X-coordinate of the light source.
+	 * @param lightY The Y-coordinate of the light source.
+	 * @param lightZ The Z-coordinate of the light source.
+	 */
+	public void reapplyLighting(int lightX, int lightY, int lightZ) {
+		// High 16 bits: Ambient, Low 16 bits: Light Magnitude
+		int ambient = lightingParameters >> 16;
+		int magnitude = (lightingParameters << 16) >> 16;
+
+		calculateShading(ambient, magnitude, lightX, lightY, lightZ);
+	}
+
+	/**
+	 * Calculates the Gouraud shading for the model based on a light source vector.
+	 *
+	 * @param ambient   The base ambient light level.
+	 * @param magnitude The intensity/magnitude of the light source.
+	 * @param lightX    X-component of the light direction.
+	 * @param lightY    Y-component of the light direction.
+	 * @param lightZ    Z-component of the light direction.
+	 */
+	public void calculateShading(int ambient, int magnitude, int lightX, int lightY, int lightZ) {
+		for (int face = 0; face < faceCount; face++) {
+
+			// Get the vertex indices for this face
+			int vA = faceIndicesX[face];
+			int vB = faceIndicesY[face];
+			int vC = faceIndicesZ[face];
+
+			// Determine if this face has specific render properties (like flat shading or textures)
+			int renderType = (faceRenderTypes == null) ? 0 : faceRenderTypes[face];
+
+			faceColorsA[face] = calculateVertexLight(vA, ambient, magnitude, lightX, lightY, lightZ, colors[face], renderType);
+			faceColorsB[face] = calculateVertexLight(vB, ambient, magnitude, lightX, lightY, lightZ, colors[face], renderType);
+			faceColorsC[face] = calculateVertexLight(vC, ambient, magnitude, lightX, lightY, lightZ, colors[face], renderType);
+
 		}
 
+		// Cleanup resources no longer needed after shading is baked into vertex colors
 		super.normals = null;
-		aClass40Array1681 = null;
-		anIntArray1676 = null;
-		anIntArray1677 = null;
-		if (anIntArray1659 != null) {
-			for (int l1 = 0; l1 < anInt1652; l1++)
-				if ((anIntArray1659[l1] & 2) == 2)
+		vertexNormalsTable = null;
+		vertexBoneIds = null;
+		faceBoneIds = null;
+		if (faceRenderTypes != null) {
+			for (int i = 0; i < faceCount; i++)
+				if ((faceRenderTypes[i] & 2) == 2)
 					return;
-
 		}
 		colors = null;
 	}
 
-	public static int method597(int i, int j, int k) {
-		if ((k & 2) == 2) {
-			if (j < 0)
-				j = 0;
-			else if (j > 127)
-				j = 127;
-			j = 127 - j;
-			return j;
+	/**
+	 * Helper to calculate the light intensity for a specific vertex using the Dot Product.
+	 */
+	private int calculateVertexLight(int vertexIndex, int ambient, int magnitude, int lx, int ly, int lz, int color, int type) {
+		VertexNormal normal = super.normals[vertexIndex];
+
+		// Calculate the divisor for the lighting equation
+		int divisor = magnitude * normal.magnitude;
+		int intensity;
+
+		if (divisor != 0) {
+			// Calculate the dot product between the light vector and the vertex normal
+			int dotProduct = (lx * normal.x + ly * normal.y + lz * normal.z);
+			intensity = ambient + (dotProduct / divisor);
+		} else {
+			// Fallback: If light magnitude or normal magnitude is zero,
+			// the vertex only receives ambient light.
+			intensity = ambient;
 		}
-		j = j * (i & 0x7f) >> 7;
-		if (j < 2)
-			j = 2;
-		else if (j > 126)
-			j = 126;
-		return (i & 0xff80) + j;
+
+		// method597 likely applies the intensity to the HSL/RGB color space
+		return applyLightToColor(color, intensity, type);
 	}
 
-	public void method598(int i, int j, int k, int l, int i1, int j1, int k1) {
-		int l1 = ThreeDimensionalCanvas.anInt1532;
-		int i2 = ThreeDimensionalCanvas.anInt1533;
-		int j2 = anIntArray1710[i];
-		int k2 = anIntArray1711[i];
-		int l2 = anIntArray1710[j];
-		int i3 = anIntArray1711[j];
-		int j3 = anIntArray1710[k];
-		int k3 = anIntArray1711[k];
-		int l3 = anIntArray1710[l];
-		int i4 = anIntArray1711[l];
-		int j4 = j1 * l3 + k1 * i4 >> 16;
-		for (int k4 = 0; k4 < anInt1648; k4++) {
-			int l4 = anIntArray1649[k4];
-			int i5 = anIntArray1650[k4];
-			int j5 = anIntArray1651[k4];
-			if (k != 0) {
-				int k5 = i5 * j3 + l4 * k3 >> 16;
-				i5 = i5 * k3 - l4 * j3 >> 16;
-				l4 = k5;
+	/**
+	 * Applies calculated light intensity to a packed HSL color.
+	 *
+	 * @param packedHsl      The base color (High bits: Hue/Sat, Low 7 bits: Lightness).
+	 * @param lightIntensity The intensity of light calculated from the 3D scene (0-127).
+	 * @param renderConfig   Bitmask for face properties (Bit 2: Inversion/Grayscale).
+	 * @return The light-adjusted packed HSL color.
+	 */
+	public static int applyLightToColor(int packedHsl, int lightIntensity, int renderConfig) {
+		// Check for special "Inversion" or Grayscale flag
+		if ((renderConfig & 0x2) == 2) {
+			if (lightIntensity < 0) {
+				lightIntensity = 0;
+			} else if (lightIntensity > 127) {
+				lightIntensity = 127;
 			}
-			if (i != 0) {
-				int l5 = i5 * k2 - j5 * j2 >> 16;
-				j5 = i5 * j2 + j5 * k2 >> 16;
-				i5 = l5;
+			return 127 - lightIntensity;
+		}
+
+		// Extract the original lightness (bottom 7 bits)
+		int baseLightness = packedHsl & 0x7f;
+
+		// Apply lighting: (Intensity * BaseLightness) / 128
+		int finalLightness = (lightIntensity * baseLightness) >> 7;
+
+		// Clamp values to keep them within the visible 2-126 range
+		if (finalLightness < 2) {
+			finalLightness = 2;
+		} else if (finalLightness > 126) {
+			finalLightness = 126;
+		}
+
+		// Recombine the original Hue/Sat with the new Lightness
+		return (packedHsl & 0xff80) | finalLightness;
+	}
+
+	/**
+	 * Projects the model's vertices from local space to 24-bit fixed-point screen space.
+	 *
+	 * @param pitch      Rotation around the X-axis.
+	 * @param yaw        Rotation around the Y-axis.
+	 * @param roll       Rotation around the Z-axis.
+	 * @param viewPitch  The pitch/tilt of the camera view.
+	 * @param offsetX    Translation along the X-axis.
+	 * @param offsetY    Translation along the Y-axis.
+	 * @param offsetZ    Translation along the Z-axis.
+	 */
+	public void viewportTransform(int pitch, int yaw, int roll, int viewPitch, int offsetX, int offsetY, int offsetZ) {
+		int centerX = ThreeDimensionalCanvas.centerX;
+		int centerY = ThreeDimensionalCanvas.centerY;
+
+		// Pre-calculate Trigonometry for the rotation matrix
+		int sinPitch = sineTable[pitch];
+		int cosPitch = cosineTable[pitch];
+		int sinYaw = sineTable[yaw];
+		int cosYaw = cosineTable[yaw];
+		int sinRoll = sineTable[roll];
+		int cosRoll = cosineTable[roll];
+		int sinView = sineTable[viewPitch];
+		int cosView = cosineTable[viewPitch];
+
+		// Calculate a Z-depth offset based on camera height and tilt
+		int viewZOffset = offsetY * sinView + offsetZ * cosView >> 16;
+
+		for (int v = 0; v < verticesCount; v++) {
+			int x = verticesX[v];
+			int y = verticesY[v];
+			int z = verticesZ[v];
+
+			// Apply Roll (Rotation around Z-axis)
+			if (roll != 0) {
+				int tempX = y * sinRoll + x * cosRoll >> 16;
+				y = y * cosRoll - x * sinRoll >> 16;
+				x = tempX;
 			}
-			if (j != 0) {
-				int i6 = j5 * l2 + l4 * i3 >> 16;
-				j5 = j5 * i3 - l4 * l2 >> 16;
-				l4 = i6;
+
+			// Apply Pitch (Rotation around X-axis)
+			if (pitch != 0) {
+				int tempY = y * cosPitch - z * sinPitch >> 16;
+				z = y * sinPitch + z * cosPitch >> 16;
+				y = tempY;
 			}
-			l4 += i1;
-			i5 += j1;
-			j5 += k1;
-			int j6 = i5 * i4 - j5 * l3 >> 16;
-			j5 = i5 * l3 + j5 * i4 >> 16;
-			i5 = j6;
-			anIntArray1688[k4] = j5 - j4;
-			anIntArray1686[k4] = l1 + (l4 << 9) / j5;
-			anIntArray1687[k4] = i2 + (i5 << 9) / j5;
-			if (anInt1664 > 0) {
-				anIntArray1689[k4] = l4;
-				anIntArray1690[k4] = i5;
-				anIntArray1691[k4] = j5;
+
+			// Apply Yaw (Rotation around Y-axis)
+			if (yaw != 0) {
+				int tempX = z * sinYaw + x * cosYaw >> 16;
+				z = z * cosYaw - x * sinYaw >> 16;
+				x = tempX;
+			}
+
+			// Translation (Move to world position)
+			x += offsetX;
+			y += offsetY;
+			z += offsetZ;
+
+			// Final Camera Transformation (Apply view tilt)
+			int transformedY = y * cosView - z * sinView >> 16;
+			z = y * sinView + z * cosView >> 16;
+			y = transformedY;
+
+			// Perspective Projection
+			// Formula: screenPos = center + (worldPos * focalLength) / depth
+			// The value 512 (1 << 9) represents the focal length/field of view.
+			projectedZ[v] = z - viewZOffset;
+			projectedX[v] = centerX + (x << 9) / z;
+			projectedY[v] = centerY + (y << 9) / z;
+			if (textureVertexCount > 0) {
+				cameraX[v] = x;
+				cameraY[v] = y;
+				cameraZ[v] = z;
 			}
 		}
 
 		try {
-			method599(false, false, 0);
-			return;
+			processFaces(false, false, 0);
 		} catch (Exception _ex) {
-			return;
+			// Catching exceptions here prevents a single malformed model
+			// from crashing the entire frame's render loop.
 		}
 	}
 
+	/**
+	 * Renders the model as an entity within the game world, including frustum culling
+	 * and mouse-hover detection.
+	 *
+	 * @param yaw           The model's local rotation around the Y-axis.
+	 * @param sinViewPitch  Sine of the camera's pitch.
+	 * @param cosViewPitch  Cosine of the camera's pitch.
+	 * @param sinViewYaw    Sine of the camera's yaw.
+	 * @param cosViewYaw    Cosine of the camera's yaw.
+	 * @param relativeX     World X-translation relative to the camera.
+	 * @param relativeY     World Y-translation relative to the camera.
+	 * @param relativeZ     World Z-translation relative to the camera.
+	 * @param modelId       Unique ID used for mouse-picking/interaction.
+	 */
 	@Override
-	public void method560(int i, int j, int k, int l, int i1, int j1, int k1, int l1, int i2) {
-		int j2 = l1 * i1 - j1 * l >> 16;
-		int k2 = k1 * j + j2 * k >> 16;
-		int l2 = anInt1671 * k >> 16;
-		int i3 = k2 + l2;
-		if (i3 <= 50 || k2 >= 3500)
+	public void render(int yaw, int sinViewPitch, int cosViewPitch, int sinViewYaw, int cosViewYaw, int relativeX, int relativeY, int relativeZ, int modelId) {
+
+		//Initial View Transformation (Camera Space Calculation)
+		int transformedZ = relativeZ * cosViewYaw - relativeX * sinViewYaw >> 16;
+		int depthZ = relativeY * sinViewPitch + transformedZ * cosViewPitch >> 16;
+		int radiusZ = modelRadius * cosViewPitch >> 16;
+		int maxZ = depthZ + radiusZ;
+
+		// Frustum Culling (Z-Axis)
+		// If the entire model is behind the near plane (50) or too far away, stop.
+		if (maxZ <= 50 || depthZ >= 3500)
 			return;
-		int j3 = l1 * l + j1 * i1 >> 16;
-		int k3 = j3 - anInt1671 << 9;
-		if (k3 / i3 >= Drawable.anInt1432)
+
+		int transformedX = relativeZ * sinViewYaw + relativeX * cosViewYaw >> 16;
+		int leftLimit = transformedX - modelRadius << 9;
+
+		// Frustum Culling (Horizontal/X-Axis)
+		if (leftLimit / maxZ >= Drawable.anInt1432)
 			return;
-		int l3 = j3 + anInt1671 << 9;
-		if (l3 / i3 <= -Drawable.anInt1432)
+
+		int rightLimit = transformedX + modelRadius << 9;
+
+		if (rightLimit / maxZ <= -Drawable.anInt1432)
 			return;
-		int i4 = k1 * k - j2 * j >> 16;
-		int j4 = anInt1671 * j >> 16;
-		int k4 = i4 + j4 << 9;
-		if (k4 / i3 <= -Drawable.anInt1433)
+
+		int transformedY = relativeY * cosViewPitch - transformedZ * sinViewPitch >> 16;
+		int radiusY = modelRadius * sinViewPitch >> 16;
+		int topLimit = transformedY + radiusY << 9;
+
+		// Frustum Culling (Vertical/Y-Axis)
+		if (topLimit / maxZ <= -Drawable.anInt1433)
 			return;
-		int l4 = j4 + (super.height * k >> 16);
-		int i5 = i4 - l4 << 9;
-		if (i5 / i3 >= Drawable.anInt1433)
+
+		int bottomLimit = radiusY + (super.height * cosViewPitch >> 16);
+		int bottomBound = transformedY - bottomLimit << 9;
+
+		if (bottomBound / maxZ >= Drawable.anInt1433)
 			return;
-		int j5 = l2 + (super.height * j >> 16);
-		boolean flag = false;
-		if (k2 - j5 <= 50)
-			flag = true;
-		boolean flag1 = false;
-		if (i2 > 0 && aBoolean1705) {
-			int k5 = k2 - l2;
-			if (k5 <= 50)
-				k5 = 50;
-			if (j3 > 0) {
-				k3 /= i3;
-				l3 /= k5;
+
+		// Broad-Phase Mouse Picking
+		// Check if the mouse cursor is roughly within the screen-space bounding box
+		boolean isMouseOver = false;
+		boolean needsClipping = depthZ - (radiusZ + (super.height * sinViewPitch >> 16)) <= 50;
+
+		if (modelId > 0 && isPickingEnabled) {
+			int minZ = depthZ - radiusZ;
+			if (minZ <= 50)
+				minZ = 50;
+
+			// Perspective-correct bounds for mouse check
+			if (transformedX > 0) {
+				leftLimit /= maxZ;
+				rightLimit /= minZ;
 			} else {
-				l3 /= i3;
-				k3 /= k5;
+				rightLimit /= maxZ;
+				leftLimit /= minZ;
 			}
-			if (i4 > 0) {
-				i5 /= i3;
-				k4 /= k5;
+
+			if (transformedY > 0) {
+				bottomBound /= maxZ;
+				topLimit /= minZ;
 			} else {
-				k4 /= i3;
-				i5 /= k5;
+				topLimit /= maxZ;
+				bottomBound /= minZ;
 			}
-			int i6 = anInt1706 - ThreeDimensionalCanvas.anInt1532;
-			int k6 = anInt1707 - ThreeDimensionalCanvas.anInt1533;
-			if (i6 > k3 && i6 < l3 && k6 > i5 && k6 < k4)
-				if (aBoolean1680)
-					anIntArray1709[anInt1708++] = i2;
+
+			int mouseRelX = mouseX - ThreeDimensionalCanvas.centerX;
+			int mouseRelY = mouseY - ThreeDimensionalCanvas.centerY;
+			if (mouseRelX > leftLimit && mouseRelX < rightLimit && mouseRelY > bottomBound && mouseRelY < topLimit)
+				if (isPriorityPicking)
+					hoveredModels[hoveredCount++] = modelId;
 				else
-					flag1 = true;
+					isMouseOver = true;
 		}
-		int l5 = ThreeDimensionalCanvas.anInt1532;
-		int j6 = ThreeDimensionalCanvas.anInt1533;
-		int l6 = 0;
-		int i7 = 0;
-		if (i != 0) {
-			l6 = anIntArray1710[i];
-			i7 = anIntArray1711[i];
+
+		// Vertex Transformation Loop
+		int screenCenterX = ThreeDimensionalCanvas.centerX;
+		int screenCenterY = ThreeDimensionalCanvas.centerY;
+		int sinYaw = 0;
+		int cosYaw = 0;
+
+		if (yaw != 0) {
+			sinYaw = sineTable[yaw];
+			cosYaw = cosineTable[yaw];
 		}
-		for (int j7 = 0; j7 < anInt1648; j7++) {
-			int k7 = anIntArray1649[j7];
-			int l7 = anIntArray1650[j7];
-			int i8 = anIntArray1651[j7];
-			if (i != 0) {
-				int j8 = i8 * l6 + k7 * i7 >> 16;
-				i8 = i8 * i7 - k7 * l6 >> 16;
-				k7 = j8;
+
+		for (int v = 0; v < verticesCount; v++) {
+			int vX = verticesX[v];
+			int vY = verticesY[v];
+			int vZ = verticesZ[v];
+
+			if (yaw != 0) {
+				int rotateX = vZ * sinYaw + vX * cosYaw >> 16;
+				vZ = vZ * cosYaw - vX * sinYaw >> 16;
+				vX = rotateX;
 			}
-			k7 += j1;
-			l7 += k1;
-			i8 += l1;
-			int k8 = i8 * l + k7 * i1 >> 16;
-			i8 = i8 * i1 - k7 * l >> 16;
-			k7 = k8;
-			k8 = l7 * k - i8 * j >> 16;
-			i8 = l7 * j + i8 * k >> 16;
-			l7 = k8;
-			anIntArray1688[j7] = i8 - k2;
-			if (i8 >= 50) {
-				anIntArray1686[j7] = l5 + (k7 << 9) / i8;
-				anIntArray1687[j7] = j6 + (l7 << 9) / i8;
+
+			// Apply World Position + Camera Rotation
+			vX += relativeX;
+			vY += relativeY;
+			vZ += relativeZ;
+
+
+			int xView = vZ * sinViewYaw + vX * cosViewYaw >> 16;
+			vZ = vZ * cosViewYaw - vX * sinViewYaw >> 16;
+			vX = xView;
+
+			int yView = vY * cosViewPitch - vZ * sinViewPitch >> 16;
+			vZ = vY * sinViewPitch + vZ * cosViewPitch >> 16;
+			vY = yView;
+
+			// Apply Projection
+			projectedZ[v] = vZ - depthZ;
+
+			if (vZ >= 50) {
+				projectedX[v] = screenCenterX + (vX << 9) / vZ;
+				projectedY[v] = screenCenterY + (vY << 9) / vZ;
 			} else {
-				anIntArray1686[j7] = -5000;
-				flag = true;
+				projectedX[v] = -5000;
+				needsClipping = true;
 			}
-			if (flag || anInt1664 > 0) {
-				anIntArray1689[j7] = k7;
-				anIntArray1690[j7] = l7;
-				anIntArray1691[j7] = i8;
+			if (needsClipping || textureVertexCount > 0) {
+				cameraX[v] = vX;
+				cameraY[v] = vY;
+				cameraZ[v] = vZ;
 			}
 		}
 
+		// Rasterization and Face Processing
 		try {
-			method599(flag, flag1, i2);
-			return;
+			processFaces(needsClipping, isMouseOver, modelId);
 		} catch (Exception _ex) {
-			return;
+			// Catching exceptions here prevents a single malformed model
+			// from crashing the entire frame's render loop.
+			// In a production environment, consider logging this exception for debugging.
 		}
 	}
 
-	public void method599(boolean flag, boolean flag1, int i) {
-		for (int j = 0; j < anInt1673; j++)
-			anIntArray1692[j] = 0;
+	/**
+	 * Processes, sorts, and dispatches faces for rendering.
+	 *
+	 * <p>This method implements the core visibility pipeline:
+	 * 1. Backface Culling: Discards triangles facing away from the camera.
+	 * 2. Mouse Picking: Checks for per-face interaction.
+	 * 3. Painter's Algorithm: Sorts faces into depth bins (0 to totalDepthSortingRange).
+	 * 4. Priority Layering: Handles complex Z-ordering overrides (12 priority levels).</p>
+	 *
+	 * @param needsClipping   True if the model is near the camera's near-plane.
+	 * @param isMouseOver     True if the mouse is within the model's broad bounding box.
+	 * @param modelId         The unique ID for interaction events.
+	 */
+	public void processFaces(boolean needsClipping, boolean isMouseOver, int modelId) {
+		//TODO split this method into smaller methods for each stage of the pipeline (culling, picking, sorting, rendering)
+		// Clear the depth bin counters
+		for (int i = 0; i < totalDepthSortingRange; i++) {
+			faceDepthCounts[i] = 0;
+		}
 
-		for (int k = 0; k < anInt1652; k++)
-			if (anIntArray1659 == null || anIntArray1659[k] != -1) {
-				int l = anIntArray1653[k];
-				int k1 = anIntArray1654[k];
-				int j2 = anIntArray1655[k];
-				int i3 = anIntArray1686[l];
-				int l3 = anIntArray1686[k1];
-				int k4 = anIntArray1686[j2];
-				if (flag && (i3 == -5000 || l3 == -5000 || k4 == -5000)) {
-					aBooleanArray1685[k] = true;
-					int j5 = (anIntArray1688[l] + anIntArray1688[k1] + anIntArray1688[j2]) / 3 + anInt1674;
-					anIntArrayArray1693[j5][anIntArray1692[j5]++] = k;
-				} else {
-					if (flag1
-							&& method602(anInt1706, anInt1707, anIntArray1687[l], anIntArray1687[k1],
-									anIntArray1687[j2], i3, l3, k4)) {
-						anIntArray1709[anInt1708++] = i;
-						flag1 = false;
-					}
-					if ((i3 - l3) * (anIntArray1687[j2] - anIntArray1687[k1])
-							- (anIntArray1687[l] - anIntArray1687[k1]) * (k4 - l3) > 0) {
-						aBooleanArray1685[k] = false;
-						if (i3 < 0 || l3 < 0 || k4 < 0 || i3 > Drawable.anInt1431
-								|| l3 > Drawable.anInt1431 || k4 > Drawable.anInt1431)
-							aBooleanArray1684[k] = true;
-						else
-							aBooleanArray1684[k] = false;
-						int k5 = (anIntArray1688[l] + anIntArray1688[k1] + anIntArray1688[j2]) / 3 + anInt1674;
-						anIntArrayArray1693[k5][anIntArray1692[k5]++] = k;
-					}
-				}
+		// Culling, Picking, and Depth Sorting Loop
+		for (int face = 0; face < faceCount; face++) {
+
+			// Skip hidden faces
+			if (faceRenderTypes != null && faceRenderTypes[face] == -1) {
+				continue;
 			}
 
-		if (anIntArray1660 == null) {
-			for (int i1 = anInt1673 - 1; i1 >= 0; i1--) {
-				int l1 = anIntArray1692[i1];
-				if (l1 > 0) {
-					int ai[] = anIntArrayArray1693[i1];
-					for (int j3 = 0; j3 < l1; j3++)
-						method600(ai[j3]);
+			int vA = faceIndicesX[face];
+			int vB = faceIndicesY[face];
+			int vC = faceIndicesZ[face];
 
+			int xA = projectedX[vA];
+			int xB = projectedX[vB];
+			int xC = projectedX[vC];
+
+			// Handle Near-Plane Clipping logic
+			// -5000 is the sentinel value for vertices projected behind the camera
+			if (needsClipping && (xA == -5000 || xB == -5000 || xC == -5000)) {
+				faceNeedsClipping[face] = true;
+
+				// Calculate average Z depth and add to bin
+				int avgZ = (projectedZ[vA] + projectedZ[vB] + projectedZ[vC]) / 3 + modelBoundingSphere;
+				faceDepthBins[avgZ][faceDepthCounts[avgZ]++] = face;
+			} else {
+				// Narrow-Phase Mouse Picking: Check if mouse is inside this specific triangle
+				if (isMouseOver && isPointInFaceBounds(mouseX, mouseY, projectedY[vA], projectedY[vB], projectedY[vC], xA, xB, xC)) {
+					hoveredModels[hoveredCount++] = modelId;
+					isMouseOver = false;
+				}
+
+				// 2D Backface Culling (Cross Product check)
+				// If the cross product of two edges is positive, the face is pointing towards the camera.
+				if ((xA - xB) * (projectedY[vC] - projectedY[vB]) - (projectedY[vA] - projectedY[vB]) * (xC - xB) > 0) {
+					faceNeedsClipping[face] = false;
+
+					// Viewport Frustum Check (Horizontal Clipping)
+					faceIsOffScreen[face] = xA < 0 || xB < 0 || xC < 0 || xA > Drawable.viewportRightBoundary || xB > Drawable.viewportRightBoundary || xC > Drawable.viewportRightBoundary;
+
+					// Assign to depth bin based on average projected Z
+					int avgZ = (projectedZ[vA] + projectedZ[vB] + projectedZ[vC]) / 3 + modelBoundingSphere;
+					faceDepthBins[avgZ][faceDepthCounts[avgZ]++] = face;
 				}
 			}
+		}
 
+		// --- CASE 1: Rendering without priority layers ---
+		if (facePriorities == null) {
+			for (int depth = totalDepthSortingRange - 1; depth >= 0; depth--) {
+				int countAtDepth = faceDepthCounts[depth];
+				if (countAtDepth > 0) {
+					int[] facesAtDepth = faceDepthBins[depth];
+					for (int faceIndex = 0; faceIndex < countAtDepth; faceIndex++)
+						drawFace(facesAtDepth[faceIndex]);
+				}
+			}
 			return;
 		}
-		for (int j1 = 0; j1 < 12; j1++) {
-			anIntArray1694[j1] = 0;
-			anIntArray1698[j1] = 0;
+
+		// --- CASE 2: Rendering with 12 priority layers ---
+		for (int priority = 0; priority < 12; priority++) {
+			priorityCounts[priority] = 0;
+			priorityAverages[priority] = 0;
 		}
 
-		for (int i2 = anInt1673 - 1; i2 >= 0; i2--) {
-			int k2 = anIntArray1692[i2];
-			if (k2 > 0) {
-				int ai1[] = anIntArrayArray1693[i2];
-				for (int i4 = 0; i4 < k2; i4++) {
-					int l4 = ai1[i4];
-					int l5 = anIntArray1660[l4];
-					int j6 = anIntArray1694[l5]++;
-					anIntArrayArray1695[l5][j6] = l4;
-					if (l5 < 10)
-						anIntArray1698[l5] += i2;
-					else if (l5 == 10)
-						anIntArray1696[j6] = i2;
+		// Sort depth bins into priority bins
+		for (int depth = totalDepthSortingRange - 1; depth >= 0; depth--) {
+			int countAtDepth = faceDepthCounts[depth];
+			if (countAtDepth > 0) {
+				int[] facesAtDepth = faceDepthBins[depth];
+				for (int faceIndex = 0; faceIndex < countAtDepth; faceIndex++) {
+					int faceId = facesAtDepth[faceIndex];
+					int priority = facePriorities[faceId];
+					int priorityBinIndex = priorityCounts[priority]++;
+					priorityBins[priority][priorityBinIndex] = faceId;
+
+					// Track depth averages for specific tiers to determine intersection points
+					if (priority < 10)
+						priorityAverages[priority] += depth;
+					else if (priority == 10)
+						priorityDepthX[priorityBinIndex] = depth;
 					else
-						anIntArray1697[j6] = i2;
+						priorityDepthY[priorityBinIndex] = depth;
 				}
 
 			}
 		}
 
-		int l2 = 0;
-		if (anIntArray1694[1] > 0 || anIntArray1694[2] > 0)
-			l2 = (anIntArray1698[1] + anIntArray1698[2]) / (anIntArray1694[1] + anIntArray1694[2]);
-		int k3 = 0;
-		if (anIntArray1694[3] > 0 || anIntArray1694[4] > 0)
-			k3 = (anIntArray1698[3] + anIntArray1698[4]) / (anIntArray1694[3] + anIntArray1694[4]);
-		int j4 = 0;
-		if (anIntArray1694[6] > 0 || anIntArray1694[8] > 0)
-			j4 = (anIntArray1698[6] + anIntArray1698[8]) / (anIntArray1694[6] + anIntArray1694[8]);
-		int i6 = 0;
-		int k6 = anIntArray1694[10];
-		int ai2[] = anIntArrayArray1695[10];
-		int ai3[] = anIntArray1696;
-		if (i6 == k6) {
-			i6 = 0;
-			k6 = anIntArray1694[11];
-			ai2 = anIntArrayArray1695[11];
-			ai3 = anIntArray1697;
-		}
-		int i5;
-		if (i6 < k6)
-			i5 = ai3[i6];
-		else
-			i5 = -1000;
-		for (int l6 = 0; l6 < 10; l6++) {
-			while (l6 == 0 && i5 > l2) {
-				method600(ai2[i6++]);
-				if (i6 == k6 && ai2 != anIntArrayArray1695[11]) {
-					i6 = 0;
-					k6 = anIntArray1694[11];
-					ai2 = anIntArrayArray1695[11];
-					ai3 = anIntArray1697;
-				}
-				if (i6 < k6)
-					i5 = ai3[i6];
-				else
-					i5 = -1000;
-			}
-			while (l6 == 3 && i5 > k3) {
-				method600(ai2[i6++]);
-				if (i6 == k6 && ai2 != anIntArrayArray1695[11]) {
-					i6 = 0;
-					k6 = anIntArray1694[11];
-					ai2 = anIntArrayArray1695[11];
-					ai3 = anIntArray1697;
-				}
-				if (i6 < k6)
-					i5 = ai3[i6];
-				else
-					i5 = -1000;
-			}
-			while (l6 == 5 && i5 > j4) {
-				method600(ai2[i6++]);
-				if (i6 == k6 && ai2 != anIntArrayArray1695[11]) {
-					i6 = 0;
-					k6 = anIntArray1694[11];
-					ai2 = anIntArrayArray1695[11];
-					ai3 = anIntArray1697;
-				}
-				if (i6 < k6)
-					i5 = ai3[i6];
-				else
-					i5 = -1000;
-			}
-			int i7 = anIntArray1694[l6];
-			int ai4[] = anIntArrayArray1695[l6];
-			for (int j7 = 0; j7 < i7; j7++)
-				method600(ai4[j7]);
-
+		// Calculate depth thresholds for specific priority tiers
+		int avgDepthTier1and2 = 0;
+		if (priorityCounts[1] > 0 || priorityCounts[2] > 0) {
+			avgDepthTier1and2 = (priorityAverages[1] + priorityAverages[2]) / (priorityCounts[1] + priorityCounts[2]);
 		}
 
-		while (i5 != -1000) {
-			method600(ai2[i6++]);
-			if (i6 == k6 && ai2 != anIntArrayArray1695[11]) {
-				i6 = 0;
-				ai2 = anIntArrayArray1695[11];
-				k6 = anIntArray1694[11];
-				ai3 = anIntArray1697;
+		int avgDepthTier3and4 = 0;
+		if (priorityCounts[3] > 0 || priorityCounts[4] > 0) {
+			avgDepthTier3and4 = (priorityAverages[3] + priorityAverages[4]) / (priorityCounts[3] + priorityCounts[4]);
+		}
+
+		int avgDepthTier6and8 = 0;
+		if (priorityCounts[6] > 0 || priorityCounts[8] > 0) {
+			avgDepthTier6and8 = (priorityAverages[6] + priorityAverages[8]) / (priorityCounts[6] + priorityCounts[8]);
+		}
+
+		// Initialize pointers for high-priority (tier 10/11) rendering
+		int highPriorityPointer = 0;
+		int highPriorityLimit = priorityCounts[10];
+		int[] highPriorityFaceBin = priorityBins[10];
+		int[] highPriorityDepthBin = priorityDepthX;
+		// If Priority 10 is empty, move immediately to Priority 11
+		if (highPriorityPointer == highPriorityLimit) {
+			highPriorityPointer = 0;
+			highPriorityLimit = priorityCounts[11];
+			highPriorityFaceBin = priorityBins[11];
+			highPriorityDepthBin = priorityDepthY;
+		}
+
+		int currentHighPriorityDepth;
+		if (highPriorityPointer < highPriorityLimit) {
+			currentHighPriorityDepth = highPriorityDepthBin[highPriorityPointer];
+		}
+		else {
+			currentHighPriorityDepth = -1000;
+		}
+
+		// Main Rendering Loop: Priority Levels 0-9
+		for (int priorityLevel = 0; priorityLevel < 10; priorityLevel++) {
+			while (priorityLevel == 0 && currentHighPriorityDepth > avgDepthTier1and2) {
+				drawFace(highPriorityFaceBin[highPriorityPointer++]);
+				if (highPriorityPointer == highPriorityLimit && highPriorityFaceBin != priorityBins[11]) {
+					highPriorityPointer = 0;
+					highPriorityLimit = priorityCounts[11];
+					highPriorityFaceBin = priorityBins[11];
+					highPriorityDepthBin = priorityDepthY;
+				}
+				if (highPriorityPointer < highPriorityLimit)
+					currentHighPriorityDepth = highPriorityDepthBin[highPriorityPointer];
+				else
+					currentHighPriorityDepth = -1000;
 			}
-			if (i6 < k6)
-				i5 = ai3[i6];
+
+			while (priorityLevel == 3 && currentHighPriorityDepth > avgDepthTier3and4) {
+				drawFace(highPriorityFaceBin[highPriorityPointer++]);
+				if (highPriorityPointer == highPriorityLimit && highPriorityFaceBin != priorityBins[11]) {
+					highPriorityPointer = 0;
+					highPriorityLimit = priorityCounts[11];
+					highPriorityFaceBin = priorityBins[11];
+					highPriorityDepthBin = priorityDepthY;
+				}
+				if (highPriorityPointer < highPriorityLimit)
+					currentHighPriorityDepth = highPriorityDepthBin[highPriorityPointer];
+				else
+					currentHighPriorityDepth = -1000;
+			}
+
+			while (priorityLevel == 5 && currentHighPriorityDepth > avgDepthTier6and8) {
+				drawFace(highPriorityFaceBin[highPriorityPointer++]);
+				if (highPriorityPointer == highPriorityLimit && highPriorityFaceBin != priorityBins[11]) {
+					highPriorityPointer = 0;
+					highPriorityLimit = priorityCounts[11];
+					highPriorityFaceBin = priorityBins[11];
+					highPriorityDepthBin = priorityDepthY;
+				}
+				if (highPriorityPointer < highPriorityLimit)
+					currentHighPriorityDepth = highPriorityDepthBin[highPriorityPointer];
+				else
+					currentHighPriorityDepth = -1000;
+			}
+
+			// Draw faces for the current standard priority level (0-9)
+			int facesInLevelCount = priorityCounts[priorityLevel];
+			int[] facesInLevel = priorityBins[priorityLevel];
+			for (int i = 0; i < facesInLevelCount; i++) {
+				drawFace(facesInLevel[i]);
+			}
+		}
+
+		// Flush remaining high-priority faces (10 and 11)
+		while (currentHighPriorityDepth != -1000) {
+			drawFace(highPriorityFaceBin[highPriorityPointer++]);
+			if (highPriorityPointer == highPriorityLimit && highPriorityFaceBin != priorityBins[11]) {
+				highPriorityPointer = 0;
+				highPriorityFaceBin = priorityBins[11];
+				highPriorityLimit = priorityCounts[11];
+				highPriorityDepthBin = priorityDepthY;
+			}
+			if (highPriorityPointer < highPriorityLimit)
+				currentHighPriorityDepth = highPriorityDepthBin[highPriorityPointer];
 			else
-				i5 = -1000;
+				currentHighPriorityDepth = -1000;
 		}
 	}
 
-	public void method600(int i) {
-		if (aBooleanArray1685[i]) {
-			method601(i);
+	/**
+	 * Dispatches a face to the rasterizer based on its render configuration.
+	 *
+	 * @param faceId The index of the face to be drawn.
+	 */
+	public void drawFace(int faceId) {
+		// Handle Near-Plane Clipping
+		if (faceNeedsClipping[faceId]) {
+			clipAndDrawFace(faceId);
 			return;
 		}
-		int j = anIntArray1653[i];
-		int k = anIntArray1654[i];
-		int l = anIntArray1655[i];
-		ThreeDimensionalCanvas.aBoolean1528 = aBooleanArray1684[i];
-		if (anIntArray1661 == null)
-			ThreeDimensionalCanvas.anInt1531 = 0;
+
+		// Fetch Vertex Indices
+		int vA = faceIndicesX[faceId];
+		int vB = faceIndicesY[faceId];
+		int vC = faceIndicesZ[faceId];
+
+		// Sync Global Rasterizer State
+		ThreeDimensionalCanvas.requiresBoundsCheck = faceIsOffScreen[faceId];
+
+		if (faceTransparency == null)
+			ThreeDimensionalCanvas.currentFaceAlpha = 0;
 		else
-			ThreeDimensionalCanvas.anInt1531 = anIntArray1661[i];
-		int i1;
-		if (anIntArray1659 == null)
-			i1 = 0;
-		else
-			i1 = anIntArray1659[i] & 3;
-		if (i1 == 0) {
-			ThreeDimensionalCanvas.method503(anIntArray1687[j], anIntArray1687[k], anIntArray1687[l],
-					anIntArray1686[j], anIntArray1686[k], anIntArray1686[l], anIntArray1656[i], anIntArray1657[i],
-					anIntArray1658[i]);
-			return;
-		}
-		if (i1 == 1) {
-			ThreeDimensionalCanvas.method505(anIntArray1687[j], anIntArray1687[k], anIntArray1687[l],
-					anIntArray1686[j], anIntArray1686[k], anIntArray1686[l], anIntArray1712[anIntArray1656[i]]);
-			return;
-		}
-		if (i1 == 2) {
-			int j1 = anIntArray1659[i] >> 2;
-			int l1 = anIntArray1665[j1];
-			int j2 = anIntArray1666[j1];
-			int l2 = anIntArray1667[j1];
-			ThreeDimensionalCanvas.method507(anIntArray1687[j], anIntArray1687[k], anIntArray1687[l],
-					anIntArray1686[j], anIntArray1686[k], anIntArray1686[l], anIntArray1656[i], anIntArray1657[i],
-					anIntArray1658[i], anIntArray1689[l1], anIntArray1689[j2], anIntArray1689[l2], anIntArray1690[l1],
-					anIntArray1690[j2], anIntArray1690[l2], anIntArray1691[l1], anIntArray1691[j2], anIntArray1691[l2],
-					colors[i]);
-			return;
-		}
-		if (i1 == 3) {
-			int k1 = anIntArray1659[i] >> 2;
-			int i2 = anIntArray1665[k1];
-			int k2 = anIntArray1666[k1];
-			int i3 = anIntArray1667[k1];
-			ThreeDimensionalCanvas.method507(anIntArray1687[j], anIntArray1687[k], anIntArray1687[l],
-					anIntArray1686[j], anIntArray1686[k], anIntArray1686[l], anIntArray1656[i], anIntArray1656[i],
-					anIntArray1656[i], anIntArray1689[i2], anIntArray1689[k2], anIntArray1689[i3], anIntArray1690[i2],
-					anIntArray1690[k2], anIntArray1690[i3], anIntArray1691[i2], anIntArray1691[k2], anIntArray1691[i3],
-					colors[i]);
+			ThreeDimensionalCanvas.currentFaceAlpha = faceTransparency[faceId];
+
+		// Determine Render Mode (Bits 0-1)
+		int renderMode = (faceRenderTypes == null) ? 0 : faceRenderTypes[faceId] & 3;
+
+		switch(renderMode) {
+			case 0: // Gouraud (Smooth) Shading
+				ThreeDimensionalCanvas.drawGouraudTriangle(projectedY[vA], projectedY[vB], projectedY[vC],
+						projectedX[vA], projectedX[vB], projectedX[vC], faceColorsA[faceId], faceColorsB[faceId],
+						faceColorsC[faceId]);
+				break;
+			case 1: // Flat Shading
+				ThreeDimensionalCanvas.drawFlatTriangle(projectedY[vA], projectedY[vB], projectedY[vC],
+						projectedX[vA], projectedX[vB], projectedX[vC], colorLookupTable[faceColorsA[faceId]]);
+				break;
+			case 2: case 3:
+				// Delegate to a helper method for textured faces, as they share common parameters
+				// The textureIndex variable is now scoped within drawTexturedFace
+				drawTexturedFace(faceId, vA, vB, vC, renderMode);
+				break;
 		}
 	}
 
-	public void method601(int i) {
-		int j = ThreeDimensionalCanvas.anInt1532;
-		int k = ThreeDimensionalCanvas.anInt1533;
-		int l = 0;
-		int i1 = anIntArray1653[i];
-		int j1 = anIntArray1654[i];
-		int k1 = anIntArray1655[i];
-		int l1 = anIntArray1691[i1];
-		int i2 = anIntArray1691[j1];
-		int j2 = anIntArray1691[k1];
-		if (l1 >= 50) {
-			anIntArray1699[l] = anIntArray1686[i1];
-			anIntArray1700[l] = anIntArray1687[i1];
-			anIntArray1701[l++] = anIntArray1656[i];
+	/**
+	 * Internal helper to handle the complex parameter list for textured triangles.
+	 * This method is called by drawFace when the renderMode indicates a textured face.
+	 */
+	private void drawTexturedFace(int faceId, int vA, int vB, int vC, int mode) {
+		int textureIndex = faceRenderTypes[faceId] >> 2;
+		int tA = textureVertexIndicesA[textureIndex];
+		int tB = textureVertexIndicesB[textureIndex];
+		int tC = textureVertexIndicesC[textureIndex];
+
+		int colorA = faceColorsA[faceId];
+		int colorB = (mode == 3) ? colorA : faceColorsB[faceId]; // Handles the difference between mode 2 and 3
+		int colorC = (mode == 3) ? colorA : faceColorsC[faceId]; // Handles the difference between mode 2 and 3
+
+		ThreeDimensionalCanvas.drawTexturedTriangle(projectedY[vA], projectedY[vB], projectedY[vC],
+				projectedX[vA], projectedX[vB], projectedX[vC], colorA, colorB,
+				colorC, cameraX[tA], cameraX[tB], cameraX[tC], cameraY[tA],
+				cameraY[tB], cameraY[tC], cameraZ[tA], cameraZ[tB], cameraZ[tC],
+				colors[faceId]);
+	}
+
+	/**
+	 * Clips a face against the near-plane (Z=50) and dispatches it to the rasterizer.
+	 *
+	 * <p>When a face crosses the near-plane, this method calculates the intersection
+	 * points to create a new visible polygon. If the clipped result is a triangle,
+	 * it is drawn directly. If it results in a quadrilateral, it is tessellated into
+	 * two triangles.</p>
+	 *
+	 * @param faceId The index of the face to clip and draw.
+	 */
+	public void clipAndDrawFace(int faceId) {
+		int centerX = ThreeDimensionalCanvas.centerX;
+		int centerY = ThreeDimensionalCanvas.centerY;
+		int clippedCount = 0;
+
+		int vA = faceIndicesX[faceId];
+		int vB = faceIndicesY[faceId];
+		int vC = faceIndicesZ[faceId];
+
+		int zA = cameraZ[vA];
+		int zB = cameraZ[vB];
+		int zC = cameraZ[vC];
+
+		final int NEAR_PLANE = 50;
+
+		// --- Vertex A Clipping Logic ---
+		if (zA >= NEAR_PLANE) {
+			clippedProjectedX[clippedCount] = projectedX[vA];
+			clippedProjectedY[clippedCount] = projectedY[vA];
+			clippedVertexColors[clippedCount++] = faceColorsA[faceId];
 		} else {
-			int k2 = anIntArray1689[i1];
-			int k3 = anIntArray1690[i1];
-			int k4 = anIntArray1656[i];
-			if (j2 >= 50) {
-				int k5 = (50 - l1) * anIntArray1713[j2 - l1];
-				anIntArray1699[l] = j + (k2 + ((anIntArray1689[k1] - k2) * k5 >> 16) << 9) / 50;
-				anIntArray1700[l] = k + (k3 + ((anIntArray1690[k1] - k3) * k5 >> 16) << 9) / 50;
-				anIntArray1701[l++] = k4 + ((anIntArray1658[i] - k4) * k5 >> 16);
+			int xA = cameraX[vA];
+			int yA = cameraY[vA];
+			int colorA = faceColorsA[faceId];
+
+			if (zC >= NEAR_PLANE) { //Edge A-C crosses near plane
+				int lerpRatio = (NEAR_PLANE - zA) * reciprocalTable[zC - zA];
+				clippedProjectedX[clippedCount] = centerX + (xA + ((cameraX[vC] - xA) * lerpRatio >> 16) << 9) / NEAR_PLANE;
+				clippedProjectedY[clippedCount] = centerY + (yA + ((cameraY[vC] - yA) * lerpRatio >> 16) << 9) / NEAR_PLANE;
+				clippedVertexColors[clippedCount++] = colorA + ((faceColorsC[faceId] - colorA) * lerpRatio >> 16);
 			}
-			if (i2 >= 50) {
-				int l5 = (50 - l1) * anIntArray1713[i2 - l1];
-				anIntArray1699[l] = j + (k2 + ((anIntArray1689[j1] - k2) * l5 >> 16) << 9) / 50;
-				anIntArray1700[l] = k + (k3 + ((anIntArray1690[j1] - k3) * l5 >> 16) << 9) / 50;
-				anIntArray1701[l++] = k4 + ((anIntArray1657[i] - k4) * l5 >> 16);
+			if (zB >= NEAR_PLANE) {
+				int lerpRatio = (NEAR_PLANE - zA) * reciprocalTable[zB - zA];
+				clippedProjectedX[clippedCount] = centerX + (xA + ((cameraX[vB] - xA) * lerpRatio >> 16) << 9) / NEAR_PLANE;
+				clippedProjectedY[clippedCount] = centerY + (yA + ((cameraY[vB] - yA) * lerpRatio >> 16) << 9) / NEAR_PLANE;
+				clippedVertexColors[clippedCount++] = colorA + ((faceColorsB[faceId] - colorA) * lerpRatio >> 16);
 			}
 		}
-		if (i2 >= 50) {
-			anIntArray1699[l] = anIntArray1686[j1];
-			anIntArray1700[l] = anIntArray1687[j1];
-			anIntArray1701[l++] = anIntArray1657[i];
+
+		// --- Vertex B Clipping Logic ---
+		if (zB >= NEAR_PLANE) {
+			clippedProjectedX[clippedCount] = projectedX[vB];
+			clippedProjectedY[clippedCount] = projectedY[vB];
+			clippedVertexColors[clippedCount++] = faceColorsB[faceId];
 		} else {
-			int l2 = anIntArray1689[j1];
-			int l3 = anIntArray1690[j1];
-			int l4 = anIntArray1657[i];
-			if (l1 >= 50) {
-				int i6 = (50 - i2) * anIntArray1713[l1 - i2];
-				anIntArray1699[l] = j + (l2 + ((anIntArray1689[i1] - l2) * i6 >> 16) << 9) / 50;
-				anIntArray1700[l] = k + (l3 + ((anIntArray1690[i1] - l3) * i6 >> 16) << 9) / 50;
-				anIntArray1701[l++] = l4 + ((anIntArray1656[i] - l4) * i6 >> 16);
+			int xB = cameraX[vB];
+			int yB = cameraY[vB];
+			int colorB = faceColorsB[faceId];
+			if (zA >= NEAR_PLANE) {
+				int lerpRatio = (NEAR_PLANE - zB) * reciprocalTable[zA - zB];
+				clippedProjectedX[clippedCount] = centerX + (xB + ((cameraX[vA] - xB) * lerpRatio >> 16) << 9) / NEAR_PLANE;
+				clippedProjectedY[clippedCount] = centerY + (yB + ((cameraY[vA] - yB) * lerpRatio >> 16) << 9) / NEAR_PLANE;
+				clippedVertexColors[clippedCount++] = colorB + ((faceColorsA[faceId] - colorB) * lerpRatio >> 16);
 			}
-			if (j2 >= 50) {
-				int j6 = (50 - i2) * anIntArray1713[j2 - i2];
-				anIntArray1699[l] = j + (l2 + ((anIntArray1689[k1] - l2) * j6 >> 16) << 9) / 50;
-				anIntArray1700[l] = k + (l3 + ((anIntArray1690[k1] - l3) * j6 >> 16) << 9) / 50;
-				anIntArray1701[l++] = l4 + ((anIntArray1658[i] - l4) * j6 >> 16);
+			if (zC >= NEAR_PLANE) {
+				int lerpRatio = (NEAR_PLANE - zB) * reciprocalTable[zC - zB];
+				clippedProjectedX[clippedCount] = centerX + (xB + ((cameraX[vC] - xB) * lerpRatio >> 16) << 9) / NEAR_PLANE;
+				clippedProjectedY[clippedCount] = centerY + (yB + ((cameraY[vC] - yB) * lerpRatio >> 16) << 9) / NEAR_PLANE;
+				clippedVertexColors[clippedCount++] = colorB + ((faceColorsC[faceId] - colorB) * lerpRatio >> 16);
 			}
 		}
-		if (j2 >= 50) {
-			anIntArray1699[l] = anIntArray1686[k1];
-			anIntArray1700[l] = anIntArray1687[k1];
-			anIntArray1701[l++] = anIntArray1658[i];
+
+		// --- Vertex C Clipping Logic ---
+		if (zC >= NEAR_PLANE) {
+			clippedProjectedX[clippedCount] = projectedX[vC];
+			clippedProjectedY[clippedCount] = projectedY[vC];
+			clippedVertexColors[clippedCount++] = faceColorsC[faceId];
 		} else {
-			int i3 = anIntArray1689[k1];
-			int i4 = anIntArray1690[k1];
-			int i5 = anIntArray1658[i];
-			if (i2 >= 50) {
-				int k6 = (50 - j2) * anIntArray1713[i2 - j2];
-				anIntArray1699[l] = j + (i3 + ((anIntArray1689[j1] - i3) * k6 >> 16) << 9) / 50;
-				anIntArray1700[l] = k + (i4 + ((anIntArray1690[j1] - i4) * k6 >> 16) << 9) / 50;
-				anIntArray1701[l++] = i5 + ((anIntArray1657[i] - i5) * k6 >> 16);
+			int xC = cameraX[vC];
+			int yC = cameraY[vC];
+			int colorC = faceColorsC[faceId];
+			if (zB >= NEAR_PLANE) {
+				int lerpRatio = (NEAR_PLANE - zC) * reciprocalTable[zB - zC];
+				clippedProjectedX[clippedCount] = centerX + (xC + ((cameraX[vB] - xC) * lerpRatio >> 16) << 9) / NEAR_PLANE;
+				clippedProjectedY[clippedCount] = centerY + (yC + ((cameraY[vB] - yC) * lerpRatio >> 16) << 9) / NEAR_PLANE;
+				clippedVertexColors[clippedCount++] = colorC + ((faceColorsB[faceId] - colorC) * lerpRatio >> 16);
 			}
-			if (l1 >= 50) {
-				int l6 = (50 - j2) * anIntArray1713[l1 - j2];
-				anIntArray1699[l] = j + (i3 + ((anIntArray1689[i1] - i3) * l6 >> 16) << 9) / 50;
-				anIntArray1700[l] = k + (i4 + ((anIntArray1690[i1] - i4) * l6 >> 16) << 9) / 50;
-				anIntArray1701[l++] = i5 + ((anIntArray1656[i] - i5) * l6 >> 16);
+			if (zA >= NEAR_PLANE) {
+				int lerpRatio = (NEAR_PLANE - zC) * reciprocalTable[zA - zC];
+				clippedProjectedX[clippedCount] = centerX + (xC + ((cameraX[vA] - xC) * lerpRatio >> 16) << 9) / 50;
+				clippedProjectedY[clippedCount] = centerY + (yC + ((cameraY[vA] - yC) * lerpRatio >> 16) << 9) / 50;
+				clippedVertexColors[clippedCount++] = colorC + ((faceColorsA[faceId] - colorC) * lerpRatio >> 16);
 			}
 		}
-		int j3 = anIntArray1699[0];
-		int j4 = anIntArray1699[1];
-		int j5 = anIntArray1699[2];
-		int i7 = anIntArray1700[0];
-		int j7 = anIntArray1700[1];
-		int k7 = anIntArray1700[2];
-		if ((j3 - j4) * (k7 - j7) - (i7 - j7) * (j5 - j4) > 0) {
-			ThreeDimensionalCanvas.aBoolean1528 = false;
-			if (l == 3) {
-				if (j3 < 0 || j4 < 0 || j5 < 0 || j3 > Drawable.anInt1431 || j4 > Drawable.anInt1431
-						|| j5 > Drawable.anInt1431)
-					ThreeDimensionalCanvas.aBoolean1528 = true;
-				int l7;
-				if (anIntArray1659 == null)
-					l7 = 0;
-				else
-					l7 = anIntArray1659[i] & 3;
-				if (l7 == 0)
-					ThreeDimensionalCanvas.method503(i7, j7, k7, j3, j4, j5, anIntArray1701[0], anIntArray1701[1],
-							anIntArray1701[2]);
-				else if (l7 == 1)
-					ThreeDimensionalCanvas.method505(i7, j7, k7, j3, j4, j5, anIntArray1712[anIntArray1656[i]]);
-				else if (l7 == 2) {
-					int j8 = anIntArray1659[i] >> 2;
-					int k9 = anIntArray1665[j8];
-					int k10 = anIntArray1666[j8];
-					int k11 = anIntArray1667[j8];
-					ThreeDimensionalCanvas.method507(i7, j7, k7, j3, j4, j5, anIntArray1701[0], anIntArray1701[1],
-							anIntArray1701[2], anIntArray1689[k9], anIntArray1689[k10], anIntArray1689[k11],
-							anIntArray1690[k9], anIntArray1690[k10], anIntArray1690[k11], anIntArray1691[k9],
-							anIntArray1691[k10], anIntArray1691[k11], colors[i]);
-				} else if (l7 == 3) {
-					int k8 = anIntArray1659[i] >> 2;
-					int l9 = anIntArray1665[k8];
-					int l10 = anIntArray1666[k8];
-					int l11 = anIntArray1667[k8];
-					ThreeDimensionalCanvas.method507(i7, j7, k7, j3, j4, j5, anIntArray1656[i], anIntArray1656[i],
-							anIntArray1656[i], anIntArray1689[l9], anIntArray1689[l10], anIntArray1689[l11],
-							anIntArray1690[l9], anIntArray1690[l10], anIntArray1690[l11], anIntArray1691[l9],
-							anIntArray1691[l10], anIntArray1691[l11], colors[i]);
-				}
-			}
-			if (l == 4) {
-				if (j3 < 0 || j4 < 0 || j5 < 0 || j3 > Drawable.anInt1431 || j4 > Drawable.anInt1431
-						|| j5 > Drawable.anInt1431 || anIntArray1699[3] < 0
-						|| anIntArray1699[3] > Drawable.anInt1431)
-					ThreeDimensionalCanvas.aBoolean1528 = true;
-				int i8;
-				if (anIntArray1659 == null)
-					i8 = 0;
-				else
-					i8 = anIntArray1659[i] & 3;
-				if (i8 == 0) {
-					ThreeDimensionalCanvas.method503(i7, j7, k7, j3, j4, j5, anIntArray1701[0], anIntArray1701[1],
-							anIntArray1701[2]);
-					ThreeDimensionalCanvas.method503(i7, k7, anIntArray1700[3], j3, j5, anIntArray1699[3],
-							anIntArray1701[0], anIntArray1701[2], anIntArray1701[3]);
-					return;
-				}
-				if (i8 == 1) {
-					int l8 = anIntArray1712[anIntArray1656[i]];
-					ThreeDimensionalCanvas.method505(i7, j7, k7, j3, j4, j5, l8);
-					ThreeDimensionalCanvas.method505(i7, k7, anIntArray1700[3], j3, j5, anIntArray1699[3], l8);
-					return;
-				}
-				if (i8 == 2) {
-					int i9 = anIntArray1659[i] >> 2;
-					int i10 = anIntArray1665[i9];
-					int i11 = anIntArray1666[i9];
-					int i12 = anIntArray1667[i9];
-					ThreeDimensionalCanvas.method507(i7, j7, k7, j3, j4, j5, anIntArray1701[0], anIntArray1701[1],
-							anIntArray1701[2], anIntArray1689[i10], anIntArray1689[i11], anIntArray1689[i12],
-							anIntArray1690[i10], anIntArray1690[i11], anIntArray1690[i12], anIntArray1691[i10],
-							anIntArray1691[i11], anIntArray1691[i12], colors[i]);
-					ThreeDimensionalCanvas.method507(i7, k7, anIntArray1700[3], j3, j5, anIntArray1699[3],
-							anIntArray1701[0], anIntArray1701[2], anIntArray1701[3], anIntArray1689[i10],
-							anIntArray1689[i11], anIntArray1689[i12], anIntArray1690[i10], anIntArray1690[i11],
-							anIntArray1690[i12], anIntArray1691[i10], anIntArray1691[i11], anIntArray1691[i12],
-							colors[i]);
-					return;
-				}
-				if (i8 == 3) {
-					int j9 = anIntArray1659[i] >> 2;
-					int j10 = anIntArray1665[j9];
-					int j11 = anIntArray1666[j9];
-					int j12 = anIntArray1667[j9];
-					ThreeDimensionalCanvas.method507(i7, j7, k7, j3, j4, j5, anIntArray1656[i], anIntArray1656[i],
-							anIntArray1656[i], anIntArray1689[j10], anIntArray1689[j11], anIntArray1689[j12],
-							anIntArray1690[j10], anIntArray1690[j11], anIntArray1690[j12], anIntArray1691[j10],
-							anIntArray1691[j11], anIntArray1691[j12], colors[i]);
-					ThreeDimensionalCanvas.method507(i7, k7, anIntArray1700[3], j3, j5, anIntArray1699[3],
-							anIntArray1656[i], anIntArray1656[i], anIntArray1656[i], anIntArray1689[j10],
-							anIntArray1689[j11], anIntArray1689[j12], anIntArray1690[j10], anIntArray1690[j11],
-							anIntArray1690[j12], anIntArray1691[j10], anIntArray1691[j11], anIntArray1691[j12],
-							colors[i]);
-				}
+
+		// Fail-safe: If after clipping we have less than 3 vertices, we cannot form a valid polygon to render.
+		if (clippedCount < 3) return;
+
+		int x1 = clippedProjectedX[0], x2 = clippedProjectedX[1], x3 = clippedProjectedX[2];
+		int y1 = clippedProjectedY[0], y2 = clippedProjectedY[1], y3 = clippedProjectedY[2];
+
+		// Backface Culling Check (Cross Product)
+		if ((x1 - x2) * (y3 - y2) - (y1 - y2) * (x3 - x2) > 0) {
+
+			// Push rendering state to Canvas
+			ThreeDimensionalCanvas.requiresBoundsCheck = isOffScreen(clippedCount);
+			int renderMode = (faceRenderTypes == null) ? 0 : (faceRenderTypes[faceId] & 3);
+
+			// Draw the first triangle
+			renderClippedTriangle(faceId, renderMode, 0, 1, 2);
+
+			// If it's a quad, draw the second triangle (0, 2, 3)
+			if (clippedCount == 4) {
+				renderClippedTriangle(faceId, renderMode, 0, 2, 3);
 			}
 		}
 	}
 
-	public boolean method602(int i, int j, int k, int l, int i1, int j1, int k1, int l1) {
-		if (j < k && j < l && j < i1)
-			return false;
-		if (j > k && j > l && j > i1)
-			return false;
-		if (i < j1 && i < k1 && i < l1)
-			return false;
-		return i <= j1 || i <= k1 || i <= l1;
+	/**
+	 * Checks if any vertices in the clipped polygon are off-screen to enable rasterizer clipping.
+	 */
+	private boolean isOffScreen(int count) {
+		for (int i = 0; i < count; i++) {
+			if (clippedProjectedX[i] < 0 || clippedProjectedX[i] > Drawable.viewportRightBoundary) return true;
+		}
+		return false;
 	}
 
-	public int anInt1636;
-	public int anInt1637;
-	public boolean aBoolean1638;
-	public boolean aBoolean1639;
-	public int anInt1640;
-	public boolean aBoolean1641;
-	public static int anInt1642;
-	public static Model aClass50_Sub1_Sub4_Sub4_1643 = new Model(852);
-	public static int anIntArray1644[] = new int[2000];
-	public static int anIntArray1645[] = new int[2000];
-	public static int anIntArray1646[] = new int[2000];
-	public static int anIntArray1647[] = new int[2000];
-	public int anInt1648;
-	public int anIntArray1649[];
-	public int anIntArray1650[];
-	public int anIntArray1651[];
-	public int anInt1652;
-	public int anIntArray1653[];
-	public int anIntArray1654[];
-	public int anIntArray1655[];
-	public int anIntArray1656[];
-	public int anIntArray1657[];
-	public int anIntArray1658[];
-	public int anIntArray1659[];
-	public int anIntArray1660[];
-	public int anIntArray1661[];
-	public int colors[];
-	public int anInt1663;
-	public int anInt1664;
-	public int anIntArray1665[];
-	public int anIntArray1666[];
-	public int anIntArray1667[];
-	public int anInt1668;
-	public int anInt1669;
-	public int anInt1670;
-	public int anInt1671;
-	public int anInt1672;
-	public int anInt1673;
-	public int anInt1674;
-	public int anInt1675;
-	public int anIntArray1676[];
-	public int anIntArray1677[];
-	public int anIntArrayArray1678[][];
-	public int anIntArrayArray1679[][];
-	public boolean aBoolean1680;
-	public VertexNormal aClass40Array1681[];
-	public static Class26 aClass26Array1682[];
-	public static ModelProvider aClass32_1683;
-	public static boolean aBooleanArray1684[] = new boolean[4096];
-	public static boolean aBooleanArray1685[] = new boolean[4096];
-	public static int anIntArray1686[] = new int[4096];
-	public static int anIntArray1687[] = new int[4096];
-	public static int anIntArray1688[] = new int[4096];
-	public static int anIntArray1689[] = new int[4096];
-	public static int anIntArray1690[] = new int[4096];
-	public static int anIntArray1691[] = new int[4096];
-	public static int anIntArray1692[] = new int[1500];
-	public static int anIntArrayArray1693[][] = new int[1500][512];
-	public static int anIntArray1694[] = new int[12];
-	public static int anIntArrayArray1695[][] = new int[12][2000];
-	public static int anIntArray1696[] = new int[2000];
-	public static int anIntArray1697[] = new int[2000];
-	public static int anIntArray1698[] = new int[12];
-	public static int anIntArray1699[] = new int[10];
-	public static int anIntArray1700[] = new int[10];
-	public static int anIntArray1701[] = new int[10];
-	public static int anInt1702;
-	public static int anInt1703;
-	public static int anInt1704;
-	public static boolean aBoolean1705;
-	public static int anInt1706;
-	public static int anInt1707;
-	public static int anInt1708;
-	public static int anIntArray1709[] = new int[1000];
-	public static int anIntArray1710[];
-	public static int anIntArray1711[];
-	public static int anIntArray1712[];
-	public static int anIntArray1713[];
+	/**
+	 * Helper to dispatch drawing for clipped polygon segments.
+	 */
+	private void renderClippedTriangle(int faceId, int mode, int idx1, int idx2, int idx3) {
+		int xA = clippedProjectedX[idx1], xB = clippedProjectedX[idx2], xC = clippedProjectedX[idx3];
+		int yA = clippedProjectedY[idx1], yB = clippedProjectedY[idx2], yC = clippedProjectedY[idx3];
+		int cA = clippedVertexColors[idx1], cB = clippedVertexColors[idx2], cC = clippedVertexColors[idx3];
 
-	static {
-		anIntArray1710 = ThreeDimensionalCanvas.sineTable;
-		anIntArray1711 = ThreeDimensionalCanvas.cosineTable;
-		anIntArray1712 = ThreeDimensionalCanvas.anIntArray1548;
-		anIntArray1713 = ThreeDimensionalCanvas.anIntArray1535;
+		switch(mode) {
+			case 0:  // Gouraud triangle
+				ThreeDimensionalCanvas.drawGouraudTriangle(yA, yB, yC, xA, xB, xC, cA, cB, cC);
+				break;
+			case 1: // Flat triangle
+				ThreeDimensionalCanvas.drawFlatTriangle(yA, yB, yC, xA, xB, xC, colorLookupTable[faceColorsA[faceId]]);
+				break;
+			case 2: // Textured
+			case 3: // Textured Flat
+				int textureIndex = faceRenderTypes[faceId] >> 2;
+				int texA = textureVertexIndicesA[textureIndex];
+				int texB = textureVertexIndicesB[textureIndex];
+				int texC = textureVertexIndicesC[textureIndex];
+
+				// For Flat Textured, we override corners with the primary color
+				int colorA = (mode == 3) ? faceColorsA[faceId] : cA;
+				int colorB = (mode == 3) ? faceColorsA[faceId] : cB;
+				int colorC = (mode == 3) ? faceColorsA[faceId] : cC;
+
+				ThreeDimensionalCanvas.drawTexturedTriangle(yA, yB, yC, xA, xB, xC, colorA, colorB,
+						colorC, cameraX[texA], cameraX[texB], cameraX[texC],
+						cameraY[texA], cameraY[texB], cameraY[texC], cameraZ[texA],
+						cameraZ[texB], cameraZ[texC], colors[faceId]);
+				break;
+
+		}
+	}
+
+	/**
+	 * Performs a fast Axis-Aligned Bounding Box (AABB) intersection check
+	 * to determine if a point (mouse) is within the screen-space extents of a face.
+	 *
+	 * @param mouseX The current X-position of the mouse.
+	 * @param mouseY The current Y-position of the mouse.
+	 * @param v1Y    Projected Y-coordinate of the first vertex.
+	 * @param v2Y    Projected Y-coordinate of the second vertex.
+	 * @param v3Y    Projected Y-coordinate of the third vertex.
+	 * @param v1X    Projected X-coordinate of the first vertex.
+	 * @param v2X    Projected X-coordinate of the second vertex.
+	 * @param v3X    Projected X-coordinate of the third vertex.
+	 * @return True if the point is within the face's bounding box; otherwise false.
+	 */
+	public boolean isPointInFaceBounds(int mouseX, int mouseY, int v1Y, int v2Y, int v3Y, int v1X, int v2X, int v3X) {
+		if (mouseY < v1Y && mouseY < v2Y && mouseY < v3Y)
+			return false;
+		if (mouseY > v1Y && mouseY > v2Y && mouseY > v3Y)
+			return false;
+		if (mouseX < v1X && mouseX < v2X && mouseX < v3X)
+			return false;
+
+		return mouseX <= v1X || mouseX <= v2X || mouseX <= v3X;
 	}
 }
