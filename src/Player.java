@@ -225,7 +225,7 @@ public class Player extends Actor {
 					class50_sub1_sub4_sub4_3.resizeModel(class27.anInt561, class27.anInt562, class27.anInt561);
 				class50_sub1_sub4_sub4_3.initLighting(64 + class27.anInt564, 850 + class27.anInt565, -30, -50, -30, true);
 				Model aclass50_sub1_sub4_sub4_1[] = { class50_sub1_sub4_sub4, class50_sub1_sub4_sub4_3 };
-				class50_sub1_sub4_sub4 = new Model(2, 0, aclass50_sub1_sub4_sub4_1);
+				class50_sub1_sub4_sub4 = new Model(2, true, 0, aclass50_sub1_sub4_sub4_1);
 			}
 		}
 		if (aClass50_Sub1_Sub4_Sub4_1746 != null) {
@@ -245,7 +245,7 @@ public class Player extends Actor {
 				} else if (super.anInt1584 == 1536)
 					class50_sub1_sub4_sub4_1.rotate90Y();
 				Model aclass50_sub1_sub4_sub4[] = { class50_sub1_sub4_sub4, class50_sub1_sub4_sub4_1 };
-				class50_sub1_sub4_sub4 = new Model(2, 0, aclass50_sub1_sub4_sub4);
+				class50_sub1_sub4_sub4 = new Model(2, true, 0, aclass50_sub1_sub4_sub4);
 				if (super.anInt1584 == 512)
 					class50_sub1_sub4_sub4_1.rotate90Y();
 				else if (super.anInt1584 == 1024) {

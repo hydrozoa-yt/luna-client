@@ -406,9 +406,9 @@ public class ItemDefinition {
 			if (class50_sub1_sub1_sub1_2 == null)
 				return null;
 		}
-		RgbSprite class50_sub1_sub1_sub1_1 = new RgbSprite(32, 32);
-		int j1 = ThreeDimensionalCanvas.centerX;
-		int k1 = ThreeDimensionalCanvas.centerY;
+		RgbSprite rgbSprite_112 = new RgbSprite(32, 32);
+		int j1 = ThreeDimensionalCanvas.halfParentWidth;
+		int k1 = ThreeDimensionalCanvas.halfParentHeight;
 		int ai[] = ThreeDimensionalCanvas.lineOffsets;
 		int ai1[] = Drawable.pixels;
 		int l1 = Drawable.width;
@@ -485,8 +485,8 @@ public class ItemDefinition {
 			spriteCache.put(rgbSprite_112, k);
 		Drawable.putPixels(l1, i2, ai1);
 		Drawable.recalcEdges(l2, j2, i3, k2, true);
-		ThreeDimensionalCanvas.centerX = j1;
-		ThreeDimensionalCanvas.centerY = k1;
+		ThreeDimensionalCanvas.halfParentWidth = j1;
+		ThreeDimensionalCanvas.halfParentHeight = k1;
 		ThreeDimensionalCanvas.lineOffsets = ai;
 		ThreeDimensionalCanvas.jagged = true;
 		if (class16.stackable)

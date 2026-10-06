@@ -4,6 +4,15 @@
 
 public class ObjectDefinition {
 
+    public ObjectDefinition() {
+        anInt768 = -992;
+        id = -1;
+        aBoolean774 = true;
+        name = "null";
+        aBoolean786 = true;
+        aByte793 = -113;
+    }
+
     public static int indices[];
     public boolean aBoolean759;
     public int anInt760;
@@ -17,7 +26,7 @@ public class ObjectDefinition {
     public int anInt768;
     public boolean aBoolean769;
     public static client aClient770;
-    public static Model aClass50_Sub1_Sub4_Sub4Array771[] = new Model[4];
+    public static Model[] aClass50_Sub1_Sub4_Sub4Array771 = new Model[4];
     public static boolean lowMemory;
     public int id;
     public boolean aBoolean774;
@@ -25,11 +34,11 @@ public class ObjectDefinition {
     public String name;
     public static int cachePos;
     public int varbitId;
-    public static LruHashTable aClass33_779 = new LruHashTable(500);
+    public static LruHashTable lruHashTable = new LruHashTable(500);
     public int anInt780;
     public int anInt781;
-    public static ObjectDefinition cache[];
-    public byte description[];
+    public static ObjectDefinition[] cache;
+    public byte[] description;
     public byte aByte784;
     public int anInt785;
     public boolean aBoolean786;
@@ -58,11 +67,10 @@ public class ObjectDefinition {
     public boolean aBoolean810;
 
     public static ObjectDefinition forId(int id) {
-        for (int j = 0; j < 20; j++) {
-            if (cache[j].id == id) {
+        for (int j = 0; j < 20; j++)
+            if (cache[j].id == id)
                 return cache[j];
-            }
-        }
+
         cachePos = (cachePos + 1) % 20;
         ObjectDefinition def = cache[cachePos];
         buf.position = indices[id];
@@ -124,8 +132,8 @@ public class ObjectDefinition {
 
     }
 
-    public Model getModel(int i, int j, int k, int l) {
-        Model result = null;
+    public Model method427(int i, int j, int k, int l) {
+        Model model = null;
         long l1;
         if (anIntArray789 == null) {
             if (l != 10)
@@ -169,9 +177,9 @@ public class ObjectDefinition {
             if (i1 == -1)
                 return null;
             l1 = ((id << 6) + (i1 << 3) + i) + ((long) (j + 1) << 32);
-            Model quickModel = (Model) aClass33_762.get(l1);
-            if (quickModel != null)
-                return quickModel;
+            Model class50_sub1_sub4_sub4_2 = (Model) aClass33_762.get(l1);
+            if (class50_sub1_sub4_sub4_2 != null)
+                return class50_sub1_sub4_sub4_2;
             int j2 = anIntArray763[i1];
             boolean flag3 = aBoolean798 ^ (i > 3);
             if (flag3)
@@ -201,16 +209,16 @@ public class ObjectDefinition {
         if (k != 0)
             anInt768 = 487;
         if (j != -1) {
-            finalResult.groupIndicesByTransform();
-            finalResult.applyAnimation(j, (byte) 6);
-            finalResult.faceIndicesByBone = null;
-            finalResult.vertexIndicesByBone = null;
+            class50_sub1_sub4_sub4_3.groupIndicesByTransform();
+            class50_sub1_sub4_sub4_3.applyAnimation(j, (byte) 6);
+            class50_sub1_sub4_sub4_3.faceIndicesByBone = null;
+            class50_sub1_sub4_sub4_3.vertexIndicesByBone = null;
         }
         while (i-- > 0)
-            finalResult.rotate90Y();
+            class50_sub1_sub4_sub4_3.rotate90Y();
         if (modifiedModelColors != null) {
             for (int k2 = 0; k2 < modifiedModelColors.length; k2++)
-                finalResult.replaceColor(modifiedModelColors[k2], originalModelColors[k2]);
+                class50_sub1_sub4_sub4_3.replaceColor(modifiedModelColors[k2], originalModelColors[k2]);
 
         }
         if (flag)
@@ -219,9 +227,9 @@ public class ObjectDefinition {
             class50_sub1_sub4_sub4_3.translate(anInt761, anInt785, anInt766);
         class50_sub1_sub4_sub4_3.initLighting(64 + aByte784, 768 + aByte787 * 5, -50, -10, -50, !aBoolean804);
         if (anInt794 == 1)
-            finalResult.modelHeight = ((Entity) (finalResult)).height;
-        aClass33_762.put(finalResult, l1);
-        return finalResult;
+            class50_sub1_sub4_sub4_3.modelHeight = ((Entity) (class50_sub1_sub4_sub4_3)).height;
+        aClass33_762.put(class50_sub1_sub4_sub4_3, l1);
+        return class50_sub1_sub4_sub4_3;
     }
 
     public boolean method428(int i) {
@@ -420,8 +428,8 @@ public class ObjectDefinition {
             anInt794 = aBoolean810 ? 1 : 0;
     }
 
-    public Model getRotatedModel(int i, int j, int k, int l, int i1, int j1, int k1) {
-        Model model = getModel(j, k1, 0, i);
+    public Model method431(int i, int j, int k, int l, int i1, int j1, int k1) {
+        Model model = method427(j, k1, 0, i);
         if (model == null)
             return null;
         if (aBoolean769 || aBoolean804)
@@ -474,12 +482,4 @@ public class ObjectDefinition {
         buf = null;
     }
 
-    public ObjectDefinition() {
-        anInt768 = -992;
-        id = -1;
-        aBoolean774 = true;
-        name = "null";
-        aBoolean786 = true;
-        aByte793 = -113;
-    }
 }

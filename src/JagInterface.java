@@ -413,7 +413,7 @@ public class JagInterface {
 		if (i == -1 && j == -1 && model.colors == null) {
             return model;
         }
-		Model model2 = new Model(false, true,
+		Model model2 = new Model(false, false, true,
 				model, AnimationFrame.isFrameTransparent(i) & AnimationFrame.isFrameTransparent(j));
 		if (i != -1 || j != -1) {
             model2.groupIndicesByTransform();
