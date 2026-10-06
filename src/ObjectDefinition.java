@@ -142,21 +142,21 @@ public class ObjectDefinition {
                 int l2 = anIntArray763[i2];
                 if (flag1)
                     l2 += 0x10000;
-                result = (Model) aClass33_779.get(l2);
-                if (result == null) {
-                    result = Model.forId(l2 & 0xffff);
-                    if (result == null)
+                model = (Model) lruHashTable.get(l2);
+                if (model == null) {
+                    model = Model.forId(l2 & 0xffff);
+                    if (model == null)
                         return null;
                     if (flag1)
-                        result.method592(0);
-                    aClass33_779.put(result, l2);
+                        model.mirrorZ();
+                    lruHashTable.put(model, l2);
                 }
                 if (k1 > 1)
-                    aClass50_Sub1_Sub4_Sub4Array771[i2] = result;
+                    aClass50_Sub1_Sub4_Sub4Array771[i2] = model;
             }
 
             if (k1 > 1)
-                result = new Model(k1, aClass50_Sub1_Sub4_Sub4Array771);
+                model = new Model(k1, aClass50_Sub1_Sub4_Sub4Array771);
         } else {
             int i1 = -1;
             for (int j1 = 0; j1 < anIntArray789.length; j1++) {
@@ -176,14 +176,14 @@ public class ObjectDefinition {
             boolean flag3 = aBoolean798 ^ (i > 3);
             if (flag3)
                 j2 += 0x10000;
-            result = (Model) aClass33_779.get(j2);
-            if (result == null) {
-                result = Model.forId(j2 & 0xffff);
-                if (result == null)
+            model = (Model) lruHashTable.get(j2);
+            if (model == null) {
+                model = Model.forId(j2 & 0xffff);
+                if (model == null)
                     return null;
                 if (flag3)
-                    result.method592(0);
-                aClass33_779.put(result, j2);
+                    model.mirrorZ();
+                lruHashTable.put(model, j2);
             }
         }
         boolean flag;
@@ -196,30 +196,30 @@ public class ObjectDefinition {
             flag2 = true;
         else
             flag2 = false;
-        Model finalResult = new Model(i == 0 && j == -1 && !flag
-                && !flag2, modifiedModelColors == null, result, ModelRelated21.method239(j));
+        Model class50_sub1_sub4_sub4_3 = new Model(i == 0 && j == -1 && !flag
+                && !flag2, false, modifiedModelColors == null, model, AnimationFrame.isFrameTransparent(j));
         if (k != 0)
             anInt768 = 487;
         if (j != -1) {
-            finalResult.method584(7);
-            finalResult.method585(j, (byte) 6);
-            finalResult.anIntArrayArray1679 = null;
-            finalResult.anIntArrayArray1678 = null;
+            finalResult.groupIndicesByTransform();
+            finalResult.applyAnimation(j, (byte) 6);
+            finalResult.faceIndicesByBone = null;
+            finalResult.vertexIndicesByBone = null;
         }
         while (i-- > 0)
-            finalResult.method588(true);
+            finalResult.rotate90Y();
         if (modifiedModelColors != null) {
             for (int k2 = 0; k2 < modifiedModelColors.length; k2++)
                 finalResult.replaceColor(modifiedModelColors[k2], originalModelColors[k2]);
 
         }
         if (flag)
-            finalResult.method593(anInt760, anInt796, anInt780);
+            class50_sub1_sub4_sub4_3.resizeModel(anInt780, anInt760, anInt796);
         if (flag2)
-            finalResult.method590(anInt761, anInt766, anInt785);
-        finalResult.method594(64 + aByte784, 768 + aByte787 * 5, -50, -10, -50, !aBoolean804);
+            class50_sub1_sub4_sub4_3.translate(anInt761, anInt785, anInt766);
+        class50_sub1_sub4_sub4_3.initLighting(64 + aByte784, 768 + aByte787 * 5, -50, -10, -50, !aBoolean804);
         if (anInt794 == 1)
-            finalResult.anInt1675 = ((Entity) (finalResult)).height;
+            finalResult.modelHeight = ((Entity) (finalResult)).height;
         aClass33_762.put(finalResult, l1);
         return finalResult;
     }
@@ -421,25 +421,25 @@ public class ObjectDefinition {
     }
 
     public Model getRotatedModel(int i, int j, int k, int l, int i1, int j1, int k1) {
-        Model class50_sub1_sub4_sub4 = getModel(j, k1, 0, i);
-        if (class50_sub1_sub4_sub4 == null)
+        Model model = getModel(j, k1, 0, i);
+        if (model == null)
             return null;
         if (aBoolean769 || aBoolean804)
-            class50_sub1_sub4_sub4 = new Model(aBoolean769, aBoolean804, 0, class50_sub1_sub4_sub4);
+            model = new Model(aBoolean769, aBoolean804, 0, model);
         if (aBoolean769) {
             int l1 = (k + l + i1 + j1) / 4;
-            for (int i2 = 0; i2 < class50_sub1_sub4_sub4.addedForSubmodels1648; i2++) {
-                int j2 = class50_sub1_sub4_sub4.anIntArray1649[i2];
-                int k2 = class50_sub1_sub4_sub4.anIntArray1651[i2];
+            for (int i2 = 0; i2 < model.verticesCount; i2++) {
+                int j2 = model.verticesX[i2];
+                int k2 = model.verticesZ[i2];
                 int l2 = k + ((l - k) * (j2 + 64)) / 128;
                 int i3 = j1 + ((i1 - j1) * (j2 + 64)) / 128;
                 int j3 = l2 + ((i3 - l2) * (k2 + 64)) / 128;
-                class50_sub1_sub4_sub4.anIntArray1650[i2] += j3 - l1;
+                model.verticesY[i2] += j3 - l1;
             }
 
-            class50_sub1_sub4_sub4.method582(6);
+            model.updateVerticalBounds();
         }
-        return class50_sub1_sub4_sub4;
+        return model;
     }
 
     public boolean method432(int i, int j) {
@@ -464,7 +464,7 @@ public class ObjectDefinition {
     }
 
     public static void method433(boolean flag) {
-        aClass33_779 = null;
+        lruHashTable = null;
         aClass33_762 = null;
         indices = null;
         if (flag) {

@@ -414,17 +414,17 @@ public class JagInterface {
             return model;
         }
 		Model model2 = new Model(false, true,
-				model, ModelRelated21.method239(i) & ModelRelated21.method239(j));
+				model, AnimationFrame.isFrameTransparent(i) & AnimationFrame.isFrameTransparent(j));
 		if (i != -1 || j != -1) {
-            model2.method584(7);
+            model2.groupIndicesByTransform();
         }
 		if (i != -1) {
-            model2.method585(i, (byte) 6);
+            model2.applyAnimation(i, (byte) 6);
         }
 		if (j != -1) {
-            model2.method585(j, (byte) 6);
+            model2.applyAnimation(j, (byte) 6);
         }
-		model2.method594(anInt280, anInt243, -50, -10, -50, true);
+		model2.initLighting(anInt280, anInt243, -50, -10, -50, true);
 		return model2;
 	}
 

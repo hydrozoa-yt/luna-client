@@ -51,19 +51,19 @@ public class Projectile extends Entity {
 		int i = -1;
 		if (spotAnimation.animation != null)
 			i = spotAnimation.animation.anIntArray295[anInt1567];
-		Model class50_sub1_sub4_sub4_1 = new Model(false, true,
-				class50_sub1_sub4_sub4, ModelRelated21.method239(i));
+		Model class50_sub1_sub4_sub4_1 = new Model(false, false, true,
+				class50_sub1_sub4_sub4, AnimationFrame.isFrameTransparent(i));
 		if (i != -1) {
-			class50_sub1_sub4_sub4_1.method584(7);
-			class50_sub1_sub4_sub4_1.method585(i, (byte) 6);
-			class50_sub1_sub4_sub4_1.anIntArrayArray1679 = null;
-			class50_sub1_sub4_sub4_1.anIntArrayArray1678 = null;
+			class50_sub1_sub4_sub4_1.groupIndicesByTransform();
+			class50_sub1_sub4_sub4_1.applyAnimation(i, (byte) 6);
+			class50_sub1_sub4_sub4_1.faceIndicesByBone = null;
+			class50_sub1_sub4_sub4_1.vertexIndicesByBone = null;
 		}
 		if (spotAnimation.anInt561 != 128 || spotAnimation.anInt562 != 128)
-			class50_sub1_sub4_sub4_1.method593(spotAnimation.anInt562, spotAnimation.anInt561,
-					spotAnimation.anInt561);
-		class50_sub1_sub4_sub4_1.method589(anInt1563, 341);
-		class50_sub1_sub4_sub4_1.method594(64 + spotAnimation.anInt564, 850 + spotAnimation.anInt565, -30, -50, -30,
+			class50_sub1_sub4_sub4_1.resizeModel(spotAnimation.anInt561, spotAnimation.anInt562, spotAnimation.anInt561
+            );
+		class50_sub1_sub4_sub4_1.rotateX(anInt1563);
+		class50_sub1_sub4_sub4_1.initLighting(64 + spotAnimation.anInt564, 850 + spotAnimation.anInt565, -30, -50, -30,
 				true);
 		return class50_sub1_sub4_sub4_1;
 	}

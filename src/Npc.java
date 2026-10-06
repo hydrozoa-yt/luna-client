@@ -31,22 +31,22 @@ public class Npc extends Actor {
 			Model class50_sub1_sub4_sub4_1 = class27.getModel();
 			if (class50_sub1_sub4_sub4_1 != null) {
 				int i = class27.animation.anIntArray295[super.anInt1615];
-				Model class50_sub1_sub4_sub4_2 = new Model(false, true,
-						class50_sub1_sub4_sub4_1, ModelRelated21.method239(i));
-				class50_sub1_sub4_sub4_2.method590(0, 0, -super.anInt1618);
-				class50_sub1_sub4_sub4_2.method584(7);
-				class50_sub1_sub4_sub4_2.method585(i, (byte) 6);
-				class50_sub1_sub4_sub4_2.anIntArrayArray1679 = null;
-				class50_sub1_sub4_sub4_2.anIntArrayArray1678 = null;
+				Model class50_sub1_sub4_sub4_2 = new Model(false, false, true,
+						class50_sub1_sub4_sub4_1, AnimationFrame.isFrameTransparent(i));
+				class50_sub1_sub4_sub4_2.translate(0, -super.anInt1618, 0);
+				class50_sub1_sub4_sub4_2.groupIndicesByTransform();
+				class50_sub1_sub4_sub4_2.applyAnimation(i, (byte) 6);
+				class50_sub1_sub4_sub4_2.faceIndicesByBone = null;
+				class50_sub1_sub4_sub4_2.vertexIndicesByBone = null;
 				if (class27.anInt561 != 128 || class27.anInt562 != 128)
-					class50_sub1_sub4_sub4_2.method593(class27.anInt562, class27.anInt561, class27.anInt561);
-				class50_sub1_sub4_sub4_2.method594(64 + class27.anInt564, 850 + class27.anInt565, -30, -50, -30, true);
+					class50_sub1_sub4_sub4_2.resizeModel(class27.anInt561, class27.anInt562, class27.anInt561);
+				class50_sub1_sub4_sub4_2.initLighting(64 + class27.anInt564, 850 + class27.anInt565, -30, -50, -30, true);
 				Model aclass50_sub1_sub4_sub4[] = { class50_sub1_sub4_sub4, class50_sub1_sub4_sub4_2 };
 				class50_sub1_sub4_sub4 = new Model(2, 0, aclass50_sub1_sub4_sub4);
 			}
 		}
 		if (def.aByte642 == 1)
-			class50_sub1_sub4_sub4.aBoolean1680 = true;
+			class50_sub1_sub4_sub4.isPriorityPicking = true;
 		return class50_sub1_sub4_sub4;
 	}
 

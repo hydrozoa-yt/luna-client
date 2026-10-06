@@ -126,9 +126,9 @@ public class ItemDefinition {
 				result = new Model(2, aclass50_sub1_sub4_sub4);
 			}
 		if (gender == 0 && aByte378 != 0)
-			result.method590(0, 0, aByte378);
+			result.translate(0, aByte378, 0);
 		if (gender == 1 && aByte330 != 0)
-			result.method590(0, 0, aByte330);
+			result.translate(0, aByte330, 0);
 		if (srcColors != null) {
 			for (int color = 0; color < srcColors.length; color++) {
                 result.replaceColor(srcColors[color], destColors[color]);
@@ -362,14 +362,14 @@ public class ItemDefinition {
 		if (model == null)
 			return null;
 		if (anInt366 != 128 || anInt357 != 128 || anInt368 != 128)
-			model.method593(anInt357, anInt368, anInt366);
+			model.resizeModel(anInt366, anInt357, anInt368);
 		if (srcColors != null) {
 			for (int l = 0; l < srcColors.length; l++)
 				model.replaceColor(srcColors[l], destColors[l]);
 
 		}
-		model.method594(64 + anInt354, 768 + anInt358, -50, -10, -50, true);
-		model.aBoolean1680 = true;
+		model.initLighting(64 + anInt354, 768 + anInt358, -50, -10, -50, true);
+		model.isPriorityPicking = true;
 		aClass33_337.put(model, id);
 		return model;
 	}
@@ -406,9 +406,9 @@ public class ItemDefinition {
 			if (class50_sub1_sub1_sub1_2 == null)
 				return null;
 		}
-		RgbSprite rgbSprite_112 = new RgbSprite(32, 32);
-		int j1 = ThreeDimensionalCanvas.halfParentWidth;
-		int k1 = ThreeDimensionalCanvas.halfParentHeight;
+		RgbSprite class50_sub1_sub1_sub1_1 = new RgbSprite(32, 32);
+		int j1 = ThreeDimensionalCanvas.centerX;
+		int k1 = ThreeDimensionalCanvas.centerY;
 		int ai[] = ThreeDimensionalCanvas.lineOffsets;
 		int ai1[] = Drawable.pixels;
 		int l1 = Drawable.width;
@@ -428,7 +428,7 @@ public class ItemDefinition {
 			j3 = (int) (j3 * 1.04D);
 		int k3 = ThreeDimensionalCanvas.sineTable[class16.modelRotationX] * j3 >> 16;
 		int l3 = ThreeDimensionalCanvas.cosineTable[class16.modelRotationX] * j3 >> 16;
-		class50_sub1_sub4_sub4.draw598(0, class16.modelRotationY, class16.anInt339, class16.modelRotationX, class16.modelOffsetX, k3
+		class50_sub1_sub4_sub4.viewportTransform(0, class16.modelRotationY, class16.anInt339, class16.modelRotationX, class16.modelOffsetX, k3
 				+ ((Entity) (class50_sub1_sub4_sub4)).height / 2 + class16.modelOffsetY, l3
 				+ class16.modelOffsetY);
 		for (int l4 = 31; l4 >= 0; l4--) {
@@ -485,8 +485,8 @@ public class ItemDefinition {
 			spriteCache.put(rgbSprite_112, k);
 		Drawable.putPixels(l1, i2, ai1);
 		Drawable.recalcEdges(l2, j2, i3, k2, true);
-		ThreeDimensionalCanvas.halfParentWidth = j1;
-		ThreeDimensionalCanvas.halfParentHeight = k1;
+		ThreeDimensionalCanvas.centerX = j1;
+		ThreeDimensionalCanvas.centerY = k1;
 		ThreeDimensionalCanvas.lineOffsets = ai;
 		ThreeDimensionalCanvas.jagged = true;
 		if (class16.stackable)

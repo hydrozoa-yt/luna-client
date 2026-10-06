@@ -4,7 +4,7 @@
 
 public class Tile extends Node {
 
-	public Tile(int i, int j, int k) {
+	public Tile(int i, int j, int k) { // was parameterized as (int plane, int x, int y)
 		aBoolean1396 = false;
 		aScenegraphRelated5Array1408 = new ScenegraphRelated5[5];
 		anIntArray1409 = new int[5];

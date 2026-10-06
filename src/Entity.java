@@ -7,11 +7,11 @@ public class Entity extends QueueNode {
 	public VertexNormal normals[];
 	public int height;
 
-	public void draw560(int i, int j, int k, int l, int i1, int j1, int k1, int l1, int i2) {
+	public void render(int i, int j, int k, int l, int i1, int j1, int k1, int l1, int i2) {
 		Model model = getModel();
 		if (model != null) {
 			height = ((Entity) (model)).height;
-			model.draw560(i, j, k, l, i1, j1, k1, l1, i2);
+			model.render(i, j, k, l, i1, j1, k1, l1, i2);
 		}
 	}
 
