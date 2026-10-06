@@ -140,15 +140,10 @@ public abstract class Actor extends Entity {
 	}
 
 	public void applyHit(int i, boolean flag, int j, int k) {
-		System.out.println("j="+j+" k="+k);
 		for (int l = 0; l < 4; l++)
 			if (anIntArray1632[l] <= i) {
 				anIntArray1630[l] = j;
-				anIntArray1631[l] = k; // problem child
-				System.out.println("k-value: "+k);
-				if (k==129 || k==130) {
-					Thread.dumpStack();
-				}
+				anIntArray1631[l] = k;
 				anIntArray1632[l] = i + 70;
 				return;
 			}

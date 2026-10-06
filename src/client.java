@@ -7,6 +7,10 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.AlphaComposite;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
 import java.io.DataInputStream;
 import java.io.EOFException;
 import java.io.IOException;
@@ -544,15 +548,29 @@ public class client extends JagApplet {
     public static int clientWidth = 765, clientHeight = 503;
 
     /**
-     * Current size of the game area
-     */
-    private int gameAreaWidth = 512;
-    private int gameAreaHeight = 334;
-
-    /**
      * Standard size for the entire client
      */
     public static final int REGULAR_WIDTH = 765, REGULAR_HEIGHT = 503;
+
+    /**
+     * Where each part of the client is drawn, rebuilt whenever the mode or window size changes
+     */
+    public ClientLayout layout = ClientLayout.create(false, REGULAR_WIDTH, REGULAR_HEIGHT);
+
+    /**
+     * The saved mode and window size, written when the mode changes and when the client closes
+     */
+    public static ClientSettings settings = new ClientSettings();
+
+    /**
+     * The mode that was saved last time, applied once the client has finished loading
+     */
+    private int startupClientSize = 0;
+
+    /**
+     * Whether the window around the login screen has been cleared since the game was last on screen
+     */
+    private boolean loginScreenCleared = false;
 
     public static void main(String args[]) {
         try {
@@ -564,7 +582,10 @@ public class client extends JagApplet {
             memberServer = true;
             signlink.storeid = 32;
             signlink.startpriv(InetAddress.getLocalHost());
+            settings = ClientSettings.load();
             client cl = new client();
+            cl.startupClientSize = settings.clientSize;
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> settings.save()));
             cl.start(765, 503);
         } catch (Exception exception) {
             return;
@@ -572,12 +593,10 @@ public class client extends JagApplet {
     }
 
     /**
-     * Added for resizable.
+     * Changes the window to the given size for the given mode and rebuilds everything that depends on it.
      */
     public void rebuildFrame(int size, int width, int height) {
         try {
-            gameAreaWidth = (size == 0) ? 512 : width;
-            gameAreaHeight = (size == 0) ? 334 : height;
             clientWidth = width;
             clientHeight = height;
             rebuildFrame(width, height, clientSize == 1);
@@ -589,16 +608,19 @@ public class client extends JagApplet {
     }
 
     /**
-     * Added for resizable.
+     * Rebuilds the layout, the 3D view and the game screen for the current mode and client size.
      */
     private void updateGameArea() {
-        ThreeDimensionalCanvas.init3D(clientSize == 0 ? REGULAR_WIDTH : clientWidth, clientSize == 0 ? REGULAR_HEIGHT : clientHeight);
+        layout = ClientLayout.create(clientSize == 1, clientWidth, clientHeight);
+        // the line offsets must match the width of the image that is drawn into
+        ThreeDimensionalCanvas.init3D(clientWidth, clientHeight);
         clientEntireOffsets = ThreeDimensionalCanvas.lineOffsets;
-        ThreeDimensionalCanvas.init3D(clientSize == 0 ? 516 : clientWidth, clientSize == 0 ? 165 : clientHeight);
+        ThreeDimensionalCanvas.init3D(ClientLayout.CHATBOX_WIDTH, ClientLayout.CHATBOX_HEIGHT);
         chatBoxOffsets = ThreeDimensionalCanvas.lineOffsets;
-        ThreeDimensionalCanvas.init3D(clientSize == 0 ? (inventoryImage != null ? inventoryImage.width : 250) : clientWidth,clientSize == 0 ? (inventoryImage != null ? inventoryImage.height : 335) : clientHeight);
+        ThreeDimensionalCanvas.init3D(ClientLayout.INVENTORY_WIDTH, ClientLayout.INVENTORY_HEIGHT);
         tabsOffsets = ThreeDimensionalCanvas.lineOffsets;
-        ThreeDimensionalCanvas.init3D(clientSize == 0 ? 512 : clientWidth, clientSize == 0 ? 334 : clientHeight);
+        // last, because init3D also sets the centre of the 3D view
+        ThreeDimensionalCanvas.init3D(layout.viewport.width, layout.viewport.height);
         gameViewportOffsets = ThreeDimensionalCanvas.lineOffsets;
 
         int ai[] = new int[9];
@@ -609,57 +631,95 @@ public class client extends JagApplet {
             ai[l8] = k9 * l9 >> 16;
         }
 
-        SceneGraph.preCalcFrustrumTable(ai, clientSize == 0 ? 512 : clientWidth, clientSize == 0 ? 334 : clientHeight, 500, 800);
+        SceneGraph.preCalcFrustrumTable(ai, layout.viewport.width, layout.viewport.height, 500, 800);
 
-        gameViewportImage = new JagImageProducer(clientSize == 0 ? 512 : clientWidth, clientSize == 0 ? 334 : clientHeight, getParentComponent());
-        Drawable.clearScreen();
-        initUI();
-
-        if (!isLoggedIn) {
-            resetAllImageProducers();
+        // the context menu belongs to the old layout
+        isContextMenuActive = false;
+        if (isLoggedIn) {
+            // rebuild the game screen for the new layout, a full screen interface is redrawn at the new size
+            super.imageProducer = null;
+            gameViewportImage = new JagImageProducer(layout.viewport.width, layout.viewport.height, getParentComponent());
+            Drawable.clearScreen();
+            initUI();
         }
+        // when not logged in the game screen is built on login, from the layout
+        // the layout changed, so everything has to be drawn again (also removes leftovers of the old layout)
+        shouldRenderUI = true;
     }
 
     /**
-     * Added for resizable.
+     * Switches between the fixed (0) and the resizable (1) mode.
      */
     public void toggleSize(int size) {
         if (clientSize != size) {
             clientSize = size;
-            int width = 765;
-            int height = 503;
-            if (size == 0) {
-                //log_view_dist = 9;
-                width = REGULAR_WIDTH;
-                height = REGULAR_HEIGHT;
-                //showChat = true;
-                //showTab = true;
-            } else if (size == 1) {
-                //log_view_dist = 10;
-                width = 900;
-                height = 600;
+            int width = REGULAR_WIDTH;
+            int height = REGULAR_HEIGHT;
+            if (size == 1) {
+                width = settings.width;
+                height = settings.height;
             }
+            // rebuildFrame also calls updateGameArea
             rebuildFrame(size, width, height);
+            settings.clientSize = clientSize;
+            settings.save();
+        }
+    }
+
+    /**
+     * Handles the commands that only concern the client and are not sent to the server.
+     *
+     * @return true if the input was such a command
+     */
+    public boolean handleClientCommand(String input) {
+        if (input.equals("::regular")) {
+            toggleSize(0);
+            return true;
+        }
+        if (input.equals("::resize")) {
+            toggleSize(1);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Applies a window resize reported by the AWT thread, on the game thread.
+     * The size is the drawable area inside the borders and title bar, not the outer window size.
+     */
+    public void checkSize() {
+        int width = super.resizedWidth;
+        int height = super.resizedHeight;
+        if (clientSize == 1 && width > 0 && height > 0 && (width != clientWidth || height != clientHeight)) {
+            clientWidth = settings.width = width;
+            clientHeight = settings.height = height;
             updateGameArea();
         }
     }
 
     /**
-     * Added for resizable.
+     * The game is laid out for 765x503 and is drawn centred in the window while on the login screen in the
+     * resizable mode, so mouse positions are moved by the same amount.
      */
-    public void checkSize() {
-        if (clientSize == 1) {
-            if (clientWidth != getParentComponent().getWidth()) {
-                clientWidth = getParentComponent().getWidth();
-                gameAreaWidth = clientWidth;
-                updateGameArea();
-            }
-            if (clientHeight != getParentComponent().getHeight()) {
-                clientHeight = getParentComponent().getHeight();
-                gameAreaHeight = clientHeight;
-                updateGameArea();
-            }
-        }
+    @Override
+    public int inputOffsetX() {
+        return loginScreenOffsetX();
+    }
+
+    @Override
+    public int inputOffsetY() {
+        return loginScreenOffsetY();
+    }
+
+    /**
+     * How far the 765x503 login screen is moved to the centre of the window. Zero in the fixed mode and in the game.
+     */
+    public int loginScreenOffsetX() {
+        return clientSize == 1 && !isLoggedIn ? Math.max(0, (clientWidth - REGULAR_WIDTH) / 2) : 0;
+    }
+
+    public int loginScreenOffsetY() {
+        return clientSize == 1 && !isLoggedIn ? Math.max(0, (clientHeight - REGULAR_HEIGHT) / 2) : 0;
     }
 
     public void run() {
@@ -991,86 +1051,88 @@ public class client extends JagApplet {
     }
 
     public void processMouseClickOnTabs21() {
+        int tabClickX = super.anInt29 - layout.inventoryDx; // compared with the classic tab positions
+        int tabClickY = super.anInt30 - layout.inventoryDy;
         if (super.anInt28 == 1) {
-            if (super.anInt29 >= 539 && super.anInt29 <= 573 && super.anInt30 >= 169 && super.anInt30 < 205
+            if (tabClickX >= 539 && tabClickX <= 573 && tabClickY >= 169 && tabClickY < 205
                     && anIntArray1081[0] != -1) {
                 aBoolean1181 = true;
                 tabId = 0;
                 aBoolean950 = true;
             }
-            if (super.anInt29 >= 569 && super.anInt29 <= 599 && super.anInt30 >= 168 && super.anInt30 < 205
+            if (tabClickX >= 569 && tabClickX <= 599 && tabClickY >= 168 && tabClickY < 205
                     && anIntArray1081[1] != -1) {
                 aBoolean1181 = true;
                 tabId = 1;
                 aBoolean950 = true;
             }
-            if (super.anInt29 >= 597 && super.anInt29 <= 627 && super.anInt30 >= 168 && super.anInt30 < 205
+            if (tabClickX >= 597 && tabClickX <= 627 && tabClickY >= 168 && tabClickY < 205
                     && anIntArray1081[2] != -1) {
                 aBoolean1181 = true;
                 tabId = 2;
                 aBoolean950 = true;
             }
-            if (super.anInt29 >= 625 && super.anInt29 <= 669 && super.anInt30 >= 168 && super.anInt30 < 203
+            if (tabClickX >= 625 && tabClickX <= 669 && tabClickY >= 168 && tabClickY < 203
                     && anIntArray1081[3] != -1) {
                 aBoolean1181 = true;
                 tabId = 3;
                 aBoolean950 = true;
             }
-            if (super.anInt29 >= 666 && super.anInt29 <= 696 && super.anInt30 >= 168 && super.anInt30 < 205
+            if (tabClickX >= 666 && tabClickX <= 696 && tabClickY >= 168 && tabClickY < 205
                     && anIntArray1081[4] != -1) {
                 aBoolean1181 = true;
                 tabId = 4;
                 aBoolean950 = true;
             }
-            if (super.anInt29 >= 694 && super.anInt29 <= 724 && super.anInt30 >= 168 && super.anInt30 < 205
+            if (tabClickX >= 694 && tabClickX <= 724 && tabClickY >= 168 && tabClickY < 205
                     && anIntArray1081[5] != -1) {
                 aBoolean1181 = true;
                 tabId = 5;
                 aBoolean950 = true;
             }
-            if (super.anInt29 >= 722 && super.anInt29 <= 756 && super.anInt30 >= 169 && super.anInt30 < 205
+            if (tabClickX >= 722 && tabClickX <= 756 && tabClickY >= 169 && tabClickY < 205
                     && anIntArray1081[6] != -1) {
                 aBoolean1181 = true;
                 tabId = 6;
                 aBoolean950 = true;
             }
-            if (super.anInt29 >= 540 && super.anInt29 <= 574 && super.anInt30 >= 466 && super.anInt30 < 502
+            if (tabClickX >= 540 && tabClickX <= 574 && tabClickY >= 466 && tabClickY < 502
                     && anIntArray1081[7] != -1) {
                 aBoolean1181 = true;
                 tabId = 7;
                 aBoolean950 = true;
             }
-            if (super.anInt29 >= 572 && super.anInt29 <= 602 && super.anInt30 >= 466 && super.anInt30 < 503
+            if (tabClickX >= 572 && tabClickX <= 602 && tabClickY >= 466 && tabClickY < 503
                     && anIntArray1081[8] != -1) {
                 aBoolean1181 = true;
                 tabId = 8;
                 aBoolean950 = true;
             }
-            if (super.anInt29 >= 599 && super.anInt29 <= 629 && super.anInt30 >= 466 && super.anInt30 < 503
+            if (tabClickX >= 599 && tabClickX <= 629 && tabClickY >= 466 && tabClickY < 503
                     && anIntArray1081[9] != -1) {
                 aBoolean1181 = true;
                 tabId = 9;
                 aBoolean950 = true;
             }
-            if (super.anInt29 >= 627 && super.anInt29 <= 671 && super.anInt30 >= 467 && super.anInt30 < 502
+            if (tabClickX >= 627 && tabClickX <= 671 && tabClickY >= 467 && tabClickY < 502
                     && anIntArray1081[10] != -1) {
                 aBoolean1181 = true;
                 tabId = 10;
                 aBoolean950 = true;
             }
-            if (super.anInt29 >= 669 && super.anInt29 <= 699 && super.anInt30 >= 466 && super.anInt30 < 503
+            if (tabClickX >= 669 && tabClickX <= 699 && tabClickY >= 466 && tabClickY < 503
                     && anIntArray1081[11] != -1) {
                 aBoolean1181 = true;
                 tabId = 11;
                 aBoolean950 = true;
             }
-            if (super.anInt29 >= 696 && super.anInt29 <= 726 && super.anInt30 >= 466 && super.anInt30 < 503
+            if (tabClickX >= 696 && tabClickX <= 726 && tabClickY >= 466 && tabClickY < 503
                     && anIntArray1081[12] != -1) {
                 aBoolean1181 = true;
                 tabId = 12;
                 aBoolean950 = true;
             }
-            if (super.anInt29 >= 724 && super.anInt29 <= 758 && super.anInt30 >= 466 && super.anInt30 < 502
+            if (tabClickX >= 724 && tabClickX <= 758 && tabClickY >= 466 && tabClickY < 502
                     && anIntArray1081[13] != -1) {
                 aBoolean1181 = true;
                 tabId = 13;
@@ -1254,7 +1316,6 @@ public class client extends JagApplet {
     }
 
     public void updateGame28(byte byte0) {
-        checkSize();
         if (anInt1057 > 1)
             anInt1057--;
         if (anInt873 > 0)
@@ -1770,18 +1831,14 @@ public class client extends JagApplet {
                     aBoolean1240 = true;
                 }
                 if ((key == 13 || key == 10) && chatInput.length() > 0) {
+                    // client side commands for everyone, these are not sent to the server
+                    boolean clientCommand = handleClientCommand(chatInput);
                     if (playerRights == 2) {
                         if (chatInput.equals("::clientdrop")) {
                             method59(1);
                         }
                         if (chatInput.equals("::lag")) {
                             printLagInfo(false);
-                        }
-                        if (chatInput.equals("::regular")) {
-                            toggleSize(0);
-                        }
-                        if (chatInput.equals("::resize")) {
-                            toggleSize(1);
                         }
                         if (chatInput.equals("::dumpobjdefs")) {
                             StringBuilder sb = new StringBuilder();
@@ -1843,7 +1900,9 @@ public class client extends JagApplet {
 
                         }
                     }
-                    if (chatInput.startsWith("::")) {
+                    if (clientCommand) {
+                        // already handled by the client
+                    } else if (chatInput.startsWith("::")) {
                         outBuffer.putOpcode(56);
                         outBuffer.putByte(chatInput.length() - 1);
                         outBuffer.putString(chatInput.substring(2));
@@ -3538,8 +3597,9 @@ public class client extends JagApplet {
     public void method39(boolean flag) {
         if (!flag)
             groundItems = null;
+        int chatClickY = super.anInt30 - layout.chatboxDy; // compared with the classic button positions
         if (super.anInt28 == 1) {
-            if (super.anInt29 >= 6 && super.anInt29 <= 106 && super.anInt30 >= 467 && super.anInt30 <= 499) {
+            if (super.anInt29 >= 6 && super.anInt29 <= 106 && chatClickY >= 467 && chatClickY <= 499) {
                 publicChatMode = (publicChatMode + 1) % 4;
                 aBoolean1212 = true;
                 aBoolean1240 = true;
@@ -3548,7 +3608,7 @@ public class client extends JagApplet {
                 outBuffer.putByte(privateChatMode);
                 outBuffer.putByte(tradeMode);
             }
-            if (super.anInt29 >= 135 && super.anInt29 <= 235 && super.anInt30 >= 467 && super.anInt30 <= 499) {
+            if (super.anInt29 >= 135 && super.anInt29 <= 235 && chatClickY >= 467 && chatClickY <= 499) {
                 privateChatMode = (privateChatMode + 1) % 3;
                 aBoolean1212 = true;
                 aBoolean1240 = true;
@@ -3557,7 +3617,7 @@ public class client extends JagApplet {
                 outBuffer.putByte(privateChatMode);
                 outBuffer.putByte(tradeMode);
             }
-            if (super.anInt29 >= 273 && super.anInt29 <= 373 && super.anInt30 >= 467 && super.anInt30 <= 499) {
+            if (super.anInt29 >= 273 && super.anInt29 <= 373 && chatClickY >= 467 && chatClickY <= 499) {
                 tradeMode = (tradeMode + 1) % 3;
                 aBoolean1212 = true;
                 aBoolean1240 = true;
@@ -3566,7 +3626,7 @@ public class client extends JagApplet {
                 outBuffer.putByte(privateChatMode);
                 outBuffer.putByte(tradeMode);
             }
-            if (super.anInt29 >= 412 && super.anInt29 <= 512 && super.anInt30 >= 467 && super.anInt30 <= 499)
+            if (super.anInt29 >= 412 && super.anInt29 <= 512 && chatClickY >= 467 && chatClickY <= 499)
                 if (anInt1169 == -1) {
                     method15(false);
                     aString839 = "";
@@ -4216,26 +4276,15 @@ public class client extends JagApplet {
             return;
         }
         int j = super.anInt28;
-        if (anInt1171 == 1 && super.anInt29 >= 516 && super.anInt30 >= 160 && super.anInt29 <= 765
-                && super.anInt30 <= 205) {
+        if (anInt1171 == 1 && super.anInt29 >= layout.tabIconsTop.x && super.anInt30 >= layout.tabIconsTop.y
+                && super.anInt29 <= layout.tabIconsTop.x + layout.tabIconsTop.width
+                && super.anInt30 <= layout.tabIconsTop.y + layout.tabIconsTop.height) {
             j = 0;
         }
         if (isContextMenuActive) {
             if (j != 1) {
-                int k = super.mouseX;
-                int j1 = super.mouseY;
-                if (anInt1304 == 0) {
-                    k -= 4;
-                    j1 -= 4;
-                }
-                if (anInt1304 == 1) {
-                    k -= 553;
-                    j1 -= 205;
-                }
-                if (anInt1304 == 2) {
-                    k -= 17;
-                    j1 -= 357;
-                }
+                int k = super.mouseX - layout.areaX(anInt1304);
+                int j1 = super.mouseY - layout.areaY(anInt1304);
                 if (k < anInt1305 - 10 || k > anInt1305 + anInt1307 + 10 || j1 < anInt1306 - 10
                         || j1 > anInt1306 + anInt1308 + 10) {
                     isContextMenuActive = false;
@@ -4251,20 +4300,8 @@ public class client extends JagApplet {
                 int l = anInt1305;
                 int k1 = anInt1306;
                 int i2 = anInt1307;
-                int k2 = super.anInt29;
-                int l2 = super.anInt30;
-                if (anInt1304 == 0) {
-                    k2 -= 4;
-                    l2 -= 4;
-                }
-                if (anInt1304 == 1) {
-                    k2 -= 553;
-                    l2 -= 205;
-                }
-                if (anInt1304 == 2) {
-                    k2 -= 17;
-                    l2 -= 357;
-                }
+                int k2 = super.anInt29 - layout.areaX(anInt1304);
+                int l2 = super.anInt30 - layout.areaY(anInt1304);
                 int i3 = -1;
                 for (int j3 = 0; j3 < anInt1183; j3++) {
                     int k3 = k1 + 31 + (anInt1183 - 1 - j3) * 15;
@@ -5854,6 +5891,9 @@ public class client extends JagApplet {
     }
 
     public void drawGame() {
+        // the login screen may have moved the origin to the centre of the window
+        ((Graphics2D) super.graphics).setTransform(new AffineTransform());
+        loginScreenCleared = false;
         if (anInt1053 != -1 && (loadingStage == 2 || super.imageProducer != null)) {
             if (loadingStage == 2) {
                 updateInterfaceAnimations(anInt951, anInt1053);
@@ -5871,14 +5911,14 @@ public class client extends JagApplet {
                     interface_1.width = 765;
                     interface_1.height = 503;
                 }
-                drawInterface(0, 0, interface_1, 0, 8);
+                drawInterface(layout.fullscreenInterfaceX, layout.fullscreenInterfaceY, interface_1, 0, 8);
                 if (openInterfaceID != -1) {
                     JagInterface interface_2 = JagInterface.forId(openInterfaceID);
                     if (interface_2.width == 512 && interface_2.height == 334 && interface_2.type == 0) {
                         interface_2.width = 765;
                         interface_2.height = 503;
                     }
-                    drawInterface(0, 0, interface_2, 0, 8);
+                    drawInterface(layout.fullscreenInterfaceX, layout.fullscreenInterfaceY, interface_2, 0, 8);
                 }
                 if (!isContextMenuActive) {
                     generateContextOptions(-521);
@@ -5893,22 +5933,25 @@ public class client extends JagApplet {
         if (shouldRenderUI) {
             initUI();
             shouldRenderUI = false;
-            aClass18_906.drawImage(0, 4, super.graphics);
-            uiSideChatboxLeft.drawImage(0, 357, super.graphics);
-            uiSideMinimapRight.drawImage(722, 4, super.graphics);
-            uiSideRockRight1.drawImage(743, 205, super.graphics);
-            aClass18_910.drawImage(0, 0, super.graphics);
-            uiSideMinimapLeft.drawImage(516, 4, super.graphics);
-            uiSideRockLeft1.drawImage(516, 205, super.graphics);
-            uiSideChatboxRight.drawImage(496, 357, super.graphics);
-            uiSideChatboxTop.drawImage(0, 338, super.graphics);
+            if (!layout.resizable) {
+                // the stone frame only exists in the fixed layout
+                aClass18_906.drawImage(layout.frameLeftEdge, super.graphics);
+                uiSideChatboxLeft.drawImage(layout.frameChatboxLeft, super.graphics);
+                uiSideMinimapRight.drawImage(layout.frameMinimapRight, super.graphics);
+                uiSideRockRight1.drawImage(layout.frameRockRight, super.graphics);
+                aClass18_910.drawImage(layout.frameTopEdge, super.graphics);
+                uiSideMinimapLeft.drawImage(layout.frameMinimapLeft, super.graphics);
+                uiSideRockLeft1.drawImage(layout.frameRockLeft, super.graphics);
+                uiSideChatboxRight.drawImage(layout.frameChatboxRight, super.graphics);
+                uiSideChatboxTop.drawImage(layout.frameChatboxTop, super.graphics);
+            }
             aBoolean1181 = true;
             aBoolean1240 = true;
             aBoolean950 = true;
             aBoolean1212 = true;
             if (loadingStage != 2) {
-                gameViewportImage.drawImage(4, 4, super.graphics);
-                aClass18_1157.drawImage(550, 4, super.graphics);
+                gameViewportImage.drawImage(layout.viewport, super.graphics);
+                drawPanel(aClass18_1157, layout.minimap, ClientLayout.MINIMAP_ALPHA);
             }
             anInt1237++;
             if (anInt1237 > 85) {
@@ -5918,6 +5961,15 @@ public class client extends JagApplet {
         }
         if (loadingStage == 2) {
             drawGameViewport();
+            if (clientSize == 1) {
+                // in resizable mode the viewport covers the whole window and is redrawn every frame,
+                // so the panels drawn on top of it have to be redrawn every frame too
+                aBoolean1181 = true; // inventory
+                aBoolean1240 = true; // chatbox
+                aBoolean950 = true; // tab icons
+                aBoolean1212 = true; // chat mode buttons
+                drawResizableFrame();
+            }
         }
         if (isContextMenuActive && anInt1304 == 1)
             aBoolean1181 = true;
@@ -5937,8 +5989,8 @@ public class client extends JagApplet {
         }
         if (anInt988 == -1 && chatboxInterfaceType == 0) {
             aClass13_1249.anInt231 = anInt1107 - anInt851 - 77;
-            if (super.mouseX > 448 && super.mouseX < 560 && super.mouseY > 332)
-                method42(anInt1107, 0, aClass13_1249, (byte) 102, super.mouseY - 357, -1, super.mouseX - 17, 77, 463);
+            if (super.mouseX > 448 && super.mouseX < 560 && super.mouseY > 332 + layout.chatboxDy)
+                method42(anInt1107, 0, aClass13_1249, (byte) 102, super.mouseY - layout.chatbox.y, -1, super.mouseX - layout.chatbox.x, 77, 463);
             int j = anInt1107 - 77 - aClass13_1249.anInt231;
             if (j < 0)
                 j = 0;
@@ -5952,8 +6004,8 @@ public class client extends JagApplet {
         if (anInt988 == -1 && chatboxInterfaceType == 3) {
             int k = anInt862 * 14 + 7;
             aClass13_1249.anInt231 = anInt865;
-            if (super.mouseX > 448 && super.mouseX < 560 && super.mouseY > 332)
-                method42(k, 0, aClass13_1249, (byte) 102, super.mouseY - 357, -1, super.mouseX - 17, 77, 463);
+            if (super.mouseX > 448 && super.mouseX < 560 && super.mouseY > 332 + layout.chatboxDy)
+                method42(k, 0, aClass13_1249, (byte) 102, super.mouseY - layout.chatbox.y, -1, super.mouseX - layout.chatbox.x, 77, 463);
             int i1 = aClass13_1249.anInt231;
             if (i1 < 0)
                 i1 = 0;
@@ -5983,7 +6035,7 @@ public class client extends JagApplet {
         }
         if (loadingStage == 2) {
             method87(503);
-            aClass18_1157.drawImage(550, 4, super.graphics);
+            drawPanel(aClass18_1157, layout.minimap, ClientLayout.MINIMAP_ALPHA);
         }
         if (anInt1213 != -1)
             aBoolean950 = true;
@@ -6028,7 +6080,7 @@ public class client extends JagApplet {
                 if (anIntArray1081[6] != -1 && (anInt1213 != 6 || pulseCycle % 20 < 10))
                     aClass50_Sub1_Sub1_Sub3Array976[6].drawSprite(208, 13);
             }
-            aClass18_1110.drawImage(516, 160, super.graphics);
+            drawPanel(aClass18_1110, layout.tabIconsTop, ClientLayout.INVENTORY_ALPHA);
             aClass18_1109.pushPixels();
             aClass50_Sub1_Sub1_Sub3_966.drawSprite(0, 0);
             if (anInt1089 == -1) {
@@ -6061,7 +6113,18 @@ public class client extends JagApplet {
                 if (anIntArray1081[13] != -1 && (anInt1213 != 13 || pulseCycle % 20 < 10))
                     aClass50_Sub1_Sub1_Sub3Array976[12].drawSprite(226, 2);
             }
-            aClass18_1109.drawImage(496, 466, super.graphics);
+            if (layout.resizable) {
+                // the left part of the image is the chatbox corner, the rest is the inventory block
+                setPanelAlpha(ClientLayout.INVENTORY_ALPHA);
+                aClass18_1109.drawImageRegion(layout.tabIconsBottom.x, layout.tabIconsBottom.y,
+                        layout.tabIconsBottomCrop, 0, layout.tabIconsBottom.width, layout.tabIconsBottom.height, super.graphics);
+                setPanelAlpha(ClientLayout.CHATBOX_ALPHA);
+                aClass18_1109.drawImageRegion(layout.frameChatboxRight.x, layout.tabIconsBottom.y, 0, 0,
+                        ClientLayout.CHAT_CORNER_WIDTH, layout.tabIconsBottom.height, super.graphics);
+                setPanelAlpha(ClientLayout.OPAQUE);
+            } else {
+                aClass18_1109.drawImage(layout.tabIconsBottom, super.graphics);
+            }
             gameViewportImage.pushPixels();
             ThreeDimensionalCanvas.lineOffsets = gameViewportOffsets;
         }
@@ -6093,11 +6156,65 @@ public class client extends JagApplet {
             if (tradeMode == 2)
                 fontChatboxButtons.drawString("Off", 324, 41, true, 0xff0000);
             fontChatboxButtons.drawString("Report abuse", 458, 33, true, 0xffffff);
-            chatboxButtons.drawImage(0, 453, super.graphics);
+            drawPanel(chatboxButtons, layout.chatButtons, ClientLayout.CHATBOX_ALPHA);
             gameViewportImage.pushPixels();
             ThreeDimensionalCanvas.lineOffsets = gameViewportOffsets;
         }
         anInt951 = 0;
+    }
+
+    /**
+     * Draws the stone frame around the chatbox block and the inventory block in the resizable layout, below the
+     * panels. In the fixed layout the frame is made of pieces that cross from one block into the other (for example
+     * the strip above the chatbox is also the top of the inventory's left side), so the pieces are cut in two here
+     * to give each block a rectangle of its own.
+     */
+    private void drawResizableFrame() {
+        Graphics g = super.graphics;
+        int cornerWidth = ClientLayout.CHAT_CORNER_WIDTH;
+        int inventoryLeft = layout.frameRockLeft.x; // the left side of the inventory block, 516 + dx
+        int chatboxFrameWidth = inventoryLeft - layout.inventoryDx; // 516, the width of the chatbox block
+
+        // chatbox block: top strip, left side and the right side
+        setPanelAlpha(ClientLayout.CHATBOX_ALPHA);
+        uiSideChatboxTop.drawImageRegion(layout.frameChatboxTop.x, layout.frameChatboxTop.y, 0, 0, chatboxFrameWidth, uiSideChatboxTop.height, g);
+        uiSideChatboxLeft.drawImage(layout.frameChatboxLeft, g);
+        uiSideChatboxRight.drawImageRegion(layout.frameChatboxRight.x, layout.frameChatboxRight.y, 0, 0, cornerWidth, uiSideChatboxRight.height, g);
+
+        // inventory block: left side (three pieces, the lower two are cut from the chatbox pieces) and right side
+        setPanelAlpha(ClientLayout.INVENTORY_ALPHA);
+        uiSideRockLeft1.drawImage(layout.frameRockLeft, g);
+        uiSideChatboxTop.drawImageRegion(inventoryLeft, layout.frameChatboxTop.y, chatboxFrameWidth, 0,
+                uiSideChatboxTop.width - chatboxFrameWidth, uiSideChatboxTop.height, g);
+        uiSideChatboxRight.drawImageRegion(inventoryLeft, layout.frameChatboxRight.y, cornerWidth, 0,
+                uiSideChatboxRight.width - cornerWidth, uiSideChatboxRight.height, g);
+        uiSideRockRight1.drawImage(layout.frameRockRight, g);
+        setPanelAlpha(ClientLayout.OPAQUE);
+    }
+
+    /**
+     * Draws a panel at its place in the layout. In the resizable layout the panel is drawn see-through by the
+     * given alpha, so the game view shows through. The fixed layout always draws opaque.
+     */
+    private void drawPanel(JagImageProducer panel, Rectangle area, int alpha) {
+        setPanelAlpha(alpha);
+        panel.drawImage(area, super.graphics);
+        setPanelAlpha(ClientLayout.OPAQUE);
+    }
+
+    /**
+     * Sets how opaque the next drawing to the screen is, from 0 (invisible) to 256 (opaque). Ignored in the fixed layout.
+     */
+    private void setPanelAlpha(int alpha) {
+        if (!layout.resizable) {
+            return;
+        }
+        Graphics2D g = (Graphics2D) super.graphics;
+        if (alpha >= ClientLayout.OPAQUE) {
+            g.setComposite(AlphaComposite.SrcOver);
+        } else {
+            g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Math.max(0, alpha) / (float) ClientLayout.OPAQUE));
+        }
     }
 
     public void drawPrivateChat() {
@@ -6122,7 +6239,7 @@ public class client extends JagApplet {
                     byte0 = 2;
                 }
                 if ((l == 3 || l == 7) && (l == 7 || privateChatMode == 0 || privateChatMode == 1 && method148(13292, s))) {
-                    int i1 = 329 - j * 13;
+                    int i1 = layout.privateChatY - j * 13;
                     int l1 = 4;
                     class50_sub1_sub1_sub2.drawString_474("From", 2245, l1, 0, i1);
                     class50_sub1_sub1_sub2.drawString_474("From", 2245, l1, 65535, i1 - 1);
@@ -6141,14 +6258,14 @@ public class client extends JagApplet {
                         return;
                 }
                 if (l == 5 && privateChatMode < 2) {
-                    int j1 = 329 - j * 13;
+                    int j1 = layout.privateChatY - j * 13;
                     class50_sub1_sub1_sub2.drawString_474(aStringArray1298[k], 2245, 4, 0, j1);
                     class50_sub1_sub1_sub2.drawString_474(aStringArray1298[k], 2245, 4, 65535, j1 - 1);
                     if (++j >= 5)
                         return;
                 }
                 if (l == 6 && privateChatMode < 2) {
-                    int k1 = 329 - j * 13;
+                    int k1 = layout.privateChatY - j * 13;
                     class50_sub1_sub1_sub2.drawString_474("To " + s + ": " + aStringArray1298[k], 2245, 4, 0, k1);
                     class50_sub1_sub1_sub2.drawString_474("To " + s + ": " + aStringArray1298[k], 2245, 4, 65535, k1 - 1);
                     if (++j >= 5)
@@ -6951,7 +7068,7 @@ public class client extends JagApplet {
         if (isContextMenuActive && anInt1304 == 2) {
             drawContextMenu();
         }
-        chatboxImage_1159.drawImage(17, 357, super.graphics);
+        drawPanel(chatboxImage_1159, layout.chatbox, ClientLayout.CHATBOX_ALPHA);
         gameViewportImage.pushPixels();
         ThreeDimensionalCanvas.lineOffsets = gameViewportOffsets;
     }
@@ -7276,6 +7393,13 @@ public class client extends JagApplet {
         pulseCycle++;
         if (byte0 != -111)
             return;
+        if (startupClientSize != 0) {
+            // the client has loaded, so the saved mode can be applied
+            int size = startupClientSize;
+            startupClientSize = 0;
+            toggleSize(size);
+        }
+        checkSize();
         if (!isLoggedIn)
             method149(-724);
         else
@@ -7296,7 +7420,7 @@ public class client extends JagApplet {
         if (anInt1053 != -1) {
             anInt915 = 0;
             anInt1315 = 0;
-            method66(0, JagInterface.forId(anInt1053), 0, 0, 0, super.mouseX, 23658, super.mouseY);
+            method66(layout.fullscreenInterfaceY, JagInterface.forId(anInt1053), 0, 0, layout.fullscreenInterfaceX, super.mouseX, 23658, super.mouseY);
             if (anInt915 != currentlyHovered1302)
                 currentlyHovered1302 = anInt915;
             if (anInt1315 != currentlyHovered1129)
@@ -7306,9 +7430,9 @@ public class client extends JagApplet {
         method111(anInt1178);
         anInt915 = 0;
         anInt1315 = 0;
-        if (super.mouseX > 4 && super.mouseY > 4 && super.mouseX < 516 && super.mouseY < 338) {
+        if (layout.isInViewport(super.mouseX, super.mouseY)) {
             if (anInt1169 != -1) {
-                method66(4, JagInterface.forId(anInt1169), 0, 0, 4, super.mouseX, 23658, super.mouseY);
+                method66(layout.viewport.y, JagInterface.forId(anInt1169), 0, 0, layout.viewport.x, super.mouseX, 23658, super.mouseY);
             } else {
                 generateContextOptions43((byte) 7);
             }
@@ -7321,11 +7445,11 @@ public class client extends JagApplet {
         }
         anInt915 = 0;
         anInt1315 = 0;
-        if (super.mouseX > 553 && super.mouseY > 205 && super.mouseX < 743 && super.mouseY < 466)
+        if (layout.isInInventory(super.mouseX, super.mouseY))
             if (anInt1089 != -1) {
-                method66(205, JagInterface.forId(anInt1089), 1, 0, 553, super.mouseX, 23658, super.mouseY);
+                method66(layout.inventory.y, JagInterface.forId(anInt1089), 1, 0, layout.inventory.x, super.mouseX, 23658, super.mouseY);
             } else if (anIntArray1081[tabId] != -1) {
-                method66(205, JagInterface.forId(anIntArray1081[tabId]), 1, 0, 553, super.mouseX, 23658,
+                method66(layout.inventory.y, JagInterface.forId(anIntArray1081[tabId]), 1, 0, layout.inventory.x, super.mouseX, 23658,
                         super.mouseY);
             }
         if (anInt915 != anInt1280) {
@@ -7338,13 +7462,13 @@ public class client extends JagApplet {
         }
         anInt915 = 0;
         anInt1315 = 0;
-        if (super.mouseX > 17 && super.mouseY > 357 && super.mouseX < 496 && super.mouseY < 453)
+        if (layout.isInChatbox(super.mouseX, super.mouseY))
             if (anInt988 != -1) {
-                method66(357, JagInterface.forId(anInt988), 2, 0, 17, super.mouseX, 23658, super.mouseY);
+                method66(layout.chatbox.y, JagInterface.forId(anInt988), 2, 0, layout.chatbox.x, super.mouseX, 23658, super.mouseY);
             } else if (anInt1191 != -1) {
-                method66(357, JagInterface.forId(anInt1191), 3, 0, 17, super.mouseX, 23658, super.mouseY);
-            } else if (super.mouseY < 434 && super.mouseX < 426 && chatboxInterfaceType == 0) {
-                method113(466, super.mouseX - 17, super.mouseY - 357);
+                method66(layout.chatbox.y, JagInterface.forId(anInt1191), 3, 0, layout.chatbox.x, super.mouseX, 23658, super.mouseY);
+            } else if (super.mouseY < 434 + layout.chatboxDy && super.mouseX < 426 && chatboxInterfaceType == 0) {
+                method113(466, super.mouseX - layout.chatbox.x, super.mouseY - layout.chatbox.y);
             }
         if ((anInt988 != -1 || anInt1191 != -1) && anInt915 != anInt1106) {
             aBoolean1240 = true;
@@ -7795,6 +7919,7 @@ public class client extends JagApplet {
         }
 
         loginFlameRight.drawImage(637, 0, super.graphics);
+        presentBackBuffer();
     }
 
     public void adjustVolume(boolean flag, byte byte0, int i) {
@@ -8265,15 +8390,15 @@ public class client extends JagApplet {
 
         j += 8;
         int i1 = 15 * anInt1183 + 21;
-        if (super.anInt29 > 4 && super.anInt30 > 4 && super.anInt29 < 516 && super.anInt30 < 338) {
-            int j1 = super.anInt29 - 4 - j / 2;
-            if (j1 + j > 512)
-                j1 = 512 - j;
+        if (layout.isInViewport(super.anInt29, super.anInt30)) {
+            int j1 = super.anInt29 - layout.viewport.x - j / 2;
+            if (j1 + j > layout.viewport.width)
+                j1 = layout.viewport.width - j;
             if (j1 < 0)
                 j1 = 0;
-            int i2 = super.anInt30 - 4;
-            if (i2 + i1 > 334)
-                i2 = 334 - i1;
+            int i2 = super.anInt30 - layout.viewport.y;
+            if (i2 + i1 > layout.viewport.height)
+                i2 = layout.viewport.height - i1;
             if (i2 < 0)
                 i2 = 0;
             isContextMenuActive = true;
@@ -8283,13 +8408,13 @@ public class client extends JagApplet {
             anInt1307 = j;
             anInt1308 = 15 * anInt1183 + 22;
         }
-        if (super.anInt29 > 553 && super.anInt30 > 205 && super.anInt29 < 743 && super.anInt30 < 466) {
-            int k1 = super.anInt29 - 553 - j / 2;
+        if (layout.isInInventory(super.anInt29, super.anInt30)) {
+            int k1 = super.anInt29 - layout.inventory.x - j / 2;
             if (k1 < 0)
                 k1 = 0;
             else if (k1 + j > 190)
                 k1 = 190 - j;
-            int j2 = super.anInt30 - 205;
+            int j2 = super.anInt30 - layout.inventory.y;
             if (j2 < 0)
                 j2 = 0;
             else if (j2 + i1 > 261)
@@ -8301,13 +8426,13 @@ public class client extends JagApplet {
             anInt1307 = j;
             anInt1308 = 15 * anInt1183 + 22;
         }
-        if (super.anInt29 > 17 && super.anInt30 > 357 && super.anInt29 < 496 && super.anInt30 < 453) {
-            int l1 = super.anInt29 - 17 - j / 2;
+        if (layout.isInChatbox(super.anInt29, super.anInt30)) {
+            int l1 = super.anInt29 - layout.chatbox.x - j / 2;
             if (l1 < 0)
                 l1 = 0;
             else if (l1 + j > 479)
                 l1 = 479 - j;
-            int k2 = super.anInt30 - 357;
+            int k2 = super.anInt30 - layout.chatbox.y;
             if (k2 < 0)
                 k2 = 0;
             else if (k2 + i1 > 96)
@@ -8324,9 +8449,9 @@ public class client extends JagApplet {
     public void draw3dScreen() {
         drawPrivateChat();
         if (anInt1023 == 1)
-            aClass50_Sub1_Sub1_Sub1Array896[anInt1022 / 100].method461(anInt1021 - 8 - 4, anInt1020 - 8 - 4, -488);
+            aClass50_Sub1_Sub1_Sub1Array896[anInt1022 / 100].method461(anInt1021 - 8 - layout.viewport.y, anInt1020 - 8 - layout.viewport.x, -488);
         if (anInt1023 == 2)
-            aClass50_Sub1_Sub1_Sub1Array896[4 + anInt1022 / 100].method461(anInt1021 - 8 - 4, anInt1020 - 8 - 4, -488);
+            aClass50_Sub1_Sub1_Sub1Array896[4 + anInt1022 / 100].method461(anInt1021 - 8 - layout.viewport.y, anInt1020 - 8 - layout.viewport.x, -488);
         if (walkableInterfaceId != -1) {
             updateInterfaceAnimations(anInt951, walkableInterfaceId);
             drawInterface(0, 0, JagInterface.forId(walkableInterfaceId), 0, 8);
@@ -8368,9 +8493,9 @@ public class client extends JagApplet {
             int l = j / 60;
             j %= 60;
             if (j < 10)
-                fontChatboxButtons.drawString_474("System update in: " + l + ":0" + j, 2245, 4, 0xffff00, 329);
+                fontChatboxButtons.drawString_474("System update in: " + l + ":0" + j, 2245, 4, 0xffff00, layout.privateChatY);
             else
-                fontChatboxButtons.drawString_474("System update in: " + l + ":" + j, 2245, 4, 0xffff00, 329);
+                fontChatboxButtons.drawString_474("System update in: " + l + ":" + j, 2245, 4, 0xffff00, layout.privateChatY);
             anInt895++;
             if (anInt895 > 112) {
                 anInt895 = 0;
@@ -8420,12 +8545,12 @@ public class client extends JagApplet {
                     s = s.substring(5);
                 }
                 if ((l == 3 || l == 7) && (l == 7 || privateChatMode == 0 || privateChatMode == 1 && method148(13292, s))) {
-                    int i1 = 329 - j * 13;
-                    if (super.mouseX > 4 && super.mouseY - 4 > i1 - 10 && super.mouseY - 4 <= i1 + 3) {
+                    int i1 = layout.privateChatY - j * 13;
+                    if (super.mouseX > layout.viewport.x && super.mouseY - layout.viewport.y > i1 - 10 && super.mouseY - layout.viewport.y <= i1 + 3) {
                         int j1 = fontChatboxButtons.method472((byte) 35, "From:  " + s + aStringArray1298[k]) + 25;
                         if (j1 > 450)
                             j1 = 450;
-                        if (super.mouseX < 4 + j1) {
+                        if (super.mouseX < layout.viewport.x + j1) {
                             if (playerRights >= 1) {
                                 rightClickOptions[anInt1183] = "Report abuse @whi@" + s;
                                 anIntArray981[anInt1183] = 2507;
@@ -9095,9 +9220,9 @@ public class client extends JagApplet {
         }
         if (i1 == 14)
             if (!isContextMenuActive)
-                sceneGraph.method279(0, super.anInt29 - 4, super.anInt30 - 4);
+                sceneGraph.method279(0, super.anInt29 - layout.viewport.x, super.anInt30 - layout.viewport.y);
             else
-                sceneGraph.method279(0, slot - 4, interfaceId - 4);
+                sceneGraph.method279(0, slot - layout.viewport.x, interfaceId - layout.viewport.y);
         if (i1 == 903) {
             outBuffer.putOpcode(1);
             outBuffer.putShort(id);
@@ -9770,8 +9895,6 @@ public class client extends JagApplet {
                             anInt932 += 15;
                             anInt933 -= 10;
                         }
-                        int index = ((Actor) (obj)).anIntArray1631[i1];
-                        System.out.println(index);
                         spriteArray1182[((Actor) (obj)).anIntArray1631[i1]].method461(anInt933 - 12, anInt932 - 12, -488);
                         font_p11_full.drawHorizontallyCenteredString(anInt932, anInt933 + 4, 0, String
                                 .valueOf(((Actor) (obj)).anIntArray1630[i1]));
@@ -9909,20 +10032,19 @@ public class client extends JagApplet {
         Drawable.clearScreen();
         mapback_1186.drawSprite(0, 0);
         inventoryImage = new JagImageProducer(190, 261, getParentComponent());
-        gameViewportImage = new JagImageProducer(512, 334, getParentComponent());
+        gameViewportImage = new JagImageProducer(layout.viewport.width, layout.viewport.height, getParentComponent());
         Drawable.clearScreen();
         chatboxButtons = new JagImageProducer(496, 50, getParentComponent());
         aClass18_1109 = new JagImageProducer(269, 37, getParentComponent());
         aClass18_1110 = new JagImageProducer(249, 45, getParentComponent());
         shouldRenderUI = true;
 
-        // todo figure out if these should be commented out? not present in resizable client
         gameViewportImage.pushPixels();
         ThreeDimensionalCanvas.lineOffsets = gameViewportOffsets;
     }
 
     public void drawErrorScreen() {
-        Graphics g = getParentComponent().getGraphics();
+        Graphics g = super.graphics;
         g.setColor(Color.black);
         g.fillRect(0, 0, 765, 503);
         setFramerate(1);
@@ -10012,7 +10134,8 @@ public class client extends JagApplet {
                 fontChatboxButtons.drawHorizontallyCenteredString(257, j, 0, s);
                 fontChatboxButtons.drawHorizontallyCenteredString(256, j - 1, 0xffffff, s);
             }
-            gameViewportImage.drawImage(4, 4, super.graphics);
+            gameViewportImage.drawImage(layout.viewport, super.graphics);
+            presentBackBuffer();
             return;
         }
         if (super.imageProducer != null) {
@@ -10033,6 +10156,7 @@ public class client extends JagApplet {
                 fontChatboxButtons.drawHorizontallyCenteredString(382, k - 1, 0xffffff, s);
             }
             super.imageProducer.drawImage(0, 0, super.graphics);
+            presentBackBuffer();
         }
     }
 
@@ -10065,11 +10189,30 @@ public class client extends JagApplet {
         }
         paintCounter1309++;
         if (!isLoggedIn) {
+            prepareLoginScreenGraphics();
             drawLoginScreen(false);
         } else {
             drawGame();
         }
         anInt1094 = 0;
+    }
+
+    /**
+     * In the resizable mode the 765x503 login screen is drawn in the centre of the window, with black around it.
+     * The back buffer Graphics is moved to the centre for the login screen and back to the corner for the game.
+     */
+    private void prepareLoginScreenGraphics() {
+        Graphics2D g = (Graphics2D) super.graphics;
+        // also clear when coming from the game (logging out), which leaves its last frame in the back buffer
+        if (clientSize == 1 && (shouldRenderUI || !loginScreenCleared)) {
+            g.setTransform(new AffineTransform());
+            g.setColor(Color.black);
+            g.fillRect(0, 0, clientWidth, clientHeight);
+            loginScreenCleared = true;
+            // the middle of the screen was cleared too, so the login screen has to be drawn again
+            shouldRenderUI = true;
+        }
+        g.setTransform(AffineTransform.getTranslateInstance(loginScreenOffsetX(), loginScreenOffsetY()));
     }
 
     public void drawContextMenu() {
@@ -10082,20 +10225,8 @@ public class client extends JagApplet {
         Drawable.drawFullRect(beginX + 1, beginY + 1, k - 2, 16, 0);
         Drawable.drawRect(beginX + 1, beginY + 18, k - 2, l - 19, 0);
         loginScreenFont.drawString_474("Choose Option", 2245, beginX + 3, i1, beginY + 14);
-        int j1 = super.mouseX;
-        int k1 = super.mouseY;
-        if (anInt1304 == 0) {
-            j1 -= 4;
-            k1 -= 4;
-        }
-        if (anInt1304 == 1) {
-            j1 -= 553;
-            k1 -= 205;
-        }
-        if (anInt1304 == 2) {
-            j1 -= 17;
-            k1 -= 357;
-        }
+        int j1 = super.mouseX - layout.areaX(anInt1304);
+        int k1 = super.mouseY - layout.areaY(anInt1304);
         for (int optionCounter = 0; optionCounter < anInt1183; optionCounter++) {
             int i2 = beginY + 31 + (anInt1183 - 1 - optionCounter) * 15;
             int j2 = 0xffffff;
@@ -10313,6 +10444,7 @@ public class client extends JagApplet {
             loginBackground_5.drawImage(128, 171, super.graphics);
             loginBackground_6.drawImage(562, 171, super.graphics);
         }
+        presentBackBuffer();
     }
 
     public void addNewNpcs(JagBuffer buf, int i, boolean flag) {
@@ -10637,7 +10769,7 @@ public class client extends JagApplet {
             drawInterface(0, 0, JagInterface.forId(anIntArray1081[tabId]), 0, 8);
         if (isContextMenuActive && anInt1304 == 1)
             drawContextMenu();
-        inventoryImage.drawImage(553, 205, super.graphics);
+        drawPanel(inventoryImage, layout.inventory, ClientLayout.INVENTORY_ALPHA);
         gameViewportImage.pushPixels();
         ThreeDimensionalCanvas.lineOffsets = gameViewportOffsets;
         if (byte0 == 7)
@@ -10754,6 +10886,7 @@ public class client extends JagApplet {
             loginBackground_5.drawImage(128, 171, super.graphics);
             loginBackground_6.drawImage(562, 171, super.graphics);
         }
+        presentBackBuffer();
     }
 
     public void loadPixelsLoginScreen_139() {
@@ -11285,8 +11418,8 @@ public class client extends JagApplet {
             return;
         }
         if (super.anInt28 == 1) {
-            int i = super.anInt29 - 25 - 550;
-            int j = super.anInt30 - 5 - 4;
+            int i = super.anInt29 - 25 - layout.minimap.x;
+            int j = super.anInt30 - 5 - layout.minimap.y;
             if (i >= 0 && j >= 0 && i < 146 && j < 151) {
                 i -= 73;
                 j -= 75;
@@ -11635,8 +11768,8 @@ public class client extends JagApplet {
         int l2 = ThreeDimensionalCanvas.anInt1547;
         Model.aBoolean1705 = true;
         Model.anInt1708 = 0;
-        Model.anInt1706 = super.mouseX - 4;
-        Model.anInt1707 = super.mouseY - 4;
+        Model.anInt1706 = super.mouseX - layout.viewport.x;
+        Model.anInt1707 = super.mouseY - layout.viewport.y;
         Drawable.clearScreen();
         sceneGraph.method280(anInt1216, k, 0, anInt1217, anInt1218, anInt1220, anInt1219);
         sceneGraph.method255(anInt897);
@@ -11644,7 +11777,7 @@ public class client extends JagApplet {
         method127(true);
         animateTexture_65(l2);
         draw3dScreen();
-        gameViewportImage.drawImage(4, 4, super.graphics);
+        gameViewportImage.drawImage(layout.viewport, super.graphics);
         anInt1216 = i1;
         anInt1217 = j1;
         anInt1218 = k1;

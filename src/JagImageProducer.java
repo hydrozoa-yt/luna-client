@@ -44,6 +44,22 @@ public class JagImageProducer implements ImageProducer, ImageObserver {
 		g.drawImage(image, x, y, this);
 	}
 
+	/**
+	 * Draws only a part of the image: the area of width x height starting at (sourceX, sourceY) is drawn at (x, y).
+	 */
+	public void drawImageRegion(int x, int y, int sourceX, int sourceY, int width, int height, Graphics g) {
+		flipBuffer();
+		g.drawImage(image, x, y, x + width, y + height, sourceX, sourceY, sourceX + width, sourceY + height, this);
+	}
+
+	public void drawImage(java.awt.Point position, Graphics g) {
+		drawImage(position.x, position.y, g);
+	}
+
+	public void drawImage(java.awt.Rectangle area, Graphics g) {
+		drawImage(area.x, area.y, g);
+	}
+
 	public synchronized void addConsumer(ImageConsumer imageconsumer) {
 		consumer = imageconsumer;
 		imageconsumer.setDimensions(width, height);
